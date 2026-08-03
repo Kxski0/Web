@@ -31,10 +31,10 @@
       <ul class="nav__menu" id="nav-menu">
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#fuer-wen">Für wen</a></li>
-        <li><a href="#ablauf">So läuft's</a></li>
+        <li><a href="#ergebnisse">Ergebnisse</a></li>
         <li><a href="#ueber-uns">Über uns</a></li>
         <li><a href="#faq">Fragen</a></li>
-        <li class="nav__cta"><a class="btn btn--primary btn--small" href="#kontakt">Anfrage stellen</a></li>
+        <li class="nav__cta"><a class="btn btn--amber btn--small" href="#kontakt">Anfrage stellen</a></li>
       </ul>
     </nav>
   </header>
@@ -43,41 +43,45 @@
 
     <!-- ===== Hero ===== -->
     <section class="hero">
-      <div class="hero__bg" aria-hidden="true">
-        <div class="blob blob--one"></div>
-        <div class="blob blob--two"></div>
+      <div class="hero__media" aria-hidden="true">
+        <img src="assets/img/garten-sonnenuntergang.jpg" alt="" fetchpriority="high">
       </div>
-      <div class="container hero__grid">
-        <div class="hero__copy reveal">
-          <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Regional. Zuverlässig. Aus einer Hand.</p>
-          <h1>Ein Anruf genügt.<br><em>Wir kümmern uns um den Rest.</em></h1>
-          <p class="lead">Garten, Winterdienst, Reparaturen, Entrümpelung oder die komplette Objektbetreuung – der Hausmeisterservice Nowak ist Ihr Partner für alles rund um Haus, Garten und Grundstück.</p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#kontakt">Kostenlose Anfrage</a>
-            <a class="btn btn--ghost" href="tel:+491701234567">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-              0170&nbsp;123&nbsp;45&nbsp;67
-            </a>
-          </div>
-          <ul class="hero__trust" role="list">
-            <li>Feste Ansprechpartner</li>
-            <li>Faire, klare Preise</li>
-            <li>Versichert &amp; erfahren</li>
-          </ul>
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <p class="eyebrow eyebrow--onimage reveal"><span class="dot" aria-hidden="true"></span>Regional. Zuverlässig. Aus einer Hand.</p>
+        <h1 class="reveal">Ein Anruf genügt.<br><em>Wir kümmern uns um den Rest.</em></h1>
+        <p class="hero__lead reveal">Garten, Winterdienst, Reparaturen, Entrümpelung oder die komplette Objektbetreuung – der Hausmeisterservice Nowak ist Ihr Partner für alles rund um Haus, Garten und Grundstück.</p>
+        <div class="hero__actions reveal">
+          <a class="btn btn--amber" href="#kontakt">Kostenlose Anfrage</a>
+          <a class="btn btn--glass" href="tel:+491701234567">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            0170&nbsp;123&nbsp;45&nbsp;67
+          </a>
         </div>
-
-        <div class="hero__visual reveal reveal--delay">
-          <div class="hero__image">
-            <img src="assets/img/garten-abend.jpg" alt="Gepflegtes Grundstück mit modernem Haus und Garten am Abend" width="701" height="561" fetchpriority="high">
-          </div>
-          <div class="hero__card glass float">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4L19 7" stroke="var(--green-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <div><strong>Rasen gemäht, Hecke geschnitten</strong><span>Fam. Berger · diese Woche</span></div>
-          </div>
-          <div class="hero__card hero__card--two glass float float--late">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.5-6.5-1.4 1.4M7.9 16.1l-1.4 1.4m0-11 1.4 1.4m8.2 8.2 1.4 1.4" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" stroke="var(--amber)" stroke-width="2"/></svg>
-            <div><strong>Winterdienst gesichert</strong><span>Hausverwaltung Krüger</span></div>
-          </div>
+        <ul class="hero__trust reveal" role="list">
+          <li>Feste Ansprechpartner</li>
+          <li>Faire, klare Preise</li>
+          <li>Versichert &amp; erfahren</li>
+        </ul>
+      </div>
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker__track">
+          <span>Gartenpflege</span><span class="ticker__leaf">❧</span>
+          <span>Winterdienst</span><span class="ticker__leaf">❧</span>
+          <span>Objektbetreuung</span><span class="ticker__leaf">❧</span>
+          <span>Renovierung</span><span class="ticker__leaf">❧</span>
+          <span>Entrümpelung</span><span class="ticker__leaf">❧</span>
+          <span>Treppenhausreinigung</span><span class="ticker__leaf">❧</span>
+          <span>Baumschnitt</span><span class="ticker__leaf">❧</span>
+          <span>Grundstückspflege</span><span class="ticker__leaf">❧</span>
+          <span>Gartenpflege</span><span class="ticker__leaf">❧</span>
+          <span>Winterdienst</span><span class="ticker__leaf">❧</span>
+          <span>Objektbetreuung</span><span class="ticker__leaf">❧</span>
+          <span>Renovierung</span><span class="ticker__leaf">❧</span>
+          <span>Entrümpelung</span><span class="ticker__leaf">❧</span>
+          <span>Treppenhausreinigung</span><span class="ticker__leaf">❧</span>
+          <span>Baumschnitt</span><span class="ticker__leaf">❧</span>
+          <span>Grundstückspflege</span><span class="ticker__leaf">❧</span>
         </div>
       </div>
     </section>
@@ -106,19 +110,22 @@
             <li>Keller, Dachboden oder eine ganze Wohnung müssen entrümpelt werden.</li>
           </ul>
         </div>
-        <div class="pain__answer glass reveal reveal--delay">
-          <svg class="pain__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <circle cx="24" cy="24" r="23" stroke="var(--green-300)" stroke-width="2"/>
-            <path d="m14 25 7 7 13-15" stroke="var(--green-500)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <h3>Genau dafür gibt es uns.</h3>
-          <p>Sie rufen an, wir schauen es uns an, Sie bekommen einen klaren Preis – und dann wird es erledigt. Ohne Hinterherlaufen, ohne Ausreden, ohne böse Überraschungen.</p>
-          <a class="btn btn--primary" href="#kontakt">Jetzt unverbindlich anfragen</a>
+        <div class="pain__visual reveal reveal--delay">
+          <img class="pain__photo" src="assets/img/garten-modern.jpg" alt="Gepflegter moderner Garten mit Terrasse" loading="lazy" width="768" height="512">
+          <div class="pain__answer glass">
+            <svg class="pain__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <circle cx="24" cy="24" r="23" stroke="var(--green-300)" stroke-width="2"/>
+              <path d="m14 25 7 7 13-15" stroke="var(--green-500)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>Genau dafür gibt es uns.</h3>
+            <p>Sie rufen an, wir schauen es uns an, Sie bekommen einen klaren Preis – und dann wird es erledigt. Ohne Hinterherlaufen, ohne Ausreden, ohne böse Überraschungen.</p>
+            <a class="btn btn--primary" href="#kontakt">Jetzt unverbindlich anfragen</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== Leistungen ===== -->
+    <!-- ===== Leistungen: Foto-Mosaik ===== -->
     <section class="section services" id="leistungen">
       <div class="container">
         <div class="section__head reveal">
@@ -126,77 +133,85 @@
           <h2>Alles rund um Haus, Garten und Grundstück</h2>
           <p class="lead">Ob einmaliger Einsatz oder regelmäßige Betreuung – Sie sagen uns, was ansteht. Wir erledigen es.</p>
         </div>
-        <div class="services__grid">
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/rasen-maehen.jpg" alt="Mitarbeiter mäht den Rasen in einem gepflegten Garten" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 27c0-9 4-15 11-18-1 9-5 16-11 18Zm0 0c0-7-3-12-9-14 1 7 4 12 9 14Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <div class="mosaic">
+          <a class="tile tile--feature reveal" href="#kontakt">
+            <img src="assets/img/rasen-maehen.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Gartenpflege</h3>
-              <p>Rasen mähen, Beete pflegen, Unkraut entfernen. Regelmäßig oder nach Bedarf – Ihr Garten bleibt gepflegt, ohne dass Sie einen Finger rühren.</p>
+              <p class="tile__desc">Rasen mähen, Beete pflegen, Unkraut entfernen. Regelmäßig oder nach Bedarf – Ihr Garten bleibt gepflegt, ohne dass Sie einen Finger rühren.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/winter-eingang.jpg" alt="Mitarbeiter räumt Schnee vor einem Hauseingang" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4v24M8 8l16 16M24 8 8 24M4 16h24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile reveal" href="#kontakt">
+            <img src="assets/img/winter-eingang.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Winterdienst</h3>
-              <p>Räumen und streuen – zuverlässig und pünktlich, bevor der erste Mieter aus dem Haus geht. Inklusive Dokumentation für Ihre Haftungssicherheit.</p>
+              <p class="tile__desc">Räumen und streuen, bevor der erste Mieter aus dem Haus geht – dokumentiert für Ihre Haftungssicherheit.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/eingangshalle-reinigung.jpg" alt="Hausmeister pflegt das Foyer eines modernen Gebäudes" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 26V13l10-7 10 7v13" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 26v-7h6v7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile reveal" href="#kontakt">
+            <img src="assets/img/eingangshalle-reinigung.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Objektbetreuung</h3>
-              <p>Regelmäßige Kontrolle, Kleinreparaturen, Ansprechpartner für Mieter. Wir halten Ihre Immobilie in Schuss – wie ein Hausmeister, nur verlässlicher.</p>
+              <p class="tile__desc">Regelmäßige Kontrolle, Kleinreparaturen, Ansprechpartner für Mieter – wie ein Hausmeister, nur verlässlicher.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/wand-streichen.jpg" alt="Mitarbeiter streicht eine Wand bei einer Renovierung" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="m20 6 6 6-13 13-7 1 1-7L20 6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile tile--wide reveal" href="#kontakt">
+            <img src="assets/img/wand-streichen.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Kleinreparaturen &amp; Renovierung</h3>
-              <p>Tropfender Hahn, klemmende Tür, Wände streichen, Laminat verlegen. Die Dinge, die sonst liegen bleiben – bei uns sind sie schnell erledigt.</p>
+              <p class="tile__desc">Tropfender Hahn, klemmende Tür, Wände streichen, Laminat verlegen. Die Dinge, die sonst liegen bleiben – bei uns sind sie schnell erledigt.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/entruempelung-tragen.jpg" alt="Mitarbeiter trägt Möbel bei einer Entrümpelung" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 10h20l-2 16H8L6 10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile reveal" href="#kontakt">
+            <img src="assets/img/entruempelung-tragen.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Entrümpelung</h3>
-              <p>Keller, Dachboden, Garage oder komplette Haushaltsauflösung. Wir räumen, entsorgen fachgerecht und übergeben besenrein.</p>
+              <p class="tile__desc">Keller, Dachboden oder komplette Haushaltsauflösung – fachgerecht entsorgt, besenrein übergeben.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/treppenhaus-wischen.jpg" alt="Mitarbeiter wischt den Boden in einem Treppenhaus" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M8 28 24 4M12 28h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 28c6-2 9-6 10-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile reveal" href="#kontakt">
+            <img src="assets/img/treppenhaus-wischen.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Treppenhausreinigung</h3>
-              <p>Saubere Treppenhäuser und gepflegte Gemeinschaftsflächen – im festen Turnus, mit gleichbleibender Qualität.</p>
+              <p class="tile__desc">Saubere Treppenhäuser und gepflegte Gemeinschaftsflächen – im festen Turnus, mit gleichbleibender Qualität.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/hecke-schneiden.jpg" alt="Mitarbeiter schneidet eine große Hecke mit der Heckenschere" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16 19v9m-4-4h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile reveal" href="#kontakt">
+            <img src="assets/img/hecke-schneiden.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Hecken- &amp; Baumschnitt</h3>
-              <p>Formschnitt, Rückschnitt und Fällungen – zur richtigen Jahreszeit und mit Abtransport des Schnittguts.</p>
+              <p class="tile__desc">Formschnitt, Rückschnitt und Fällungen – zur richtigen Jahreszeit, inklusive Abtransport des Schnittguts.</p>
             </div>
-          </article>
-          <article class="card reveal">
-            <div class="card__media"><img src="assets/img/hof-kehren.jpg" alt="Mitarbeiter kehrt die Wege einer Wohnanlage" loading="lazy" width="701" height="561"></div>
-            <div class="card__body">
-              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="5" y="5" width="22" height="22" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M5 13h22M13 13v14" stroke="currentColor" stroke-width="1.8"/></svg></span>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="tile reveal" href="#kontakt">
+            <img src="assets/img/hof-kehren.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="tile__scrim" aria-hidden="true"></div>
+            <div class="tile__content">
               <h3>Grundstückspflege</h3>
-              <p>Wege kehren, Laub entfernen, Mülltonnen bereitstellen, Zäune und Außenanlagen instand halten. Ihr Grundstück macht immer einen guten Eindruck.</p>
+              <p class="tile__desc">Wege kehren, Laub entfernen, Außenanlagen instand halten – Ihr Grundstück macht immer einen guten Eindruck.</p>
             </div>
-          </article>
+            <span class="tile__arrow" aria-hidden="true">→</span>
+          </a>
         </div>
         <p class="services__note reveal">Ihr Anliegen ist nicht dabei? <a href="#kontakt">Fragen Sie einfach</a> – meistens können wir helfen. Und wenn nicht, kennen wir jemanden, der es kann.</p>
       </div>
     </section>
 
-    <!-- ===== Für wen ===== -->
+    <!-- ===== Für wen: Foto-Paneele ===== -->
     <section class="section audiences" id="fuer-wen">
       <div class="container">
         <div class="section__head reveal">
@@ -204,32 +219,44 @@
           <h2>Privat oder gewerblich – wir sind Ihr Ansprechpartner</h2>
         </div>
         <div class="audiences__grid">
-          <article class="audience glass reveal">
-            <h3>Privatkunden &amp; Senioren</h3>
-            <p>Wenn die Gartenarbeit zu viel wird oder Reparaturen liegen bleiben: Wir kommen vorbei, packen an und Sie haben den Kopf wieder frei. Auf Wunsch regelmäßig, zum festen Termin.</p>
-            <ul role="list">
-              <li>Feste Termine, pünktliches Erscheinen</li>
-              <li>Ein Ansprechpartner für alles</li>
-              <li>Geduldige, verständliche Beratung</li>
-            </ul>
+          <article class="panel reveal">
+            <img src="assets/img/rasen-maehen-garten.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="panel__scrim" aria-hidden="true"></div>
+            <div class="panel__content">
+              <h3>Privatkunden &amp; Senioren</h3>
+              <p class="panel__intro">Wenn die Gartenarbeit zu viel wird oder Reparaturen liegen bleiben: Wir kommen vorbei und packen an.</p>
+              <ul role="list">
+                <li>Feste Termine, pünktliches Erscheinen</li>
+                <li>Ein Ansprechpartner für alles</li>
+                <li>Geduldige, verständliche Beratung</li>
+              </ul>
+            </div>
           </article>
-          <article class="audience glass audience--highlight reveal reveal--delay">
-            <h3>Vermieter &amp; Hausverwaltungen</h3>
-            <p>Wir betreuen Ihre Objekte zuverlässig – von der Treppenhausreinigung bis zum Winterdienst. Mit Dokumentation, fester Erreichbarkeit und Rechnungen, die Ihre Buchhaltung nicht ärgern.</p>
-            <ul role="list">
-              <li>Betreuung mehrerer Objekte aus einer Hand</li>
-              <li>Dokumentierte Leistungen, klare Abrechnung</li>
-              <li>Schnelle Reaktion bei Mieteranliegen</li>
-            </ul>
+          <article class="panel reveal reveal--delay">
+            <img src="assets/img/objekt-hecke.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="panel__scrim" aria-hidden="true"></div>
+            <div class="panel__content">
+              <h3>Vermieter &amp; Hausverwaltungen</h3>
+              <p class="panel__intro">Wir betreuen Ihre Objekte zuverlässig – mit Dokumentation, fester Erreichbarkeit und sauberer Abrechnung.</p>
+              <ul role="list">
+                <li>Mehrere Objekte aus einer Hand</li>
+                <li>Dokumentierte Leistungen</li>
+                <li>Schnelle Reaktion bei Mieteranliegen</li>
+              </ul>
+            </div>
           </article>
-          <article class="audience glass reveal reveal--delay2">
-            <h3>Gewerbe &amp; Eigentümergemeinschaften</h3>
-            <p>Gepflegte Außenanlagen und funktionierende Gebäudetechnik sind Ihre Visitenkarte. Wir kümmern uns darum – planbar, versichert und mit festen Konditionen.</p>
-            <ul role="list">
-              <li>Rahmenverträge mit klaren Leistungen</li>
-              <li>Vertretungssicherheit im ganzen Jahr</li>
-              <li>Ein Vertrag statt fünf Dienstleister</li>
-            </ul>
+          <article class="panel reveal reveal--delay2">
+            <img src="assets/img/winter-raeumfahrzeug.jpg" alt="" loading="lazy" width="701" height="561">
+            <div class="panel__scrim" aria-hidden="true"></div>
+            <div class="panel__content">
+              <h3>Gewerbe &amp; Eigentümergemeinschaften</h3>
+              <p class="panel__intro">Gepflegte Außenanlagen sind Ihre Visitenkarte. Wir kümmern uns darum – planbar und versichert.</p>
+              <ul role="list">
+                <li>Rahmenverträge mit klaren Leistungen</li>
+                <li>Vertretungssicherheit im ganzen Jahr</li>
+                <li>Ein Vertrag statt fünf Dienstleister</li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>
@@ -308,6 +335,9 @@
           <div class="about__image">
             <img src="assets/img/inhaber-buero.jpg" alt="Der Inhaber des Hausmeisterservice Nowak am Schreibtisch" loading="lazy" width="701" height="561">
           </div>
+          <div class="about__image about__image--small">
+            <img src="assets/img/inhaber-transporter.jpg" alt="Der Inhaber vor dem Firmentransporter" loading="lazy" width="701" height="561">
+          </div>
           <div class="about__badge glass float">
             <strong>Inhabergeführt</strong>
             <span>Sie sprechen direkt mit dem Chef</span>
@@ -326,22 +356,40 @@
       </div>
     </section>
 
-    <!-- ===== Galerie ===== -->
+    <!-- ===== Galerie: Marquee ===== -->
     <section class="section gallery">
-      <div class="container">
-        <div class="section__head reveal">
-          <p class="eyebrow">Einblicke</p>
-          <h2>Echte Einsätze, echte Ergebnisse</h2>
+      <div class="section__head section__head--center reveal">
+        <p class="eyebrow">Einblicke</p>
+        <h2>Echte Einsätze, echte Ergebnisse</h2>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__row marquee__row--left">
+          <img src="assets/img/garten-sonnenuntergang.jpg" alt="" loading="lazy">
+          <img src="assets/img/formschnitt.jpg" alt="" loading="lazy">
+          <img src="assets/img/winter-raeumfahrzeug.jpg" alt="" loading="lazy">
+          <img src="assets/img/pflanzen-setzen.jpg" alt="" loading="lazy">
+          <img src="assets/img/garten-treppe.jpg" alt="" loading="lazy">
+          <img src="assets/img/fliesen-legen.jpg" alt="" loading="lazy">
+          <img src="assets/img/garten-sonnenuntergang.jpg" alt="" loading="lazy">
+          <img src="assets/img/formschnitt.jpg" alt="" loading="lazy">
+          <img src="assets/img/winter-raeumfahrzeug.jpg" alt="" loading="lazy">
+          <img src="assets/img/pflanzen-setzen.jpg" alt="" loading="lazy">
+          <img src="assets/img/garten-treppe.jpg" alt="" loading="lazy">
+          <img src="assets/img/fliesen-legen.jpg" alt="" loading="lazy">
         </div>
-        <div class="gallery__grid reveal">
-          <img src="assets/img/garten-sonnenuntergang.jpg" alt="Gepflegter Garten im Abendlicht" loading="lazy" width="768" height="512">
-          <img src="assets/img/formschnitt.jpg" alt="Präziser Formschnitt an einem Buchsbaum" loading="lazy" width="701" height="561">
-          <img src="assets/img/winter-raeumfahrzeug.jpg" alt="Winterdienst mit Räumfahrzeug" loading="lazy" width="701" height="561">
-          <img src="assets/img/pflanzen-setzen.jpg" alt="Neue Pflanzen werden in ein Beet gesetzt" loading="lazy" width="701" height="561">
-          <img src="assets/img/garten-treppe.jpg" alt="Neu angelegte Gartentreppe mit Bepflanzung" loading="lazy" width="768" height="512">
-          <img src="assets/img/fliesen-legen.jpg" alt="Fliesenarbeiten im Badezimmer" loading="lazy" width="701" height="561">
-          <img src="assets/img/anhaenger-beladen.jpg" alt="Möbel werden bei einer Entrümpelung verladen" loading="lazy" width="701" height="561">
-          <img src="assets/img/garten-beleuchtung.jpg" alt="Gartenweg mit stimmungsvoller Beleuchtung" loading="lazy" width="768" height="512">
+        <div class="marquee__row marquee__row--right">
+          <img src="assets/img/anhaenger-beladen.jpg" alt="" loading="lazy">
+          <img src="assets/img/garten-beleuchtung.jpg" alt="" loading="lazy">
+          <img src="assets/img/laminat-verlegen.jpg" alt="" loading="lazy">
+          <img src="assets/img/laub-rechen.jpg" alt="" loading="lazy">
+          <img src="assets/img/winter-streuen.jpg" alt="" loading="lazy">
+          <img src="assets/img/beet-pflegen.jpg" alt="" loading="lazy">
+          <img src="assets/img/anhaenger-beladen.jpg" alt="" loading="lazy">
+          <img src="assets/img/garten-beleuchtung.jpg" alt="" loading="lazy">
+          <img src="assets/img/laminat-verlegen.jpg" alt="" loading="lazy">
+          <img src="assets/img/laub-rechen.jpg" alt="" loading="lazy">
+          <img src="assets/img/winter-streuen.jpg" alt="" loading="lazy">
+          <img src="assets/img/beet-pflegen.jpg" alt="" loading="lazy">
         </div>
       </div>
     </section>
