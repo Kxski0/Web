@@ -257,6 +257,123 @@ h3 { font-size: 1.25rem; letter-spacing: -0.012em; }
 }
 .nav__menu a:not(.btn):hover { color: var(--green-500); }
 
+/* Leistungen-Dropdown */
+
+.nav__item--sub { position: relative; }
+
+.nav__sub-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.97rem;
+  color: var(--anthracite);
+  transition: color 0.2s ease;
+}
+.nav__sub-toggle:hover,
+.nav__item--sub:hover .nav__sub-toggle,
+.nav__sub-toggle[aria-expanded="true"] { color: var(--green-500); }
+
+.nav__caret {
+  width: 11px;
+  height: 8px;
+  transition: transform 0.25s ease;
+}
+.nav__sub-toggle[aria-expanded="true"] .nav__caret { transform: rotate(180deg); }
+
+.nav__sub {
+  position: absolute;
+  top: calc(100% + 1.1rem);
+  left: 50%;
+  width: min(600px, calc(100vw - 3rem));
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  /* Fast deckend: ueber dem Foto-Hero wuerde sonst die Ueberschrift
+     durch die Leistungsliste schimmern. */
+  background: rgba(246, 244, 238, 0.98);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: var(--shadow-hover);
+  opacity: 0;
+  transform: translateX(-50%) translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+/* hidden wird per JavaScript entfernt, sobald das Menue einmal geoeffnet wurde;
+   ohne JavaScript bleibt die Liste im Fluss der Seite erreichbar. */
+.nav__sub[hidden] { display: block; }
+
+.nav__item--sub:hover .nav__sub,
+.nav__item--sub:focus-within .nav__sub,
+.nav__sub-toggle[aria-expanded="true"] + .nav__sub {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Eine unsichtbare Bruecke, damit der Zeiger den Spalt ueberqueren kann */
+.nav__item--sub::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  height: 1.2rem;
+}
+
+.nav__sub-all {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--green-700);
+  margin-bottom: 0.6rem;
+  text-decoration: none !important;
+}
+.nav__sub-all strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+.nav__sub-all span { font-size: 0.82rem; color: var(--green-300); }
+.nav__sub-all:hover { background: var(--green-900); }
+
+.nav__sub-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.15rem;
+  list-style: none;
+}
+.nav__sub-list a {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  text-decoration: none !important;
+  transition: background 0.2s ease;
+}
+.nav__sub-list a:hover { background: var(--green-100); }
+.nav__sub-list strong {
+  display: block;
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--green-900);
+}
+.nav__sub-list span { font-size: 0.79rem; color: var(--ink-soft); }
+.nav__sub-list a.is-current { background: var(--green-100); }
+.nav__sub-list a.is-current strong { color: var(--green-500); }
+
+@media (max-width: 1100px) {
+  .nav__sub { width: min(340px, calc(100vw - 3rem)); }
+  .nav__sub-list { grid-template-columns: 1fr; }
+}
+
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -1597,7 +1714,7 @@ html.js .faq__body {
   .related__grid { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 980px) {
   .nav__toggle { display: flex; }
 
   .nav__menu {
@@ -1607,12 +1724,17 @@ html.js .faq__body {
     flex-direction: column;
     align-items: stretch;
     gap: 0.2rem;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    /* Deckend statt durchscheinend: mit ausgeklapptem Untermenue wuerde
+       sonst der Seiteninhalt durch die Liste schimmern. */
+    background: var(--cream);
+    border: 1px solid rgba(20, 42, 33, 0.08);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-hover);
     padding: 0.8rem;
+    /* Mit allen acht Leistungen wird das Menue laenger als der Bildschirm */
+    max-height: calc(100svh - 6.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     display: none;
   }
   .nav__menu.is-open { display: flex; }
@@ -1625,10 +1747,55 @@ html.js .faq__body {
   .nav__cta { margin-top: 0.4rem; }
   .nav__cta .btn { width: 100%; justify-content: center; }
 
+  .nav__sub-toggle {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.7rem 0.9rem;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  .nav__sub-toggle[aria-expanded="true"] { background: var(--green-100); }
+
+  .nav__item--sub::after { display: none; }
+
+  .nav__sub {
+    position: static;
+    width: auto;
+    padding: 0.4rem 0 0.2rem;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+  }
+  .nav__sub[hidden] { display: none; }
+
+  /* Die Hover-Varianten haben hoehere Spezifitaet als die Grundregel und
+     wuerden das Untermenue sonst weiterhin aus dem Fluss schieben. */
+  .nav__item--sub:hover .nav__sub,
+  .nav__item--sub:focus-within .nav__sub,
+  .nav__sub-toggle[aria-expanded="true"] + .nav__sub {
+    position: static;
+    transform: none;
+    opacity: 1;
+    box-shadow: none;
+  }
+
+  .nav__sub-all { padding: 0.7rem 0.9rem; }
+  .nav__sub-list { grid-template-columns: 1fr; gap: 0; }
+  .nav__sub-list a { padding: 0.6rem 0.9rem; }
+  .nav__sub-list span { display: none; }
+
   .nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
   .nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+}
 
+@media (max-width: 860px) {
   .pain__grid,
   .about__grid,
   .contact__panel,

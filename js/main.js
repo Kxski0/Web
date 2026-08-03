@@ -31,6 +31,56 @@
       if (event.target.closest("a")) setOpen(false);
     });
 
+    // Leistungen-Untermenü
+    var subToggle = nav.querySelector(".nav__sub-toggle");
+    var sub = nav.querySelector(".nav__sub");
+
+    if (subToggle && sub) {
+      // Ohne JavaScript bleibt die Liste sichtbar im Seitenfluss;
+      // sobald das Skript läuft, übernimmt der Knopf die Steuerung.
+      sub.hidden = true;
+
+      function setSubOpen(open) {
+        sub.hidden = !open;
+        subToggle.setAttribute("aria-expanded", String(open));
+      }
+
+      subToggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+        setSubOpen(subToggle.getAttribute("aria-expanded") !== "true");
+      });
+
+      sub.addEventListener("click", function (event) {
+        if (event.target.closest("a")) {
+          setSubOpen(false);
+          setOpen(false);
+        }
+      });
+
+      document.addEventListener("click", function (event) {
+        if (!nav.contains(event.target)) setSubOpen(false);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        if (subToggle.getAttribute("aria-expanded") === "true") {
+          setSubOpen(false);
+          subToggle.focus();
+        }
+      });
+
+      // Am Zeigergerät reicht Überfahren; das Untermenü bleibt dabei im DOM,
+      // damit die CSS-Hover-Regel greifen kann.
+      if (window.matchMedia("(hover: hover) and (min-width: 861px)").matches) {
+        var item = subToggle.closest(".nav__item--sub");
+        item.addEventListener("mouseenter", function () { sub.hidden = false; });
+        item.addEventListener("mouseleave", function () {
+          if (subToggle.getAttribute("aria-expanded") !== "true") sub.hidden = true;
+        });
+        subToggle.addEventListener("focus", function () { sub.hidden = false; });
+      }
+    }
+
     // Tippen daneben schließt das Menü wieder
     document.addEventListener("click", function (event) {
       if (menu.classList.contains("is-open") && !nav.contains(event.target)) {

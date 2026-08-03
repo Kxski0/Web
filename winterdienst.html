@@ -123,7 +123,28 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__menu" id="nav-menu">
-        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li class="nav__item nav__item--sub">
+          <button class="nav__sub-toggle" type="button" aria-expanded="false" aria-controls="nav-sub-winterdienst">
+            Leistungen
+            <svg class="nav__caret" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="m1 1.5 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav__sub" id="nav-sub-winterdienst" hidden>
+            <a class="nav__sub-all" href="index.html#leistungen">
+              <strong>Alle Leistungen im Überblick</strong>
+              <span>Was wir rund um Haus, Garten und Grundstück übernehmen</span>
+            </a>
+            <ul class="nav__sub-list" role="list">
+            <li><a href="gartenpflege.html"><strong>Gartenpflege</strong><span>Rasen, Beete, Laub</span></a></li>
+            <li><a href="winterdienst.html" aria-current="page" class="is-current"><strong>Winterdienst</strong><span>Räumen, streuen, dokumentieren</span></a></li>
+            <li><a href="objektbetreuung.html"><strong>Objektbetreuung</strong><span>Rundgänge und Kleinreparaturen</span></a></li>
+            <li><a href="renovierung.html"><strong>Reparatur &amp; Renovierung</strong><span>Streichen, Boden, Fliesen</span></a></li>
+            <li><a href="entruempelung.html"><strong>Entrümpelung</strong><span>Keller bis Haushaltsauflösung</span></a></li>
+            <li><a href="treppenhausreinigung.html"><strong>Treppenhausreinigung</strong><span>Fester Turnus, feste Qualität</span></a></li>
+            <li><a href="baumschnitt.html"><strong>Hecken- &amp; Baumschnitt</strong><span>Formschnitt bis Fällung</span></a></li>
+            <li><a href="grundstueckspflege.html"><strong>Grundstückspflege</strong><span>Wege, Außenanlagen, Tonnen</span></a></li>
+            </ul>
+          </div>
+        </li>
         <li><a href="index.html#fuer-wen">Für wen</a></li>
         <li><a href="index.html#ergebnisse">Ergebnisse</a></li>
         <li><a href="index.html#ueber-uns">Über uns</a></li>
