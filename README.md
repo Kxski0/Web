@@ -46,21 +46,36 @@ python3 -m http.server 8000
 
 ## Temporär hosten (Kundenvorschau)
 
-Die Website ist eine reine statische Seite und läuft daher auf jedem Webspace. Für eine schnelle Vorschau bietet sich GitHub Pages an – kostenlos, weil das Repository öffentlich ist.
+Die Website ist rein statisch und läuft daher auf jedem Webspace.
 
-**Einmalig einrichten:**
+### Empfohlen: GitHub Pages
 
-1. Auf GitHub das Repository öffnen → **Settings** → links **Pages**
-2. Unter *Build and deployment* → *Source*: **Deploy from a branch**
-3. Branch: `claude/nowak-website-concept-d4t6wj`, Ordner: `/ (root)` → **Save**
-4. Nach ein bis zwei Minuten ist die Seite erreichbar unter
-   **https://kxski0.github.io/Web/**
+Kostenlos, weil das Repository öffentlich ist, mit sauberer URL und automatischer Aktualisierung bei jedem Push. Der Workflow `.github/workflows/pages.yml` liegt bereits im Repository und übernimmt das Veröffentlichen.
 
-Jeder weitere Push auf den Branch aktualisiert die Vorschau automatisch. Nach dem Merge in `main` kann man die Quelle in denselben Einstellungen auf `main` umstellen.
+**GitHub Pages muss einmalig eingeschaltet werden** – das kann kein Skript und kein Automatisierungs-Token, GitHub verlangt dafür den Repository-Besitzer:
 
-`.nojekyll` und `404.html` liegen bereits im Repository, alle Pfade sind relativ – die Seite funktioniert deshalb auch im Unterverzeichnis `/Web/`.
+1. https://github.com/Kxski0/Web/settings/pages öffnen
+2. Unter *Build and deployment* → *Source*: **GitHub Actions** wählen
+3. Unter *Actions* den Workflow „Vorschau veröffentlichen" erneut starten
+   (oder einfach den nächsten Push abwarten)
 
-**Hinweis zur Suchmaschine:** Die Canonical-Tags zeigen bereits auf die spätere Domain. Google indexiert die Vorschau-URL dadurch in aller Regel nicht. Wer ganz sicher gehen will, setzt für die Dauer der Vorschau in `robots.txt` ein `Disallow: /` und entfernt es vor dem Livegang wieder.
+Danach ist die Seite erreichbar unter **https://kxski0.github.io/Web/**
+
+### Ohne Einrichtung: Direktlink über einen CDN-Spiegel
+
+Funktioniert sofort, ohne Klick, weil das Repository öffentlich ist:
+
+```
+https://rawcdn.githack.com/Kxski0/Web/f1ce492453fac9101db1bfcabbea20526c9ef99b/index.html
+```
+
+Der Link zeigt fest auf diesen einen Stand. Nach neuen Commits braucht man einen neuen Link mit der aktuellen Commit-ID (`git rev-parse HEAD`). Für eine schnelle Rückmeldung reicht das; für die Kundenpräsentation ist GitHub Pages die bessere Wahl.
+
+### Später: eigene Domain
+
+Sobald die Domain steht, den Inhalt des Repositorys per FTP auf den Webspace laden – oder bei GitHub Pages unter *Settings → Pages → Custom domain* die Domain eintragen und beim Domain-Anbieter einen CNAME auf `kxski0.github.io` setzen.
+
+**Hinweis zur Suchmaschine:** Die Canonical-Tags zeigen bereits auf die spätere Domain, dadurch indexiert Google die Vorschau-URL in aller Regel nicht. Wer ganz sichergehen will, setzt für die Dauer der Vorschau in `robots.txt` ein `Disallow: /` und entfernt es vor dem Livegang wieder.
 
 ## Vor dem Livegang
 
