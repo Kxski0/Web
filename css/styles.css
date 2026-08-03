@@ -1515,6 +1515,45 @@ html.js .faq__body {
   letter-spacing: -0.01em;
 }
 
+/* ---------- Mobile Kontaktleiste ----------
+   Auf dem Handy ist der Anruf der kürzeste Weg zum Auftrag.
+   Auf dem Desktop übernimmt das die Navigation. */
+
+.callbar { display: none; }
+
+@media (max-width: 860px) {
+  body { padding-bottom: 4.6rem; }
+
+  .callbar {
+    position: fixed;
+    left: 0.75rem; right: 0.75rem; bottom: 0.75rem;
+    z-index: 45;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 0.5rem;
+    padding: 0.45rem;
+    border-radius: 999px;
+    background: rgba(20, 42, 33, 0.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 34px rgba(9, 20, 15, 0.35);
+  }
+  .callbar a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 46px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none !important;
+  }
+  .callbar a svg { width: 1.1em; height: 1.1em; }
+  .callbar__call { background: rgba(255, 255, 255, 0.14); color: var(--white); }
+  .callbar__ask { background: var(--cream); color: var(--green-900); }
+}
+
 /* ---------- Scroll-Animationen ---------- */
 
 .reveal {
