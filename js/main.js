@@ -79,6 +79,15 @@
     });
   }
 
+  // Vorher/Nachher-Vergleich
+  document.querySelectorAll("[data-compare]").forEach(function (compare) {
+    var range = compare.querySelector(".compare__range");
+    if (!range) return;
+    range.addEventListener("input", function () {
+      compare.style.setProperty("--pos", range.value + "%");
+    });
+  });
+
   // Kontaktformular
   // Hinweis: Für den Live-Betrieb einen Formular-Dienst (z. B. Formspree)
   // oder ein serverseitiges Skript anbinden. Bis dahin öffnet das Formular

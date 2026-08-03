@@ -67,33 +67,8 @@
         </div>
 
         <div class="hero__visual reveal reveal--delay">
-          <!-- Platzhalter-Illustration – hier später ein echtes Foto vom Team / Einsatz einsetzen -->
-          <div class="hero__image" role="img" aria-label="Gepflegtes Grundstück mit Garten">
-            <svg class="hero__scene" viewBox="0 0 520 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#DCE9DC"/><stop offset="1" stop-color="#F5F1E6"/>
-                </linearGradient>
-                <linearGradient id="lawn" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#5E8A5E"/><stop offset="1" stop-color="#3E6B4F"/>
-                </linearGradient>
-              </defs>
-              <rect width="520" height="420" fill="url(#sky)"/>
-              <circle cx="430" cy="80" r="46" fill="#F0C468" opacity=".85"/>
-              <path d="M0 300 Q130 250 260 290 T520 280 V420 H0 Z" fill="url(#lawn)"/>
-              <path d="M0 330 Q170 290 320 325 T520 320 V420 H0 Z" fill="#2C4F3B" opacity=".85"/>
-              <g>
-                <rect x="150" y="170" width="180" height="130" rx="10" fill="#F7F3EA"/>
-                <path d="M138 176 240 96l102 80z" fill="#26382E"/>
-                <rect x="176" y="210" width="34" height="42" rx="6" fill="#9CBFA4"/>
-                <rect x="270" y="210" width="34" height="90" rx="6" fill="#324A3C"/>
-                <rect x="176" y="120" width="10" height="40" fill="#324A3C" transform="rotate(0)"/>
-              </g>
-              <g fill="#1E3D2F">
-                <circle cx="80" cy="270" r="34"/><rect x="76" y="270" width="8" height="52" rx="4"/>
-                <circle cx="465" cy="250" r="28"/><rect x="461" y="250" width="8" height="48" rx="4"/>
-              </g>
-            </svg>
+          <div class="hero__image">
+            <img src="assets/img/garten-abend.jpg" alt="Gepflegtes Grundstück mit modernem Haus und Garten am Abend" width="701" height="561" fetchpriority="high">
           </div>
           <div class="hero__card glass float">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4L19 7" stroke="var(--green-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -153,44 +128,68 @@
         </div>
         <div class="services__grid">
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 27c0-9 4-15 11-18-1 9-5 16-11 18Zm0 0c0-7-3-12-9-14 1 7 4 12 9 14Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-            <h3>Gartenpflege</h3>
-            <p>Rasen mähen, Beete pflegen, Unkraut entfernen. Regelmäßig oder nach Bedarf – Ihr Garten bleibt gepflegt, ohne dass Sie einen Finger rühren.</p>
+            <div class="card__media"><img src="assets/img/rasen-maehen.jpg" alt="Mitarbeiter mäht den Rasen in einem gepflegten Garten" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 27c0-9 4-15 11-18-1 9-5 16-11 18Zm0 0c0-7-3-12-9-14 1 7 4 12 9 14Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <h3>Gartenpflege</h3>
+              <p>Rasen mähen, Beete pflegen, Unkraut entfernen. Regelmäßig oder nach Bedarf – Ihr Garten bleibt gepflegt, ohne dass Sie einen Finger rühren.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4v24M8 8l16 16M24 8 8 24M4 16h24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <h3>Winterdienst</h3>
-            <p>Räumen und streuen – zuverlässig und pünktlich, bevor der erste Mieter aus dem Haus geht. Inklusive Dokumentation für Ihre Haftungssicherheit.</p>
+            <div class="card__media"><img src="assets/img/winter-eingang.jpg" alt="Mitarbeiter räumt Schnee vor einem Hauseingang" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4v24M8 8l16 16M24 8 8 24M4 16h24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+              <h3>Winterdienst</h3>
+              <p>Räumen und streuen – zuverlässig und pünktlich, bevor der erste Mieter aus dem Haus geht. Inklusive Dokumentation für Ihre Haftungssicherheit.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 26V13l10-7 10 7v13" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 26v-7h6v7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-            <h3>Objektbetreuung</h3>
-            <p>Regelmäßige Kontrolle, Kleinreparaturen, Ansprechpartner für Mieter. Wir halten Ihre Immobilie in Schuss – wie ein Hausmeister, nur verlässlicher.</p>
+            <div class="card__media"><img src="assets/img/eingangshalle-reinigung.jpg" alt="Hausmeister pflegt das Foyer eines modernen Gebäudes" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 26V13l10-7 10 7v13" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 26v-7h6v7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <h3>Objektbetreuung</h3>
+              <p>Regelmäßige Kontrolle, Kleinreparaturen, Ansprechpartner für Mieter. Wir halten Ihre Immobilie in Schuss – wie ein Hausmeister, nur verlässlicher.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="m20 6 6 6-13 13-7 1 1-7L20 6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-            <h3>Kleinreparaturen &amp; Renovierung</h3>
-            <p>Tropfender Hahn, klemmende Tür, Wände streichen, Laminat verlegen. Die Dinge, die sonst liegen bleiben – bei uns sind sie schnell erledigt.</p>
+            <div class="card__media"><img src="assets/img/wand-streichen.jpg" alt="Mitarbeiter streicht eine Wand bei einer Renovierung" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="m20 6 6 6-13 13-7 1 1-7L20 6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <h3>Kleinreparaturen &amp; Renovierung</h3>
+              <p>Tropfender Hahn, klemmende Tür, Wände streichen, Laminat verlegen. Die Dinge, die sonst liegen bleiben – bei uns sind sie schnell erledigt.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 10h20l-2 16H8L6 10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8"/></svg></span>
-            <h3>Entrümpelung</h3>
-            <p>Keller, Dachboden, Garage oder komplette Haushaltsauflösung. Wir räumen, entsorgen fachgerecht und übergeben besenrein.</p>
+            <div class="card__media"><img src="assets/img/entruempelung-tragen.jpg" alt="Mitarbeiter trägt Möbel bei einer Entrümpelung" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 10h20l-2 16H8L6 10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8"/></svg></span>
+              <h3>Entrümpelung</h3>
+              <p>Keller, Dachboden, Garage oder komplette Haushaltsauflösung. Wir räumen, entsorgen fachgerecht und übergeben besenrein.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M8 28 24 4M12 28h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 28c6-2 9-6 10-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <h3>Treppenhausreinigung</h3>
-            <p>Saubere Treppenhäuser und gepflegte Gemeinschaftsflächen – im festen Turnus, mit gleichbleibender Qualität.</p>
+            <div class="card__media"><img src="assets/img/treppenhaus-wischen.jpg" alt="Mitarbeiter wischt den Boden in einem Treppenhaus" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M8 28 24 4M12 28h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 28c6-2 9-6 10-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+              <h3>Treppenhausreinigung</h3>
+              <p>Saubere Treppenhäuser und gepflegte Gemeinschaftsflächen – im festen Turnus, mit gleichbleibender Qualität.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16 19v9m-4-4h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <h3>Hecken- &amp; Baumschnitt</h3>
-            <p>Formschnitt, Rückschnitt und Fällungen – zur richtigen Jahreszeit und mit Abtransport des Schnittguts.</p>
+            <div class="card__media"><img src="assets/img/hecke-schneiden.jpg" alt="Mitarbeiter schneidet eine große Hecke mit der Heckenschere" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16 19v9m-4-4h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+              <h3>Hecken- &amp; Baumschnitt</h3>
+              <p>Formschnitt, Rückschnitt und Fällungen – zur richtigen Jahreszeit und mit Abtransport des Schnittguts.</p>
+            </div>
           </article>
           <article class="card reveal">
-            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="5" y="5" width="22" height="22" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M5 13h22M13 13v14" stroke="currentColor" stroke-width="1.8"/></svg></span>
-            <h3>Grundstückspflege</h3>
-            <p>Wege kehren, Laub entfernen, Mülltonnen bereitstellen, Zäune und Außenanlagen instand halten. Ihr Grundstück macht immer einen guten Eindruck.</p>
+            <div class="card__media"><img src="assets/img/hof-kehren.jpg" alt="Mitarbeiter kehrt die Wege einer Wohnanlage" loading="lazy" width="701" height="561"></div>
+            <div class="card__body">
+              <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="5" y="5" width="22" height="22" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M5 13h22M13 13v14" stroke="currentColor" stroke-width="1.8"/></svg></span>
+              <h3>Grundstückspflege</h3>
+              <p>Wege kehren, Laub entfernen, Mülltonnen bereitstellen, Zäune und Außenanlagen instand halten. Ihr Grundstück macht immer einen guten Eindruck.</p>
+            </div>
           </article>
         </div>
         <p class="services__note reveal">Ihr Anliegen ist nicht dabei? <a href="#kontakt">Fragen Sie einfach</a> – meistens können wir helfen. Und wenn nicht, kennen wir jemanden, der es kann.</p>
@@ -263,22 +262,51 @@
       </div>
     </section>
 
+    <!-- ===== Vorher / Nachher ===== -->
+    <section class="section results" id="ergebnisse">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Vorher / Nachher</p>
+          <h2>Der Unterschied ist sichtbar</h2>
+          <p class="lead">Ziehen Sie den Regler und sehen Sie selbst, was aus verwilderten Gärten und in die Jahre gekommenen Räumen wird.</p>
+        </div>
+        <div class="results__grid">
+          <figure class="result reveal">
+            <div class="compare" data-compare>
+              <img class="compare__after" src="assets/img/garten-nachher.jpg" alt="Gepflegter Garten mit Rasen, Terrasse und Beeten nach unserem Einsatz" loading="lazy" width="793" height="496">
+              <div class="compare__before" aria-hidden="true">
+                <img src="assets/img/garten-vorher.jpg" alt="" loading="lazy" width="793" height="496">
+              </div>
+              <div class="compare__handle" aria-hidden="true"><span></span></div>
+              <span class="compare__label compare__label--before" aria-hidden="true">Vorher</span>
+              <span class="compare__label compare__label--after" aria-hidden="true">Nachher</span>
+              <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Vergleich verschieben">
+            </div>
+            <figcaption>Verwilderter Garten – komplett neu angelegt und dauerhaft in Pflege.</figcaption>
+          </figure>
+          <figure class="result reveal reveal--delay">
+            <div class="compare" data-compare>
+              <img class="compare__after" src="assets/img/wohnzimmer-nachher.jpg" alt="Modern renoviertes Wohnzimmer nach unserem Einsatz" loading="lazy" width="793" height="496">
+              <div class="compare__before" aria-hidden="true">
+                <img src="assets/img/wohnzimmer-vorher.jpg" alt="" loading="lazy" width="793" height="496">
+              </div>
+              <div class="compare__handle" aria-hidden="true"><span></span></div>
+              <span class="compare__label compare__label--before" aria-hidden="true">Vorher</span>
+              <span class="compare__label compare__label--after" aria-hidden="true">Nachher</span>
+              <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher-Vergleich verschieben">
+            </div>
+            <figcaption>Wohnzimmer entrümpelt, renoviert und bezugsfertig übergeben.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== Über uns ===== -->
     <section class="section about" id="ueber-uns">
       <div class="container about__grid">
         <div class="about__visual reveal">
-          <!-- Platzhalter – hier später ein echtes Porträt / Teamfoto einsetzen -->
-          <div class="about__image" role="img" aria-label="Porträt des Inhabers">
-            <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <linearGradient id="bgp" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#E4EEE4"/><stop offset="1" stop-color="#CBDCC9"/>
-                </linearGradient>
-              </defs>
-              <rect width="400" height="460" fill="url(#bgp)"/>
-              <circle cx="200" cy="170" r="70" fill="#3E6B4F"/>
-              <path d="M80 460c8-90 55-140 120-140s112 50 120 140Z" fill="#1E3D2F"/>
-            </svg>
+          <div class="about__image">
+            <img src="assets/img/inhaber-buero.jpg" alt="Der Inhaber des Hausmeisterservice Nowak am Schreibtisch" loading="lazy" width="701" height="561">
           </div>
           <div class="about__badge glass float">
             <strong>Inhabergeführt</strong>
@@ -294,6 +322,26 @@
             <p>„Am Ende zählt für mich nur eins: dass unsere Kunden sich auf uns verlassen können. Alles andere ergibt sich daraus."</p>
             <footer>— M. Nowak, Inhaber</footer>
           </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Galerie ===== -->
+    <section class="section gallery">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Einblicke</p>
+          <h2>Echte Einsätze, echte Ergebnisse</h2>
+        </div>
+        <div class="gallery__grid reveal">
+          <img src="assets/img/garten-sonnenuntergang.jpg" alt="Gepflegter Garten im Abendlicht" loading="lazy" width="768" height="512">
+          <img src="assets/img/formschnitt.jpg" alt="Präziser Formschnitt an einem Buchsbaum" loading="lazy" width="701" height="561">
+          <img src="assets/img/winter-raeumfahrzeug.jpg" alt="Winterdienst mit Räumfahrzeug" loading="lazy" width="701" height="561">
+          <img src="assets/img/pflanzen-setzen.jpg" alt="Neue Pflanzen werden in ein Beet gesetzt" loading="lazy" width="701" height="561">
+          <img src="assets/img/garten-treppe.jpg" alt="Neu angelegte Gartentreppe mit Bepflanzung" loading="lazy" width="768" height="512">
+          <img src="assets/img/fliesen-legen.jpg" alt="Fliesenarbeiten im Badezimmer" loading="lazy" width="701" height="561">
+          <img src="assets/img/anhaenger-beladen.jpg" alt="Möbel werden bei einer Entrümpelung verladen" loading="lazy" width="701" height="561">
+          <img src="assets/img/garten-beleuchtung.jpg" alt="Gartenweg mit stimmungsvoller Beleuchtung" loading="lazy" width="768" height="512">
         </div>
       </div>
     </section>

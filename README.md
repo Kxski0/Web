@@ -11,6 +11,7 @@ Statische Website ohne Build-Schritt:
 - `css/styles.css` – komplettes Styling (Farbwelt, Glassmorphism, Animationen, Responsive)
 - `js/main.js` – Scroll-Animationen, Zähler, mobiles Menü, Kontaktformular
 - `assets/favicon.svg` – Favicon mit Blatt-Logo
+- `assets/img/` – Fotos (aus den gelieferten Collagen zugeschnitten und als JPG optimiert)
 
 ## Lokal ansehen
 
@@ -23,8 +24,7 @@ Oder `index.html` direkt im Browser öffnen.
 
 ## Vor dem Livegang
 
-1. **Echte Fotos einsetzen:** Die SVG-Illustrationen im Hero (`.hero__image`) und im Über-uns-Bereich (`.about__image`) sind Platzhalter. Echte Fotos vom Team und von Einsätzen wirken deutlich stärker.
-2. **Kontaktdaten prüfen:** Telefonnummer und E-Mail-Adresse in `index.html` (Hero, Kontakt, Footer) durch die echten Daten ersetzen.
-3. **Formular anbinden:** Das Kontaktformular öffnet aktuell eine vorausgefüllte E-Mail. Für den Live-Betrieb einen Dienst wie Formspree oder ein serverseitiges Skript in `js/main.js` anbinden.
-4. **Impressum & Datenschutz ausfüllen:** Platzhalter in eckigen Klammern ersetzen und rechtlich prüfen lassen.
-5. **Webfonts lokal hosten:** Google Fonts werden aktuell extern geladen – für DSGVO-Konformität lokal einbinden.
+1. **Kontaktdaten prüfen:** Telefonnummer und E-Mail-Adresse in `index.html` (Hero, Kontakt, Footer) durch die echten Daten ersetzen.
+2. **Formular anbinden:** Das Kontaktformular öffnet aktuell eine vorausgefüllte E-Mail. Für den Live-Betrieb einen Dienst wie Formspree oder ein serverseitiges Skript in `js/main.js` anbinden.
+3. **Impressum & Datenschutz ausfüllen:** Platzhalter in eckigen Klammern ersetzen und rechtlich prüfen lassen.
+4. **Webfonts lokal hosten:** Google Fonts werden aktuell extern geladen – für DSGVO-Konformität lokal einbinden.
