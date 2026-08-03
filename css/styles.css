@@ -248,14 +248,14 @@ h3 { font-size: 1.25rem; letter-spacing: -0.012em; }
   list-style: none;
 }
 
-.nav__menu a:not(.btn) {
+.nav__menu > li > a:not(.btn) {
   font-weight: 500;
   font-size: 0.97rem;
   color: var(--anthracite);
   text-decoration: none;
   transition: color 0.2s ease;
 }
-.nav__menu a:not(.btn):hover { color: var(--green-500); }
+.nav__menu > li > a:not(.btn):hover { color: var(--green-500); }
 
 /* Leistungen-Dropdown */
 
@@ -332,6 +332,7 @@ h3 { font-size: 1.25rem; letter-spacing: -0.012em; }
   border-radius: var(--radius-sm);
   background: var(--green-700);
   margin-bottom: 0.6rem;
+  color: var(--white);
   text-decoration: none !important;
 }
 .nav__sub-all strong {
@@ -1738,12 +1739,12 @@ html.js .faq__body {
     display: none;
   }
   .nav__menu.is-open { display: flex; }
-  .nav__menu a:not(.btn) {
+  .nav__menu > li > a:not(.btn) {
     display: block;
     padding: 0.7rem 0.9rem;
     border-radius: 10px;
   }
-  .nav__menu a:not(.btn):hover { background: var(--green-100); }
+  .nav__menu > li > a:not(.btn):hover { background: var(--green-100); }
   .nav__cta { margin-top: 0.4rem; }
   .nav__cta .btn { width: 100%; justify-content: center; }
 
