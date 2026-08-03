@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grundstückspflege übers ganze Jahr | Nowak</title>
+  <meta name="description" content="Wege, Außenanlagen, Mülltonnen, Laub und Beleuchtung: Grundstückspflege im Jahresvertrag vom Hausmeisterservice Nowak – planbar, versichert, aus einer Hand.">
+  <link rel="canonical" href="https://www.hausmeisterservice-nowak.de/grundstueckspflege.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Grundstückspflege übers ganze Jahr | Nowak">
+  <meta property="og:description" content="Wege, Außenanlagen, Mülltonnen, Laub und Beleuchtung: Grundstückspflege im Jahresvertrag vom Hausmeisterservice Nowak – planbar, versichert, aus einer Hand.">
+  <meta property="og:image" content="https://www.hausmeisterservice-nowak.de/assets/img/hof-kehren.jpg">
+  <meta property="og:locale" content="de_DE">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Grundstückspflege",
+  "serviceType": "Grundstückspflege",
+  "description": "Wege, Außenanlagen, Mülltonnen, Laub und Beleuchtung: Grundstückspflege im Jahresvertrag vom Hausmeisterservice Nowak – planbar, versichert, aus einer Hand.",
+  "url": "https://www.hausmeisterservice-nowak.de/grundstueckspflege.html",
+  "provider": {
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Hausmeisterservice Nowak",
+    "telephone": "+49 170 1234567",
+    "url": "https://www.hausmeisterservice-nowak.de/"
+  },
+  "areaServed": "Region"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Startseite",
+      "item": "https://www.hausmeisterservice-nowak.de/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Grundstückspflege",
+      "item": "https://www.hausmeisterservice-nowak.de/grundstueckspflege.html"
+    }
+  ]
+}
+  </script>
+  <style>
+
+    /* Die Fläche reinigt sich beim Scrollen */
+    .sweep { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-hover); }
+    .sweep img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+    .sweep__dirt {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 120px 40px at 20% 80%, rgba(62, 52, 40, 0.55), transparent 70%),
+        radial-gradient(ellipse 160px 50px at 55% 88%, rgba(62, 52, 40, 0.5), transparent 70%),
+        radial-gradient(ellipse 100px 36px at 80% 76%, rgba(62, 52, 40, 0.45), transparent 70%),
+        linear-gradient(180deg, transparent 55%, rgba(52, 44, 34, 0.38) 100%);
+      clip-path: inset(0 0 0 calc(var(--scrub, 0) * 100%));
+    }
+    .sweep__broom {
+      position: absolute; bottom: 12%; left: calc(var(--scrub, 0) * 92%);
+      transform: translateX(-50%) rotate(calc(-8deg + var(--scrub, 0) * 16deg));
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--white); box-shadow: var(--shadow-soft);
+      display: grid; place-items: center; color: var(--green-700);
+    }
+    .sweep__broom svg { width: 24px; height: 24px; }
+    .sweep figcaption { position: absolute; left: 1.2rem; top: 1rem; color: var(--white); font-weight: 600; text-shadow: 0 2px 10px rgba(9,20,15,0.6); }
+
+    /* Einsatzgebiet mit pulsierenden Radien */
+    .areamap { position: relative; display: grid; place-items: center; }
+    .areamap svg { width: min(420px, 90%); height: auto; }
+    .areamap .ring { transform-origin: center; opacity: 0; }
+    .reveal.is-visible .areamap .ring { animation: ripple 3.2s ease-out infinite; }
+    .reveal.is-visible .areamap .ring--2 { animation-delay: 1.1s; }
+    .reveal.is-visible .areamap .ring--3 { animation-delay: 2.2s; }
+    @keyframes ripple {
+      0% { transform: scale(0.35); opacity: 0.7; }
+      100% { transform: scale(1.05); opacity: 0; }
+    }
+    .arealist { list-style: none; display: grid; gap: 0.6rem; font-weight: 500; }
+    .arealist li { padding-left: 1.6rem; position: relative; }
+    .arealist li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 9px; height: 9px; border-radius: 50%; background: var(--green-500); }
+
+    /* Pflegepakete */
+    .packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; align-items: stretch; }
+    .package { background: var(--white); border-radius: var(--radius-md); padding: 1.7rem 1.5rem; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; }
+    .package--highlight { background: var(--green-700); }
+    .package--highlight h3, .package--highlight strong { color: var(--white); }
+    .package--highlight li, .package--highlight p { color: var(--green-100); }
+    .package h3 { font-size: 1.1rem; }
+    .package p { font-size: 0.88rem; color: var(--ink-soft); margin: 0.3rem 0 1rem; }
+    .package ul { list-style: none; display: grid; gap: 0.5rem; font-size: 0.92rem; margin-bottom: 1.2rem; }
+    .package ul li { padding-left: 1.4rem; position: relative; }
+    .package ul li::before { content: "✓"; position: absolute; left: 0; color: var(--green-500); font-weight: 700; }
+    .package--highlight ul li::before { color: var(--green-300); }
+    .package .btn { margin-top: auto; justify-content: center; }
+    @media (max-width: 860px) { .packages { grid-template-columns: 1fr; } }
+    
+  </style>
+</head>
+<body class="page-grundstueckspflege">
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav glass" aria-label="Hauptnavigation">
+      <a class="nav__brand" href="index.html" aria-label="Hausmeisterservice Nowak – zur Startseite">
+        <span class="nav__logo" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="20" fill="var(--green-700)"/>
+            <path d="M20 30c0-8 3-13 10-16-1 8-4 14-10 16Zm0 0c0-6-2.5-10-8-12 .8 6.5 3.2 10.5 8 12Z" fill="var(--green-100)"/>
+          </svg>
+        </span>
+        <span class="nav__name">Nowak<small>Hausmeisterservice</small></span>
+      </a>
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#fuer-wen">Für wen</a></li>
+        <li><a href="index.html#ergebnisse">Ergebnisse</a></li>
+        <li><a href="index.html#ueber-uns">Über uns</a></li>
+        <li><a href="index.html#faq">Fragen</a></li>
+        <li class="nav__cta"><a class="btn btn--primary btn--small" href="index.html#kontakt">Anfrage stellen</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="inhalt">
+    <section class="page-hero">
+      <div class="page-hero__media" aria-hidden="true">
+        <img src="assets/img/hof-kehren.webp" alt="" fetchpriority="high" width="701" height="561">
+      </div>
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container">
+        <nav aria-label="Brotkrumen">
+          <ol class="breadcrumbs">
+            <li><a href="index.html">Startseite</a></li>
+            <li><a href="index.html#leistungen">Leistungen</a></li>
+            <li><span aria-current="page">Grundstückspflege</span></li>
+          </ol>
+        </nav>
+        <p class="eyebrow eyebrow--onimage">Leistung · Grundstückspflege</p>
+        <h1>Grundstückspflege, die den ersten Eindruck macht</h1>
+        <p class="page-hero__lead">Besucher, Mieter und Käufer urteilen in Sekunden – über Wege, Grün und Eingänge. Wir sorgen dafür, dass Ihr Grundstück dieses Urteil jeden Tag besteht.</p>
+        <div class="page-hero__actions">
+          <a class="btn btn--light" href="index.html#kontakt" data-magnet>Pflege anfragen</a>
+          <a class="btn btn--glass" href="tel:+491701234567">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            0170&nbsp;123&nbsp;45&nbsp;67
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Scrollen Sie die Fläche sauber</p>
+          <h2>Gepflegt ist, wenn man nichts bemerkt</h2>
+        </div>
+        <figure class="sweep reveal" data-scrub>
+          <img src="assets/img/objekt-hecke.webp" alt="Sauber gekehrte Wege und geschnittene Hecken vor einer Wohnanlage" loading="lazy" width="701" height="561">
+          <div class="sweep__dirt" aria-hidden="true"></div>
+          <div class="sweep__broom" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M14 3 8.5 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M5 21c1.6-4.2 3-6.5 4.6-7.6l2.7 1.5C11.7 17 10 19.4 8 21H5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <figcaption>Wege, Grün und Plätze – dauerhaft in Ordnung.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--cream-dark);">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Pflegepakete</p>
+          <h2>Drei Pakete, ein gepflegtes Grundstück</h2>
+          <p class="lead">Die Pakete sind Startpunkte – den genauen Zuschnitt legen wir bei der Besichtigung gemeinsam fest.</p>
+        </div>
+        <div class="packages">
+          <article class="package reveal">
+            <h3>Basis</h3>
+            <p>Für kleine Grundstücke und Selbermacher mit wenig Zeit.</p>
+            <ul role="list">
+              <li>Wege kehren und Laub entfernen</li>
+              <li>Mülltonnen bereitstellen</li>
+              <li>Sichtkontrolle bei jedem Einsatz</li>
+            </ul>
+            <a class="btn btn--primary btn--small" href="index.html#kontakt">Basis anfragen</a>
+          </article>
+          <article class="package package--highlight reveal reveal--delay">
+            <h3>Komplett</h3>
+            <p>Unser meistgebuchtes Paket für Wohnanlagen und Vermieter.</p>
+            <ul role="list">
+              <li>Alles aus Basis</li>
+              <li>Rasen- und Heckenpflege</li>
+              <li>Kleinreparaturen an Außenanlagen</li>
+              <li>Beleuchtung geprüft, Ausfälle behoben</li>
+            </ul>
+            <a class="btn btn--light btn--small" href="index.html#kontakt">Komplett anfragen</a>
+          </article>
+          <article class="package reveal reveal--delay2">
+            <h3>Ganzjahr</h3>
+            <p>Rundum-sorglos inklusive Winter – ein Vertrag für alles.</p>
+            <ul role="list">
+              <li>Alles aus Komplett</li>
+              <li>Winterdienst mit Dokumentation</li>
+              <li>Saisonale Grundreinigung der Flächen</li>
+            </ul>
+            <a class="btn btn--primary btn--small" href="index.html#kontakt">Ganzjahr anfragen</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div class="reveal">
+          <p class="eyebrow">Einsatzgebiet</p>
+          <h2>Regional heißt: Wir sind wirklich in der Nähe</h2>
+          <div class="prose">
+            <p>Kurze Wege sind bei Grundstückspflege kein Detail, sondern das Geschäftsmodell. Nur wer schnell vor Ort ist, kann auf Sturm, Schnee oder eine umgekippte Mülltonne noch am selben Tag reagieren.</p>
+          </div>
+          <ul class="arealist" role="list">
+            <li>Stadtgebiet und alle Ortsteile</li>
+            <li>Umland im Radius von rund 25 Kilometern</li>
+            <li>Weitere Objekte auf Anfrage – fragen kostet nichts</li>
+          </ul>
+        </div>
+        <div class="areamap reveal reveal--delay" aria-hidden="true">
+          <svg viewBox="0 0 300 300" fill="none">
+            <circle cx="150" cy="150" r="140" fill="var(--green-100)"/>
+            <path d="M70 190c-8-34 8-78 42-96s82-12 106 14 26 68 6 96-52 40-86 34-60-24-68-48Z" fill="var(--green-300)" opacity="0.5"/>
+            <circle class="ring" cx="150" cy="150" r="120" stroke="var(--green-500)" stroke-width="2"/>
+            <circle class="ring ring--2" cx="150" cy="150" r="120" stroke="var(--green-500)" stroke-width="2"/>
+            <circle class="ring ring--3" cx="150" cy="150" r="120" stroke="var(--green-500)" stroke-width="2"/>
+            <circle cx="150" cy="150" r="10" fill="var(--green-700)"/>
+            <circle cx="150" cy="150" r="4" fill="var(--white)"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cta" aria-label="Kontakt">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Ihr Grundstück hat einen Pflege-Plan verdient.</h2>
+            <p>Wir schauen uns Fläche und Anlagen kostenlos an und schlagen Ihnen das Paket vor, das wirklich passt – ohne Überdimensionierung.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light" href="index.html#kontakt">Anfrage stellen</a>
+            <a class="btn btn--glass" href="tel:+491701234567">0170 123 45 67</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--related related" aria-labelledby="weitere-leistungen">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Weitere Leistungen</p>
+          <h2 id="weitere-leistungen">Das übernehmen wir ebenfalls</h2>
+        </div>
+        <div class="related__grid">
+          <a class="related-card reveal" href="gartenpflege.html">
+            <img src="assets/img/rasen-maehen.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Gartenpflege</span>
+          </a>
+          <a class="related-card reveal" href="winterdienst.html">
+            <img src="assets/img/winter-eingang.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Winterdienst</span>
+          </a>
+          <a class="related-card reveal" href="objektbetreuung.html">
+            <img src="assets/img/eingangshalle-reinigung.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Objektbetreuung</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a class="nav__brand nav__brand--footer" href="index.html">
+          <span class="nav__logo" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="20" fill="var(--green-100)"/>
+              <path d="M20 30c0-8 3-13 10-16-1 8-4 14-10 16Zm0 0c0-6-2.5-10-8-12 .8 6.5 3.2 10.5 8 12Z" fill="var(--green-700)"/>
+            </svg>
+          </span>
+          <span class="nav__name">Nowak<small>Hausmeisterservice</small></span>
+        </a>
+        <p class="footer__claim">Ihr regionaler Partner für Haus, Garten und Grundstück. Ein Anruf genügt.</p>
+      </div>
+      <div>
+        <p class="footer__heading">Leistungen</p>
+        <ul role="list">
+          <li><a href="gartenpflege.html">Gartenpflege</a></li>
+          <li><a href="winterdienst.html">Winterdienst</a></li>
+          <li><a href="objektbetreuung.html">Objektbetreuung</a></li>
+          <li><a href="renovierung.html">Renovierung</a></li>
+          <li><a href="entruempelung.html">Entrümpelung</a></li>
+          <li><a href="treppenhausreinigung.html">Treppenhausreinigung</a></li>
+          <li><a href="baumschnitt.html">Hecken- &amp; Baumschnitt</a></li>
+          <li><a href="grundstueckspflege.html">Grundstückspflege</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Kontakt</p>
+        <ul role="list">
+          <li><a href="tel:+491701234567">0170 123 45 67</a></li>
+          <li><a href="mailto:info@hausmeisterservice-nowak.de">info@hausmeisterservice-nowak.de</a></li>
+          <li>Mo–Fr 7–18 Uhr · Sa 8–13 Uhr</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Rechtliches</p>
+        <ul role="list">
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>© <span id="year"></span> Hausmeisterservice Nowak. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

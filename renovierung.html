@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kleinreparaturen & Renovierung – schnell erledigt | Nowak</title>
+  <meta name="description" content="Wände streichen, Laminat verlegen, Fliesen, Spachteln und alle Kleinreparaturen: Der Hausmeisterservice Nowak renoviert sauber, zügig und zum vereinbarten Preis.">
+  <link rel="canonical" href="https://www.hausmeisterservice-nowak.de/renovierung.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kleinreparaturen & Renovierung – schnell erledigt | Nowak">
+  <meta property="og:description" content="Wände streichen, Laminat verlegen, Fliesen, Spachteln und alle Kleinreparaturen: Der Hausmeisterservice Nowak renoviert sauber, zügig und zum vereinbarten Preis.">
+  <meta property="og:image" content="https://www.hausmeisterservice-nowak.de/assets/img/wand-streichen.jpg">
+  <meta property="og:locale" content="de_DE">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Kleinreparaturen & Renovierung",
+  "serviceType": "Kleinreparaturen & Renovierung",
+  "description": "Wände streichen, Laminat verlegen, Fliesen, Spachteln und alle Kleinreparaturen: Der Hausmeisterservice Nowak renoviert sauber, zügig und zum vereinbarten Preis.",
+  "url": "https://www.hausmeisterservice-nowak.de/renovierung.html",
+  "provider": {
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Hausmeisterservice Nowak",
+    "telephone": "+49 170 1234567",
+    "url": "https://www.hausmeisterservice-nowak.de/"
+  },
+  "areaServed": "Region"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Startseite",
+      "item": "https://www.hausmeisterservice-nowak.de/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Kleinreparaturen & Renovierung",
+      "item": "https://www.hausmeisterservice-nowak.de/renovierung.html"
+    }
+  ]
+}
+  </script>
+  <style>
+
+    /* Farbleiste zieht sich beim Scrollen über die Wand */
+    .paintbar { position: relative; height: 18px; border-radius: 999px; background: var(--cream-dark); overflow: visible; margin: 0.5rem 0 3rem; }
+    .paintbar__fill {
+      position: absolute; inset: 0; border-radius: 999px;
+      background: linear-gradient(90deg, var(--green-500), var(--green-700));
+      transform-origin: left; transform: scaleX(var(--scrub, 0));
+    }
+    .paintbar__roller {
+      position: absolute; top: 50%; left: calc(var(--scrub, 0) * 100%);
+      transform: translate(-50%, -50%);
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--white); box-shadow: var(--shadow-soft);
+      display: grid; place-items: center; color: var(--green-700);
+    }
+    .paintbar__roller svg { width: 24px; height: 24px; }
+
+    /* Gewerke-Chips */
+    .trades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+    .trade { position: relative; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-soft); aspect-ratio: 4 / 4.6; }
+    .trade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.22,0.61,0.36,1); }
+    .trade:hover img { transform: scale(1.06); }
+    .trade::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,42,33,0) 45%, rgba(20,42,33,0.85) 100%); }
+    .trade figcaption { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 0.95rem; z-index: 1; color: var(--white); }
+    .trade figcaption strong { font-family: var(--font-display); font-weight: 600; font-size: 1.08rem; display: block; }
+    .trade figcaption small { font-size: 0.82rem; color: rgba(255,255,255,0.85); }
+
+    /* Vorher/Nachher-Morph beim Scrollen */
+    .morph { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-hover); }
+    .morph img { width: 100%; aspect-ratio: 8 / 5; object-fit: cover; display: block; }
+    .morph__after { position: absolute; inset: 0; opacity: var(--scrub, 0); }
+    .morph__after img { height: 100%; }
+    .morph__tag {
+      position: absolute; top: 1rem; left: 1rem; z-index: 1;
+      padding: 0.3rem 0.85rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      background: rgba(20, 42, 33, 0.65); color: var(--white);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .morph__tag--after { left: auto; right: 1rem; opacity: var(--scrub, 0); }
+    .steps-plain { counter-reset: step; list-style: none; display: grid; gap: 1.4rem; max-width: 620px; }
+    .steps-plain li { position: relative; padding-left: 3.2rem; }
+    .steps-plain li::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 0; top: 0;
+      width: 2.2rem; height: 2.2rem; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--green-100); color: var(--green-700);
+      font-family: var(--font-display); font-weight: 600;
+    }
+    .steps-plain strong { display: block; color: var(--green-900); }
+    .steps-plain p { color: var(--ink-soft); font-size: 0.95rem; }
+    @media (max-width: 860px) { .trades { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .trades { grid-template-columns: 1fr; } }
+    
+  </style>
+</head>
+<body class="page-renovierung">
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav glass" aria-label="Hauptnavigation">
+      <a class="nav__brand" href="index.html" aria-label="Hausmeisterservice Nowak – zur Startseite">
+        <span class="nav__logo" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="20" fill="var(--green-700)"/>
+            <path d="M20 30c0-8 3-13 10-16-1 8-4 14-10 16Zm0 0c0-6-2.5-10-8-12 .8 6.5 3.2 10.5 8 12Z" fill="var(--green-100)"/>
+          </svg>
+        </span>
+        <span class="nav__name">Nowak<small>Hausmeisterservice</small></span>
+      </a>
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#fuer-wen">Für wen</a></li>
+        <li><a href="index.html#ergebnisse">Ergebnisse</a></li>
+        <li><a href="index.html#ueber-uns">Über uns</a></li>
+        <li><a href="index.html#faq">Fragen</a></li>
+        <li class="nav__cta"><a class="btn btn--primary btn--small" href="index.html#kontakt">Anfrage stellen</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="inhalt">
+    <section class="page-hero">
+      <div class="page-hero__media" aria-hidden="true">
+        <img src="assets/img/wand-streichen.webp" alt="" fetchpriority="high" width="701" height="561">
+      </div>
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container">
+        <nav aria-label="Brotkrumen">
+          <ol class="breadcrumbs">
+            <li><a href="index.html">Startseite</a></li>
+            <li><a href="index.html#leistungen">Leistungen</a></li>
+            <li><span aria-current="page">Kleinreparaturen & Renovierung</span></li>
+          </ol>
+        </nav>
+        <p class="eyebrow eyebrow--onimage">Leistung · Reparaturen & Renovierung</p>
+        <h1>Renovierungen, die einfach fertig werden</h1>
+        <p class="page-hero__lead">Zwischen &bdquo;müsste man mal machen&ldquo; und &bdquo;ist erledigt&ldquo; liegt bei uns ein Anruf. Wir übernehmen die Arbeiten, für die sich kein großer Handwerksbetrieb interessiert – und machen sie ordentlich.</p>
+        <div class="page-hero__actions">
+          <a class="btn btn--light" href="index.html#kontakt" data-magnet>Projekt besprechen</a>
+          <a class="btn btn--glass" href="tel:+491701234567">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            0170&nbsp;123&nbsp;45&nbsp;67
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Scrollen Sie die Wand fertig</p>
+          <h2>Von der ersten Bahn bis zum letzten Pinselstrich</h2>
+        </div>
+        <div class="paintbar" data-scrub aria-hidden="true">
+          <div class="paintbar__fill"></div>
+          <div class="paintbar__roller">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="13" height="6" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 7h4v4h-8v3" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="14" width="2.5" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="trades">
+          <figure class="trade reveal">
+            <img src="assets/img/malern-leiter.webp" alt="Maler streicht eine Wand von der Leiter aus" loading="lazy" width="701" height="561">
+            <figcaption><strong>Malerarbeiten</strong><small>Wände, Decken, Türen – sauber abgeklebt.</small></figcaption>
+          </figure>
+          <figure class="trade reveal">
+            <img src="assets/img/spachteln.webp" alt="Wand wird vor dem Streichen glatt gespachtelt" loading="lazy" width="701" height="561">
+            <figcaption><strong>Spachteln &amp; Ausbessern</strong><small>Löcher, Risse, Dübelspuren.</small></figcaption>
+          </figure>
+          <figure class="trade reveal">
+            <img src="assets/img/laminat-verlegen.webp" alt="Laminat wird in einer leeren Wohnung verlegt" loading="lazy" width="701" height="561">
+            <figcaption><strong>Bodenbeläge</strong><small>Laminat und Vinyl, inklusive Leisten.</small></figcaption>
+          </figure>
+          <figure class="trade reveal">
+            <img src="assets/img/fliesen-legen.webp" alt="Fliesenarbeiten in einem Badezimmer" loading="lazy" width="701" height="561">
+            <figcaption><strong>Fliesenarbeiten</strong><small>Bad, Küche, Flur – mit Gefühl für Fugen.</small></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--cream-dark);">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Wohnungsübergabe in Sicht?</p>
+          <h2>Aus bewohnt wird bezugsfertig</h2>
+          <p class="lead">Scrollen Sie weiter und sehen Sie, wie dieselbe Wohnung nach unserer Renovierung übergeben wurde.</p>
+        </div>
+        <div class="morph reveal" data-scrub>
+          <img src="assets/img/wohnzimmer-vorher.webp" alt="Wohnzimmer vor der Renovierung mit alter Einrichtung" loading="lazy" width="793" height="496">
+          <div class="morph__after" aria-hidden="true">
+            <img src="assets/img/wohnzimmer-nachher.webp" alt="" loading="lazy" width="793" height="496">
+          </div>
+          <span class="morph__tag">Vorher</span>
+          <span class="morph__tag morph__tag--after">Nachher</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div class="reveal">
+          <p class="eyebrow">So läuft Ihr Projekt</p>
+          <h2>Klarer Preis, klarer Termin, klares Ende</h2>
+          <ol class="steps-plain" role="list">
+            <li><strong>Besichtigung &amp; Festpreis</strong><p>Wir schauen uns die Räume an und nennen Ihnen einen Preis, der hält.</p></li>
+            <li><strong>Ein Termin, ein Team</strong><p>Wir kommen mit allem Material und arbeiten am Stück durch – keine Wochen mit halbfertigen Wänden.</p></li>
+            <li><strong>Abnahme gemeinsam</strong><p>Fertig ist, wenn Sie zufrieden sind. Besenrein übergeben, Schlüssel zurück.</p></li>
+          </ol>
+        </div>
+        <figure class="split__figure reveal reveal--delay">
+          <img src="assets/img/werkstatt.webp" alt="Vorbereitung von Material in der Werkstatt" loading="lazy" width="701" height="561">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--cta" aria-label="Kontakt">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Was liegt bei Ihnen seit Monaten an?</h2>
+            <p>Schicken Sie uns ein Foto und zwei Sätze – oft reicht das schon für eine erste ehrliche Einschätzung von Aufwand und Preis.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light" href="index.html#kontakt">Anfrage stellen</a>
+            <a class="btn btn--glass" href="tel:+491701234567">0170 123 45 67</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--related related" aria-labelledby="weitere-leistungen">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Weitere Leistungen</p>
+          <h2 id="weitere-leistungen">Das übernehmen wir ebenfalls</h2>
+        </div>
+        <div class="related__grid">
+          <a class="related-card reveal" href="entruempelung.html">
+            <img src="assets/img/entruempelung-tragen.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Entrümpelung</span>
+          </a>
+          <a class="related-card reveal" href="objektbetreuung.html">
+            <img src="assets/img/eingangshalle-reinigung.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Objektbetreuung</span>
+          </a>
+          <a class="related-card reveal" href="treppenhausreinigung.html">
+            <img src="assets/img/treppenhaus-wischen.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Treppenhausreinigung</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a class="nav__brand nav__brand--footer" href="index.html">
+          <span class="nav__logo" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="20" fill="var(--green-100)"/>
+              <path d="M20 30c0-8 3-13 10-16-1 8-4 14-10 16Zm0 0c0-6-2.5-10-8-12 .8 6.5 3.2 10.5 8 12Z" fill="var(--green-700)"/>
+            </svg>
+          </span>
+          <span class="nav__name">Nowak<small>Hausmeisterservice</small></span>
+        </a>
+        <p class="footer__claim">Ihr regionaler Partner für Haus, Garten und Grundstück. Ein Anruf genügt.</p>
+      </div>
+      <div>
+        <p class="footer__heading">Leistungen</p>
+        <ul role="list">
+          <li><a href="gartenpflege.html">Gartenpflege</a></li>
+          <li><a href="winterdienst.html">Winterdienst</a></li>
+          <li><a href="objektbetreuung.html">Objektbetreuung</a></li>
+          <li><a href="renovierung.html">Renovierung</a></li>
+          <li><a href="entruempelung.html">Entrümpelung</a></li>
+          <li><a href="treppenhausreinigung.html">Treppenhausreinigung</a></li>
+          <li><a href="baumschnitt.html">Hecken- &amp; Baumschnitt</a></li>
+          <li><a href="grundstueckspflege.html">Grundstückspflege</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Kontakt</p>
+        <ul role="list">
+          <li><a href="tel:+491701234567">0170 123 45 67</a></li>
+          <li><a href="mailto:info@hausmeisterservice-nowak.de">info@hausmeisterservice-nowak.de</a></li>
+          <li>Mo–Fr 7–18 Uhr · Sa 8–13 Uhr</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Rechtliches</p>
+        <ul role="list">
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>© <span id="year"></span> Hausmeisterservice Nowak. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

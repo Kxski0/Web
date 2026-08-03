@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gartenpflege – regelmäßig oder nach Bedarf | Nowak</title>
+  <meta name="description" content="Rasenpflege, Beete, Heckenschnitt und Laub: Der Hausmeisterservice Nowak hält Ihren Garten das ganze Jahr in Form. Feste Termine, faire Preise, ein Ansprechpartner.">
+  <link rel="canonical" href="https://www.hausmeisterservice-nowak.de/gartenpflege.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gartenpflege – regelmäßig oder nach Bedarf | Nowak">
+  <meta property="og:description" content="Rasenpflege, Beete, Heckenschnitt und Laub: Der Hausmeisterservice Nowak hält Ihren Garten das ganze Jahr in Form. Feste Termine, faire Preise, ein Ansprechpartner.">
+  <meta property="og:image" content="https://www.hausmeisterservice-nowak.de/assets/img/rasen-maehen-garten.jpg">
+  <meta property="og:locale" content="de_DE">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Gartenpflege",
+  "serviceType": "Gartenpflege",
+  "description": "Rasenpflege, Beete, Heckenschnitt und Laub: Der Hausmeisterservice Nowak hält Ihren Garten das ganze Jahr in Form. Feste Termine, faire Preise, ein Ansprechpartner.",
+  "url": "https://www.hausmeisterservice-nowak.de/gartenpflege.html",
+  "provider": {
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Hausmeisterservice Nowak",
+    "telephone": "+49 170 1234567",
+    "url": "https://www.hausmeisterservice-nowak.de/"
+  },
+  "areaServed": "Region"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Startseite",
+      "item": "https://www.hausmeisterservice-nowak.de/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Gartenpflege",
+      "item": "https://www.hausmeisterservice-nowak.de/gartenpflege.html"
+    }
+  ]
+}
+  </script>
+  <style>
+
+    /* Saisonkarten entfalten sich nacheinander */
+    .seasons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; perspective: 1000px; }
+    .season {
+      background: var(--white); border-radius: var(--radius-md); padding: 1.6rem 1.4rem;
+      box-shadow: var(--shadow-soft); border-top: 4px solid var(--green-300);
+      opacity: 0; transform: rotateX(-14deg) translateY(26px); transform-origin: top center;
+      transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .season.is-on { opacity: 1; transform: none; }
+    .season h3 { font-size: 1.05rem; margin-bottom: 0.6rem; }
+    .season ul { list-style: none; display: grid; gap: 0.4rem; font-size: 0.9rem; color: var(--ink-soft); }
+    .season ul li { padding-left: 1.1rem; position: relative; }
+    .season ul li::before { content: "·"; position: absolute; left: 0; color: var(--green-500); font-weight: 700; }
+    .season__tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-500); }
+
+    /* Die Wiese wächst beim Scrollen aus dem Boden */
+    .meadow { display: block; width: min(620px, 88%); margin: 0 auto 0.5rem; }
+    .meadow__blade { transform: scaleY(var(--scrub, 0)); transform-origin: 50% 100%; transform-box: fill-box; }
+    .meadow__blade:nth-child(2n) { transform: scaleY(calc(var(--scrub, 0) * 0.86)); }
+    .meadow__blade:nth-child(3n) { transform: scaleY(calc(var(--scrub, 0) * 1.08)); }
+    .meadow__bud { opacity: calc((var(--scrub, 0) - 0.55) * 3); transform: scale(var(--scrub, 0)); transform-origin: 50% 100%; transform-box: fill-box; }
+    .meadow__ground { transform: scaleX(var(--scrub, 0)); transform-origin: 50% 50%; transform-box: fill-box; }
+
+    /* Zoom-Galerie */
+    .garden-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .garden-gallery figure { border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-soft); position: relative; margin: 0; }
+    .garden-gallery img { width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1); }
+    .garden-gallery figure:hover img { transform: scale(1.1); }
+    .garden-gallery figcaption {
+      position: absolute; left: 1rem; bottom: 0.8rem; color: var(--white); font-size: 0.85rem; font-weight: 600;
+      text-shadow: 0 2px 10px rgba(9, 20, 15, 0.6);
+    }
+    @media (max-width: 860px) { .seasons { grid-template-columns: repeat(2, 1fr); } .garden-gallery { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .seasons { grid-template-columns: 1fr; } }
+    
+  </style>
+</head>
+<body class="page-gartenpflege">
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav glass" aria-label="Hauptnavigation">
+      <a class="nav__brand" href="index.html" aria-label="Hausmeisterservice Nowak – zur Startseite">
+        <span class="nav__logo" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="20" fill="var(--green-700)"/>
+            <path d="M20 30c0-8 3-13 10-16-1 8-4 14-10 16Zm0 0c0-6-2.5-10-8-12 .8 6.5 3.2 10.5 8 12Z" fill="var(--green-100)"/>
+          </svg>
+        </span>
+        <span class="nav__name">Nowak<small>Hausmeisterservice</small></span>
+      </a>
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#fuer-wen">Für wen</a></li>
+        <li><a href="index.html#ergebnisse">Ergebnisse</a></li>
+        <li><a href="index.html#ueber-uns">Über uns</a></li>
+        <li><a href="index.html#faq">Fragen</a></li>
+        <li class="nav__cta"><a class="btn btn--primary btn--small" href="index.html#kontakt">Anfrage stellen</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="inhalt">
+    <section class="page-hero">
+      <div class="page-hero__media" aria-hidden="true">
+        <img src="assets/img/rasen-maehen-garten.webp" alt="" fetchpriority="high" width="701" height="561">
+      </div>
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="container">
+        <nav aria-label="Brotkrumen">
+          <ol class="breadcrumbs">
+            <li><a href="index.html">Startseite</a></li>
+            <li><a href="index.html#leistungen">Leistungen</a></li>
+            <li><span aria-current="page">Gartenpflege</span></li>
+          </ol>
+        </nav>
+        <p class="eyebrow eyebrow--onimage">Leistung · Gartenpflege</p>
+        <h1>Gartenpflege, die man das ganze Jahr sieht</h1>
+        <p class="page-hero__lead">Ein Garten macht Arbeit – jede Woche, jede Saison. Wir nehmen sie Ihnen ab: mit festen Terminen, eigenem Gerät und einem Blick dafür, was Ihr Garten gerade braucht.</p>
+        <div class="page-hero__actions">
+          <a class="btn btn--light" href="index.html#kontakt" data-magnet>Gartenpflege anfragen</a>
+          <a class="btn btn--glass" href="tel:+491701234567">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            0170&nbsp;123&nbsp;45&nbsp;67
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div class="reveal">
+          <p class="eyebrow">Was wir übernehmen</p>
+          <h2>Ihr Garten hat einen Plan – wir halten ihn ein</h2>
+          <div class="prose">
+            <p>Gartenpflege scheitert selten am Wollen, sondern am Dranbleiben. Der Rasen wartet nicht aufs Wochenende, die Hecke nicht auf den Urlaub. Deshalb arbeiten wir mit festen Pflegeterminen: Sie merken gar nicht, dass wir da waren – nur, dass alles gepflegt aussieht.</p>
+          </div>
+          <ul class="checklist">
+            <li>Rasen mähen, vertikutieren und düngen</li>
+            <li>Beete anlegen, pflanzen und Unkraut jäten</li>
+            <li>Hecken in Form halten</li>
+            <li>Laub räumen und Grünschnitt entsorgen</li>
+            <li>Bewässerung im Blick behalten</li>
+          </ul>
+        </div>
+        <figure class="split__figure reveal reveal--delay">
+          <img src="assets/img/beet-pflegen.webp" alt="Gärtner bepflanzt ein frisch angelegtes Beet" loading="lazy" width="701" height="561">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--green-100); padding-top: 3rem;">
+      <div class="container">
+        <svg class="meadow" data-scrub viewBox="0 0 620 96" fill="none" aria-hidden="true">
+          <g fill="var(--green-500)">
+            <path class="meadow__blade" d="M62 88C60 66 54 50 44 38c6 18 10 34 12 50Z"/>
+            <path class="meadow__blade" d="M96 88c2-30 10-50 26-64-8 24-14 44-16 64Z"/>
+            <path class="meadow__blade" d="M138 88c-2-22-8-38-18-50 6 18 12 32 14 50Z"/>
+            <path class="meadow__blade" d="M186 88c1-34 9-56 25-72-8 27-15 48-17 72Z"/>
+            <path class="meadow__blade" d="M228 88c-2-26-9-44-20-56 7 20 14 36 16 56Z"/>
+            <path class="meadow__blade" d="M276 88c1-30 8-50 23-65-8 24-14 43-16 65Z"/>
+            <path class="meadow__blade" d="M318 88c-2-24-8-41-19-53 7 19 13 34 15 53Z"/>
+            <path class="meadow__blade" d="M368 88c1-36 10-58 27-74-9 28-16 50-18 74Z"/>
+            <path class="meadow__blade" d="M410 88c-2-22-8-38-18-50 6 18 12 32 14 50Z"/>
+            <path class="meadow__blade" d="M456 88c1-31 9-51 24-66-8 25-14 44-16 66Z"/>
+            <path class="meadow__blade" d="M498 88c-2-26-9-44-20-56 7 20 14 36 16 56Z"/>
+            <path class="meadow__blade" d="M548 88c1-30 8-50 23-64-8 23-14 42-16 64Z"/>
+          </g>
+          <g fill="var(--green-300)">
+            <circle class="meadow__bud" cx="211" cy="18" r="6"/>
+            <circle class="meadow__bud" cx="395" cy="16" r="7"/>
+            <circle class="meadow__bud" cx="571" cy="26" r="5"/>
+          </g>
+          <rect class="meadow__ground" x="30" y="88" width="560" height="2.5" rx="1.25" fill="var(--green-300)"/>
+        </svg>
+        <div class="section__head section__head--center reveal" style="margin-top: 2rem;">
+          <p class="eyebrow">Ein Garten im Jahreslauf</p>
+          <h2>Jede Saison hat ihre Aufgaben</h2>
+          <p class="lead">Wir planen die Pflege übers Jahr – damit nichts liegen bleibt und nichts zur falschen Zeit passiert.</p>
+        </div>
+        <div class="seasons" data-sequence="160">
+          <article class="season seq">
+            <p class="season__tag">März – Mai</p>
+            <h3>Frühjahr</h3>
+            <ul role="list">
+              <li>Beete vorbereiten und pflanzen</li>
+              <li>Rasen vertikutieren und düngen</li>
+              <li>Erster Formschnitt</li>
+            </ul>
+          </article>
+          <article class="season seq">
+            <p class="season__tag">Juni – August</p>
+            <h3>Sommer</h3>
+            <ul role="list">
+              <li>Mähen im festen Rhythmus</li>
+              <li>Unkraut und Wildwuchs entfernen</li>
+              <li>Bewässerung bei Hitze</li>
+            </ul>
+          </article>
+          <article class="season seq">
+            <p class="season__tag">September – November</p>
+            <h3>Herbst</h3>
+            <ul role="list">
+              <li>Laub räumen und abfahren</li>
+              <li>Stauden zurückschneiden</li>
+              <li>Garten winterfest machen</li>
+            </ul>
+          </article>
+          <article class="season seq">
+            <p class="season__tag">Dezember – Februar</p>
+            <h3>Winter</h3>
+            <ul role="list">
+              <li>Gehölzschnitt in der Ruhephase</li>
+              <li>Kontrolle nach Sturm und Frost</li>
+              <li>Planung fürs neue Gartenjahr</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Einblicke</p>
+          <h2>So arbeiten wir im Garten</h2>
+        </div>
+        <div class="garden-gallery reveal">
+          <figure>
+            <img src="assets/img/formschnitt.webp" alt="Präziser Formschnitt an einem Buchsbaum von Hand" loading="lazy" width="701" height="561">
+            <figcaption>Formschnitt von Hand</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/rasen-maehen.webp" alt="Rasenpflege mit Profigerät in einem Privatgarten" loading="lazy" width="701" height="561">
+            <figcaption>Rasenpflege mit Profigerät</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/laub-rechen.webp" alt="Laub wird im Herbst zusammengerecht" loading="lazy" width="701" height="561">
+            <figcaption>Herbstlaub? Unser Problem.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cta" aria-label="Kontakt">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Ihr Garten verdient einen festen Termin.</h2>
+            <p>Erzählen Sie uns kurz, was bei Ihnen wächst – wir schauen kostenlos vorbei und machen Ihnen ein klares Angebot für die regelmäßige Pflege.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light" href="index.html#kontakt">Anfrage stellen</a>
+            <a class="btn btn--glass" href="tel:+491701234567">0170 123 45 67</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--related related" aria-labelledby="weitere-leistungen">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow">Weitere Leistungen</p>
+          <h2 id="weitere-leistungen">Das übernehmen wir ebenfalls</h2>
+        </div>
+        <div class="related__grid">
+          <a class="related-card reveal" href="baumschnitt.html">
+            <img src="assets/img/hecke-trimmen.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Hecken- & Baumschnitt</span>
+          </a>
+          <a class="related-card reveal" href="grundstueckspflege.html">
+            <img src="assets/img/hof-kehren.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Grundstückspflege</span>
+          </a>
+          <a class="related-card reveal" href="winterdienst.html">
+            <img src="assets/img/winter-eingang.webp" alt="" loading="lazy" width="701" height="561">
+            <span>Winterdienst</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a class="nav__brand nav__brand--footer" href="index.html">
+          <span class="nav__logo" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="20" fill="var(--green-100)"/>
+              <path d="M20 30c0-8 3-13 10-16-1 8-4 14-10 16Zm0 0c0-6-2.5-10-8-12 .8 6.5 3.2 10.5 8 12Z" fill="var(--green-700)"/>
+            </svg>
+          </span>
+          <span class="nav__name">Nowak<small>Hausmeisterservice</small></span>
+        </a>
+        <p class="footer__claim">Ihr regionaler Partner für Haus, Garten und Grundstück. Ein Anruf genügt.</p>
+      </div>
+      <div>
+        <p class="footer__heading">Leistungen</p>
+        <ul role="list">
+          <li><a href="gartenpflege.html">Gartenpflege</a></li>
+          <li><a href="winterdienst.html">Winterdienst</a></li>
+          <li><a href="objektbetreuung.html">Objektbetreuung</a></li>
+          <li><a href="renovierung.html">Renovierung</a></li>
+          <li><a href="entruempelung.html">Entrümpelung</a></li>
+          <li><a href="treppenhausreinigung.html">Treppenhausreinigung</a></li>
+          <li><a href="baumschnitt.html">Hecken- &amp; Baumschnitt</a></li>
+          <li><a href="grundstueckspflege.html">Grundstückspflege</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Kontakt</p>
+        <ul role="list">
+          <li><a href="tel:+491701234567">0170 123 45 67</a></li>
+          <li><a href="mailto:info@hausmeisterservice-nowak.de">info@hausmeisterservice-nowak.de</a></li>
+          <li>Mo–Fr 7–18 Uhr · Sa 8–13 Uhr</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__heading">Rechtliches</p>
+        <ul role="list">
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>© <span id="year"></span> Hausmeisterservice Nowak. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

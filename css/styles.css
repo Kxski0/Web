@@ -1,33 +1,33 @@
 /* =====================================================
-   Hausmeisterservice Nowak – Stylesheet
-   Farbwelt: Piniengrün, Salbei, warmes Sand-Weiß,
-   Stein-Grau, Akzent in gedecktem Champagner
-   Typografie: Marcellus (Display) + Instrument Sans (Text)
+   Hausmeisterservice Nowak – Design-System
+   Farbwelt: Piniengrün, Moosgrün, Salbei, warmes
+   Alabaster-Weiß, Greige – ohne warme Gelb-/Orangetöne
+   Typografie: Bricolage Grotesque (Display) + Figtree (Text)
    ===================================================== */
 
 :root {
-  --green-900: #0f211a;
-  --green-700: #183327;
-  --green-500: #43705a;
-  --green-300: #a7c0ac;
-  --green-100: #e5ede4;
-  --cream: #f7f5ef;
-  --cream-dark: #ede8db;
+  --green-900: #142a21;
+  --green-700: #1d3d2f;
+  --green-500: #3c6a52;
+  --green-300: #a3bfa9;
+  --green-100: #e2ebe2;
+  --cream: #f6f4ee;
+  --cream-dark: #eae5da;
   --anthracite: #20261f;
-  --ink-soft: #5a635c;
-  --gold: #c9b489;
-  --gold-soft: #e9e0c9;
+  --ink-soft: #575f56;
   --white: #ffffff;
 
   --radius-lg: 28px;
   --radius-md: 20px;
   --radius-sm: 14px;
 
-  --shadow-soft: 0 10px 40px rgba(15, 33, 26, 0.08);
-  --shadow-hover: 0 18px 50px rgba(15, 33, 26, 0.14);
+  --shadow-soft: 0 10px 40px rgba(20, 42, 33, 0.08);
+  --shadow-hover: 0 18px 50px rgba(20, 42, 33, 0.14);
 
-  --font-display: "Marcellus", "Times New Roman", serif;
-  --font-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Bricolage Grotesque", "Arial Black", sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, sans-serif;
+
+  --space-section: clamp(4rem, 9vw, 7rem);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,36 +45,49 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--gold-soft); color: var(--green-900); }
+::selection { background: var(--green-100); color: var(--green-900); }
 
 img, svg { display: block; max-width: 100%; }
 
 a { color: var(--green-500); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--green-500); outline-offset: 3px; }
 
 .container {
   width: min(1160px, 100% - 2.5rem);
   margin-inline: auto;
 }
 
-.section { padding: clamp(4rem, 9vw, 7rem) 0; }
+.section { padding: var(--space-section) 0; }
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.7rem 1.2rem;
+  background: var(--green-900);
+  color: var(--white);
+  border-radius: 0 0 12px 12px;
+  font-weight: 600;
+}
+.skip-link:focus { top: 0; text-decoration: none; }
 
 /* ---------- Typografie ---------- */
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 600;
   color: var(--green-900);
-  line-height: 1.12;
-  letter-spacing: 0.004em;
+  line-height: 1.08;
+  letter-spacing: -0.022em;
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.6rem, 5.8vw, 4.4rem); }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
-h3 { font-size: 1.3rem; }
+h1 { font-size: clamp(2.4rem, 5.4vw, 4.1rem); }
+h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); }
+h3 { font-size: 1.25rem; letter-spacing: -0.012em; }
 
 .lead {
   font-size: clamp(1.05rem, 1.6vw, 1.2rem);
@@ -86,21 +99,21 @@ h3 { font-size: 1.3rem; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--green-500);
   margin-bottom: 1rem;
 }
 
 .eyebrow--light { color: var(--green-300); }
-.eyebrow--onimage { color: var(--gold-soft); }
+.eyebrow--onimage { color: var(--green-300); }
 
 .eyebrow .dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--green-300);
 }
 
 .section__head {
@@ -136,7 +149,7 @@ h3 { font-size: 1.3rem; }
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
   text-decoration: none !important;
   will-change: transform;
 }
@@ -144,25 +157,25 @@ h3 { font-size: 1.3rem; }
 .btn svg { width: 1.15em; height: 1.15em; }
 
 .btn--primary {
-  background: var(--green-700);
-  color: var(--cream);
-  box-shadow: 0 8px 24px rgba(24, 51, 39, 0.28);
+  background: var(--green-500);
+  color: var(--white);
+  box-shadow: 0 8px 24px rgba(60, 106, 82, 0.3);
 }
 .btn--primary:hover {
-  background: var(--green-900);
+  background: var(--green-700);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(24, 51, 39, 0.34);
+  box-shadow: 0 12px 30px rgba(60, 106, 82, 0.38);
 }
 
-.btn--gold {
-  background: var(--gold);
+.btn--light {
+  background: var(--cream);
   color: var(--green-900);
-  box-shadow: 0 8px 24px rgba(201, 180, 137, 0.35);
+  box-shadow: 0 8px 24px rgba(9, 20, 15, 0.25);
 }
-.btn--gold:hover {
-  background: #bda878;
+.btn--light:hover {
+  background: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(201, 180, 137, 0.45);
+  box-shadow: 0 12px 30px rgba(9, 20, 15, 0.3);
 }
 
 .btn--glass {
@@ -211,15 +224,17 @@ h3 { font-size: 1.3rem; }
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-weight: 600;
+  font-size: 1.28rem;
+  letter-spacing: -0.02em;
   color: var(--green-900);
   line-height: 1.05;
 }
 .nav__name small {
   font-family: var(--font-body);
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--green-500);
 }
@@ -256,10 +271,7 @@ h3 { font-size: 1.3rem; }
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* ---------- Hero ----------
-   Animationen hier: Parallax auf dem Hintergrundbild (Tiefe),
-   gezeichnete Linie unter der Kernaussage, wenige treibende
-   Blätter als Markenzeichen, Laufband der Leistungen. */
+/* ---------- Hero (Startseite) ---------- */
 
 .hero {
   position: relative;
@@ -325,7 +337,7 @@ h3 { font-size: 1.3rem; }
 .hero__content h1 .reveal { display: inline-block; }
 .hero__content h1 em {
   font-style: normal;
-  color: var(--gold-soft);
+  color: var(--green-300);
 }
 
 /* Gezeichnete Linie unter der Kernaussage */
@@ -336,7 +348,7 @@ h3 { font-size: 1.3rem; }
   bottom: -0.22em;
   width: 102%;
   height: 0.32em;
-  color: var(--gold);
+  color: var(--green-300);
   overflow: visible;
 }
 .hl__stroke path {
@@ -382,7 +394,7 @@ h3 { font-size: 1.3rem; }
   content: "";
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--green-300);
 }
 
 /* Laufband am unteren Hero-Rand */
@@ -406,12 +418,13 @@ h3 { font-size: 1.3rem; }
   width: max-content;
   animation: ticker 36s linear infinite;
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-weight: 500;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
 }
 
-.ticker__leaf { color: var(--gold); font-size: 0.9rem; }
+.ticker__leaf { color: var(--green-300); font-size: 0.9rem; }
 
 @keyframes ticker {
   from { transform: translateX(0); }
@@ -437,7 +450,7 @@ h3 { font-size: 1.3rem; }
   display: block;
   font-family: var(--font-display);
   font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-  color: var(--gold);
+  color: var(--green-300);
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
@@ -446,9 +459,7 @@ h3 { font-size: 1.3rem; }
   color: var(--green-100);
 }
 
-/* ---------- Probleme / Lösung ----------
-   Animation hier: die Glass-Karte reagiert mit leichter
-   3D-Neigung auf die Mausposition. */
+/* ---------- Probleme / Lösung ---------- */
 
 .pain__grid {
   display: grid;
@@ -473,7 +484,7 @@ h3 { font-size: 1.3rem; }
   content: "—";
   position: absolute;
   left: 0;
-  color: var(--gold);
+  color: var(--green-500);
   font-weight: 700;
 }
 
@@ -500,14 +511,9 @@ h3 { font-size: 1.3rem; }
 .pain__answer h3 { font-size: 1.4rem; margin-bottom: 0.7rem; }
 .pain__answer p { color: var(--ink-soft); margin-bottom: 1.4rem; }
 
-/* ---------- Leistungen: Foto-Mosaik ----------
-   Animationen hier: Kacheln entfalten sich nacheinander,
-   beim Hover gleitet ein Lichtreflex über das Bild und die
-   Beschreibung fährt ein. */
+/* ---------- Leistungen: Foto-Mosaik ---------- */
 
-.services {
-  background: linear-gradient(180deg, var(--cream) 0%, var(--green-100) 100%);
-}
+.services { background: var(--green-100); }
 
 .mosaic {
   display: grid;
@@ -544,7 +550,7 @@ h3 { font-size: 1.3rem; }
 .tile__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15, 33, 26, 0.05) 35%, rgba(15, 33, 26, 0.88) 100%);
+  background: linear-gradient(180deg, rgba(20, 42, 33, 0.05) 35%, rgba(20, 42, 33, 0.9) 100%);
 }
 
 /* Lichtreflex */
@@ -572,10 +578,10 @@ h3 { font-size: 1.3rem; }
 }
 .tile__content h3 {
   color: var(--white);
-  font-size: 1.3rem;
+  font-size: 1.28rem;
   text-shadow: 0 2px 12px rgba(9, 20, 15, 0.4);
 }
-.tile--feature .tile__content h3 { font-size: 1.65rem; }
+.tile--feature .tile__content h3 { font-size: 1.6rem; }
 
 .tile__desc {
   max-height: 0;
@@ -613,15 +619,14 @@ h3 { font-size: 1.3rem; }
 }
 .tile:hover .tile__arrow,
 .tile:focus-visible .tile__arrow {
-  background: var(--gold);
+  background: var(--green-100);
   color: var(--green-900);
   transform: rotate(-45deg);
 }
 
-/* Auf Touch-Geräten: Beschreibungen immer sichtbar */
 @media (hover: none) {
   .tile__desc { max-height: none; opacity: 1; transform: none; }
-  .tile__arrow { display: none; }
+  .tile__arrow { transform: rotate(-45deg); background: rgba(255, 255, 255, 0.22); }
   .tile::after { display: none; }
 }
 
@@ -631,9 +636,7 @@ h3 { font-size: 1.3rem; }
   color: var(--ink-soft);
 }
 
-/* ---------- Zielgruppen: Foto-Paneele ----------
-   Animation hier: die Vorteilsliste entfaltet sich beim
-   Hover aus dem Paneel. */
+/* ---------- Zielgruppen: Foto-Paneele ---------- */
 
 .audiences__grid {
   display: grid;
@@ -664,7 +667,7 @@ h3 { font-size: 1.3rem; }
 .panel__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15, 33, 26, 0.08) 25%, rgba(15, 33, 26, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(20, 42, 33, 0.08) 25%, rgba(20, 42, 33, 0.93) 100%);
 }
 
 .panel__content {
@@ -676,7 +679,7 @@ h3 { font-size: 1.3rem; }
 }
 .panel__content h3 {
   color: var(--white);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 12px rgba(9, 20, 15, 0.4);
 }
@@ -710,7 +713,7 @@ h3 { font-size: 1.3rem; }
   content: "✓";
   position: absolute;
   left: 0;
-  color: var(--gold);
+  color: var(--green-300);
   font-weight: 700;
 }
 
@@ -718,10 +721,7 @@ h3 { font-size: 1.3rem; }
   .panel__content ul { max-height: none; opacity: 1; margin-top: 0.9rem; }
 }
 
-/* ---------- Ablauf: Sticky-Timeline ----------
-   Animation hier: die Einleitung bleibt stehen, während die
-   Schritte durchlaufen; die Linie zeichnet sich beim Scrollen
-   und aktiviert Schritt für Schritt. */
+/* ---------- Ablauf: Sticky-Timeline ---------- */
 
 .process { background: var(--cream-dark); }
 
@@ -753,14 +753,14 @@ h3 { font-size: 1.3rem; }
   top: 1rem;
   bottom: 1rem;
   width: 2px;
-  background: rgba(15, 33, 26, 0.12);
+  background: rgba(20, 42, 33, 0.12);
 }
 .timeline__fill {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
-  background: var(--gold);
+  background: var(--green-500);
   transform: scaleY(0);
   transform-origin: top;
   will-change: transform;
@@ -783,51 +783,63 @@ h3 { font-size: 1.3rem; }
   place-items: center;
   border-radius: 50%;
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
   color: var(--green-700);
   background: var(--cream);
   border: 2px solid var(--green-300);
   transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 .timeline__step.is-active .timeline__dot {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--green-900);
+  background: var(--green-500);
+  border-color: var(--green-500);
+  color: var(--white);
 }
 
 .timeline__step h3 { margin-bottom: 0.5rem; }
 .timeline__step p { color: var(--ink-soft); font-size: 0.96rem; max-width: 44ch; }
 
-/* ---------- Vorher / Nachher ----------
-   Animation hier: der Wischer selbst – beim ersten Einblenden
-   macht der Griff eine kurze Bewegung, damit man ihn versteht. */
+/* ---------- Vorher / Nachher: Showcase ----------
+   Eine grosse Buehne statt zweier kleiner Slider. Man zieht
+   direkt im Bild, die Kante folgt weich nach (Lerp im JS),
+   und ueber die Reiter wechselt man die Referenz. */
 
-.results__grid {
+.showcase { background: var(--green-900); }
+.showcase h2 { color: var(--white); }
+.showcase .lead { color: rgba(226, 235, 226, 0.78); }
+.showcase .eyebrow { color: var(--green-300); }
+
+.showcase__wrap {
+  --pos: 50%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.6rem;
+  gap: 1.4rem;
 }
 
-.result figcaption {
-  margin-top: 0.9rem;
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-  text-align: center;
-}
-
-.compare {
+.showcase__frame {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  aspect-ratio: 8 / 5;
-  --pos: 50%;
+  box-shadow: var(--shadow-hover);
+  aspect-ratio: 16 / 9;
+  cursor: ew-resize;
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  background: var(--green-900);
 }
 
-.compare__after,
-.compare__before img {
+.scene {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.55s ease, visibility 0.55s;
+}
+.scene.is-active { opacity: 1; visibility: visible; }
+
+.scene__after,
+.scene__before img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -835,79 +847,138 @@ h3 { font-size: 1.3rem; }
   object-fit: cover;
 }
 
-.compare__before {
+/* Die Vorher-Ebene wird beschnitten und minimal groesser skaliert,
+   damit beim Wischen ein Hauch Tiefe entsteht. */
+.scene__before {
   position: absolute;
   inset: 0;
   clip-path: inset(0 calc(100% - var(--pos)) 0 0);
 }
+.scene__before img { transform: scale(1.025); }
 
-.compare__handle {
+.showcase__divider {
   position: absolute;
-  top: 0; bottom: 0;
+  top: 0;
+  bottom: 0;
   left: var(--pos);
-  width: 3px;
-  background: var(--white);
+  width: 2px;
   transform: translateX(-50%);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 1px rgba(20, 42, 33, 0.15), 0 0 22px rgba(9, 20, 15, 0.45);
   pointer-events: none;
+  z-index: 2;
 }
-.compare__handle span {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-}
-.compare__handle span::before,
-.compare__handle span::after {
-  content: "";
+
+.showcase__grip {
   position: absolute;
   top: 50%;
-  width: 8px; height: 8px;
-  border-top: 2.5px solid var(--green-700);
-  border-left: 2.5px solid var(--green-700);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--green-900);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 24px rgba(9, 20, 15, 0.35);
+  transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
-.compare__handle span::before {
-  left: 9px;
-  transform: translateY(-50%) rotate(-45deg);
-}
-.compare__handle span::after {
-  right: 9px;
-  transform: translateY(-50%) rotate(135deg);
-}
+.showcase__grip svg { width: 26px; height: 26px; }
+.showcase__frame:hover .showcase__grip,
+.showcase__frame:focus-within .showcase__grip { transform: translate(-50%, -50%) scale(1.08); }
+.showcase__wrap.is-dragging .showcase__grip { transform: translate(-50%, -50%) scale(0.94); }
 
-.compare__label {
+.showcase__tag {
   position: absolute;
-  top: 0.9rem;
-  padding: 0.3rem 0.85rem;
+  top: 1.1rem;
+  z-index: 2;
+  padding: 0.35rem 0.95rem;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: rgba(15, 33, 26, 0.65);
   color: var(--white);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(20, 42, 33, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
-.compare__label--before { left: 0.9rem; }
-.compare__label--after { right: 0.9rem; }
+.showcase__tag--before { left: 1.1rem; opacity: clamp(0, calc((var(--pos-num, 0.5) - 0.08) * 8), 1); }
+.showcase__tag--after { right: 1.1rem; opacity: clamp(0, calc((0.92 - var(--pos-num, 0.5)) * 8), 1); }
 
-.compare__range {
+/* Der Regler bleibt als Tastatur- und Screenreader-Bedienung erhalten,
+   liegt aber unsichtbar ueber der Buehne. */
+.showcase__range {
   position: absolute;
   inset: 0;
+  z-index: 3;
   width: 100%;
   height: 100%;
+  margin: 0;
   opacity: 0;
   cursor: ew-resize;
-  margin: 0;
+}
+.showcase__range:focus-visible {
+  opacity: 1;
+  background: transparent;
+  outline: 3px solid var(--green-300);
+  outline-offset: -3px;
 }
 
-/* ---------- Über uns ----------
-   Animation hier: das kleine Collage-Foto bewegt sich beim
-   Scrollen minimal langsamer als das große (Tiefe). */
+.showcase__bar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.6rem;
+  align-items: center;
+}
+
+.showcase__tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.showcase__tab {
+  display: grid;
+  gap: 0.1rem;
+  text-align: left;
+  padding: 0.7rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(226, 235, 226, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.showcase__tab span { font-weight: 600; font-size: 0.95rem; color: var(--white); }
+.showcase__tab small { font-size: 0.78rem; color: rgba(226, 235, 226, 0.65); }
+.showcase__tab:hover { transform: translateY(-2px); border-color: var(--green-300); }
+.showcase__tab.is-current {
+  background: var(--cream);
+  border-color: var(--cream);
+}
+.showcase__tab.is-current span { color: var(--green-900); }
+.showcase__tab.is-current small { color: var(--green-500); }
+
+.showcase__note {
+  font-size: 0.94rem;
+  color: rgba(226, 235, 226, 0.75);
+  max-width: 60ch;
+}
+
+@media (max-width: 860px) {
+  .showcase__frame { aspect-ratio: 4 / 3; }
+  .showcase__bar { grid-template-columns: 1fr; gap: 1rem; }
+  .showcase__tab { flex: 1 1 8rem; }
+}
+
+
+/* ---------- Über uns ---------- */
 
 .about__grid {
   display: grid;
@@ -966,13 +1037,14 @@ h3 { font-size: 1.3rem; }
 .about__quote {
   margin-top: 1.8rem;
   padding: 1.4rem 1.6rem;
-  border-left: 4px solid var(--gold);
+  border-left: 4px solid var(--green-500);
   background: var(--green-100);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 .about__quote p {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-weight: 500;
+  font-size: 1.1rem;
   color: var(--green-900);
   margin-bottom: 0.6rem;
 }
@@ -981,7 +1053,7 @@ h3 { font-size: 1.3rem; }
 /* ---------- Galerie: Marquee ---------- */
 
 .gallery {
-  background: linear-gradient(180deg, var(--cream) 0%, var(--green-100) 100%);
+  background: var(--green-100);
   overflow: hidden;
 }
 
@@ -1035,7 +1107,7 @@ h3 { font-size: 1.3rem; }
 }
 
 .testimonial__stars {
-  color: var(--gold);
+  color: var(--green-500);
   letter-spacing: 0.2em;
   font-size: 1.05rem;
 }
@@ -1049,8 +1121,7 @@ h3 { font-size: 1.3rem; }
 .testimonial figcaption strong { display: block; color: var(--green-900); font-size: 0.95rem; }
 .testimonial figcaption span { font-size: 0.82rem; color: var(--ink-soft); }
 
-/* ---------- FAQ ----------
-   Animation hier: die Antworten gleiten weich auf und zu. */
+/* ---------- FAQ ---------- */
 
 .faq__wrap { max-width: 780px; }
 
@@ -1060,7 +1131,7 @@ h3 { font-size: 1.3rem; }
   background: var(--white);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(15, 33, 26, 0.05);
+  border: 1px solid rgba(20, 42, 33, 0.05);
   overflow: hidden;
 }
 
@@ -1129,7 +1200,7 @@ html.js .faq__body {
   font-weight: 600;
   font-size: 1.05rem;
 }
-.contact__channels a:hover { color: var(--gold); text-decoration: none; }
+.contact__channels a:hover { color: var(--green-300); text-decoration: none; }
 .contact__channels svg { width: 22px; height: 22px; }
 
 .contact__hours { font-size: 0.88rem; color: var(--green-300); }
@@ -1168,7 +1239,7 @@ html.js .faq__body {
 .field textarea:focus {
   outline: none;
   border-color: var(--green-500);
-  box-shadow: 0 0 0 3px rgba(67, 112, 90, 0.15);
+  box-shadow: 0 0 0 3px rgba(60, 106, 82, 0.15);
 }
 
 .field--split {
@@ -1181,6 +1252,7 @@ html.js .faq__body {
   font-size: 0.78rem;
   color: var(--ink-soft);
 }
+.contact__privacy a { font-weight: 600; }
 
 .contact__success {
   background: var(--green-100);
@@ -1202,10 +1274,10 @@ html.js .faq__body {
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1.2fr 0.8fr;
+  grid-template-columns: 1.4fr 1.1fr 1.2fr 0.8fr;
   gap: 2rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(229, 237, 228, 0.15);
+  border-bottom: 1px solid rgba(226, 235, 226, 0.15);
 }
 
 .nav__brand--footer .nav__name { color: var(--green-100); }
@@ -1218,9 +1290,10 @@ html.js .faq__body {
   max-width: 30ch;
 }
 
-.footer h4 {
+.footer__heading {
+  font-family: var(--font-body);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--green-300);
@@ -1234,12 +1307,208 @@ html.js .faq__body {
   font-size: 0.94rem;
 }
 .footer a { color: var(--green-100); }
-.footer a:hover { color: var(--gold); text-decoration: none; }
+.footer a:hover { color: var(--green-300); text-decoration: none; }
 
 .footer__bottom {
   padding-top: 1.5rem;
   font-size: 0.82rem;
   color: var(--green-300);
+}
+
+/* =====================================================
+   Unterseiten: gemeinsame Bausteine
+   ===================================================== */
+
+/* Kompakter Seiten-Hero mit Bild */
+.page-hero {
+  position: relative;
+  min-height: 62svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 9rem 0 3.5rem;
+  color: var(--white);
+}
+.page-hero__media,
+.page-hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.page-hero__media img { object-fit: cover; }
+.page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 20, 15, 0.5) 0%, rgba(9, 20, 15, 0.25) 40%, rgba(9, 20, 15, 0.82) 100%);
+}
+.page-hero .container { position: relative; z-index: 1; }
+.page-hero h1 { color: var(--white); max-width: 18ch; }
+.page-hero__lead {
+  margin-top: 1rem;
+  max-width: 56ch;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.9);
+}
+.page-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.8rem;
+}
+
+/* Brotkrumen */
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+.breadcrumbs a { color: rgba(255, 255, 255, 0.9); font-weight: 500; }
+.breadcrumbs li + li::before {
+  content: "›";
+  margin-right: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+.breadcrumbs [aria-current] { color: var(--green-300); }
+
+/* Fließtext-Bereiche */
+.prose { max-width: 68ch; }
+.prose p { color: var(--ink-soft); margin-bottom: 1.05rem; }
+.prose strong { color: var(--anthracite); }
+
+/* Zwei-Spalten-Layout Text/Bild */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.split__figure {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-hover);
+}
+.split__figure img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Häkchen-Liste */
+.checklist {
+  list-style: none;
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.4rem;
+}
+.checklist li {
+  position: relative;
+  padding-left: 2.1rem;
+  color: var(--anthracite);
+  font-weight: 500;
+}
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: var(--green-100);
+}
+.checklist li::after {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: 0.5em;
+  width: 0.55rem;
+  height: 0.3rem;
+  border-left: 2.5px solid var(--green-500);
+  border-bottom: 2.5px solid var(--green-500);
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+/* Info-Karten */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.3rem;
+}
+.info-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 1.7rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(20, 42, 33, 0.05);
+}
+.info-card h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+.info-card p { color: var(--ink-soft); font-size: 0.94rem; }
+
+/* CTA-Band und Anschluss-Sektion sitzen enger beieinander,
+   damit am Seitenende kein Leerraum-Loch entsteht. */
+.section--cta { padding-block: clamp(2rem, 4vw, 3.2rem); }
+.section--related { padding-top: clamp(1rem, 2vw, 1.5rem); }
+
+.cta-band {
+  background: var(--green-700);
+  border-radius: var(--radius-lg);
+  padding: clamp(2.2rem, 5vw, 3.5rem);
+  display: grid;
+  grid-template-columns: 1.4fr auto;
+  align-items: center;
+  gap: 1.5rem;
+}
+.cta-band h2 { color: var(--white); margin-bottom: 0.5rem; }
+.cta-band p { color: var(--green-100); max-width: 50ch; }
+.cta-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+/* Weitere Leistungen */
+.related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.3rem;
+}
+.related-card {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  color: var(--white);
+  text-decoration: none !important;
+  box-shadow: var(--shadow-soft);
+}
+.related-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.related-card:hover img { transform: scale(1.06); }
+.related-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 42, 33, 0.1) 40%, rgba(20, 42, 33, 0.85) 100%);
+}
+.related-card span {
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1rem;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
 }
 
 /* ---------- Scroll-Animationen ---------- */
@@ -1281,6 +1550,8 @@ html.js .faq__body {
 @media (max-width: 1020px) {
   .mosaic { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 210px; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
+  .info-cards { grid-template-columns: 1fr; }
+  .related__grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 860px) {
@@ -1318,7 +1589,8 @@ html.js .faq__body {
   .pain__grid,
   .about__grid,
   .contact__panel,
-  .process__grid { grid-template-columns: 1fr; }
+  .process__grid,
+  .split { grid-template-columns: 1fr; }
 
   .process__intro { position: static; }
 
@@ -1332,6 +1604,22 @@ html.js .faq__body {
 
   .about__visual { padding-right: 0; }
   .about__badge { right: 0.9rem; }
+
+  .cta-band { grid-template-columns: 1fr; }
+}
+
+/* Auf Touch-Geräten brauchen Textlinks in Fußzeile und Brotkrumen
+   eine Trefferfläche, die man auch mit dem Daumen erwischt. */
+@media (hover: none), (max-width: 860px) {
+  .footer ul a,
+  .breadcrumbs a,
+  .breadcrumbs span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .footer ul { gap: 0; }
+  .breadcrumbs { gap: 0.15rem 0.5rem; }
 }
 
 @media (max-width: 560px) {
@@ -1344,5 +1632,8 @@ html.js .faq__body {
 
   .field--split { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
-  .hero__actions .btn { width: 100%; justify-content: center; }
+  .hero__actions .btn,
+  .page-hero__actions .btn { width: 100%; justify-content: center; }
+
+  .related__grid { grid-template-columns: 1fr; }
 }

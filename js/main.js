@@ -180,41 +180,186 @@
     updateTimeline();
   }
 
-  // Vorher/Nachher-Vergleich
-  document.querySelectorAll("[data-compare]").forEach(function (compare) {
-    var range = compare.querySelector(".compare__range");
-    if (!range) return;
+  // Scroll-Scrub: Elemente mit [data-scrub] bekommen eine CSS-Variable
+  // --scrub (0 bis 1), die den Fortschritt beim Durchscrollen abbildet.
+  // Jede Seite nutzt sie anders (Schnee schieben, Wand streichen, Morph …).
+  var scrubElements = Array.prototype.slice.call(document.querySelectorAll("[data-scrub]"));
 
-    function setPos(value) {
-      compare.style.setProperty("--pos", value + "%");
+  if (scrubElements.length) {
+    var scrubTicking = false;
+
+    function updateScrub() {
+      var vh = window.innerHeight;
+      scrubElements.forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.bottom < -100 || rect.top > vh + 100) return;
+        var progress = (vh * 0.92 - rect.top) / (vh * 0.72);
+        progress = Math.min(Math.max(progress, 0), 1);
+        el.style.setProperty("--scrub", progress.toFixed(3));
+      });
+      scrubTicking = false;
     }
 
-    range.addEventListener("input", function () { setPos(range.value); });
+    window.addEventListener("scroll", function () {
+      if (!scrubTicking) {
+        scrubTicking = true;
+        requestAnimationFrame(updateScrub);
+      }
+    }, { passive: true });
+    updateScrub();
+  }
 
-    // Beim ersten Einblenden kurz „anfassen", damit der Regler verständlich ist
-    if (!reduceMotion && "IntersectionObserver" in window) {
-      var peeked = false;
-      var peekObserver = new IntersectionObserver(function (entries) {
+  // Sequenz: Kinder mit .seq in einem [data-sequence]-Container werden
+  // nacheinander aktiviert, sobald der Container sichtbar wird.
+  if ("IntersectionObserver" in window) {
+    document.querySelectorAll("[data-sequence]").forEach(function (containerEl) {
+      var step = parseInt(containerEl.getAttribute("data-sequence"), 10) || 140;
+      var seqObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (!entry.isIntersecting || peeked) return;
-          peeked = true;
-          peekObserver.disconnect();
+          if (!entry.isIntersecting) return;
+          seqObserver.disconnect();
+          containerEl.querySelectorAll(".seq").forEach(function (child, i) {
+            child.style.transitionDelay = i * step + "ms";
+            child.classList.add("is-on");
+          });
+        });
+      }, { threshold: 0.35 });
+      seqObserver.observe(containerEl);
+    });
+  } else {
+    document.querySelectorAll("[data-sequence] .seq").forEach(function (child) {
+      child.classList.add("is-on");
+    });
+  }
+
+  // Vorher/Nachher-Showcase
+  // Man zieht direkt im Bild; die Kante folgt weich nach, statt hart
+  // am Finger zu kleben. Der Regler bleibt fuer Tastatur und Screenreader.
+  document.querySelectorAll("[data-showcase]").forEach(function (showcase) {
+    var frame = showcase.querySelector(".showcase__frame");
+    var range = showcase.querySelector(".showcase__range");
+    var scenes = showcase.querySelectorAll("[data-scene]");
+    var tabs = showcase.querySelectorAll(".showcase__tab");
+    var notes = showcase.querySelectorAll("[data-note]");
+    if (!frame || !range) return;
+
+    var target = 50;
+    var current = 50;
+    var running = false;
+    var touched = false;
+
+    function paint(value) {
+      showcase.style.setProperty("--pos", value + "%");
+      showcase.style.setProperty("--pos-num", (value / 100).toFixed(4));
+    }
+
+    function loop() {
+      // Lerp: je groesser der Faktor, desto direkter das Gefuehl
+      current += (target - current) * 0.18;
+      if (Math.abs(target - current) < 0.05) {
+        current = target;
+        running = false;
+      } else {
+        requestAnimationFrame(loop);
+      }
+      paint(current);
+    }
+
+    function setTarget(value, immediate) {
+      target = Math.min(Math.max(value, 0), 100);
+      range.value = target;
+      if (immediate || reduceMotion) {
+        current = target;
+        paint(current);
+        return;
+      }
+      if (!running) {
+        running = true;
+        requestAnimationFrame(loop);
+      }
+    }
+
+    function positionFromEvent(event) {
+      var rect = frame.getBoundingClientRect();
+      return ((event.clientX - rect.left) / rect.width) * 100;
+    }
+
+    frame.addEventListener("pointerdown", function (event) {
+      if (event.target === range) return;
+      touched = true;
+      showcase.classList.add("is-dragging");
+      frame.setPointerCapture(event.pointerId);
+      setTarget(positionFromEvent(event));
+    });
+
+    frame.addEventListener("pointermove", function (event) {
+      if (!showcase.classList.contains("is-dragging")) return;
+      event.preventDefault();
+      setTarget(positionFromEvent(event));
+    });
+
+    ["pointerup", "pointercancel", "pointerleave"].forEach(function (type) {
+      frame.addEventListener(type, function () {
+        showcase.classList.remove("is-dragging");
+      });
+    });
+
+    range.addEventListener("input", function () {
+      touched = true;
+      setTarget(parseFloat(range.value), true);
+    });
+
+    // Reiter: Referenz wechseln, Position dabei behalten
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var key = tab.getAttribute("data-target");
+        tabs.forEach(function (other) {
+          var on = other === tab;
+          other.classList.toggle("is-current", on);
+          other.setAttribute("aria-selected", String(on));
+        });
+        scenes.forEach(function (scene) {
+          var on = scene.getAttribute("data-scene") === key;
+          scene.classList.toggle("is-active", on);
+          if (on) { scene.removeAttribute("aria-hidden"); }
+          else { scene.setAttribute("aria-hidden", "true"); }
+        });
+        notes.forEach(function (note) {
+          note.hidden = note.getAttribute("data-note") !== key;
+        });
+      });
+    });
+
+    paint(50);
+
+    // Beim ersten Sichtbarwerden einmal langsam durchwischen, damit
+    // klar ist, dass man hier ziehen kann. Bricht bei Interaktion ab.
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      var introObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          introObserver.disconnect();
           var start = null;
-          var duration = 1500;
-          function peek(timestamp) {
+          var duration = 2600;
+          function intro(timestamp) {
+            if (touched) return;
             if (start === null) start = timestamp;
             var t = Math.min((timestamp - start) / duration, 1);
-            var value = 50 + Math.sin(t * Math.PI) * 14;
-            setPos(value.toFixed(1));
+            var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            var value = 50 + Math.sin(eased * Math.PI * 2) * 26;
+            current = value;
+            target = value;
             range.value = value;
-            if (t < 1) requestAnimationFrame(peek);
+            paint(value);
+            if (t < 1) requestAnimationFrame(intro);
           }
-          requestAnimationFrame(peek);
+          requestAnimationFrame(intro);
         });
-      }, { threshold: 0.6 });
-      peekObserver.observe(compare);
+      }, { threshold: 0.45 });
+      introObserver.observe(showcase);
     }
   });
+
 
   // FAQ: Antworten gleiten weich auf und zu
   document.querySelectorAll(".faq__item").forEach(function (item) {
