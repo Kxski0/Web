@@ -7,7 +7,7 @@
   <meta name="description" content="Hausmeisterservice Nowak – Ihr regionaler Partner für Gartenpflege, Winterdienst, Reparaturen, Entrümpelung und Objektbetreuung. Ein Anruf genügt.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 </head>
@@ -34,7 +34,7 @@
         <li><a href="#ergebnisse">Ergebnisse</a></li>
         <li><a href="#ueber-uns">Über uns</a></li>
         <li><a href="#faq">Fragen</a></li>
-        <li class="nav__cta"><a class="btn btn--amber btn--small" href="#kontakt">Anfrage stellen</a></li>
+        <li class="nav__cta"><a class="btn btn--gold btn--small" href="#kontakt">Anfrage stellen</a></li>
       </ul>
     </nav>
   </header>
@@ -44,21 +44,36 @@
     <!-- ===== Hero ===== -->
     <section class="hero">
       <div class="hero__media" aria-hidden="true">
-        <img src="assets/img/garten-sonnenuntergang.jpg" alt="" fetchpriority="high">
+        <img src="assets/img/garten-sonnenuntergang.jpg" alt="" fetchpriority="high" data-parallax="0.16">
       </div>
       <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__leaves" aria-hidden="true">
+        <svg class="leaf leaf--1" viewBox="0 0 24 24"><path d="M12 22c0-8 3-14 10-18-1 9-4 16-10 18Z" fill="currentColor"/></svg>
+        <svg class="leaf leaf--2" viewBox="0 0 24 24"><path d="M12 22c0-8 3-14 10-18-1 9-4 16-10 18Z" fill="currentColor"/></svg>
+        <svg class="leaf leaf--3" viewBox="0 0 24 24"><path d="M12 22c0-8 3-14 10-18-1 9-4 16-10 18Z" fill="currentColor"/></svg>
+        <svg class="leaf leaf--4" viewBox="0 0 24 24"><path d="M12 22c0-8 3-14 10-18-1 9-4 16-10 18Z" fill="currentColor"/></svg>
+      </div>
       <div class="container hero__content">
         <p class="eyebrow eyebrow--onimage reveal"><span class="dot" aria-hidden="true"></span>Regional. Zuverlässig. Aus einer Hand.</p>
-        <h1 class="reveal">Ein Anruf genügt.<br><em>Wir kümmern uns um den Rest.</em></h1>
-        <p class="hero__lead reveal">Garten, Winterdienst, Reparaturen, Entrümpelung oder die komplette Objektbetreuung – der Hausmeisterservice Nowak ist Ihr Partner für alles rund um Haus, Garten und Grundstück.</p>
-        <div class="hero__actions reveal">
-          <a class="btn btn--amber" href="#kontakt">Kostenlose Anfrage</a>
+        <h1>
+          <span class="reveal">Ein Anruf genügt.</span><br>
+          <em class="reveal reveal--delay">Wir kümmern uns um
+            <span class="hl">den Rest.
+              <svg class="hl__stroke" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M4 14 C 80 6 210 5 296 12" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </em>
+        </h1>
+        <p class="hero__lead reveal reveal--delay">Garten, Winterdienst, Reparaturen, Entrümpelung oder die komplette Objektbetreuung – der Hausmeisterservice Nowak ist Ihr Partner für alles rund um Haus, Garten und Grundstück.</p>
+        <div class="hero__actions reveal reveal--delay2">
+          <a class="btn btn--gold" href="#kontakt" data-magnet>Kostenlose Anfrage</a>
           <a class="btn btn--glass" href="tel:+491701234567">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
             0170&nbsp;123&nbsp;45&nbsp;67
           </a>
         </div>
-        <ul class="hero__trust reveal" role="list">
+        <ul class="hero__trust reveal reveal--delay2" role="list">
           <li>Feste Ansprechpartner</li>
           <li>Faire, klare Preise</li>
           <li>Versichert &amp; erfahren</li>
@@ -112,7 +127,7 @@
         </div>
         <div class="pain__visual reveal reveal--delay">
           <img class="pain__photo" src="assets/img/garten-modern.jpg" alt="Gepflegter moderner Garten mit Terrasse" loading="lazy" width="768" height="512">
-          <div class="pain__answer glass">
+          <div class="pain__answer glass" data-tilt>
             <svg class="pain__mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
               <circle cx="24" cy="24" r="23" stroke="var(--green-300)" stroke-width="2"/>
               <path d="m14 25 7 7 13-15" stroke="var(--green-500)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -262,28 +277,36 @@
       </div>
     </section>
 
-    <!-- ===== Ablauf ===== -->
+    <!-- ===== Ablauf: Sticky-Timeline ===== -->
     <section class="section process" id="ablauf">
-      <div class="container">
-        <div class="section__head reveal">
+      <div class="container process__grid">
+        <div class="process__intro reveal">
           <p class="eyebrow">So läuft's</p>
           <h2>In drei Schritten zum erledigten Auftrag</h2>
+          <p class="lead">Kein Papierkram, keine Warteschleifen – nur ein klarer Weg von Ihrer Anfrage bis zum aufgeräumten Ergebnis.</p>
         </div>
-        <ol class="process__steps" role="list">
-          <li class="step reveal">
-            <span class="step__number" aria-hidden="true">1</span>
-            <h3>Sie melden sich</h3>
-            <p>Kurz anrufen oder das Formular ausfüllen. Schildern Sie einfach, was ansteht – wir melden uns innerhalb von 24 Stunden zurück.</p>
+        <ol class="timeline" role="list">
+          <span class="timeline__line" aria-hidden="true"><span class="timeline__fill"></span></span>
+          <li class="timeline__step">
+            <span class="timeline__dot" aria-hidden="true">1</span>
+            <div>
+              <h3>Sie melden sich</h3>
+              <p>Kurz anrufen oder das Formular ausfüllen. Schildern Sie einfach, was ansteht – wir melden uns innerhalb von 24 Stunden zurück.</p>
+            </div>
           </li>
-          <li class="step reveal reveal--delay">
-            <span class="step__number" aria-hidden="true">2</span>
-            <h3>Wir schauen vorbei</h3>
-            <p>Bei Bedarf kommen wir kostenlos zur Besichtigung. Danach bekommen Sie ein klares Angebot – ohne Kleingedrucktes.</p>
+          <li class="timeline__step">
+            <span class="timeline__dot" aria-hidden="true">2</span>
+            <div>
+              <h3>Wir schauen vorbei</h3>
+              <p>Bei Bedarf kommen wir kostenlos zur Besichtigung. Danach bekommen Sie ein klares Angebot – ohne Kleingedrucktes.</p>
+            </div>
           </li>
-          <li class="step reveal reveal--delay2">
-            <span class="step__number" aria-hidden="true">3</span>
-            <h3>Wir erledigen es</h3>
-            <p>Zum vereinbarten Termin sind wir da und arbeiten sauber und zügig. Am Ende ist alles aufgeräumt – und Sie haben eine Sorge weniger.</p>
+          <li class="timeline__step">
+            <span class="timeline__dot" aria-hidden="true">3</span>
+            <div>
+              <h3>Wir erledigen es</h3>
+              <p>Zum vereinbarten Termin sind wir da und arbeiten sauber und zügig. Am Ende ist alles aufgeräumt – und Sie haben eine Sorge weniger.</p>
+            </div>
           </li>
         </ol>
       </div>
@@ -335,10 +358,10 @@
           <div class="about__image">
             <img src="assets/img/inhaber-buero.jpg" alt="Der Inhaber des Hausmeisterservice Nowak am Schreibtisch" loading="lazy" width="701" height="561">
           </div>
-          <div class="about__image about__image--small">
+          <div class="about__image about__image--small" data-parallax="-0.05">
             <img src="assets/img/inhaber-transporter.jpg" alt="Der Inhaber vor dem Firmentransporter" loading="lazy" width="701" height="561">
           </div>
-          <div class="about__badge glass float">
+          <div class="about__badge glass">
             <strong>Inhabergeführt</strong>
             <span>Sie sprechen direkt mit dem Chef</span>
           </div>
@@ -431,23 +454,23 @@
         <div class="faq__list reveal">
           <details class="faq__item">
             <summary>Was kostet ein Einsatz?<span class="faq__chevron" aria-hidden="true"></span></summary>
-            <p>Das hängt von der Aufgabe ab. Nach einem kurzen Gespräch oder einer Besichtigung bekommen Sie ein klares Angebot – bei regelmäßigen Arbeiten gern als fester Monatspreis. Versteckte Kosten gibt es bei uns nicht.</p>
+            <div class="faq__body"><p>Das hängt von der Aufgabe ab. Nach einem kurzen Gespräch oder einer Besichtigung bekommen Sie ein klares Angebot – bei regelmäßigen Arbeiten gern als fester Monatspreis. Versteckte Kosten gibt es bei uns nicht.</p></div>
           </details>
           <details class="faq__item">
             <summary>Wie schnell könnt ihr kommen?<span class="faq__chevron" aria-hidden="true"></span></summary>
-            <p>Wir melden uns innerhalb von 24 Stunden zurück. Kleinere Einsätze schaffen wir oft innerhalb weniger Tage, bei Notfällen versuchen wir es schneller möglich zu machen.</p>
+            <div class="faq__body"><p>Wir melden uns innerhalb von 24 Stunden zurück. Kleinere Einsätze schaffen wir oft innerhalb weniger Tage, bei Notfällen versuchen wir es schneller möglich zu machen.</p></div>
           </details>
           <details class="faq__item">
             <summary>Übernehmt ihr auch regelmäßige Betreuung?<span class="faq__chevron" aria-hidden="true"></span></summary>
-            <p>Ja, das ist sogar unser Kerngeschäft. Viele Kunden buchen uns im festen Turnus – wöchentlich, monatlich oder saisonal. Sie müssen sich um nichts mehr kümmern.</p>
+            <div class="faq__body"><p>Ja, das ist sogar unser Kerngeschäft. Viele Kunden buchen uns im festen Turnus – wöchentlich, monatlich oder saisonal. Sie müssen sich um nichts mehr kümmern.</p></div>
           </details>
           <details class="faq__item">
             <summary>Seid ihr versichert?<span class="faq__chevron" aria-hidden="true"></span></summary>
-            <p>Ja. Wir arbeiten ausschließlich mit Betriebshaftpflichtversicherung. Beim Winterdienst dokumentieren wir unsere Einsätze zusätzlich für Ihre Haftungssicherheit.</p>
+            <div class="faq__body"><p>Ja. Wir arbeiten ausschließlich mit Betriebshaftpflichtversicherung. Beim Winterdienst dokumentieren wir unsere Einsätze zusätzlich für Ihre Haftungssicherheit.</p></div>
           </details>
           <details class="faq__item">
             <summary>Was ist, wenn meine Aufgabe nicht in eurer Liste steht?<span class="faq__chevron" aria-hidden="true"></span></summary>
-            <p>Fragen Sie trotzdem. Vieles erledigen wir selbst, und für Spezialarbeiten haben wir ein Netzwerk verlässlicher Partnerbetriebe aus der Region.</p>
+            <div class="faq__body"><p>Fragen Sie trotzdem. Vieles erledigen wir selbst, und für Spezialarbeiten haben wir ein Netzwerk verlässlicher Partnerbetriebe aus der Region.</p></div>
           </details>
         </div>
       </div>
@@ -508,7 +531,7 @@
               <label for="cf-message">Ihre Nachricht</label>
               <textarea id="cf-message" name="message" rows="4" placeholder="Beschreiben Sie kurz, was ansteht …" required></textarea>
             </div>
-            <button class="btn btn--amber" type="submit">Anfrage absenden</button>
+            <button class="btn btn--gold" type="submit" data-magnet>Anfrage absenden</button>
             <p class="contact__privacy">Mit dem Absenden stimmen Sie zu, dass wir Ihre Angaben zur Bearbeitung der Anfrage nutzen. <a href="datenschutz.html">Datenschutz</a></p>
             <p class="contact__success" hidden>Vielen Dank! Ihre Anfrage ist angekommen. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
           </form>

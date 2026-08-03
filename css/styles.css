@@ -1,32 +1,33 @@
 /* =====================================================
    Hausmeisterservice Nowak – Stylesheet
-   Farbwelt: Dunkelgrün, Hellgrün, Naturweiß, Anthrazit,
-   Akzent in warmem Gelb
+   Farbwelt: Piniengrün, Salbei, warmes Sand-Weiß,
+   Stein-Grau, Akzent in gedecktem Champagner
+   Typografie: Marcellus (Display) + Instrument Sans (Text)
    ===================================================== */
 
 :root {
-  --green-900: #14291f;
-  --green-700: #1e3d2f;
-  --green-500: #3e6b4f;
-  --green-300: #9cbfa4;
-  --green-100: #e4eee4;
-  --cream: #faf7f0;
-  --cream-dark: #f2ecdf;
-  --anthracite: #262b27;
-  --ink-soft: #55605a;
-  --amber: #e8a23d;
-  --amber-soft: #f6dcae;
+  --green-900: #0f211a;
+  --green-700: #183327;
+  --green-500: #43705a;
+  --green-300: #a7c0ac;
+  --green-100: #e5ede4;
+  --cream: #f7f5ef;
+  --cream-dark: #ede8db;
+  --anthracite: #20261f;
+  --ink-soft: #5a635c;
+  --gold: #c9b489;
+  --gold-soft: #e9e0c9;
   --white: #ffffff;
 
   --radius-lg: 28px;
   --radius-md: 20px;
   --radius-sm: 14px;
 
-  --shadow-soft: 0 10px 40px rgba(20, 41, 31, 0.08);
-  --shadow-hover: 0 18px 50px rgba(20, 41, 31, 0.14);
+  --shadow-soft: 0 10px 40px rgba(15, 33, 26, 0.08);
+  --shadow-hover: 0 18px 50px rgba(15, 33, 26, 0.14);
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Marcellus", "Times New Roman", serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,14 +45,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--amber-soft); color: var(--green-900); }
+::selection { background: var(--gold-soft); color: var(--green-900); }
 
 img, svg { display: block; max-width: 100%; }
 
 a { color: var(--green-500); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
 .container {
   width: min(1160px, 100% - 2.5rem);
@@ -64,16 +65,16 @@ a:hover { text-decoration: underline; }
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--green-900);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.12;
+  letter-spacing: 0.004em;
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.5rem, 5.5vw, 4.2rem); }
-h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); }
-h3 { font-size: 1.25rem; }
+h1 { font-size: clamp(2.6rem, 5.8vw, 4.4rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+h3 { font-size: 1.3rem; }
 
 .lead {
   font-size: clamp(1.05rem, 1.6vw, 1.2rem);
@@ -85,21 +86,21 @@ h3 { font-size: 1.25rem; }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--green-500);
   margin-bottom: 1rem;
 }
 
 .eyebrow--light { color: var(--green-300); }
-.eyebrow--onimage { color: var(--amber-soft); }
+.eyebrow--onimage { color: var(--gold-soft); }
 
 .eyebrow .dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: var(--amber);
+  background: var(--gold);
 }
 
 .section__head {
@@ -135,29 +136,34 @@ h3 { font-size: 1.25rem; }
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   text-decoration: none !important;
+  will-change: transform;
 }
 
 .btn svg { width: 1.15em; height: 1.15em; }
 
 .btn--primary {
   background: var(--green-700);
-  color: var(--white);
-  box-shadow: 0 8px 24px rgba(30, 61, 47, 0.3);
+  color: var(--cream);
+  box-shadow: 0 8px 24px rgba(24, 51, 39, 0.28);
 }
 .btn--primary:hover {
   background: var(--green-900);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(30, 61, 47, 0.36);
+  box-shadow: 0 12px 30px rgba(24, 51, 39, 0.34);
 }
 
-.btn--amber {
-  background: var(--amber);
+.btn--gold {
+  background: var(--gold);
   color: var(--green-900);
-  box-shadow: 0 8px 24px rgba(232, 162, 61, 0.35);
+  box-shadow: 0 8px 24px rgba(201, 180, 137, 0.35);
 }
-.btn--amber:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(232, 162, 61, 0.45); }
+.btn--gold:hover {
+  background: #bda878;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(201, 180, 137, 0.45);
+}
 
 .btn--glass {
   background: rgba(255, 255, 255, 0.14);
@@ -205,16 +211,15 @@ h3 { font-size: 1.25rem; }
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   color: var(--green-900);
   line-height: 1.05;
 }
 .nav__name small {
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--green-500);
 }
@@ -251,7 +256,10 @@ h3 { font-size: 1.25rem; }
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero ----------
+   Animationen hier: Parallax auf dem Hintergrundbild (Tiefe),
+   gezeichnete Linie unter der Kernaussage, wenige treibende
+   Blätter als Markenzeichen, Laufband der Leistungen. */
 
 .hero {
   position: relative;
@@ -271,20 +279,40 @@ h3 { font-size: 1.25rem; }
 }
 .hero__media img {
   object-fit: cover;
-  animation: kenburns 22s ease-in-out infinite alternate;
-}
-
-@keyframes kenburns {
-  from { transform: scale(1) translateX(0); }
-  to { transform: scale(1.09) translateX(-1.5%); }
+  transform: scale(1.14);
+  will-change: transform;
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(10, 24, 17, 0.35) 0%, rgba(10, 24, 17, 0) 30%, rgba(10, 24, 17, 0.55) 100%),
-    linear-gradient(98deg, rgba(10, 24, 17, 0.86) 0%, rgba(10, 24, 17, 0.55) 46%, rgba(10, 24, 17, 0.12) 100%);
+    linear-gradient(180deg, rgba(9, 20, 15, 0.35) 0%, rgba(9, 20, 15, 0) 30%, rgba(9, 20, 15, 0.55) 100%),
+    linear-gradient(98deg, rgba(9, 20, 15, 0.87) 0%, rgba(9, 20, 15, 0.56) 46%, rgba(9, 20, 15, 0.12) 100%);
+}
+
+.hero__leaves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--green-300);
+}
+.leaf {
+  position: absolute;
+  width: 26px;
+  opacity: 0;
+  animation: leaf-drift linear infinite;
+}
+.leaf--1 { left: 18%; animation-duration: 17s; animation-delay: 0s; }
+.leaf--2 { left: 46%; width: 20px; animation-duration: 23s; animation-delay: 6s; }
+.leaf--3 { left: 68%; animation-duration: 19s; animation-delay: 11s; }
+.leaf--4 { left: 86%; width: 18px; animation-duration: 26s; animation-delay: 3s; }
+
+@keyframes leaf-drift {
+  0%   { transform: translate3d(0, -8vh, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.4; }
+  85%  { opacity: 0.35; }
+  100% { transform: translate3d(6vw, 105vh, 0) rotate(300deg); opacity: 0; }
 }
 
 .hero__content {
@@ -294,7 +322,33 @@ h3 { font-size: 1.25rem; }
 }
 
 .hero__content h1 { color: var(--white); }
-.hero__content h1 em { font-style: italic; color: var(--amber); }
+.hero__content h1 .reveal { display: inline-block; }
+.hero__content h1 em {
+  font-style: normal;
+  color: var(--gold-soft);
+}
+
+/* Gezeichnete Linie unter der Kernaussage */
+.hl { position: relative; display: inline-block; }
+.hl__stroke {
+  position: absolute;
+  left: -1%;
+  bottom: -0.22em;
+  width: 102%;
+  height: 0.32em;
+  color: var(--gold);
+  overflow: visible;
+}
+.hl__stroke path {
+  stroke-dasharray: 330;
+  stroke-dashoffset: 330;
+}
+.reveal.is-visible .hl__stroke path {
+  animation: draw-line 1s cubic-bezier(0.65, 0, 0.35, 1) 0.7s forwards;
+}
+@keyframes draw-line {
+  to { stroke-dashoffset: 0; }
+}
 
 .hero__lead {
   font-size: clamp(1.05rem, 1.6vw, 1.2rem);
@@ -328,7 +382,7 @@ h3 { font-size: 1.25rem; }
   content: "";
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--amber);
+  background: var(--gold);
 }
 
 /* Laufband am unteren Hero-Rand */
@@ -339,7 +393,7 @@ h3 { font-size: 1.25rem; }
   z-index: 1;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(10, 24, 17, 0.35);
+  background: rgba(9, 20, 15, 0.35);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 0.85rem 0;
@@ -357,7 +411,7 @@ h3 { font-size: 1.25rem; }
   white-space: nowrap;
 }
 
-.ticker__leaf { color: var(--amber); font-size: 0.9rem; }
+.ticker__leaf { color: var(--gold); font-size: 0.9rem; }
 
 @keyframes ticker {
   from { transform: translateX(0); }
@@ -383,7 +437,7 @@ h3 { font-size: 1.25rem; }
   display: block;
   font-family: var(--font-display);
   font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-  color: var(--amber);
+  color: var(--gold);
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
@@ -392,7 +446,9 @@ h3 { font-size: 1.25rem; }
   color: var(--green-100);
 }
 
-/* ---------- Probleme / Lösung ---------- */
+/* ---------- Probleme / Lösung ----------
+   Animation hier: die Glass-Karte reagiert mit leichter
+   3D-Neigung auf die Mausposition. */
 
 .pain__grid {
   display: grid;
@@ -417,9 +473,11 @@ h3 { font-size: 1.25rem; }
   content: "—";
   position: absolute;
   left: 0;
-  color: var(--amber);
+  color: var(--gold);
   font-weight: 700;
 }
+
+.pain__visual { perspective: 900px; }
 
 .pain__photo {
   width: 100%;
@@ -434,12 +492,18 @@ h3 { font-size: 1.25rem; }
   border-radius: var(--radius-lg);
   padding: clamp(1.6rem, 3.5vw, 2.4rem);
   margin: -5rem 1.4rem 0;
+  transition: transform 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 .pain__mark { width: 46px; height: 46px; margin-bottom: 1rem; }
 .pain__answer h3 { font-size: 1.4rem; margin-bottom: 0.7rem; }
 .pain__answer p { color: var(--ink-soft); margin-bottom: 1.4rem; }
 
-/* ---------- Leistungen: Foto-Mosaik ---------- */
+/* ---------- Leistungen: Foto-Mosaik ----------
+   Animationen hier: Kacheln entfalten sich nacheinander,
+   beim Hover gleitet ein Lichtreflex über das Bild und die
+   Beschreibung fährt ein. */
 
 .services {
   background: linear-gradient(180deg, var(--cream) 0%, var(--green-100) 100%);
@@ -480,32 +544,38 @@ h3 { font-size: 1.25rem; }
 .tile__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(20, 41, 31, 0.05) 35%, rgba(20, 41, 31, 0.88) 100%);
+  background: linear-gradient(180deg, rgba(15, 33, 26, 0.05) 35%, rgba(15, 33, 26, 0.88) 100%);
 }
-.tile__scrim::after {
+
+/* Lichtreflex */
+.tile::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(20, 41, 31, 0.3);
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.32) 50%, transparent 62%);
+  transform: translateX(-130%);
+  pointer-events: none;
 }
-.tile:hover .tile__scrim::after,
-.tile:focus-visible .tile__scrim::after { opacity: 1; }
+.tile:hover::after,
+.tile:focus-visible::after {
+  transition: transform 0.85s ease;
+  transform: translateX(130%);
+}
 
 .tile__content {
   position: absolute;
   left: 1.35rem;
   right: 1.35rem;
   bottom: 1.15rem;
-  z-index: 1;
+  z-index: 2;
 }
 .tile__content h3 {
   color: var(--white);
-  font-size: 1.28rem;
-  text-shadow: 0 2px 12px rgba(10, 24, 17, 0.4);
+  font-size: 1.3rem;
+  text-shadow: 0 2px 12px rgba(9, 20, 15, 0.4);
 }
-.tile--feature .tile__content h3 { font-size: 1.6rem; }
+.tile--feature .tile__content h3 { font-size: 1.65rem; }
 
 .tile__desc {
   max-height: 0;
@@ -529,7 +599,7 @@ h3 { font-size: 1.25rem; }
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 1;
+  z-index: 2;
   width: 42px; height: 42px;
   display: grid;
   place-items: center;
@@ -543,7 +613,7 @@ h3 { font-size: 1.25rem; }
 }
 .tile:hover .tile__arrow,
 .tile:focus-visible .tile__arrow {
-  background: var(--amber);
+  background: var(--gold);
   color: var(--green-900);
   transform: rotate(-45deg);
 }
@@ -552,6 +622,7 @@ h3 { font-size: 1.25rem; }
 @media (hover: none) {
   .tile__desc { max-height: none; opacity: 1; transform: none; }
   .tile__arrow { display: none; }
+  .tile::after { display: none; }
 }
 
 .services__note {
@@ -560,7 +631,9 @@ h3 { font-size: 1.25rem; }
   color: var(--ink-soft);
 }
 
-/* ---------- Zielgruppen: Foto-Paneele ---------- */
+/* ---------- Zielgruppen: Foto-Paneele ----------
+   Animation hier: die Vorteilsliste entfaltet sich beim
+   Hover aus dem Paneel. */
 
 .audiences__grid {
   display: grid;
@@ -591,7 +664,7 @@ h3 { font-size: 1.25rem; }
 .panel__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(20, 41, 31, 0.08) 25%, rgba(20, 41, 31, 0.92) 100%);
+  background: linear-gradient(180deg, rgba(15, 33, 26, 0.08) 25%, rgba(15, 33, 26, 0.92) 100%);
 }
 
 .panel__content {
@@ -603,9 +676,9 @@ h3 { font-size: 1.25rem; }
 }
 .panel__content h3 {
   color: var(--white);
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 12px rgba(10, 24, 17, 0.4);
+  text-shadow: 0 2px 12px rgba(9, 20, 15, 0.4);
 }
 .panel__intro {
   font-size: 0.92rem;
@@ -637,7 +710,7 @@ h3 { font-size: 1.25rem; }
   content: "✓";
   position: absolute;
   left: 0;
-  color: var(--amber);
+  color: var(--gold);
   font-weight: 700;
 }
 
@@ -645,33 +718,89 @@ h3 { font-size: 1.25rem; }
   .panel__content ul { max-height: none; opacity: 1; margin-top: 0.9rem; }
 }
 
-/* ---------- Ablauf ---------- */
+/* ---------- Ablauf: Sticky-Timeline ----------
+   Animation hier: die Einleitung bleibt stehen, während die
+   Schritte durchlaufen; die Linie zeichnet sich beim Scrollen
+   und aktiviert Schritt für Schritt. */
 
 .process { background: var(--cream-dark); }
 
-.process__steps {
+.process__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.process__intro {
+  position: sticky;
+  top: 120px;
+}
+
+.timeline {
   list-style: none;
+  position: relative;
+  padding-left: 4rem;
+  display: grid;
+  gap: clamp(2.4rem, 5vw, 3.6rem);
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
 }
 
-.step { position: relative; padding-top: 0.5rem; }
-
-.step__number {
+.timeline__line {
+  position: absolute;
+  left: 1.45rem;
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  background: rgba(15, 33, 26, 0.12);
+}
+.timeline__fill {
+  position: absolute;
+  inset: 0;
   display: block;
-  font-family: var(--font-display);
-  font-size: clamp(3.4rem, 6vw, 4.6rem);
-  font-weight: 600;
-  line-height: 1;
-  color: var(--green-300);
-  margin-bottom: 0.7rem;
+  width: 100%;
+  background: var(--gold);
+  transform: scaleY(0);
+  transform-origin: top;
+  will-change: transform;
 }
 
-.step h3 { margin-bottom: 0.6rem; }
-.step p { color: var(--ink-soft); font-size: 0.95rem; max-width: 34ch; }
+.timeline__step {
+  position: relative;
+  opacity: 0.4;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.timeline__step.is-active { opacity: 1; transform: none; }
 
-/* ---------- Vorher / Nachher ---------- */
+.timeline__dot {
+  position: absolute;
+  left: -4rem;
+  top: -0.2rem;
+  width: 3rem; height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--green-700);
+  background: var(--cream);
+  border: 2px solid var(--green-300);
+  transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+.timeline__step.is-active .timeline__dot {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--green-900);
+}
+
+.timeline__step h3 { margin-bottom: 0.5rem; }
+.timeline__step p { color: var(--ink-soft); font-size: 0.96rem; max-width: 44ch; }
+
+/* ---------- Vorher / Nachher ----------
+   Animation hier: der Wischer selbst – beim ersten Einblenden
+   macht der Griff eine kurze Bewegung, damit man ihn versteht. */
 
 .results__grid {
   display: grid;
@@ -758,7 +887,7 @@ h3 { font-size: 1.25rem; }
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(20, 41, 31, 0.65);
+  background: rgba(15, 33, 26, 0.65);
   color: var(--white);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -776,7 +905,9 @@ h3 { font-size: 1.25rem; }
   margin: 0;
 }
 
-/* ---------- Über uns ---------- */
+/* ---------- Über uns ----------
+   Animation hier: das kleine Collage-Foto bewegt sich beim
+   Scrollen minimal langsamer als das große (Tiefe). */
 
 .about__grid {
   display: grid;
@@ -813,6 +944,7 @@ h3 { font-size: 1.25rem; }
   border: 6px solid var(--cream);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-hover);
+  will-change: transform;
 }
 .about__image--small img { object-position: center; }
 
@@ -834,13 +966,13 @@ h3 { font-size: 1.25rem; }
 .about__quote {
   margin-top: 1.8rem;
   padding: 1.4rem 1.6rem;
-  border-left: 4px solid var(--amber);
+  border-left: 4px solid var(--gold);
   background: var(--green-100);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 .about__quote p {
   font-family: var(--font-display);
-  font-size: 1.12rem;
+  font-size: 1.15rem;
   color: var(--green-900);
   margin-bottom: 0.6rem;
 }
@@ -903,7 +1035,7 @@ h3 { font-size: 1.25rem; }
 }
 
 .testimonial__stars {
-  color: var(--amber);
+  color: var(--gold);
   letter-spacing: 0.2em;
   font-size: 1.05rem;
 }
@@ -917,7 +1049,8 @@ h3 { font-size: 1.25rem; }
 .testimonial figcaption strong { display: block; color: var(--green-900); font-size: 0.95rem; }
 .testimonial figcaption span { font-size: 0.82rem; color: var(--ink-soft); }
 
-/* ---------- FAQ ---------- */
+/* ---------- FAQ ----------
+   Animation hier: die Antworten gleiten weich auf und zu. */
 
 .faq__wrap { max-width: 780px; }
 
@@ -927,7 +1060,7 @@ h3 { font-size: 1.25rem; }
   background: var(--white);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(20, 41, 31, 0.05);
+  border: 1px solid rgba(15, 33, 26, 0.05);
   overflow: hidden;
 }
 
@@ -950,14 +1083,21 @@ h3 { font-size: 1.25rem; }
   border-right: 2.5px solid var(--green-500);
   border-bottom: 2.5px solid var(--green-500);
   transform: rotate(45deg);
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease;
 }
-.faq__item[open] .faq__chevron { transform: rotate(-135deg); }
+.faq__item[open] .faq__chevron,
+.faq__item.open .faq__chevron { transform: rotate(-135deg); }
 
-.faq__item p {
+.faq__body p {
   padding: 0 1.4rem 1.3rem;
   color: var(--ink-soft);
   font-size: 0.96rem;
+}
+
+html.js .faq__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ---------- Kontakt ---------- */
@@ -989,7 +1129,7 @@ h3 { font-size: 1.25rem; }
   font-weight: 600;
   font-size: 1.05rem;
 }
-.contact__channels a:hover { color: var(--amber); text-decoration: none; }
+.contact__channels a:hover { color: var(--gold); text-decoration: none; }
 .contact__channels svg { width: 22px; height: 22px; }
 
 .contact__hours { font-size: 0.88rem; color: var(--green-300); }
@@ -1028,7 +1168,7 @@ h3 { font-size: 1.25rem; }
 .field textarea:focus {
   outline: none;
   border-color: var(--green-500);
-  box-shadow: 0 0 0 3px rgba(62, 107, 79, 0.15);
+  box-shadow: 0 0 0 3px rgba(67, 112, 90, 0.15);
 }
 
 .field--split {
@@ -1065,7 +1205,7 @@ h3 { font-size: 1.25rem; }
   grid-template-columns: 1.4fr 1fr 1.2fr 0.8fr;
   gap: 2rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(228, 238, 228, 0.15);
+  border-bottom: 1px solid rgba(229, 237, 228, 0.15);
 }
 
 .nav__brand--footer .nav__name { color: var(--green-100); }
@@ -1094,7 +1234,7 @@ h3 { font-size: 1.25rem; }
   font-size: 0.94rem;
 }
 .footer a { color: var(--green-100); }
-.footer a:hover { color: var(--amber); text-decoration: none; }
+.footer a:hover { color: var(--gold); text-decoration: none; }
 
 .footer__bottom {
   padding-top: 1.5rem;
@@ -1113,20 +1253,18 @@ h3 { font-size: 1.25rem; }
 .reveal--delay2 { transition-delay: 0.3s; }
 .reveal.is-visible { opacity: 1; transform: none; }
 
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.float { animation: floaty 5s ease-in-out infinite; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .float,
-  .hero__media img,
+  .hero__media img { transform: none; }
   .ticker__track,
-  .marquee__row { animation: none; }
+  .marquee__row,
+  .leaf { animation: none; }
+  .leaf { display: none; }
   .marquee { overflow-x: auto; }
+  .reveal.is-visible .hl__stroke path { animation: none; stroke-dashoffset: 0; }
+  .timeline__step { opacity: 1; transform: none; }
+  html.js .faq__body { transition: none; }
 }
 
 /* ---------- Legal-Seiten ---------- */
@@ -1179,10 +1317,12 @@ h3 { font-size: 1.25rem; }
 
   .pain__grid,
   .about__grid,
-  .contact__panel { grid-template-columns: 1fr; }
+  .contact__panel,
+  .process__grid { grid-template-columns: 1fr; }
+
+  .process__intro { position: static; }
 
   .audiences__grid,
-  .process__steps,
   .testimonials__grid,
   .results__grid { grid-template-columns: 1fr; }
 
@@ -1196,6 +1336,7 @@ h3 { font-size: 1.25rem; }
 
 @media (max-width: 560px) {
   .hero { padding-top: 7rem; }
+  .hero__leaves { display: none; }
 
   .mosaic { grid-template-columns: 1fr; grid-auto-rows: 240px; }
   .tile--feature,
