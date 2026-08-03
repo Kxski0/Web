@@ -44,6 +44,24 @@ python3 -m http.server 8000
 # dann http://localhost:8000 öffnen
 ```
 
+## Temporär hosten (Kundenvorschau)
+
+Die Website ist eine reine statische Seite und läuft daher auf jedem Webspace. Für eine schnelle Vorschau bietet sich GitHub Pages an – kostenlos, weil das Repository öffentlich ist.
+
+**Einmalig einrichten:**
+
+1. Auf GitHub das Repository öffnen → **Settings** → links **Pages**
+2. Unter *Build and deployment* → *Source*: **Deploy from a branch**
+3. Branch: `claude/nowak-website-concept-d4t6wj`, Ordner: `/ (root)` → **Save**
+4. Nach ein bis zwei Minuten ist die Seite erreichbar unter
+   **https://kxski0.github.io/Web/**
+
+Jeder weitere Push auf den Branch aktualisiert die Vorschau automatisch. Nach dem Merge in `main` kann man die Quelle in denselben Einstellungen auf `main` umstellen.
+
+`.nojekyll` und `404.html` liegen bereits im Repository, alle Pfade sind relativ – die Seite funktioniert deshalb auch im Unterverzeichnis `/Web/`.
+
+**Hinweis zur Suchmaschine:** Die Canonical-Tags zeigen bereits auf die spätere Domain. Google indexiert die Vorschau-URL dadurch in aller Regel nicht. Wer ganz sicher gehen will, setzt für die Dauer der Vorschau in `robots.txt` ein `Disallow: /` und entfernt es vor dem Livegang wieder.
+
 ## Vor dem Livegang
 
 1. **Kontaktdaten ersetzen:** Telefonnummer (`0170 123 45 67`) und E-Mail-Adresse stehen in allen HTML-Dateien sowie im Schema.org-Block der Startseite.
