@@ -65,9 +65,14 @@
       transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.55, 0, 0.55, 0.2);
     }
     .clearout__items span.is-on { opacity: 0; transform: translate(60vw, -18px) rotate(8deg); }
+    .clearout::before {
+      content: ""; position: absolute; inset: 0 0 auto; height: 40%;
+      background: linear-gradient(180deg, rgba(20, 42, 33, 0.72), transparent);
+      z-index: 1; pointer-events: none;
+    }
     .clearout figcaption {
-      position: absolute; top: 1rem; left: 1.2rem; color: var(--white); font-weight: 600;
-      text-shadow: 0 2px 10px rgba(9, 20, 15, 0.6);
+      position: absolute; top: 1rem; left: 1.2rem; z-index: 2;
+      color: var(--white); font-weight: 600;
     }
 
     /* Festpreis-Stempel */

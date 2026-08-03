@@ -85,7 +85,7 @@
     }
     .months span.is-on { opacity: 1; transform: none; }
     .months span.m-go.is-on { background: var(--green-500); color: var(--white); }
-    .months span.m-soft.is-on { background: var(--green-100); color: var(--green-700); }
+    .months span.m-soft.is-on { background: var(--white); color: var(--green-700); box-shadow: inset 0 0 0 1.5px var(--green-300); }
     .months__legend { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 1.1rem; font-size: 0.88rem; color: var(--ink-soft); }
     .months__legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
     .months__legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
@@ -189,7 +189,7 @@
         </div>
         <div class="months__legend" aria-hidden="true">
           <span><i style="background: var(--green-500);"></i>Starker Rückschnitt &amp; Fällung</span>
-          <span><i style="background: var(--white); border: 1.5px solid var(--green-300);"></i>Schonender Form- &amp; Pflegeschnitt</span>
+          <span><i style="background: var(--white); box-shadow: inset 0 0 0 1.5px var(--green-300);"></i>Schonender Form- &amp; Pflegeschnitt</span>
         </div>
       </div>
     </section>

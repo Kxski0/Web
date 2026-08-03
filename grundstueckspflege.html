@@ -95,16 +95,26 @@
     /* Pflegepakete */
     .packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; align-items: stretch; }
     .package { background: var(--white); border-radius: var(--radius-md); padding: 1.7rem 1.5rem; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; }
-    .package--highlight { background: var(--green-700); }
-    .package--highlight h3, .package--highlight strong { color: var(--white); }
-    .package--highlight li, .package--highlight p { color: var(--green-100); }
     .package h3 { font-size: 1.1rem; }
     .package p { font-size: 0.88rem; color: var(--ink-soft); margin: 0.3rem 0 1rem; }
     .package ul { list-style: none; display: grid; gap: 0.5rem; font-size: 0.92rem; margin-bottom: 1.2rem; }
     .package ul li { padding-left: 1.4rem; position: relative; }
     .package ul li::before { content: "✓"; position: absolute; left: 0; color: var(--green-500); font-weight: 700; }
-    .package--highlight ul li::before { color: var(--green-300); }
     .package .btn { margin-top: auto; justify-content: center; }
+
+    /* Hervorgehobenes Paket zuletzt, damit es die Grundfarben sicher überschreibt */
+    .package--highlight { background: var(--green-700); box-shadow: var(--shadow-hover); }
+    .package--highlight h3,
+    .package--highlight strong { color: var(--white); }
+    .package--highlight p { color: var(--green-100); }
+    .package--highlight ul li { color: var(--green-100); }
+    .package--highlight ul li::before { color: var(--green-300); }
+    .package--highlight .package__badge {
+      align-self: flex-start; margin-bottom: 0.6rem;
+      padding: 0.25rem 0.7rem; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--green-300); color: var(--green-900);
+    }
     @media (max-width: 860px) { .packages { grid-template-columns: 1fr; } }
     
   </style>
@@ -200,6 +210,7 @@
             <a class="btn btn--primary btn--small" href="index.html#kontakt">Basis anfragen</a>
           </article>
           <article class="package package--highlight reveal reveal--delay">
+            <p class="package__badge">Meistgebucht</p>
             <h3>Komplett</h3>
             <p>Unser meistgebuchtes Paket für Wohnanlagen und Vermieter.</p>
             <ul role="list">
