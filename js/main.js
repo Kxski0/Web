@@ -9,23 +9,42 @@
   var finePointer = window.matchMedia("(pointer: fine)").matches;
 
   // Mobiles Menü
-  var toggle = document.querySelector(".nav__toggle");
-  var menu = document.getElementById("nav-menu");
+  // Bewusst über die Navigation selbst gesucht statt über eine feste ID:
+  // so funktioniert es auch, wenn mehrere Navigationen im Dokument liegen.
+  document.querySelectorAll(".nav").forEach(function (nav) {
+    var toggle = nav.querySelector(".nav__toggle");
+    var menu = nav.querySelector(".nav__menu");
+    if (!toggle || !menu) return;
 
-  if (toggle && menu) {
-    toggle.addEventListener("click", function () {
-      var open = menu.classList.toggle("is-open");
+    function setOpen(open) {
+      menu.classList.toggle("is-open", open);
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+    }
+
+    toggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      setOpen(!menu.classList.contains("is-open"));
     });
 
     menu.addEventListener("click", function (event) {
-      if (event.target.closest("a")) {
-        menu.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
+      if (event.target.closest("a")) setOpen(false);
+    });
+
+    // Tippen daneben schließt das Menü wieder
+    document.addEventListener("click", function (event) {
+      if (menu.classList.contains("is-open") && !nav.contains(event.target)) {
+        setOpen(false);
       }
     });
-  }
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && menu.classList.contains("is-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  });
 
   // Mosaik-Kacheln entfalten sich nacheinander
   document.querySelectorAll(".mosaic .tile").forEach(function (tile, index) {
