@@ -1,0 +1,245 @@
+/* ClearWay Gebäudeservice – Interaktionen
+   Alles dependency-frei; Scroll-Logik über IntersectionObserver bzw.
+   requestAnimationFrame. prefers-reduced-motion wird respektiert. */
+(function () {
+  'use strict';
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Header: transparent → Glas beim Scrollen ---------- */
+  var header = document.querySelector('[data-header]');
+  if (header) {
+    var onScrollHeader = function () {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+    onScrollHeader();
+    window.addEventListener('scroll', onScrollHeader, { passive: true });
+  }
+
+  /* ---------- Mobil-Menü ---------- */
+  var menuToggle = document.querySelector('[data-menu-toggle]');
+  var mobileMenu = document.querySelector('[data-mobile-menu]');
+  if (menuToggle && mobileMenu) {
+    var closeMenu = function () {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.hidden = true;
+      document.body.style.overflow = '';
+    };
+    menuToggle.addEventListener('click', function () {
+      var open = menuToggle.getAttribute('aria-expanded') === 'true';
+      if (open) {
+        closeMenu();
+      } else {
+        menuToggle.setAttribute('aria-expanded', 'true');
+        mobileMenu.hidden = false;
+        document.body.style.overflow = 'hidden';
+        if (header) { header.classList.add('is-scrolled'); }
+      }
+    });
+    mobileMenu.addEventListener('click', function (e) {
+      if (e.target === mobileMenu) { closeMenu(); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !mobileMenu.hidden) {
+        closeMenu();
+        menuToggle.focus();
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+  }
+
+  var mobileSubToggle = document.querySelector('[data-mobile-sub-toggle]');
+  if (mobileSubToggle) {
+    mobileSubToggle.addEventListener('click', function () {
+      var open = mobileSubToggle.getAttribute('aria-expanded') === 'true';
+      mobileSubToggle.setAttribute('aria-expanded', String(!open));
+    });
+  }
+
+  /* ---------- Desktop-Dropdown (Klick/Touch/Tastatur zusätzlich zu Hover) ---------- */
+  var dropdownToggle = document.querySelector('[data-dropdown-toggle]');
+  if (dropdownToggle) {
+    var ddParent = dropdownToggle.closest('.has-dropdown');
+    dropdownToggle.addEventListener('click', function () {
+      var open = ddParent.classList.toggle('open');
+      dropdownToggle.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', function (e) {
+      if (!ddParent.contains(e.target)) {
+        ddParent.classList.remove('open');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        ddParent.classList.remove('open');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ---------- Scroll-Reveal ---------- */
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if (revealEls.length && 'IntersectionObserver' in window && !reducedMotion) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('revealed'); });
+  }
+
+  /* ---------- Wisch-/Schmutz-Reveals (Fenster, Hochdruck) ---------- */
+  var wipeEls = document.querySelectorAll('.wipe-glass, .dirt-reveal');
+  if (wipeEls.length && 'IntersectionObserver' in window && !reducedMotion) {
+    var wipeObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          wipeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    wipeEls.forEach(function (el) { wipeObserver.observe(el); });
+  } else {
+    wipeEls.forEach(function (el) { el.classList.add('revealed'); });
+  }
+
+  /* ---------- „Klar werden“-Karten (Warum ClearWay) ---------- */
+  var clarityCards = document.querySelectorAll('.clarity-card');
+  if (clarityCards.length && 'IntersectionObserver' in window && !reducedMotion) {
+    var clarityObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-clear');
+          clarityObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.45 });
+    clarityCards.forEach(function (card, i) {
+      card.style.setProperty('--wipe-delay', (i % 3) * 0.16 + 's');
+      clarityObserver.observe(card);
+    });
+  } else {
+    clarityCards.forEach(function (card) { card.classList.add('is-clear'); });
+  }
+
+  /* ---------- Prozesslinie ---------- */
+  var processTrack = document.querySelector('[data-process]');
+  if (processTrack) {
+    var steps = processTrack.querySelectorAll('.process-step');
+    var lineFill = processTrack.querySelector('.process-line-fill');
+    if (reducedMotion) {
+      steps.forEach(function (s) { s.classList.add('is-active'); });
+      if (lineFill) { processTrack.style.setProperty('--line-progress', '1'); }
+    } else {
+      var ticking = false;
+      var updateProcess = function () {
+        ticking = false;
+        var rect = processTrack.getBoundingClientRect();
+        var viewH = window.innerHeight;
+        var progress = (viewH * 0.72 - rect.top) / rect.height;
+        progress = Math.max(0, Math.min(1, progress));
+        processTrack.style.setProperty('--line-progress', progress.toFixed(3));
+        steps.forEach(function (step) {
+          var sRect = step.getBoundingClientRect();
+          step.classList.toggle('is-active', sRect.top < viewH * 0.75);
+        });
+      };
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateProcess);
+        }
+      }, { passive: true });
+      updateProcess();
+    }
+  }
+
+  /* ---------- Vorher/Nachher-Slider ---------- */
+  document.querySelectorAll('[data-ba]').forEach(function (slider) {
+    var range = slider.querySelector('.ba-range');
+    var setPos = function (value) {
+      slider.style.setProperty('--ba-pos', value + '%');
+    };
+    setPos(range.value);
+    range.addEventListener('input', function () { setPos(range.value); });
+
+    /* Pointer-Drag direkt auf der Fläche (Range ist unsichtbar darüber,
+       deckt aber nur Klicks ab – Drag übernimmt Pointer-Logik): */
+    var dragging = false;
+    var updateFromPointer = function (clientX) {
+      var rect = slider.getBoundingClientRect();
+      var pct = ((clientX - rect.left) / rect.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      range.value = pct;
+      setPos(pct);
+    };
+    slider.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) { return; }
+      dragging = true;
+      slider.setPointerCapture(e.pointerId);
+      updateFromPointer(e.clientX);
+    });
+    slider.addEventListener('pointermove', function (e) {
+      if (dragging) { updateFromPointer(e.clientX); }
+    });
+    ['pointerup', 'pointercancel'].forEach(function (evt) {
+      slider.addEventListener(evt, function () { dragging = false; });
+    });
+  });
+
+  /* ---------- Vorher/Nachher: Motiv-Umschalter ---------- */
+  document.querySelectorAll('[data-ba-switcher]').forEach(function (switcher) {
+    var tabs = switcher.querySelectorAll('.ba-tab');
+    var target = document.querySelector(switcher.getAttribute('data-ba-switcher'));
+    if (!target) { return; }
+    var beforeImg = target.querySelector('.ba-before img');
+    var afterImg = target.querySelector('.ba-after-img');
+    var range = target.querySelector('.ba-range');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
+        tab.setAttribute('aria-pressed', 'true');
+        beforeImg.src = tab.getAttribute('data-before');
+        afterImg.src = tab.getAttribute('data-after');
+        beforeImg.alt = tab.getAttribute('data-alt-before');
+        afterImg.alt = tab.getAttribute('data-alt-after');
+        range.value = 50;
+        target.style.setProperty('--ba-pos', '50%');
+      });
+    });
+  });
+
+  /* ---------- Breite des Vorher-Bilds an Containerbreite koppeln ---------- */
+  var syncBaWidths = function () {
+    document.querySelectorAll('[data-ba]').forEach(function (slider) {
+      var beforeImg = slider.querySelector('.ba-before img');
+      if (beforeImg) { beforeImg.style.width = slider.clientWidth + 'px'; }
+    });
+  };
+  window.addEventListener('resize', syncBaWidths, { passive: true });
+  window.addEventListener('load', syncBaWidths);
+  syncBaWidths();
+
+  /* ---------- Nur ein FAQ-Element gleichzeitig offen ---------- */
+  document.querySelectorAll('[data-faq]').forEach(function (group) {
+    var items = group.querySelectorAll('details');
+    items.forEach(function (item) {
+      item.addEventListener('toggle', function () {
+        if (item.open) {
+          items.forEach(function (other) {
+            if (other !== item) { other.open = false; }
+          });
+        }
+      });
+    });
+  });
+})();

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hinweis: BASE_URL in _src/build.py setzen und neu bauen, sobald die Domain feststeht. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>/aussenpflege.html</loc></url>
+  <url><loc>/bodenreinigung.html</loc></url>
+  <url><loc>/fassadenreinigung.html</loc></url>
+  <url><loc>/fensterreinigung.html</loc></url>
+  <url><loc>/gewerbereinigung.html</loc></url>
+  <url><loc>/hochdruckreinigung.html</loc></url>
+  <url><loc>/</loc></url>
+  <url><loc>/kontakt.html</loc></url>
+  <url><loc>/leistungen.html</loc></url>
+  <url><loc>/terrassenreinigung.html</loc></url>
+  <url><loc>/treppenhausreinigung.html</loc></url>
+  <url><loc>/ueber-uns.html</loc></url>
+</urlset>

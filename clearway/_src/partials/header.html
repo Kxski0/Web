@@ -1,0 +1,63 @@
+<header class="site-header" data-header>
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="ClearWay Gebäudeservice – zur Startseite">
+      <svg class="brand-mark" aria-hidden="true" width="34" height="34" viewBox="0 0 48 48" fill="none">
+        <path d="M10 24 24 11l14 13" stroke="var(--cw-navy-900)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15 23v11h18V23" stroke="var(--cw-navy-900)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 40c10 4 22 4 32-8" stroke="var(--cw-green)" stroke-width="3.6" stroke-linecap="round"/>
+        <rect x="20" y="26" width="8" height="6" rx="1" fill="var(--cw-blue)" opacity=".85"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">Clear<em>Way</em></span>
+        <span class="brand-sub">Gebäudeservice</span>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Hauptnavigation" data-nav-root>
+      <ul>
+        <li><a href="index.html" data-nav="start">Startseite</a></li>
+        <li class="has-dropdown">
+          <a href="leistungen.html" data-nav="leistungen">Leistungen</a>
+          <button class="dropdown-toggle" aria-expanded="false" aria-label="Untermenü Leistungen öffnen" data-dropdown-toggle>
+            <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m2 4 4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="dropdown glass" data-dropdown>
+{{NAV_DROPDOWN}}
+          </ul>
+        </li>
+        <li><a href="ueber-uns.html" data-nav="ueber-uns">Über uns</a></li>
+        <li><a href="kontakt.html" data-nav="kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      {{PHONE_NAV}}
+      <a class="btn btn-primary btn-nav" href="kontakt.html">Kostenlos anfragen</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobil-menue" data-menu-toggle>
+        <span class="menu-toggle-box" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">Menü öffnen</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobil-menue" hidden data-mobile-menu>
+  <div class="mobile-menu-glass glass-dark">
+    <nav aria-label="Mobile Navigation">
+      <ul class="mobile-primary">
+        <li><a href="index.html">Startseite</a></li>
+        <li>
+          <button class="mobile-sub-toggle" aria-expanded="false" data-mobile-sub-toggle>
+            Leistungen
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="m2 4 4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="mobile-sub" data-mobile-sub>
+            <li><a href="leistungen.html">Alle Leistungen im Überblick</a></li>
+{{NAV_DROPDOWN}}
+          </ul>
+        </li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary btn-block" href="kontakt.html">Kostenlos anfragen</a>
+  </div>
+</div>
