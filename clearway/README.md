@@ -47,5 +47,19 @@ In `_src/build.py` oben zentral eintragen und neu bauen:
 5. Optional: Chef-/Inhaber-Bilder und -Name für einen persönlichen Bereich
    auf „Über uns" (Material lag beim Bau noch nicht vor).
 
-Ein Kontaktformular wurde bewusst nicht eingebaut, solange kein Backend die
-Daten tatsächlich verarbeitet.
+## Kontaktformular anbinden
+
+Die Kontaktseite enthält ein vollständiges Formular (Validierung, Honeypot-
+Spamschutz, Datenschutz-Checkbox). Es täuscht **keinen** Versand vor: Solange
+kein Backend verbunden ist, informiert es ehrlich und bietet an, die Anfrage
+als Text zu kopieren.
+
+Zum Scharfschalten in `js/main.js` die Konstante `FORM_ENDPOINT` mit der URL
+eines Formular-Backends füllen (eigener Server, Formspree, Web3Forms o. ä.):
+
+```js
+var FORM_ENDPOINT = 'https://…';  // POST, FormData, Accept: application/json
+```
+
+Danach sendet das Formular per `fetch` und zeigt echte Erfolgs-/Fehlerzustände.
+Vor dem Livegang: Datenschutzerklärung um den Formular-Abschnitt ergänzen.

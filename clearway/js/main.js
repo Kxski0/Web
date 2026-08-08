@@ -97,7 +97,7 @@
   }
 
   /* ---------- Wisch-/Schmutz-Reveals (Fenster, Hochdruck) ---------- */
-  var wipeEls = document.querySelectorAll('.wipe-glass, .dirt-reveal');
+  var wipeEls = document.querySelectorAll('.wipe-glass, .dirt-reveal, .frost-text');
   if (wipeEls.length && 'IntersectionObserver' in window && !reducedMotion) {
     var wipeObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -416,6 +416,95 @@
       path.closest('.trace-stage').style.setProperty('--trace-len', len);
     } catch (e) { /* Pfad nicht messbar – Standardwert bleibt */ }
   });
+
+  /* ---------- Kontaktformular ----------
+     FORM_ENDPOINT: URL eines Formular-Backends (z. B. eigener Server,
+     Formspree o. ä.) eintragen, sobald vorhanden. Solange die Konstante
+     leer ist, wird NICHTS gesendet und das Formular sagt das ehrlich –
+     es täuscht keine Übermittlung vor. */
+  var FORM_ENDPOINT = '';
+  var form = document.querySelector('[data-contact-form]');
+  if (form) {
+    var statusBox = form.querySelector('.form-status');
+    var showStatus = function (kind, html) {
+      statusBox.className = 'form-status is-visible status-' + kind;
+      statusBox.innerHTML = html;
+      statusBox.focus();
+    };
+    var setError = function (field, msg) {
+      var wrap = field.closest('.form-field, .form-consent');
+      if (!wrap) { return; }
+      wrap.classList.toggle('has-error', !!msg);
+      var err = wrap.querySelector('.field-error');
+      if (err) { err.textContent = msg || ''; err.style.display = msg ? 'block' : 'none'; }
+    };
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      /* Honeypot: von Menschen unsichtbar – wenn gefüllt, still abbrechen */
+      if (form.querySelector('[name="firma_www"]').value) { return; }
+      var valid = true;
+      form.querySelectorAll('[required]').forEach(function (field) {
+        var msg = '';
+        if (field.type === 'checkbox') {
+          if (!field.checked) { msg = 'Bitte bestätigen Sie die Datenschutzerklärung.'; }
+        } else if (!field.value.trim()) {
+          msg = 'Bitte füllen Sie dieses Feld aus.';
+        } else if (field.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(field.value)) {
+          msg = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        }
+        setError(field, msg);
+        if (msg && valid) { field.focus(); }
+        if (msg) { valid = false; }
+      });
+      if (!valid) { return; }
+
+      var data = new FormData(form);
+      data.delete('firma_www');
+      if (FORM_ENDPOINT) {
+        var btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+          .then(function (res) {
+            if (!res.ok) { throw new Error('HTTP ' + res.status); }
+            form.reset();
+            showStatus('ok', '<strong>Vielen Dank!</strong> Ihre Anfrage ist bei uns eingegangen – Sie erhalten zeitnah eine Rückmeldung.');
+          })
+          .catch(function () {
+            showStatus('error', 'Die Übermittlung hat leider nicht geklappt. Bitte versuchen Sie es später erneut oder besuchen Sie uns in der Friedrichstraße 108, Ludwigsburg.');
+          })
+          .then(function () { btn.disabled = false; });
+      } else {
+        /* Noch kein Postfach angebunden: ehrlich sagen + Anfrage kopierbar machen */
+        var lines = [];
+        data.forEach(function (value, key) {
+          if (value && key !== 'datenschutz') { lines.push(key + ': ' + value); }
+        });
+        var text = 'Anfrage an ClearWay Gebäudeservice\n\n' + lines.join('\n');
+        showStatus('info',
+          '<strong>Fast geschafft:</strong> Der Online-Versand wird gerade eingerichtet und ist in Kürze verfügbar. ' +
+          'Ihre Eingaben gehen nicht verloren – kopieren Sie Ihre Anfrage mit einem Klick und senden Sie sie uns über Ihren bevorzugten Kanal, sobald Telefonnummer und E-Mail hier veröffentlicht sind. ' +
+          '<button type="button" class="btn btn-ghost" data-copy style="margin-top:.6rem">Anfrage als Text kopieren</button>');
+        var copyBtn = statusBox.querySelector('[data-copy]');
+        copyBtn.addEventListener('click', function () {
+          (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
+            .then(function () { copyBtn.textContent = 'Kopiert ✓'; })
+            .catch(function () {
+              var ta = document.createElement('textarea');
+              ta.value = text;
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand('copy');
+              document.body.removeChild(ta);
+              copyBtn.textContent = 'Kopiert ✓';
+            });
+        });
+      }
+    });
+    /* Fehler beim Tippen zurücknehmen */
+    form.addEventListener('input', function (e) {
+      if (e.target.closest('.has-error')) { setError(e.target, ''); }
+    });
+  }
 
   /* ---------- Nur ein FAQ-Element gleichzeitig offen ---------- */
   document.querySelectorAll('[data-faq]').forEach(function (group) {
