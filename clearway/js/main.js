@@ -417,6 +417,22 @@
     } catch (e) { /* Pfad nicht messbar – Standardwert bleibt */ }
   });
 
+  /* ---------- Material-Umschalter (Hochdruck) ---------- */
+  document.querySelectorAll('[data-mtabs]').forEach(function (root) {
+    var tabs = root.querySelectorAll('[role="tab"]');
+    var img = root.querySelector('[data-mtabs-img]');
+    var text = root.querySelector('[data-mtabs-text]');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+        tab.setAttribute('aria-selected', 'true');
+        img.src = tab.getAttribute('data-img');
+        img.alt = tab.getAttribute('data-alt');
+        text.textContent = tab.getAttribute('data-text');
+      });
+    });
+  });
+
   /* ---------- Kontaktformular ----------
      FORM_ENDPOINT: URL eines Formular-Backends (z. B. eigener Server,
      Formspree o. ä.) eintragen, sobald vorhanden. Solange die Konstante
