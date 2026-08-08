@@ -156,7 +156,9 @@ def check_css():
             html = open(os.path.join(ROOT, fname), encoding="utf-8").read()
             used |= set(re.findall(r"var\((--[\w-]+)", html))
     undefined = {u for u in used if u not in defined
-                 and not u.startswith(("--reveal-delay", "--wipe-delay", "--ba-pos", "--line-progress"))}
+                 and not u.startswith(("--reveal-delay", "--wipe-delay", "--ba-pos", "--line-progress",
+                                        "--p", "--rx", "--ry", "--drop-delay", "--focus-delay",
+                                        "--pulse-delay", "--trace-len", "--pane-delay", "--edge"))}
     for u in sorted(undefined):
         ERRORS.append(f"style.css: var({u}) wird benutzt, aber nirgends definiert")
 

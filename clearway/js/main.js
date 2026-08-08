@@ -229,6 +229,194 @@
   window.addEventListener('load', syncBaWidths);
   syncBaWidths();
 
+  /* ---------- Scroll-Progress (--p: 0..1) für scrollgetriebene Effekte ---------- */
+  var progressEls = document.querySelectorAll('[data-scroll-progress]');
+  if (progressEls.length) {
+    if (reducedMotion) {
+      progressEls.forEach(function (el) { el.style.setProperty('--p', '1'); });
+    } else {
+      var progressTicking = false;
+      var updateProgress = function () {
+        progressTicking = false;
+        var viewH = window.innerHeight;
+        progressEls.forEach(function (el) {
+          var rect = el.getBoundingClientRect();
+          if (rect.bottom < -80 || rect.top > viewH + 80) { return; }
+          /* 0 = Oberkante betritt den Viewport unten, 1 = Oberkante erreicht das obere Sechstel */
+          var p = (viewH - rect.top) / (viewH * 0.85);
+          p = Math.max(0, Math.min(1, p));
+          el.style.setProperty('--p', p.toFixed(4));
+        });
+      };
+      window.addEventListener('scroll', function () {
+        if (!progressTicking) {
+          progressTicking = true;
+          window.requestAnimationFrame(updateProgress);
+        }
+      }, { passive: true });
+      window.addEventListener('resize', updateProgress, { passive: true });
+      updateProgress();
+    }
+  }
+
+  /* ---------- 01: Glass Refraction – Reflexion folgt Cursor bzw. Scroll ---------- */
+  document.querySelectorAll('.refract').forEach(function (el) {
+    if (reducedMotion) { return; }
+    var fine = window.matchMedia('(pointer: fine)').matches;
+    if (fine) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--rx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+        el.style.setProperty('--ry', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+      });
+      el.addEventListener('pointerleave', function () {
+        el.style.setProperty('--rx', '0');
+        el.style.setProperty('--ry', '0');
+      });
+    } else {
+      var refractTick = false;
+      window.addEventListener('scroll', function () {
+        if (refractTick) { return; }
+        refractTick = true;
+        window.requestAnimationFrame(function () {
+          refractTick = false;
+          var r = el.getBoundingClientRect();
+          var c = (r.top + r.height / 2) / window.innerHeight - 0.5;
+          el.style.setProperty('--rx', (c * 0.6).toFixed(3));
+          el.style.setProperty('--ry', (-c).toFixed(3));
+        });
+      }, { passive: true });
+    }
+  });
+
+  /* ---------- 05: Focus Cleaning – Bereiche werden nacheinander scharf ---------- */
+  document.querySelectorAll('.focus-seq').forEach(function (seq) {
+    var kids = Array.prototype.slice.call(seq.children);
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      kids.forEach(function (k) { k.classList.add('in-focus'); });
+      return;
+    }
+    kids.forEach(function (k, i) { k.style.setProperty('--focus-delay', (i * 0.22) + 's'); });
+    var fo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          kids.forEach(function (k) { k.classList.add('in-focus'); });
+          fo.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    fo.observe(seq);
+  });
+
+  /* ---------- 07: Mikro-Tropfen erzeugen ---------- */
+  document.querySelectorAll('.droplets').forEach(function (host) {
+    if (reducedMotion) { return; }
+    var spots = [[12, 18], [78, 8], [46, 30], [88, 42], [26, 55], [64, 62]];
+    spots.forEach(function (pos, i) {
+      var d = document.createElement('span');
+      d.className = 'drop';
+      d.style.left = pos[0] + '%';
+      d.style.top = pos[1] + '%';
+      d.style.setProperty('--drop-delay', (i * 1.15) + 's');
+      d.setAttribute('aria-hidden', 'true');
+      host.appendChild(d);
+    });
+  });
+
+  /* ---------- 12: Window Grid – Scheiben fahren auseinander ---------- */
+  var windowGrids = document.querySelectorAll('.window-grid');
+  if (windowGrids.length && 'IntersectionObserver' in window && !reducedMotion) {
+    var wg = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          wg.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    windowGrids.forEach(function (el) { wg.observe(el); });
+  } else {
+    windowGrids.forEach(function (el) { el.classList.add('revealed'); });
+  }
+
+  /* ---------- 17: Magnetic Label – Beschriftung folgt dem Cursor minimal ---------- */
+  if (window.matchMedia('(pointer: fine)').matches && !reducedMotion) {
+    document.querySelectorAll('[data-magnetic]').forEach(function (card) {
+      var label = card.querySelector('.magnetic-label');
+      if (!label) { return; }
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        var x = ((e.clientX - r.left) / r.width - 0.5) * 8;
+        var y = ((e.clientY - r.top) / r.height - 0.5) * 5;
+        label.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      });
+      card.addEventListener('pointerleave', function () {
+        label.style.transform = '';
+      });
+    });
+  }
+
+  /* ---------- Treppenhaus: Bildwechsel je Stockwerk ---------- */
+  var floorVisual = document.querySelector('[data-floor-visual]');
+  var floorSteps = document.querySelectorAll('[data-floor-img]');
+  if (floorVisual && floorSteps.length) {
+    var floorImgs = floorVisual.querySelectorAll('img');
+    var setFloor = function (src) {
+      floorImgs.forEach(function (img) {
+        img.classList.toggle('is-current', img.getAttribute('data-src-key') === src);
+      });
+    };
+    if (reducedMotion) {
+      setFloor(floorSteps[0].getAttribute('data-floor-img'));
+    } else {
+      var floorTick = false;
+      var updateFloor = function () {
+        floorTick = false;
+        var best = null;
+        var line = window.innerHeight * 0.55;
+        floorSteps.forEach(function (step) {
+          var r = step.getBoundingClientRect();
+          if (r.top < line) { best = step; }
+        });
+        setFloor((best || floorSteps[0]).getAttribute('data-floor-img'));
+      };
+      window.addEventListener('scroll', function () {
+        if (!floorTick) {
+          floorTick = true;
+          window.requestAnimationFrame(updateFloor);
+        }
+      }, { passive: true });
+      updateFloor();
+    }
+  }
+
+  /* ---------- 11: Cleaning Rhythm – Pulse nacheinander starten ---------- */
+  var rhythm = document.querySelector('.rhythm');
+  if (rhythm) {
+    rhythm.querySelectorAll('.interval-day.is-on').forEach(function (day, i) {
+      day.style.setProperty('--pulse-delay', (i * 0.5) + 's');
+    });
+    if ('IntersectionObserver' in window && !reducedMotion) {
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            rhythm.classList.add('revealed');
+            ro.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      ro.observe(rhythm);
+    }
+  }
+
+  /* ---------- 18: Clean Trace – Kurvenlänge initialisieren ---------- */
+  document.querySelectorAll('.trace-stage svg.trace path').forEach(function (path) {
+    try {
+      var len = Math.ceil(path.getTotalLength());
+      path.closest('.trace-stage').style.setProperty('--trace-len', len);
+    } catch (e) { /* Pfad nicht messbar – Standardwert bleibt */ }
+  });
+
   /* ---------- Nur ein FAQ-Element gleichzeitig offen ---------- */
   document.querySelectorAll('[data-faq]').forEach(function (group) {
     var items = group.querySelectorAll('details');

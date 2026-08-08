@@ -10,15 +10,18 @@
 }
 META-->
 
-<section class="page-hero" aria-label="Einstieg Treppenhausreinigung">
-  <img src="assets/img/treppenhaus-reinigung-frau-1600.webp" alt="ClearWay-Mitarbeiterin reinigt den Handlauf im Treppenhaus eines Mehrfamilienhauses" width="1600" height="1269" fetchpriority="high">
-  <div class="hero-panel">
-    <p class="hero-kicker">Treppenhausreinigung &amp; Kehrwoche</p>
+<section class="hero-split" aria-label="Einstieg Treppenhausreinigung">
+  <div class="hero-split-text glass">
+    <p class="eyebrow">Treppenhausreinigung &amp; Kehrwoche</p>
     <h1>Das Treppenhaus lügt nie.</h1>
-    <p class="hero-text">Es ist der erste Raum, den Bewohner und Besucher betreten – und der ehrlichste Gradmesser für die Pflege eines Hauses. Wir halten ihn zuverlässig sauber, Woche für Woche.</p>
+    <p>Es ist der erste Raum, den Bewohner und Besucher betreten – und der ehrlichste Gradmesser für die Pflege eines Hauses. Wir halten ihn zuverlässig sauber, Woche für Woche.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="kontakt.html">Kostenlos anfragen</a>
+      <a class="btn btn-ghost" href="#treppe-rundgang-titel">Zum Rundgang</a>
     </div>
+  </div>
+  <div class="hero-split-media">
+    <img src="assets/img/treppenhaus-reinigung-frau-1600.webp" alt="ClearWay-Mitarbeiterin reinigt den Handlauf im Treppenhaus eines Mehrfamilienhauses" width="1600" height="1269" style="object-position: center 22%" fetchpriority="high">
   </div>
 </section>
 
@@ -32,7 +35,7 @@ META-->
     <div class="process-layout">
       <div class="process-track" data-process>
         <div class="process-line" aria-hidden="true"><span class="process-line-fill"></span></div>
-        <div class="process-step">
+        <div class="process-step" data-floor-img="eg">
           <span class="process-dot glass">EG</span>
           <div>
             <p class="floor-badge">Eingangsbereich</p>
@@ -40,7 +43,7 @@ META-->
             <p>Eingangstür und Glasflächen, Briefkastenanlage, Klingeltableau und Fußmatten – der Bereich, den jeder Gast als Erstes sieht und anfasst.</p>
           </div>
         </div>
-        <div class="process-step">
+        <div class="process-step" data-floor-img="og1">
           <span class="process-dot glass">1.</span>
           <div>
             <p class="floor-badge">Stufen &amp; Podeste</p>
@@ -48,7 +51,7 @@ META-->
             <p>Stufen, Podeste und Sockelleisten werden gekehrt und nass gewischt – mit Warnaufsteller, damit niemand auf feuchten Stufen ausrutscht.</p>
           </div>
         </div>
-        <div class="process-step">
+        <div class="process-step" data-floor-img="og2">
           <span class="process-dot glass">2.</span>
           <div>
             <p class="floor-badge">Handläufe &amp; Geländer</p>
@@ -56,7 +59,7 @@ META-->
             <p>Handläufe, Geländerstäbe und Lichtschalter wischen wir gründlich ab – gerade in Mehrfamilienhäusern eine Frage der Hygiene, nicht nur der Optik.</p>
           </div>
         </div>
-        <div class="process-step">
+        <div class="process-step" data-floor-img="og3">
           <span class="process-dot glass">3.</span>
           <div>
             <p class="floor-badge">Glas &amp; Details</p>
@@ -64,7 +67,7 @@ META-->
             <p>Treppenhausfenster, Glasgeländer und Leuchten kommen im vereinbarten Rhythmus dazu – damit auch das Licht wieder klar durchs Haus fällt.</p>
           </div>
         </div>
-        <div class="process-step">
+        <div class="process-step" data-floor-img="dg">
           <span class="process-dot glass">DG</span>
           <div>
             <p class="floor-badge">Abschluss</p>
@@ -73,8 +76,12 @@ META-->
           </div>
         </div>
       </div>
-      <div class="process-visual" data-reveal="right">
-        <img src="assets/img/treppenhaus-wischen-frau.webp" alt="Treppenhausreinigung: Boden neben der Stahltreppe wird mit dem Mopp gewischt" width="764" height="510" loading="lazy">
+      <div class="process-visual floor-visual" data-floor-visual>
+        <img data-src-key="eg" class="is-current" src="assets/img/treppenhaus-briefkaesten.webp" alt="Gepflegter Eingangsbereich mit Briefkastenanlage" width="700" height="557" loading="lazy">
+        <img data-src-key="og1" src="assets/img/treppenhaus-mopp-stufen.webp" alt="Granitstufen werden feucht gewischt" width="692" height="555" loading="lazy">
+        <img data-src-key="og2" src="assets/img/treppenhaus-handlauf-nah.webp" alt="Edelstahl-Handlauf wird gründlich abgewischt" width="696" height="556" loading="lazy">
+        <img data-src-key="og3" src="assets/img/treppenhaus-gelaender-frau.webp" alt="Glasgeländer im Treppenhaus wird streifenfrei gereinigt" width="696" height="553" loading="lazy">
+        <img data-src-key="dg" src="assets/img/treppenhaus-wischwagen-aufzug.webp" alt="Reinigungswagen vor dem Aufzug im obersten Stockwerk" width="696" height="556" loading="lazy">
       </div>
     </div>
   </div>
@@ -133,25 +140,11 @@ META-->
   </div>
 </section>
 
-<section class="section-tight" aria-labelledby="treppe-details-titel">
-  <div class="shell-wide">
-    <div class="section-head" data-reveal>
-      <p class="eyebrow">Details, die auffallen</p>
-      <h2 id="treppe-details-titel">Sauber heißt: bis in den Handlauf.</h2>
-    </div>
-    <div class="media-trio">
-      <figure class="img-frame" data-reveal>
-        <img src="assets/img/treppenhaus-handlauf-nah.webp" alt="Edelstahl-Handlauf wird mit Mikrofasertuch gründlich abgewischt" width="696" height="556" loading="lazy">
-        <figcaption class="media-caption">Handläufe &amp; Kontaktflächen</figcaption>
-      </figure>
-      <figure class="img-frame" data-reveal style="--reveal-delay:.1s">
-        <img src="assets/img/treppenhaus-wischwagen-aufzug.webp" alt="Reinigungswagen vor dem Aufzug, der Boden im Flur wird gewischt" width="696" height="556" loading="lazy">
-        <figcaption class="media-caption">Aufzüge &amp; Flure</figcaption>
-      </figure>
-      <figure class="img-frame" data-reveal style="--reveal-delay:.2s">
-        <img src="assets/img/treppenhaus-gelaender-frau.webp" alt="Glasgeländer im Treppenhaus wird streifenfrei gereinigt" width="696" height="553" loading="lazy">
-        <figcaption class="media-caption">Glasgeländer &amp; Brüstungen</figcaption>
-      </figure>
+<section class="section-tight" aria-labelledby="treppe-verwaltung-titel">
+  <div class="shell">
+    <div class="feature-card glass" data-reveal>
+      <h3 id="treppe-verwaltung-titel">Für Hausverwaltungen: ein Gewerk weniger auf dem Tisch.</h3>
+      <p>Verwaltungen arbeiten mit uns, weil drei Dinge verlässlich funktionieren: <strong>Dokumentation</strong> (jeder Termin wird festgehalten und ist bei Eigentümerversammlungen belegbar), <strong>Erreichbarkeit</strong> (ein fester Ansprechpartner statt Ticketsystem) und <strong>Meldung von Auffälligkeiten</strong> – defekte Leuchten, beschädigte Türschließer oder Wasserflecken melden wir, bevor Bewohner sich beschweren. Die Abrechnung ist als Betriebskostenposition sauber umlagefähig.</p>
     </div>
   </div>
 </section>
@@ -234,7 +227,7 @@ META-->
 </section>
 
 <section class="cta-final" aria-labelledby="treppe-cta-titel">
-  <img src="assets/img/treppenhaus-glasgelaender-frau-1600.webp" alt="" width="1600" height="1280" loading="lazy">
+  <img src="assets/img/treppenhaus-hausflur-wischwagen.webp" alt="" width="692" height="557" loading="lazy">
   <div class="cta-panel glass-dark">
     <h2 id="treppe-cta-titel">Schluss mit der Kehrwochen-Diskussion.</h2>
     <p>Nennen Sie uns Etagenzahl und gewünschten Rhythmus – Verwaltungen und Eigentümergemeinschaften erhalten ein Angebot, das sich fair umlegen lässt.</p>

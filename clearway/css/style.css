@@ -646,8 +646,12 @@ section { padding-block: var(--section-pad); position: relative; }
   gap: .9rem;
   margin-top: 1.6rem;
 }
-.hero-actions .btn-ghost { color: #f0f6fb; background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
-.hero-actions .btn-ghost:hover, .hero-actions .btn-ghost:focus-visible { background: rgba(255,255,255,.22); color: #fff; }
+.hero .hero-actions .btn-ghost,
+.page-hero .hero-actions .btn-ghost,
+.cta-panel .hero-actions .btn-ghost { color: #f0f6fb; background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
+.hero .hero-actions .btn-ghost:hover, .hero .hero-actions .btn-ghost:focus-visible,
+.page-hero .hero-actions .btn-ghost:hover, .page-hero .hero-actions .btn-ghost:focus-visible,
+.cta-panel .hero-actions .btn-ghost:hover, .cta-panel .hero-actions .btn-ghost:focus-visible { background: rgba(255,255,255,.22); color: #fff; }
 
 /* ---------- Trust-Pills ---------- */
 .trust {
@@ -1471,6 +1475,327 @@ section { padding-block: var(--section-pad); position: relative; }
 }
 
 /* ============================================================
+   Hero-Varianten – jede Leistungsseite hat eine eigene Komposition
+   ============================================================ */
+
+/* Panel rechts (Fenster) */
+.page-hero--right { justify-content: flex-end; }
+.page-hero--right::before {
+  background: linear-gradient(190deg, rgba(6,27,51,.14) 20%, rgba(6,27,51,.55) 88%),
+              linear-gradient(-80deg, rgba(6,27,51,.5), transparent 60%);
+}
+
+/* Panel als durchgehende Glasleiste unten (Boden) */
+.page-hero--bar { align-items: flex-end; }
+.page-hero--bar .hero-panel {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  border-left: 0; border-right: 0; border-bottom: 0;
+  display: grid;
+  grid-template-columns: 1.4fr auto;
+  gap: .2rem 1.5rem;
+  align-items: center;
+}
+.page-hero--bar .hero-panel > * { grid-column: 1; }
+.page-hero--bar .hero-panel .hero-actions {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  margin-top: 0;
+  justify-content: flex-end;
+}
+
+/* Zentriertes schmales Panel (Gewerbe) */
+.page-hero--center { justify-content: center; align-items: center; text-align: center; }
+.page-hero--center .hero-panel { max-width: 620px; }
+.page-hero--center .hero-kicker { margin-inline: auto; }
+.page-hero--center .hero-text { margin-inline: auto; }
+.page-hero--center .hero-actions { justify-content: center; }
+
+/* Geteilter Hero ohne Vollbild (Fassade, Treppenhaus gespiegelt) */
+.hero-split {
+  width: min(var(--cw-shell-wide), 100% - 1.6rem);
+  margin: 1rem auto 0;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  align-items: stretch;
+}
+.hero-split .hero-split-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.6rem, 3.4vw, 3rem);
+}
+.hero-split .hero-split-text h1 { color: var(--cw-navy-950); }
+.hero-split .hero-split-text p { color: var(--cw-muted); }
+.hero-split .hero-split-media {
+  position: relative;
+  min-height: clamp(340px, 52vh, 560px);
+  border-radius: var(--cw-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--cw-shadow-lg);
+  border: 1px solid rgba(255,255,255,.55);
+}
+.hero-split .hero-split-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hero-split--flip .hero-split-media { order: -1; }
+
+/* ============================================================
+   Charakter-Animationen (je Effekt genau einmal im Einsatz)
+   ============================================================ */
+
+/* 01 – Glass Refraction: Reflexion folgt Cursor (mobil: Scroll) */
+.refract { position: relative; overflow: hidden; }
+.refract::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(34% 26% at calc(50% + var(--rx, 0) * 38%) calc(45% + var(--ry, 0) * 32%),
+              rgba(255,255,255,.32), transparent 70%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+
+/* 05 – Focus Cleaning: Inhalte werden nacheinander scharf */
+.focus-seq .clarity-card::after { display: none; } /* kein doppelter Wisch-Effekt */
+.focus-seq > * {
+  filter: blur(5px);
+  opacity: .45;
+  transition: filter .9s var(--ease-glass), opacity .9s var(--ease-glass);
+  transition-delay: var(--focus-delay, 0s);
+}
+.focus-seq > .in-focus { filter: blur(0); opacity: 1; }
+
+/* 07 – Mikro-Tropfen auf einer Glasfläche */
+.droplets { position: relative; }
+.droplets .drop {
+  position: absolute;
+  width: 7px; height: 10px;
+  border-radius: 50% 50% 58% 58%;
+  background: linear-gradient(175deg, rgba(255,255,255,.75), rgba(255,255,255,.18) 70%);
+  box-shadow: 0 1px 3px rgba(6,27,51,.25), inset 0 1px 1px rgba(255,255,255,.8);
+  opacity: 0;
+  pointer-events: none;
+}
+.revealed .drop, .droplets.revealed .drop {
+  animation: drop-slide 7s linear infinite;
+  animation-delay: var(--drop-delay, 0s);
+}
+@keyframes drop-slide {
+  0% { opacity: 0; transform: translateY(0) scaleY(1); }
+  8% { opacity: .85; }
+  62% { opacity: .75; transform: translateY(46px) scaleY(1.15); }
+  78% { opacity: 0; transform: translateY(78px) scaleY(1.3); }
+  100% { opacity: 0; transform: translateY(78px); }
+}
+
+/* 09 – Glass Border Travel: Lichtreflex läuft an der Kante entlang */
+.border-run { position: relative; }
+.border-run::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--edge, 0deg),
+    transparent 0deg 322deg,
+    rgba(210, 236, 255, .1) 332deg,
+    rgba(255,255,255,.95) 347deg,
+    rgba(210, 236, 255, .1) 356deg,
+    transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+@property --edge {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.border-run:hover::after, .border-run:focus-within::after {
+  opacity: 1;
+  animation: edge-travel 1.6s linear;
+}
+@keyframes edge-travel {
+  from { --edge: 0deg; }
+  to { --edge: 360deg; }
+}
+
+/* 03 – Water Pressure Path: Wasserlinie schiebt die Schmutzschicht weg */
+.pressure-reveal { position: relative; overflow: hidden; }
+.pressure-reveal .pressure-grime {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(130% 90% at 20% 15%, rgba(56, 47, 30, .5), rgba(56, 47, 30, .26) 55%, rgba(43, 37, 24, .55)),
+    linear-gradient(10deg, rgba(40, 34, 22, .3), rgba(70, 60, 40, .28));
+  mix-blend-mode: multiply;
+  clip-path: inset(calc(var(--p, 0) * 104%) 0 0 0);
+  pointer-events: none;
+  z-index: 2;
+}
+.pressure-reveal .pressure-line {
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(var(--p, 0) * 104% - 2%);
+  height: 26px;
+  background:
+    linear-gradient(180deg, transparent, rgba(210, 240, 255, .55) 45%, rgba(255,255,255,.9) 50%, rgba(190, 228, 250, .4) 60%, transparent),
+    repeating-linear-gradient(90deg, transparent 0 26px, rgba(255,255,255,.35) 26px 30px);
+  filter: blur(.4px);
+  opacity: calc(1 - max(0, (var(--p, 0) - .92)) * 12);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 08 – Polished Surface Light: schmale Reflexion wandert mit dem Scroll */
+.polish-light { position: relative; overflow: hidden; }
+.polish-light::after {
+  content: "";
+  position: absolute;
+  inset: -20% auto -20% 0;
+  width: 26%;
+  background: linear-gradient(104deg, transparent, rgba(255,255,255,.34) 48%, rgba(230,244,255,.22) 55%, transparent);
+  transform: skewX(-14deg) translateX(calc(-110% + var(--p, 0) * 560%));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 10 – Service Lens: transparente Linse zieht über das Bild */
+.lens-stage { position: relative; }
+.lens-stage .lens {
+  position: absolute;
+  top: calc(8% + var(--p, 0) * 58%);
+  left: calc(6% + var(--p, 0) * 66%);
+  width: clamp(120px, 24%, 210px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.75);
+  box-shadow: var(--cw-shadow-md), inset 0 1px 0 rgba(255,255,255,.6), inset 0 -14px 28px rgba(6,27,51,.1);
+  backdrop-filter: saturate(1.45) contrast(1.18) brightness(1.06);
+  -webkit-backdrop-filter: saturate(1.45) contrast(1.18) brightness(1.06);
+  background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,0) 55%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 12 – Architectural Window Grid: Glasscheiben geben das Bild frei */
+.window-grid { position: relative; overflow: hidden; }
+.window-grid .pane {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: linear-gradient(165deg, rgba(255,255,255,.42), rgba(226,238,247,.28) 55%);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-inline: 1px solid rgba(255,255,255,.75);
+  box-shadow: inset 0 0 30px rgba(255,255,255,.25);
+  transition: transform 1.3s var(--ease-glass), opacity 1.1s var(--ease-glass);
+  transition-delay: var(--pane-delay, 0s);
+  z-index: 2;
+}
+.window-grid .pane:nth-child(1) { left: 0; width: 34%; --pane-delay: 0s; }
+.window-grid .pane:nth-child(2) { left: 33%; width: 34%; --pane-delay: .14s; }
+.window-grid .pane:nth-child(3) { left: 66%; width: 34%; --pane-delay: .28s; }
+.window-grid.revealed .pane:nth-child(1) { transform: translateX(-104%); opacity: .6; }
+.window-grid.revealed .pane:nth-child(2) { transform: translateY(-104%); opacity: .6; }
+.window-grid.revealed .pane:nth-child(3) { transform: translateX(104%); opacity: .6; }
+
+/* 13 – Surface Material Transition: Textur wird beim Scrollen sauber */
+.material-shift { position: relative; overflow: hidden; }
+.material-shift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(94deg, rgba(74, 84, 66, .34) 0 3px, rgba(52, 60, 46, .16) 3px 7px, rgba(90, 98, 76, .3) 7px 12px),
+    radial-gradient(120% 100% at 30% 0%, rgba(64, 72, 52, .38), rgba(46, 52, 40, .3));
+  mix-blend-mode: multiply;
+  opacity: calc(1 - var(--p, 0));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 14 – Liquid Glass CTA: die Glasschicht schwappt beim Hover */
+.btn-liquid::before {
+  border-radius: 46% 54% 52% 48% / 58% 44% 56% 42%;
+  inset: -12% -6%;
+  transition: transform 1.2s var(--ease-glass), opacity .5s, border-radius 1.2s var(--ease-glass);
+}
+.btn-liquid:hover::before, .btn-liquid:focus-visible::before, .btn-liquid:active::before {
+  opacity: .35;
+  transform: translate(7%, -9%) rotate(7deg) scale(1.06);
+  border-radius: 52% 48% 44% 56% / 46% 58% 42% 54%;
+}
+
+/* 17 – Magnetic Label: nur die Beschriftung folgt dem Cursor minimal */
+.magnetic-label { display: inline-block; transition: transform .3s var(--ease-glass); will-change: transform; }
+
+/* 18 – Clean Trace: organische Wischkurve verbindet Inhalte */
+.trace-stage { position: relative; }
+.trace-stage svg.trace {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.trace-stage svg.trace path {
+  fill: none;
+  stroke: url(#trace-grad);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: var(--trace-len, 1600);
+  stroke-dashoffset: calc(var(--trace-len, 1600) * (1 - var(--p, 0)));
+  filter: drop-shadow(0 0 6px rgba(121, 191, 53, .35));
+}
+.trace-stage .media-duo { position: relative; z-index: 1; }
+
+/* 11 – Cleaning Rhythm: Intervallpunkte pulsieren nacheinander */
+.rhythm .interval-day.is-on { position: relative; }
+.rhythm.revealed .interval-day.is-on {
+  animation: rhythm-pulse 3.2s var(--ease-glass) infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+@keyframes rhythm-pulse {
+  0%, 100% { box-shadow: 0 8px 20px rgba(91,152,36,.3), var(--cw-inset-light); }
+  12% { box-shadow: 0 8px 26px rgba(91,152,36,.55), 0 0 0 5px rgba(121,191,53,.16), var(--cw-inset-light); }
+  24% { box-shadow: 0 8px 20px rgba(91,152,36,.3), var(--cw-inset-light); }
+}
+.rhythm-line {
+  position: relative;
+  height: 2px;
+  margin: -0.4rem 0 1rem;
+  background: linear-gradient(90deg, rgba(121,191,53,.5), rgba(47,143,212,.4));
+  border-radius: 2px;
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+}
+
+/* Treppenhaus: Stockwerks-Bildwechsel im Sticky-Visual */
+.floor-visual { position: relative; }
+.floor-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .7s var(--ease-glass);
+}
+.floor-visual img.is-current { opacity: 1; }
+.floor-visual img:first-child { position: relative; }
+
+/* ============================================================
    Responsiv
    ============================================================ */
 @media (max-width: 1100px) {
@@ -1485,6 +1810,14 @@ section { padding-block: var(--section-pad); position: relative; }
 @media (max-width: 940px) {
   .media-duo, .media-trio, .feature-split, .related-band { grid-template-columns: 1fr; }
   .page-hero { min-height: 340px; }
+  .hero-split { grid-template-columns: 1fr; }
+  .hero-split--flip .hero-split-media { order: 0; }
+  .hero-split .hero-split-media { min-height: 300px; }
+  .page-hero--bar .hero-panel { grid-template-columns: 1fr; gap: .8rem; }
+  .page-hero--bar .hero-panel > *,
+  .page-hero--bar .hero-panel .hero-actions { grid-column: 1; grid-row: auto; }
+  .page-hero--bar .hero-panel .hero-actions { justify-content: flex-start; }
+  .lens-stage .lens { width: clamp(90px, 30%, 150px); }
   .main-nav { display: none; }
   .menu-toggle { display: inline-flex; }
   .phone-link.nav-phone { display: none; }
@@ -1545,6 +1878,14 @@ section { padding-block: var(--section-pad); position: relative; }
   [data-reveal] { opacity: 1; transform: none; clip-path: none; }
   .clarity-card::after { display: none; }
   .wipe-glass::after, .wipe-glass::before, .dirt-reveal::after { display: none; }
+  .droplets .drop, .refract::after, .polish-light::after,
+  .pressure-reveal .pressure-grime, .pressure-reveal .pressure-line,
+  .material-shift::after, .window-grid .pane, .trace-stage svg.trace,
+  .lens-stage .lens { display: none; }
+  .focus-seq > * { filter: none; opacity: 1; }
+  .rhythm.revealed .interval-day.is-on { animation: none; }
+  .rhythm-line { transform: scaleX(1); }
+  .floor-visual img { transition: none; }
   .process-step { opacity: 1; transform: none; }
   .hero-streak { display: none; }
   .audience-tile img, .service-card img { transition: none; }
