@@ -2121,7 +2121,7 @@ section { padding-block: var(--section-pad); position: relative; }
 .hero-canvas .canvas-media::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(6,27,51,.16), transparent 36%, rgba(238,243,248,.55) 74%, var(--cw-bg) 96%);
+  background: linear-gradient(180deg, rgba(6,27,51,.16), transparent 30%, rgba(238,243,248,.65) 64%, var(--cw-bg) 90%);
 }
 .hero-canvas .canvas-chip {
   position: absolute;
@@ -2233,7 +2233,8 @@ section { padding-block: var(--section-pad); position: relative; }
 }
 
 /* Randlose Bildfläche */
-.fullbleed { position: relative; width: 100%; overflow: hidden; }
+.fullbleed { position: relative; width: 100%; overflow: hidden; padding-block: 0; }
+section.fullbleed { padding-block: 0; }
 .fullbleed img { width: 100%; height: clamp(340px, 58vh, 560px); object-fit: cover; display: block; }
 .fullbleed .media-caption { left: auto; right: 1.2rem; bottom: 1.2rem; max-width: 320px; }
 
@@ -2516,15 +2517,16 @@ section { padding-block: var(--section-pad); position: relative; }
 .hero-mono .mono-media::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(6,27,51,.2), transparent 40%, rgba(6,27,51,.35));
+  background: linear-gradient(180deg, rgba(6,27,51,.2), transparent 38%, rgba(238,243,248,.4) 76%, var(--cw-bg) 97%);
 }
 .hero-mono h1 {
   position: relative;
   z-index: 2;
-  margin: clamp(-3.4rem, -6vw, -2rem) 0 0 0;
+  margin: -1.4rem 0 0 0;
   font-size: clamp(2.6rem, 7vw, 5.4rem);
-  line-height: 1.02;
+  line-height: 1.04;
   max-width: 13ch;
+  text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 0 26px rgba(238,243,248,.75);
 }
 .hero-mono .mono-sub { max-width: 56ch; color: var(--cw-muted); margin-top: 1rem; }
 
@@ -2533,6 +2535,7 @@ section { padding-block: var(--section-pad); position: relative; }
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 0;
+  align-items: start; /* Figuren nicht auf Zellenhöhe strecken – Captions bleiben am Bild */
 }
 .offset-duo figure { margin: 0; border-radius: var(--cw-radius-lg); overflow: hidden; box-shadow: var(--cw-shadow-lg); position: relative; }
 .offset-duo figure:nth-child(1) { grid-column: 1 / 8; grid-row: 1; }
@@ -2686,6 +2689,7 @@ section { padding-block: var(--section-pad); position: relative; }
    Responsiv
    ============================================================ */
 @media (max-width: 1100px) {
+  .hero-canvas .canvas-text { margin-top: -1.4rem; }
   .services-grid { grid-template-columns: repeat(6, 1fr); }
   .service-card.card-featured { grid-column: span 6; min-height: 400px; }
   .service-card.card-half { grid-column: span 3; }
