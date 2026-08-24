@@ -20,6 +20,17 @@ Screenshots werden beim Hinzufügen automatisch auf max. 1600 px verkleinert und
 Wichtig: Die Daten hängen am jeweiligen Browser bzw. Gerät. Für einen Umzug oder als Sicherung das
 Backup unter „⋯ → Backup exportieren“ nutzen.
 
+## Veröffentlichen (einmalig einrichten)
+
+Der Workflow `.github/workflows/pages.yml` veröffentlicht die App bei jedem Push automatisch.
+GitHub Pages muss dafür einmal von Hand eingeschaltet werden – ein Actions-Token darf das nicht:
+
+1. **Settings → Pages** öffnen
+2. Unter *Build and deployment* → *Source* auf **GitHub Actions** stellen
+3. Unter **Actions** den Workflow „Deploy to GitHub Pages" erneut starten (*Re-run jobs*)
+
+Danach liegt die App unter `https://kxski0.github.io/Web/`.
+
 ## Installieren
 
 - **iPad / iPhone (Safari):** Seite öffnen → Teilen-Symbol → „Zum Home-Bildschirm“

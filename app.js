@@ -349,6 +349,39 @@
     return res.blob();
   }
 
+  // Im Artifact-Viewer laeuft der Download ueber die Host-Bruecke, sonst klassisch.
+  let downloadsNs;
+  async function downloadsCapability() {
+    if (downloadsNs !== undefined) return downloadsNs;
+    try {
+      downloadsNs = (window.claude && typeof window.claude.use === 'function')
+        ? await window.claude.use('downloads')
+        : null;
+    } catch { downloadsNs = null; }
+    return downloadsNs;
+  }
+
+  async function saveFile(filename, blob) {
+    const host = await downloadsCapability();
+    if (host) {
+      try {
+        await host.save({ filename, data: blob });
+        toast('Backup gesichert');
+      } catch (err) {
+        if (!err || err.code !== 'declined') toast('Backup konnte nicht gesichert werden.');
+      }
+      return;
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast('Backup exportiert');
+  }
+
   async function exportBackup() {
     const data = {
       format: 'referenzen-backup',
@@ -361,14 +394,7 @@
       })))
     };
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `referenzen-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    toast('Backup exportiert');
+    await saveFile(`referenzen-${new Date().toISOString().slice(0, 10)}.json`, blob);
   }
 
   async function importBackup(file) {
