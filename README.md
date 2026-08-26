@@ -1,1 +1,208 @@
-# Web
+# RuhrCargo GmbH — Website
+
+Moderne, conversionstarke Website für ein Speditions- und Logistikunternehmen.
+Statisches HTML/CSS/JS, keine Build-Tools, keine Abhängigkeiten, keine externen Requests.
+
+**Designwelt:** „Signal & Asphalt" — Asphaltschwarz, Signalrot, große Grotesk-Typografie,
+technische Mono-Annotationen und Route-/GPS-Motive. Dunkle und helle Sektionen wechseln
+sich ab, damit Fahrzeugbilder maximal wirken.
+
+---
+
+## Vor dem Livegang — Checkliste
+
+| # | Aufgabe | Wo |
+|---|---|---|
+| 1 | **Echte Fotos einsetzen** (siehe Tabelle unten) | `assets/img/` |
+| 2 | **Telefonnummer, E-Mail, Adresse** ersetzen | überall mit `TODO:KONTAKT` markiert |
+| 3 | **Impressum** vollständig ausfüllen | `impressum.html` |
+| 4 | **Datenschutzerklärung** juristisch prüfen lassen | `datenschutz.html` |
+| 5 | **Formular-Empfang** einrichten | `js/main.js` → `CONFIG.formEndpoint` |
+| 6 | **Kundenlogos** einsetzen (oder Bereich entfernen) | `index.html` → `<div class="logos">` |
+| 7 | **Domain** in `canonical` und JSON-LD eintragen | `index.html` `<head>` |
+| 8 | Optional: **Jahreszahlen** in der Timeline ergänzen | `index.html` → `.tl__step` |
+
+Alle Platzhalter finden:
+
+```bash
+grep -rn "TODO:KONTAKT\|Musterstraße\|000 00 00\|HRB 00000" *.html
+```
+
+---
+
+## Bilder ersetzen
+
+Die ausgelieferten JPGs sind gestaltete Platzhalter im richtigen Format. **Einfach mit
+gleichnamigen Dateien überschreiben — kein Code muss angefasst werden.**
+
+| Datei | Format | Motiv |
+|---|---|---|
+| `hero.jpg` | 2400 × 1350 (16:9) | Hauptmotiv: RuhrCargo-Fahrzeug. Fahrzeug rechts im Bild, links Platz für die Headline. Eher dunkel belichtet. |
+| `leistung-neumoebel.jpg` | 900 × 1125 (4:5) | Möbeltransport / Möbelkoffer |
+| `leistung-elektrogeraete.jpg` | 900 × 1125 | Weiße Ware, Verladung |
+| `leistung-stueckgut.jpg` | 900 × 1125 | Paletten, Ladefläche |
+| `leistung-kurier.jpg` | 900 × 1125 | Kleintransporter unterwegs |
+| `leistung-reifen.jpg` | 900 × 1125 | Reifen, Verladung |
+| `leistung-umzuege.jpg` | 900 × 1125 | Umzugssituation |
+| `leistung-messebau.jpg` | 900 × 1125 | Anlieferung Messe / Ladenbau |
+| `leistung-reha.jpg` | 900 × 1125 | Zustellung Hilfsmittel |
+| `fuhrpark-lkw.jpg` | 1600 × 1000 (16:10) | 12–18 t LKW |
+| `fuhrpark-sprinter.jpg` | 1600 × 1000 | Kleintransporter |
+| `fuhrpark-koffer75.jpg` | 1600 × 1000 | 7,5 t Koffer mit Ladebordwand |
+| `fuhrpark-moebelkoffer.jpg` | 1600 × 1000 | Möbelkoffer |
+| `about.jpg` | 1400 × 1750 (4:5) | Team oder Fuhrpark-Aufstellung |
+| `prozess.jpg` | 2000 × 1125 | Reserve (aktuell nicht eingebunden) |
+
+**Fototipps für dieses Design:** eher kontrastreich und leicht unterbelichtet, Fahrzeuge
+frontal oder im Dreiviertelprofil, ruhige Hintergründe. Rote Bildelemente wirken besonders
+gut, weil sie die Markenfarbe aufnehmen.
+
+Bilder vor dem Hochladen komprimieren (Ziel: unter 300 KB pro Datei), z. B. mit
+[squoosh.app](https://squoosh.app).
+
+### Video statt Foto im Hero
+
+In `index.html` das `<img>` im Block `.hero__media` ersetzen durch:
+
+```html
+<video autoplay muted loop playsinline poster="assets/img/hero.jpg">
+  <source src="assets/video/hero.mp4" type="video/mp4">
+</video>
+```
+
+Empfehlung: max. 8–10 Sekunden, unter 3 MB, ohne Ton. Das CSS ist bereits vorbereitet.
+
+### Kundenlogos
+
+In `index.html` im Block `<div class="logos">` je Slot ersetzen:
+
+```html
+<div class="logo-slot">
+  <img src="assets/img/kunde-01.svg" alt="Firmenname" width="140" height="40">
+</div>
+```
+
+Am besten einfarbig dunkles SVG oder PNG. Slots, die leer bleiben, einfach löschen —
+das Raster passt sich automatisch an. **Nur Logos verwenden, für die eine Freigabe des
+Kunden vorliegt.**
+
+---
+
+## Anfrageformular anbinden
+
+Standardmäßig öffnet das Formular eine vorausgefüllte E-Mail im Mailprogramm des
+Besuchers. Das funktioniert überall, ist aber nicht die beste Conversion. Für echten
+Serverempfang in `js/main.js` ganz oben eintragen:
+
+```js
+var CONFIG = {
+  formEndpoint: 'https://formspree.io/f/DEINE-ID',   // oder '/anfrage.php'
+  contactEmail: 'info@ruhrcargo.de'
+};
+```
+
+Das Formular sendet dann `POST` mit JSON-Body und erwartet einen `2xx`-Status.
+Enthaltene Felder: `ladung`, `von`, `nach`, `name`, `firma`, `email`, `telefon`,
+`termin`, `nachricht`. Ein unsichtbares Honeypot-Feld filtert einfache Bots.
+
+Wenn ein Dienstleister wie Formspree eingesetzt wird, muss das in der
+Datenschutzerklärung ergänzt werden (Auftragsverarbeitung, Drittlandtransfer).
+
+---
+
+## Lokal ansehen
+
+```bash
+python3 -m http.server 8000
+# → http://localhost:8000
+```
+
+Ein `file://`-Aufruf funktioniert nicht zuverlässig (Schriften, `fetch`).
+
+## Veröffentlichen
+
+Alle Dateien in das Web-Root des Hosters laden — fertig. Es gibt keinen Build-Schritt.
+Funktioniert ebenso auf Netlify, Vercel, GitHub Pages oder klassischem FTP-Webspace.
+
+---
+
+## Aufbau
+
+```
+index.html          Startseite mit allen Sektionen
+impressum.html      Rechtstext (ausfüllen!)
+datenschutz.html    Rechtstext (prüfen lassen!)
+css/style.css       Designsystem + alle Komponenten
+css/fonts.css       Selbst gehostete Schriften
+js/main.js          Interaktion, Scroll-Animationen, Formular
+assets/fonts/       Archivo, Inter, IBM Plex Mono (SIL OFL 1.1)
+assets/img/         Bilder — hier austauschen
+assets/logo.svg     Logo-Zeichen
+assets/favicon.svg  Favicon
+```
+
+### Sektionen der Startseite
+
+Hero → Leistungs-Ticker → Leistungen (8 Karten) → Konfigurator „Was möchten Sie
+transportieren?" → Über RuhrCargo (Kennzahlen + Timeline) → Prozess (4 Schritte) →
+Fuhrpark → Warum RuhrCargo → Referenzen → Abschluss-CTA mit Anfrageformular → Footer
+
+### Designtokens
+
+Alle Farben, Schriftgrößen, Abstände und Animationskurven sind CSS-Variablen am Anfang
+von `css/style.css`. Zentrale Werte:
+
+```css
+--red:   #E3000F;   --ink:   #111111;
+--white: #FFFFFF;   --grey:  #666666;   --paper: #F4F4F3;
+
+--ease-out:    cubic-bezier(.23, 1, .32, 1);
+--ease-in-out: cubic-bezier(.77, 0, .175, 1);
+```
+
+Farbe global ändern = eine Zeile in `:root`.
+
+---
+
+## Technische Entscheidungen
+
+**Schriften selbst gehostet.** Kein Google-Fonts-Request. In Deutschland wurden
+Websites für das Einbinden von Google Fonts abgemahnt; lokale Auslieferung vermeidet
+das Problem und ist zusätzlich schneller. Nur die Subsets `latin` und `latin-ext`
+sind enthalten (~268 KB gesamt).
+
+**Keine Cookies, kein Tracking.** Deshalb ist kein Cookie-Banner nötig. Wird später
+Analytics oder eine Kartenanbindung ergänzt, ändert sich das.
+
+**Animationen.** Ausschließlich `transform` und `opacity`, damit alles auf der GPU
+läuft. Eigene, kräftigere Easing-Kurven statt der schwachen CSS-Defaults. Scroll-Reveals
+laufen über einen `IntersectionObserver`, der Elemente nach dem Auslösen abmeldet.
+`prefers-reduced-motion: reduce` schaltet jede Bewegung ab, ohne dass Inhalte
+verschwinden.
+
+**Hover-Effekte** sind hinter `@media (hover: hover) and (pointer: fine)` gekapselt,
+damit sie auf Touchgeräten nicht beim Antippen hängen bleiben. Die Leistungskarten
+zeigen ihr Bild auf Touchgeräten dauerhaft statt beim Hover.
+
+**Barrierefreiheit.** Semantische Landmarks, Skip-Link, sichtbare Fokusringe,
+Tastaturbedienung im Konfigurator (Pfeiltasten), `aria-live` für Formularmeldungen,
+Kontraste nach WCAG AA.
+
+**Performance.** Hero-Bild wird vorgeladen, alle weiteren Bilder `loading="lazy"`
+mit festen `width`/`height` gegen Layout-Shift.
+
+---
+
+## Bekannte Platzhalter
+
+Diese Inhalte sind bewusst neutral gehalten und müssen vom Unternehmen bestätigt
+oder ersetzt werden:
+
+- **Telefon, E-Mail, Anschrift, Handelsregister, USt-IdNr.** — durchgehend Platzhalter
+- **Timeline** — vier Etappen ohne Jahreszahlen, damit nichts Falsches behauptet wird
+- **Kundenlogos** — leere Slots statt erfundener Referenzen
+- **Branchenliste** — abgeleitet aus den Leistungsbereichen, bitte gegenprüfen
+- **„Mo – Fr, 07:00 – 18:00 Uhr"** — angenommene Erreichbarkeit, bitte anpassen
+
+Kennzahlen (20+ Fahrzeuge, 20+ Jahre Erfahrung, deutschlandweit, 8 Leistungsbereiche)
+stammen aus der Projektvorgabe.
