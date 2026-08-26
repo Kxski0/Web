@@ -55,40 +55,42 @@ blieb unverändert. Bei einem Logo-Update alle Varianten neu erzeugen.
 
 | Datei | Format | Motiv |
 |---|---|---|
-| `hero.jpg` | 1600 × 899 | Zwei Mitarbeiter vor dem beladenen Koffer-LKW |
+| `hero.jpg` | 1600 × 900 | Sattelzug auf der Autobahn im Abendlicht |
+| `band-unterwegs.jpg` | 1700 × 729 | LKW auf einer Brücke — Band „Deutschlandweit unterwegs" |
 | `about.jpg` | 1100 × 879 | Das Team vor dem Betriebsgelände |
-| `leistung-neumoebel.jpg` | 720 × 900 | Verpacktes Sofa wird in eine Wohnung getragen |
-| `leistung-elektrogeraete.jpg` | 720 × 899 | Kühlschrank wird in einer Küche gestellt |
-| `leistung-stueckgut.jpg` | 720 × 900 | Palette am Hubwagen vor dem Transporter |
-| `leistung-kurier.jpg` | 720 × 900 | Paketübergabe an der Haustür |
-| `leistung-reifen.jpg` | 720 × 899 | Reifenerfassung im Lager |
+| `karte-deutschland.jpg` | 1000 × 625 | Streckennetz — Hintergrund im Kontaktbereich |
+| `leistung-neumoebel.jpg` | 720 × 900 | Verpacktes Sofa wird in einen Wohnraum getragen |
+| `leistung-elektrogeraete.jpg` | 720 × 899 | Waschmaschine über die Rampe in den Transporter |
+| `leistung-stueckgut.jpg` | 720 × 899 | Gabelstapler mit folierter Palette |
+| `leistung-kurier.jpg` | 720 × 901 | Zustellung an einem Bürogebäude |
+| `leistung-reifen.jpg` | 720 × 901 | Reifenerfassung vor dem beladenen LKW |
 | `leistung-umzuege.jpg` | 720 × 901 | Matratze im Treppenhaus |
-| `leistung-messebau.jpg` | 720 × 901 | Messestandaufbau |
-| `leistung-reha.jpg` | 720 × 901 | Rollstuhlfahrer über die Rampe |
-| `fuhrpark-kofferlkw.jpg` | 1500 × 643 | Koffer-LKW mit Ladebordwand |
-| `fuhrpark-transporter.jpg` | 1100 × 756 | Kleintransporter bei der Zustellung |
+| `leistung-messebau.jpg` | 720 × 900 | Messestandaufbau mit Logowand |
+| `leistung-reha.jpg` | 720 × 900 | Rollstuhlfahrerin über die Rampe |
+| `fuhrpark-lkw.jpg` | 1500 × 642 | LKW wird per Gabelstapler beladen |
+| `fuhrpark-kofferlkw.jpg` | 1100 × 757 | Koffer-LKW mit Ladebordwand |
 | `fuhrpark-moebelkoffer.jpg` | 1100 × 757 | Möbelkoffer beim Verladen |
-| `fuhrpark-umschlag.jpg` | 1500 × 643 | Transporter wird mit Reifen beladen |
-| `prozess.jpg` | 1400 × 788 | Planung im Büro (Reserve, aktuell nicht eingebunden) |
+| `fuhrpark-transporter.jpg` | 1500 × 642 | Kleintransporter bei der Zustellung |
 
-In `assets/img/reserve/` liegen fünf weitere Motive, die nicht auf der Seite
-verwendet werden: Disposition am Rechner, Reifenlager, Möbeltransport,
-Messestand und ein zweites Fahrzeugmotiv. Zum Tauschen einfach über die
+In `assets/img/reserve/` liegen zehn weitere Motive, die nicht auf der Seite
+verwendet werden — unter anderem die Logowand, die Verladehalle bei Nacht, die
+Haustürübergabe und ein zweites Reha-Motiv. Zum Tauschen einfach über die
 gleichnamige Datei in `assets/img/` kopieren.
 
 ### Zur Auflösung
 
 Die Fotos kamen als Kontaktbögen, die Einzelbilder waren daher nur rund
-440–770 Pixel breit. Für die kleinen Formate (Leistungskarten, Fuhrpark) reicht
-das aus. Beim **Hero und den beiden breiten Fuhrpark-Karten** wurde um Faktor
-zwei hochskaliert und nachgeschärft — auf normalen Bildschirmen sichtbar sauber,
-auf sehr großen 4K-Displays etwas weich. Falls die Originaldateien in voller
-Auflösung vorliegen, lohnt sich für diese drei Bilder ein Austausch:
+440–770 Pixel breit. Für die kleinen Formate reicht das aus. Beim **Hero, dem
+Band und den beiden breiten Fuhrpark-Karten** wurde um Faktor zwei hochskaliert
+und nachgeschärft — auf normalen Bildschirmen sichtbar sauber, auf sehr großen
+4K-Displays etwas weich. Falls die Originaldateien in voller Auflösung
+vorliegen, lohnt sich für diese vier Bilder ein Austausch:
 
 ```
-assets/img/hero.jpg                 möglichst 2400 × 1350
-assets/img/fuhrpark-kofferlkw.jpg   möglichst 2100 × 900
-assets/img/fuhrpark-umschlag.jpg    möglichst 2100 × 900
+assets/img/hero.jpg                  möglichst 2400 × 1350
+assets/img/band-unterwegs.jpg        möglichst 2400 × 1029
+assets/img/fuhrpark-lkw.jpg          möglichst 2100 × 900
+assets/img/fuhrpark-transporter.jpg  möglichst 2100 × 900
 ```
 
 Gleiche Dateinamen verwenden — dann muss am Code nichts geändert werden.
@@ -180,8 +182,9 @@ assets/og-image.jpg Social-Media-Vorschau
 ### Sektionen der Startseite
 
 Hero → Leistungs-Ticker → Leistungen (8 Karten) → Konfigurator „Was möchten Sie
-transportieren?" → Über RuhrCargo (Kennzahlen + Timeline) → Prozess (4 Schritte) →
-Fuhrpark → Warum RuhrCargo → Referenzen → Abschluss-CTA mit Anfrageformular → Footer
+transportieren?" → Über RuhrCargo (Kennzahlen + Timeline) → Band „Deutschlandweit
+unterwegs" → Prozess (4 Schritte) → Fuhrpark → Warum RuhrCargo → Referenzen →
+Abschluss-CTA mit Anfrageformular → Footer
 
 ### Designtokens
 
