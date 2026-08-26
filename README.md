@@ -71,6 +71,7 @@ blieb unverändert. Bei einem Logo-Update alle Varianten neu erzeugen.
 | `fuhrpark-kofferlkw.jpg` | 1100 × 757 | Koffer-LKW mit Ladebordwand |
 | `fuhrpark-moebelkoffer.jpg` | 1100 × 757 | Möbelkoffer beim Verladen |
 | `fuhrpark-transporter.jpg` | 1500 × 642 | Kleintransporter bei der Zustellung |
+| `kopf-*.jpg` (8 Stück) | 1500 × 643 | Breite Kopfbilder der Leistungs-Detailseiten |
 
 In `assets/img/reserve/` liegen zehn weitere Motive, die nicht auf der Seite
 verwendet werden — unter anderem die Logowand, die Verladehalle bei Nacht, die
@@ -165,43 +166,64 @@ Funktioniert ebenso auf Netlify, Vercel, GitHub Pages oder klassischem FTP-Websp
 ## Aufbau
 
 ```
-index.html          Startseite mit allen Sektionen
-impressum.html      Rechtstext (ausfüllen!)
-datenschutz.html    Rechtstext (prüfen lassen!)
-css/style.css       Designsystem + alle Komponenten
-css/fonts.css       Selbst gehostete Schriften
-js/main.js          Interaktion, Scroll-Animationen, Formular
-assets/fonts/       Archivo, Inter, IBM Plex Mono (SIL OFL 1.1)
-assets/img/         Fotos der Website
-assets/img/reserve/ Nicht verwendete Motive zum Tauschen
-assets/logo*.png    Wort-Bild-Marke in mehreren Varianten
-assets/favicon.png  Favicon
-assets/og-image.jpg Social-Media-Vorschau
+index.html              Startseite — verdichtet, verweist auf die Unterseiten
+leistungen.html         Alle acht Leistungen im Überblick
+leistungen/*.html       Acht Detailseiten, eine je Leistung
+fuhrpark.html           Fuhrpark ausführlich
+unternehmen.html        Über RuhrCargo, Entwicklung, Gründe, Referenzen
+ablauf.html             Prozess ausführlich + Konfigurator
+kontakt.html            Kontaktdaten + Anfrageformular
+impressum.html          Rechtstext (ausfüllen!)
+datenschutz.html        Rechtstext (prüfen lassen!)
+
+css/style.css           Designsystem + alle Komponenten
+css/fonts.css           Selbst gehostete Schriften
+js/main.js              Interaktion, Scroll-Animationen, Formular
+tools/                  Generator (siehe unten)
+assets/                 Schriften, Logo, Bilder
 ```
 
-### Sektionen der Startseite
+16 Seiten insgesamt. Die Startseite nennt nur die wichtigsten Punkte und verlinkt
+jeweils in die Tiefe — die Ausführlichkeit steckt in den Unterseiten.
 
-Hero → Leistungs-Ticker → Leistungen (8 Karten) → Konfigurator „Was möchten Sie
-transportieren?" → Über RuhrCargo (Kennzahlen + Timeline) → Band „Deutschlandweit
-unterwegs" → Prozess (4 Schritte) → Fuhrpark → Warum RuhrCargo → Referenzen →
-Abschluss-CTA mit Anfrageformular → Footer
+### Seiten pflegen
 
-### Designtokens
+Die HTML-Dateien werden aus `tools/content.py` erzeugt. Alle Texte stehen dort an
+einer Stelle, die Seitenhülle (Kopf, Navigation, Fuß) nur einmal in `tools/build.py`.
 
-Alle Farben, Schriftgrößen, Abstände und Animationskurven sind CSS-Variablen am Anfang
-von `css/style.css`. Zentrale Werte:
-
-```css
---red:   #E3000F;   --ink:   #111111;
---white: #FFFFFF;   --grey:  #666666;   --paper: #F4F4F3;
-
---ease-out:    cubic-bezier(.23, 1, .32, 1);
---ease-in-out: cubic-bezier(.77, 0, .175, 1);
+```bash
+python3 tools/build.py      # erzeugt alle 16 Seiten neu
 ```
 
-Farbe global ändern = eine Zeile in `:root`.
+**Wichtig:** Änderungen direkt im HTML gehen beim nächsten Lauf verloren. Für
+Textänderungen also `tools/content.py` bearbeiten und neu erzeugen. Wer den
+Generator nicht nutzen will, kann ihn löschen und die HTML-Dateien von Hand
+pflegen — sie sind eigenständig und brauchen ihn zum Betrieb nicht.
 
----
+Eine neue Leistung ergänzen: einen Eintrag in `SERVICES` anlegen (Slug, Titel,
+Icon, Bild, Texte, FAQ, verwandte Leistungen), Bilder unter den passenden Namen
+in `assets/img/` legen, `python3 tools/build.py` ausführen. Navigation, Untermenü,
+Fußzeile, Konfigurator-Chips und Übersichtsseite ziehen automatisch nach.
+
+### Animation und Bewegung
+
+Alles läuft ausschließlich über `transform`, `opacity` und `clip-path`, damit die
+GPU die Arbeit macht:
+
+- Wort-für-Wort-Einblendung der Hero-Überschrift beim Laden
+- Gestaffelte Scroll-Einblendungen für nahezu jeden Abschnitt
+- Bilder werden per `clip-path` von unten aufgedeckt statt nur eingeblendet
+- Dezente Tiefenstaffelung (Parallax) auf Hero- und Kopfbildern
+- Hochzählende Kennzahlen
+- Rot durchlaufende Prozesslinie, waagerecht auf der Startseite, senkrecht auf `ablauf.html`
+- Laufband der Leistungen unter dem Hero
+- Untermenü mit weichem Auf- und Zuklappen
+- FAQ-Akkordeon mit animierter Höhe
+- Fahrzeug- und Leistungskarten heben sich beim Überfahren an
+- Weiche Seitenübergänge über die View-Transitions-API, wo der Browser sie kennt
+
+`prefers-reduced-motion: reduce` schaltet jede Bewegung ab, ohne dass Inhalte
+verschwinden.
 
 ## Technische Entscheidungen
 
