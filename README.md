@@ -13,7 +13,7 @@ sich ab, damit Fahrzeugbilder maximal wirken.
 
 | # | Aufgabe | Wo |
 |---|---|---|
-| 1 | **Echte Fotos einsetzen** (siehe Tabelle unten) | `assets/img/` |
+| 1 | ~~Echte Fotos einsetzen~~ — erledigt, echtes Bildmaterial ist eingebunden | `assets/img/` |
 | 2 | **Telefonnummer, E-Mail, Adresse** ersetzen | überall mit `TODO:KONTAKT` markiert |
 | 3 | **Impressum** vollständig ausfüllen | `impressum.html` |
 | 4 | **Datenschutzerklärung** juristisch prüfen lassen | `datenschutz.html` |
@@ -30,35 +30,70 @@ grep -rn "TODO:KONTAKT\|Musterstraße\|000 00 00\|HRB 00000" *.html
 
 ---
 
-## Bilder ersetzen
+## Bildmaterial
 
-Die ausgelieferten JPGs sind gestaltete Platzhalter im richtigen Format. **Einfach mit
-gleichnamigen Dateien überschreiben — kein Code muss angefasst werden.**
+Alle Fotos und das Logo stammen vom Kunden und sind eingebunden. Die Kontaktbögen
+wurden in Einzelbilder zerlegt, motivgerecht auf die Zielformate zugeschnitten und
+für das Web komprimiert.
+
+### Logo
+
+| Datei | Verwendung |
+|---|---|
+| `assets/logo-wordmark-light.png` | Header — Chevrons + „RuhrCargo", weiß, für dunklen Grund |
+| `assets/logo-wordmark.png` | dieselbe Wortmarke in Originalfarben, für hellen Grund |
+| `assets/logo-light.png` | vollständige Wort-Bild-Marke inkl. Claim, weiß — Footer |
+| `assets/logo.png` | vollständige Wort-Bild-Marke in Originalfarben |
+| `assets/logo-mark.png` | nur die Chevrons — Wasserzeichen im Kontaktbereich |
+| `assets/favicon.png` | Browser-Tab |
+| `assets/og-image.jpg` | Vorschaubild für Social Media und WhatsApp |
+
+Die hellen Varianten sind aus dem Original abgeleitet: Schwarz wurde zu Weiß, Rot
+blieb unverändert. Bei einem Logo-Update alle Varianten neu erzeugen.
+
+### Fotos
 
 | Datei | Format | Motiv |
 |---|---|---|
-| `hero.jpg` | 2400 × 1350 (16:9) | Hauptmotiv: RuhrCargo-Fahrzeug. Fahrzeug rechts im Bild, links Platz für die Headline. Eher dunkel belichtet. |
-| `leistung-neumoebel.jpg` | 900 × 1125 (4:5) | Möbeltransport / Möbelkoffer |
-| `leistung-elektrogeraete.jpg` | 900 × 1125 | Weiße Ware, Verladung |
-| `leistung-stueckgut.jpg` | 900 × 1125 | Paletten, Ladefläche |
-| `leistung-kurier.jpg` | 900 × 1125 | Kleintransporter unterwegs |
-| `leistung-reifen.jpg` | 900 × 1125 | Reifen, Verladung |
-| `leistung-umzuege.jpg` | 900 × 1125 | Umzugssituation |
-| `leistung-messebau.jpg` | 900 × 1125 | Anlieferung Messe / Ladenbau |
-| `leistung-reha.jpg` | 900 × 1125 | Zustellung Hilfsmittel |
-| `fuhrpark-lkw.jpg` | 1600 × 1000 (16:10) | 12–18 t LKW |
-| `fuhrpark-sprinter.jpg` | 1600 × 1000 | Kleintransporter |
-| `fuhrpark-koffer75.jpg` | 1600 × 1000 | 7,5 t Koffer mit Ladebordwand |
-| `fuhrpark-moebelkoffer.jpg` | 1600 × 1000 | Möbelkoffer |
-| `about.jpg` | 1400 × 1750 (4:5) | Team oder Fuhrpark-Aufstellung |
-| `prozess.jpg` | 2000 × 1125 | Reserve (aktuell nicht eingebunden) |
+| `hero.jpg` | 1600 × 899 | Zwei Mitarbeiter vor dem beladenen Koffer-LKW |
+| `about.jpg` | 1100 × 879 | Das Team vor dem Betriebsgelände |
+| `leistung-neumoebel.jpg` | 720 × 900 | Verpacktes Sofa wird in eine Wohnung getragen |
+| `leistung-elektrogeraete.jpg` | 720 × 899 | Kühlschrank wird in einer Küche gestellt |
+| `leistung-stueckgut.jpg` | 720 × 900 | Palette am Hubwagen vor dem Transporter |
+| `leistung-kurier.jpg` | 720 × 900 | Paketübergabe an der Haustür |
+| `leistung-reifen.jpg` | 720 × 899 | Reifenerfassung im Lager |
+| `leistung-umzuege.jpg` | 720 × 901 | Matratze im Treppenhaus |
+| `leistung-messebau.jpg` | 720 × 901 | Messestandaufbau |
+| `leistung-reha.jpg` | 720 × 901 | Rollstuhlfahrer über die Rampe |
+| `fuhrpark-kofferlkw.jpg` | 1500 × 643 | Koffer-LKW mit Ladebordwand |
+| `fuhrpark-transporter.jpg` | 1100 × 756 | Kleintransporter bei der Zustellung |
+| `fuhrpark-moebelkoffer.jpg` | 1100 × 757 | Möbelkoffer beim Verladen |
+| `fuhrpark-umschlag.jpg` | 1500 × 643 | Transporter wird mit Reifen beladen |
+| `prozess.jpg` | 1400 × 788 | Planung im Büro (Reserve, aktuell nicht eingebunden) |
 
-**Fototipps für dieses Design:** eher kontrastreich und leicht unterbelichtet, Fahrzeuge
-frontal oder im Dreiviertelprofil, ruhige Hintergründe. Rote Bildelemente wirken besonders
-gut, weil sie die Markenfarbe aufnehmen.
+In `assets/img/reserve/` liegen fünf weitere Motive, die nicht auf der Seite
+verwendet werden: Disposition am Rechner, Reifenlager, Möbeltransport,
+Messestand und ein zweites Fahrzeugmotiv. Zum Tauschen einfach über die
+gleichnamige Datei in `assets/img/` kopieren.
 
-Bilder vor dem Hochladen komprimieren (Ziel: unter 300 KB pro Datei), z. B. mit
-[squoosh.app](https://squoosh.app).
+### Zur Auflösung
+
+Die Fotos kamen als Kontaktbögen, die Einzelbilder waren daher nur rund
+440–770 Pixel breit. Für die kleinen Formate (Leistungskarten, Fuhrpark) reicht
+das aus. Beim **Hero und den beiden breiten Fuhrpark-Karten** wurde um Faktor
+zwei hochskaliert und nachgeschärft — auf normalen Bildschirmen sichtbar sauber,
+auf sehr großen 4K-Displays etwas weich. Falls die Originaldateien in voller
+Auflösung vorliegen, lohnt sich für diese drei Bilder ein Austausch:
+
+```
+assets/img/hero.jpg                 möglichst 2400 × 1350
+assets/img/fuhrpark-kofferlkw.jpg   möglichst 2100 × 900
+assets/img/fuhrpark-umschlag.jpg    möglichst 2100 × 900
+```
+
+Gleiche Dateinamen verwenden — dann muss am Code nichts geändert werden.
+Die `width`/`height`-Attribute im HTML sollten zum neuen Seitenverhältnis passen,
+sind aber unkritisch, solange das Verhältnis stimmt.
 
 ### Video statt Foto im Hero
 
@@ -74,7 +109,8 @@ Empfehlung: max. 8–10 Sekunden, unter 3 MB, ohne Ton. Das CSS ist bereits vorb
 
 ### Kundenlogos
 
-In `index.html` im Block `<div class="logos">` je Slot ersetzen:
+Im Referenzbereich stehen noch sechs leere Slots. In `index.html` im Block
+`<div class="logos">` je Slot ersetzen:
 
 ```html
 <div class="logo-slot">
@@ -85,8 +121,6 @@ In `index.html` im Block `<div class="logos">` je Slot ersetzen:
 Am besten einfarbig dunkles SVG oder PNG. Slots, die leer bleiben, einfach löschen —
 das Raster passt sich automatisch an. **Nur Logos verwenden, für die eine Freigabe des
 Kunden vorliegt.**
-
----
 
 ## Anfrageformular anbinden
 
@@ -136,9 +170,11 @@ css/style.css       Designsystem + alle Komponenten
 css/fonts.css       Selbst gehostete Schriften
 js/main.js          Interaktion, Scroll-Animationen, Formular
 assets/fonts/       Archivo, Inter, IBM Plex Mono (SIL OFL 1.1)
-assets/img/         Bilder — hier austauschen
-assets/logo.svg     Logo-Zeichen
-assets/favicon.svg  Favicon
+assets/img/         Fotos der Website
+assets/img/reserve/ Nicht verwendete Motive zum Tauschen
+assets/logo*.png    Wort-Bild-Marke in mehreren Varianten
+assets/favicon.png  Favicon
+assets/og-image.jpg Social-Media-Vorschau
 ```
 
 ### Sektionen der Startseite

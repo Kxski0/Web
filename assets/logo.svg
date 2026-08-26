@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 32" width="44" height="32" role="img" aria-label="RuhrCargo">
-  <g fill="none" stroke="#E3000F" stroke-width="6.5" stroke-linecap="butt">
-    <path d="M4 5.5 L14.5 16 L4 26.5"/>
-    <path d="M17 5.5 L27.5 16 L17 26.5"/>
-    <path d="M30 5.5 L40.5 16 L30 26.5" opacity=".35"/>
-  </g>
-</svg>
