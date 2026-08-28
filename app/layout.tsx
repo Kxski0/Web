@@ -4,6 +4,7 @@ import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { JsonLd } from '@/components/JsonLd';
 import { unternehmen } from '@/content/unternehmen';
+import { basisUrl, istProduktion } from '@/lib/site';
 import './globals.css';
 
 /**
@@ -19,11 +20,8 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-/** Beim Deployment auf die echte Domain setzen. */
-const basis = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.energie-zentrum-saar.de';
-
 export const metadata: Metadata = {
-  metadataBase: new URL(basis),
+  metadataBase: new URL(basisUrl),
   title: {
     default: `${unternehmen.marke} — ${unternehmen.claim}`,
     template: `%s — ${unternehmen.marke}`,
@@ -35,7 +33,14 @@ export const metadata: Metadata = {
     locale: 'de_DE',
     siteName: unternehmen.marke,
   },
-  robots: { index: true, follow: true },
+  /*
+    Nur die Produktion darf indexiert werden. Ein Vorschau-Deployment traegt
+    den echten Firmennamen und die echte Anschrift, aber ein noch
+    unvollstaendiges Impressum — das gehoert nicht in den Suchindex.
+  */
+  robots: istProduktion
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
 };
 
 export default function RootLayout({
@@ -77,7 +82,7 @@ export default function RootLayout({
             name: unternehmen.marke,
             legalName: unternehmen.traeger,
             slogan: unternehmen.claim,
-            url: basis,
+            url: basisUrl,
             telephone: unternehmen.telefon,
             email: unternehmen.email,
             address: {

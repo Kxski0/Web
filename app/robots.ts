@@ -1,10 +1,14 @@
 import type { MetadataRoute } from 'next';
-
-const basis = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.energie-zentrum-saar.de';
+import { basisUrl, istProduktion } from '@/lib/site';
 
 export default function robots(): MetadataRoute.Robots {
+  // Vorschau-Deployments werden vollstaendig gesperrt — siehe app/layout.tsx.
+  if (!istProduktion) {
+    return { rules: { userAgent: '*', disallow: '/' } };
+  }
+
   return {
     rules: { userAgent: '*', allow: '/' },
-    sitemap: `${basis}/sitemap.xml`,
+    sitemap: `${basisUrl}/sitemap.xml`,
   };
 }
