@@ -1,0 +1,158 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   EnergieSaar — Design Tokens
+   Abgeleitet aus EnergieSaarDESIGN.md. Abweichungen von der Vorgabe sind
+   jeweils direkt an Ort und Stelle begruendet.
+   ========================================================================== */
+
+@theme {
+  /* --- Farben -------------------------------------------------------------
+     Sechs Werte, sonst nichts. Keine Akzentfarbe — die Abwesenheit von Farbe
+     ist das Design. Neue Farbwerte gehoeren nicht in diese Datei.            */
+  --color-vellum: #f0efe9;
+  --color-paper-white: #ffffff;
+  --color-carbon-warm: #322d2a;
+  --color-onyx-depth: #0f0e12;
+  --color-mercury: #8b8b8b;
+  --color-pure-black: #000000;
+
+  /* Abgeleitete Rollen — keine neuen Farben, nur Carbon mit Deckkraft.
+     Mercury (#8b8b8b) erreicht auf Vellum nur 2.96:1 und faellt damit durch
+     WCAG AA. Fuer gedaempften, aber lesbaren Text daher Carbon @ 65 %
+     (~7.0:1). Mercury bleibt echten Disabled-Zustaenden vorbehalten.
+     Weisse Hairlines lieferten auf Vellum 1.15:1 — unsichtbar; Carbon bei
+     voller Deckung ist zu hart, 18 % ist der stimmige Kompromiss.            */
+  --color-text-muted: color-mix(in srgb, var(--color-carbon-warm) 65%, transparent);
+  --color-hairline: color-mix(in srgb, var(--color-carbon-warm) 18%, transparent);
+  --color-hairline-inverse: color-mix(in srgb, var(--color-paper-white) 22%, transparent);
+
+  /* --- Typografie ---------------------------------------------------------
+     T1 Sans ist nicht oeffentlich verfuegbar; die Vorgabe nennt Inter oder
+     Soehne als Ersatz. Soehne ist lizenzpflichtig (Klim) → Inter.
+     Nur die Schnitte 300 und 400 — mehr gibt das System nicht her.           */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+
+  /* Zeilenhoehe und Laufweite als verschachtelte Keys — nur so verdrahtet
+     Tailwind v4 sie mit der jeweiligen text-*-Utility. Die im Quelldokument
+     vorgeschlagenen separaten --leading- und --tracking-Variablen haetten
+     hier keinerlei Wirkung gehabt.                                           */
+
+  /* Versalien-Label. Laufweite bewusst 0.12em statt der 0.12px aus der
+     Token-Tabelle: die Komponentenbeschreibung und beide Beispiel-Prompts
+     nennen 0.12em, und Versalien in 12px brauchen die weite Laufweite.       */
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.3;
+  --text-label--letter-spacing: 0.12em;
+
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.3;
+  --text-body-sm--letter-spacing: 0.01em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.4;
+  --text-body--letter-spacing: 0.01em;
+
+  --text-subheading: 1.375rem;
+  --text-subheading--line-height: 1.3;
+  --text-subheading--letter-spacing: 0.01em;
+
+  --text-heading: 2rem;
+  --text-heading--line-height: 1.2;
+  --text-heading--letter-spacing: 0.01em;
+
+  /* Display: fluide statt fest 52px. Deutsche Komposita
+     ("Photovoltaik-Freiflaechenanlagen") brechen sonst bei Zeilenhoehe 1.0
+     auf schmalen Viewports aus dem Layout. Die Decke liegt bei exakt
+     3.25rem = 52px, der Vorgabewert wird auf Desktop also punktgenau
+     erreicht.                                                                */
+  --text-display: clamp(2rem, 6.5vw, 3.25rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: 0.01em;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+
+  /* --- Radien -------------------------------------------------------------
+     Die Vorgabe widerspricht sich beim Button: Radius-Tabelle 16px, aber
+     Komponenten, Do's und Beispiel-Prompts nennen uebereinstimmend 100px.
+     Entschieden: 100px (volle Pille).                                        */
+  --radius-pill: 100px;
+  --radius-nav: 16px;
+  --radius-card: 12px;
+  --radius-small: 8px;
+
+  /* Bildradius fluide: 80px auf einem 340px breiten Bild wirkt wie ein
+     Kreis. Decke exakt 5rem = 80px.                                          */
+  --radius-image: clamp(2rem, 8vw, 5rem);
+
+  /* --- Layout ------------------------------------------------------------- */
+  --page-max-width: 1200px;
+  --section-gap: 48px;
+  --card-padding: 22px;
+  --element-gap: 8px;
+}
+
+/* ==========================================================================
+   Basis
+   ========================================================================== */
+
+@layer base {
+  html {
+    /* Deutsche Komposita brauchen Trennung, sonst reissen sie das enge
+       Display-Raster auf. Greift nur zusammen mit lang="de" im <html>.       */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  body {
+    background-color: var(--color-vellum);
+    color: var(--color-carbon-warm);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-body);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Fokusring. In der Vorgabe nicht definiert — ohne ihn ist die Seite per
+     Tastatur unbedienbar. Outline statt box-shadow, damit die
+     Schattenlosigkeit des Systems unangetastet bleibt.                       */
+  :focus-visible {
+    outline: 2px solid var(--color-carbon-warm);
+    outline-offset: 2px;
+    border-radius: var(--radius-small);
+  }
+
+  /* Auf dunklen Flaechen kehrt sich der Ring um. */
+  .surface-dark :focus-visible {
+    outline-color: var(--color-paper-white);
+  }
+
+  ::selection {
+    background-color: var(--color-carbon-warm);
+    color: var(--color-paper-white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Hilfsklassen
+   ========================================================================== */
+
+@utility container-page {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: 24px;
+}

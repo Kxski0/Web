@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Platzhalter">
+  <rect width="1600" height="900" fill="#322d2a"/>
+  <g fill="#0f0e12" opacity="0.55">
+    <rect x="0" y="560" width="1600" height="340"/>
+  </g>
+  <g stroke="#f0efe9" stroke-width="1" opacity="0.10">
+    <path d="M0 560h1600M0 640h1600M0 720h1600M0 800h1600"/>
+    <path d="M200 560v340M400 560v340M600 560v340M800 560v340M1000 560v340M1200 560v340M1400 560v340"/>
+  </g>
+  <g fill="#f0efe9" opacity="0.06">
+    <circle cx="1180" cy="300" r="170"/>
+  </g>
+</svg>
