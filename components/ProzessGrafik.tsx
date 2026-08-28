@@ -59,13 +59,17 @@ export function ProzessGrafik({ stufe }: { stufe: number }) {
         <path d="M345 302 V326 M357 302 V326" pathLength={1} opacity={0.5} />
       </g>
 
-      {/* 4 — Kostenverlauf */}
-      <g className={ebene(4)}>
+      {/*
+        4 — Kostenverlauf.
+        Die einzige farbige Linie der Grafik: Sie zeigt das Ergebnis des
+        ganzen Vorgehens, und genau dorthin gehoert der Akzent.
+      */}
+      <g className={ebene(4)} stroke="var(--color-kupfer)">
         <path
           d="M110 372 C 158 372 176 392 224 396 S 300 402 340 403"
           pathLength={1}
         />
-        <circle cx="340" cy="403" r="3.5" fill="currentColor" stroke="none" />
+        <circle cx="340" cy="403" r="3.5" fill="var(--color-kupfer)" stroke="none" />
       </g>
     </svg>
   );

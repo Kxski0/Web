@@ -31,7 +31,18 @@ Drei Merkmale tragen das Erscheinungsbild und dürfen nicht verwässert werden:
 2. Das 4px-Quadrat vor jedem Section-Label (`components/SectionLabel.tsx`).
 3. Der große Radius auf allen Bildcontainern (`components/ImageCard.tsx`).
 
-Dazu gilt: keine Schatten, keine Icons, keine Akzentfarbe.
+Dazu gilt: keine Schatten, keine Icons.
+
+**Eine Akzentfarbe gibt es entgegen der Vorgabe.** Der Kunde fand die Seite
+zu farblos; die Vorgabe ist Referenz, nicht Gesetz. Kupfer markiert
+ausschließlich **Handlung und Ergebnis**: Primär-Buttons, das 4px-Quadrat vor
+jedem Section-Label, den aktiven Navigationspunkt, den geöffneten
+Accordion-Eintrag und die Kostenkurve in der Prozess-Grafik. Nicht in
+Fließtext, nicht auf Flächen, nicht im Fokusring.
+
+Zwei Tonstufen, weil gerechnet und nicht geschätzt: Kein einzelner Kupferton
+besteht auf hellem **und** dunklem Grund. `--color-kupfer` (#a8481f) trägt auf
+Vellum mit 5.05:1, `--color-kupfer-hell` (#e08a5a) auf Carbon mit 5.15:1.
 
 ### Bewusste Abweichungen von der Vorgabe
 
@@ -68,17 +79,21 @@ Alle Inhalte liegen zentral in `content/`:
 
 ### Was noch fehlt
 
-**Bilder.** Die Bildebene tragen derzeit gezeichnete Szenen
-(`components/szenen.tsx`): technische Architekturzeichnungen in der Farbwelt
-der Marke. Es liegen keine eigenen Aufnahmen vor, und aus der
-Entwicklungsumgebung ist kein Bildhost erreichbar (Unsplash, Pexels, Picsum
-und Pixabay antworten alle nicht).
+**Bilder.** Jeder Eintrag in `content/media.ts` hat eine gezeichnete Szene
+(`components/szenen.tsx`) und ein Unsplash-Foto. Lädt das Foto, wird es
+gezeigt; lädt es nicht, fällt `<Bild>` automatisch auf die Szene zurück — es
+gibt nie ein kaputtes Bild.
 
-Umstellung auf echte Fotos: in `content/media.ts` beim jeweiligen Eintrag
-`foto` statt `szene` setzen. `<Bild>` nimmt beides, und der Absatz zu
-Drittanbieter-Bildern in der Datenschutzerklärung schaltet sich über
-`nutztExterneBilder` selbst zu. `images.unsplash.com` ist in
-`next.config.ts` bereits freigeschaltet.
+⚠️ **Die Unsplash-IDs sind ungeprüft.** Aus der Entwicklungsumgebung ist kein
+Bildhost erreichbar (Unsplash, Pexels, Picsum, Pixabay, Wikimedia, Flickr —
+alle geblockt), die IDs konnten weder auf Existenz noch auf ihr Motiv geprüft
+werden. Wo eine ID nicht mehr stimmt, erscheint die Szene. Beim ersten
+lokalen Start also durchsehen und die Ausreißer ersetzen.
+
+Besser als Stock sind eigene Aufnahmen: `foto` auf einen Pfad unter
+`/public` setzen. Dann liegen die Bilder auf der eigenen Domain, und der
+Absatz zu Drittanbietern in der Datenschutzerklärung entfällt automatisch
+(`nutztExterneBilder`).
 
 **Kundenstimmen.** `content/referenzen.ts` enthält nur die Namen. Zitate sind
 bewusst leer: Der Wortlaut der echten Aussagen liegt nicht vor, und erfundene

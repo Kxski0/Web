@@ -1,5 +1,6 @@
 import { DisplayHeading } from './DisplayHeading';
-import { SzeneHero } from './szenen';
+import { Bild } from './Bild';
+import { media } from '@/content/media';
 import { cn } from '@/lib/cn';
 
 /**
@@ -35,9 +36,7 @@ export function Hero({
         className,
       )}
     >
-      <div className="bild absolute inset-0 rounded-none" data-sichtbar="true">
-        <SzeneHero className="szene absolute inset-0 h-full w-full" />
-      </div>
+      <Bild szene="hero" foto={media.hero.foto} fuellend sofort priority sizes="100vw" />
 
       {/* Lesbarkeitsverlauf — siehe Kommentar oben. */}
       <div

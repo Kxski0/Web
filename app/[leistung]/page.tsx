@@ -86,7 +86,7 @@ export default async function LeistungsSeite({
             </div>
             <Bild
               szene={bildFuerLeistung(l.slug, l.cluster).szene}
-              src={bildFuerLeistung(l.slug, l.cluster).foto}
+              foto={bildFuerLeistung(l.slug, l.cluster).foto}
               aspect="aspect-[5/4]"
               priority
             />

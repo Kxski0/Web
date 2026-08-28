@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { Section } from '@/components/Section';
 import { DisplayHeading } from '@/components/DisplayHeading';
 import { Bild } from '@/components/Bild';
+import { media } from '@/content/media';
 import { Reveal } from '@/components/Reveal';
 import { Vertrauen } from '@/components/Vertrauen';
 import { ReferenzStrip } from '@/components/ReferenzStrip';
@@ -44,7 +45,7 @@ export default function UnternehmenSeite() {
             Hier gehören echte Aufnahmen des Unternehmens hin — Gebäude,
             Team, umgesetzte Projekte. Bis dahin eine gezeichnete Szene.
           */}
-          <Bild szene="unternehmen" aspect="aspect-[5/4]" />
+          <Bild szene="unternehmen" foto={media.unternehmen.foto} aspect="aspect-[5/4]" />
         </div>
       </Section>
 

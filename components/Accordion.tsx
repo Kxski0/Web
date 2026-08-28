@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
+import { cn } from '@/lib/cn';
 
 export type AccordionItem = {
   title: string;
@@ -37,12 +38,22 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
                 onClick={() => setOpenIndex(isOpen ? null : index)}
                 className="flex w-full items-center justify-between gap-6 py-6 text-left"
               >
-                <span className="text-subheading font-normal text-carbon-warm">
+                <span
+                  className={cn(
+                    'text-subheading font-normal transition-colors',
+                    isOpen ? 'text-kupfer' : 'text-carbon-warm',
+                  )}
+                >
                   {item.title}
                 </span>
                 <span
                   aria-hidden="true"
-                  className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-pill)] border border-carbon-warm bg-paper-white text-body-sm leading-none text-carbon-warm"
+                  className={cn(
+                    'flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-pill)] bg-paper-white text-body-sm leading-none transition-colors',
+                    isOpen
+                      ? 'border border-kupfer text-kupfer'
+                      : 'border border-carbon-warm text-carbon-warm',
+                  )}
                 >
                   {isOpen ? '−' : '+'}
                 </span>

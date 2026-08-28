@@ -37,7 +37,12 @@ export function BereichListe() {
               )}
             >
               <div className="flex flex-col gap-4 md:flex-row md:items-baseline md:justify-between md:gap-12">
-                <h3 className="text-heading font-light text-carbon-warm">
+                <h3
+                  className={cn(
+                    'text-heading font-light transition-colors duration-300',
+                    aktiv === c.id ? 'text-kupfer' : 'text-carbon-warm',
+                  )}
+                >
                   {c.name}
                 </h3>
                 <ul className="flex flex-wrap gap-x-6 gap-y-2 md:max-w-lg md:justify-end">

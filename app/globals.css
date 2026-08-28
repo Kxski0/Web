@@ -27,6 +27,23 @@
   --color-hairline: color-mix(in srgb, var(--color-carbon-warm) 18%, transparent);
   --color-hairline-inverse: color-mix(in srgb, var(--color-paper-white) 22%, transparent);
 
+  /* --- Akzent -------------------------------------------------------------
+     Die Design-Vorgabe verbietet Akzentfarben ausdruecklich ("die Abwesenheit
+     von Farbe ist das Design"). Der Kunde hat sich anders entschieden: zu
+     farblos. Die Vorgabe ist Referenz, nicht Gesetz — der Akzent kommt also
+     rein, aber sparsam und mit klarer Aufgabe: Er markiert Handlung und
+     Ergebnis, sonst nichts.
+
+     Zwei Tonstufen, weil gerechnet und nicht geschaetzt: Kein einziger
+     Kupferton besteht auf hellem UND dunklem Grund. Was auf Vellum als Text
+     durchgeht, faellt auf Carbon auf unter 2.4:1; was auf Carbon traegt,
+     verfehlt auf Vellum die 4.5:1.
+
+       --color-kupfer       5.05:1 auf Vellum, Weiss darauf 5.81:1
+       --color-kupfer-hell  5.15:1 auf Carbon, 7.28:1 auf Onyx            */
+  --color-kupfer: #a8481f;
+  --color-kupfer-hell: #e08a5a;
+
   /* --- Typografie ---------------------------------------------------------
      T1 Sans ist nicht oeffentlich verfuegbar; die Vorgabe nennt Inter oder
      Soehne als Ersatz. Soehne ist lizenzpflichtig (Klim) → Inter.

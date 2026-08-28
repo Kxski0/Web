@@ -5,6 +5,10 @@ import { cn } from '@/lib/cn';
  *
  * Das Quadrat ist eine der drei Signaturen des Systems und ersetzt bewusst
  * Bullet oder Icon. Es steht vor jedem Label — ohne Ausnahme.
+ *
+ * Es traegt zudem die Akzentfarbe: Die Signatur des Systems wird zum Traeger
+ * des Akzents, statt dass irgendwo eine zusaetzliche farbige Flaeche
+ * dazukommt. Das Label selbst bleibt in Carbon.
  */
 export function SectionLabel({
   children,
@@ -34,7 +38,7 @@ export function SectionLabel({
         aria-hidden="true"
         className={cn(
           'mr-2 inline-block size-1 shrink-0',
-          inverse ? 'bg-paper-white' : 'bg-carbon-warm',
+          inverse ? 'bg-kupfer-hell' : 'bg-kupfer',
         )}
       />
       {children}

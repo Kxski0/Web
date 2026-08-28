@@ -159,8 +159,10 @@ export function Nav() {
                 onClick={() => setDropdown((v) => !v)}
                 onFocus={() => setDropdown(true)}
                 className={cn(
-                  'flex items-center gap-2 text-body-sm text-paper-white transition-opacity hover:opacity-65',
-                  istLeistungsseite && 'underline underline-offset-4',
+                  'flex items-center gap-2 text-body-sm transition-opacity hover:opacity-65',
+                  istLeistungsseite
+                    ? 'text-kupfer-hell underline underline-offset-4'
+                    : 'text-paper-white',
                 )}
               >
                 Leistungen
@@ -187,8 +189,12 @@ export function Nav() {
                       href={item.href}
                       aria-current={aktiv ? 'page' : undefined}
                       className={cn(
-                        'text-body-sm text-paper-white transition-opacity hover:opacity-65',
-                        aktiv && 'underline underline-offset-4',
+                        'text-body-sm transition-opacity hover:opacity-65',
+                        // Farbe UND Unterstreichung: Der aktive Punkt darf
+                        // nicht allein an der Farbe haengen.
+                        aktiv
+                          ? 'text-kupfer-hell underline underline-offset-4'
+                          : 'text-paper-white',
                       )}
                     >
                       {item.label}
@@ -235,8 +241,10 @@ export function Nav() {
                             href={`/${l.slug}`}
                             aria-current={pathname === `/${l.slug}` ? 'page' : undefined}
                             className={cn(
-                              'text-body-sm text-paper-white transition-opacity hover:opacity-65',
-                              pathname === `/${l.slug}` && 'underline underline-offset-4',
+                              'text-body-sm transition-opacity hover:opacity-65',
+                              pathname === `/${l.slug}`
+                                ? 'text-kupfer-hell underline underline-offset-4'
+                                : 'text-paper-white',
                             )}
                           >
                             {l.name}

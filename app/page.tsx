@@ -2,6 +2,7 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { DisplayHeading } from '@/components/DisplayHeading';
 import { Bild } from '@/components/Bild';
+import { media } from '@/content/media';
 import { Button } from '@/components/Button';
 import { Reveal } from '@/components/Reveal';
 import { BereichListe } from '@/components/BereichListe';
@@ -61,7 +62,7 @@ export default function Startseite() {
       {/* Leistungsausblick */}
       <Section>
         <div className="grid gap-12 md:grid-cols-2 md:items-center">
-          <Bild szene="photovoltaik" aspect="aspect-[5/4]" />
+          <Bild szene="photovoltaik" foto={media.photovoltaik.foto} aspect="aspect-[5/4]" />
           <Reveal delay={100}>
             <DisplayHeading enthuellen>Ihre Energie. Auf Ihrem Dach.</DisplayHeading>
             <p className="mt-6 max-w-md text-body text-text-muted">
@@ -132,7 +133,7 @@ export default function Startseite() {
               </Button>
             </div>
           </Reveal>
-          <Bild szene="unternehmen" aspect="aspect-[5/4]" />
+          <Bild szene="unternehmen" foto={media.unternehmen.foto} aspect="aspect-[5/4]" />
         </div>
       </Section>
 

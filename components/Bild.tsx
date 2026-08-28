@@ -32,15 +32,17 @@ export type SzenenName = keyof typeof szenen;
 /**
  * Bildcontainer mit dem markanten Radius — die dritte Signatur des Systems.
  *
- * Nimmt entweder eine gezeichnete Szene (`szene`) oder ein echtes Foto
- * (`src`). Solange keine Fotos vorliegen, tragen die Szenen die Bildebene;
- * der Wechsel auf Fotos ist ein Austausch der Prop.
+ * Zeigt ein Foto, wenn eines hinterlegt ist, und faellt sonst auf die
+ * gezeichnete Szene zurueck. Der Rueckfall greift auch, wenn das Foto nicht
+ * laedt: Die Foto-URLs stammen von Unsplash und lassen sich aus der
+ * Entwicklungsumgebung nicht pruefen (kein Bildhost erreichbar). Statt eines
+ * kaputten Bildes erscheint dann die Szene — sichtbar wird der Unterschied
+ * nur daran, dass eine Zeichnung statt eines Fotos steht.
  *
  * Beim Eintritt ins Bild laeuft eine Enthuellung: Die Maske gibt den Inhalt
  * von unten nach oben frei, das Motiv faehrt aus einer leichten
- * Ueberzeichnung in seine Endgroesse, und das Linienwerk der Szene wird
- * gezeichnet. Bei prefers-reduced-motion entfaellt das vollstaendig — die
- * Regeln dazu stehen in globals.css.
+ * Ueberzeichnung in seine Endgroesse, und das Linienwerk einer Szene wird
+ * gezeichnet.
  *
  * Wichtig: Die Maske liegt auf einem INNEREN Element, nicht auf dem
  * beobachteten Container. clip-path fliesst in die Berechnung des
@@ -49,26 +51,35 @@ export type SzenenName = keyof typeof szenen;
  */
 export function Bild({
   szene,
-  src,
+  foto,
   alt = '',
   className,
   aspect = 'aspect-[4/3]',
   sizes = '(max-width: 768px) 100vw, 50vw',
   priority = false,
+  fuellend = false,
+  sofort = false,
 }: {
-  szene?: SzenenName;
-  src?: string;
+  szene: SzenenName;
+  /** Unsplash-URL oder lokaler Pfad. Faellt bei Fehler auf die Szene zurueck. */
+  foto?: string;
   /** Leerer String nur fuer rein dekorative Bilder. */
   alt?: string;
   className?: string;
   aspect?: string;
   sizes?: string;
   priority?: boolean;
+  /** Fuellt den Elternbereich statt ein Seitenverhaeltnis vorzugeben (Hero). */
+  fuellend?: boolean;
+  /** Ohne Enthuellung sofort sichtbar (Hero). */
+  sofort?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [sichtbar, setSichtbar] = useState(false);
+  const [sichtbar, setSichtbar] = useState(sofort);
+  const [fotoKaputt, setFotoKaputt] = useState(false);
 
   useEffect(() => {
+    if (sofort) return;
     const el = ref.current;
     if (!el) return;
 
@@ -83,26 +94,41 @@ export function Bild({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [sofort]);
 
-  const Szene = szene ? szenen[szene] : null;
+  const Szene = szenen[szene];
+  const zeigeFoto = Boolean(foto) && !fotoKaputt;
 
   return (
     <div
       ref={ref}
       data-sichtbar={sichtbar ? 'true' : undefined}
-      className={cn('bild relative w-full', aspect, className)}
+      className={cn(
+        'bild',
+        fuellend ? 'absolute inset-0' : cn('relative w-full', aspect),
+        className,
+      )}
     >
-      <div className="bildmaske absolute inset-0 overflow-hidden rounded-[var(--radius-image)] bg-[color-mix(in_srgb,var(--color-carbon-warm)_8%,var(--color-vellum))]">
-        {Szene ? (
-          <Szene className="szene absolute inset-0 h-full w-full" />
-        ) : src ? (
+      <div
+        className={cn(
+          'bildmaske absolute inset-0 overflow-hidden bg-[color-mix(in_srgb,var(--color-carbon-warm)_8%,var(--color-vellum))]',
+          fuellend ? 'rounded-none' : 'rounded-[var(--radius-image)]',
+        )}
+      >
+        {/*
+          Die Szene liegt immer darunter. Faellt das Foto aus, steht sofort
+          etwas da — es blitzt keine leere Flaeche auf.
+        */}
+        <Szene className="szene absolute inset-0 h-full w-full" />
+
+        {zeigeFoto ? (
           <Image
-            src={src}
+            src={foto as string}
             alt={alt}
             fill
             sizes={sizes}
             priority={priority}
+            onError={() => setFotoKaputt(true)}
             className="szene object-cover"
           />
         ) : null}

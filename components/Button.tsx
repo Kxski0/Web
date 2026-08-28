@@ -12,8 +12,12 @@ type Variant = 'filled' | 'ghost' | 'invers' | 'ghostInvers';
  *
  * Zustaende sind in der Vorgabe nicht definiert. Ohne Farben und ohne
  * Schatten bleiben nur Fuellungstausch und Deckkraft:
- *   filled → Hover wechselt Carbon auf Onyx
+ *   filled → Kupfer, Hover dunkelt ab
  *   ghost  → Hover fuellt sich mit Carbon, wird also zum Zwilling
+ *
+ * Der gefuellte Button traegt als einziges Bedienelement die Akzentfarbe.
+ * Er ist der wichtigste Handlungsausloeser der Seite — genau dort gehoert
+ * die Aufmerksamkeit hin, und nirgends sonst.
  *
  * Fuer dunkle Flaechen gibt es eigene Varianten statt Ueberschreibungen per
  * className: Konkurrieren zwei Tailwind-Utilities fuer dieselbe Eigenschaft,
@@ -29,13 +33,15 @@ const base =
 
 const variants: Record<Variant, string> = {
   filled:
-    'border border-transparent bg-carbon-warm text-paper-white hover:bg-onyx-depth',
+    'border border-transparent bg-kupfer text-paper-white hover:bg-[#8c3a16]',
   ghost:
     'border border-carbon-warm bg-transparent text-carbon-warm ' +
     'hover:bg-carbon-warm hover:text-paper-white',
-  // Auf dunklen Flaechen: helle Fuellung, dunkle Schrift.
+  // Auf dunklen Flaechen dieselbe Aussage wie filled, nur in der hellen
+  // Tonstufe des Akzents: Der Primaer-Button sieht ueberall gleich aus.
+  // Carbon auf Kupfer hell ergibt 5.15:1 und besteht damit AA.
   invers:
-    'border border-transparent bg-paper-white text-carbon-warm hover:bg-vellum',
+    'border border-transparent bg-kupfer-hell text-carbon-warm hover:bg-[#efa47a]',
   ghostInvers:
     'border border-paper-white bg-transparent text-paper-white ' +
     'hover:bg-paper-white hover:text-carbon-warm',
