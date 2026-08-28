@@ -25,6 +25,23 @@ Token liegen vollständig in `app/globals.css` im `@theme`-Block — Farben,
 Typografie, Radien, Layout. Neue Farbwerte gehören nicht dorthin: Das System
 ist monochrom, und die Abwesenheit von Farbe ist beabsichtigt.
 
+### Rhythmus
+
+Die erste Fassung war zu gleichförmig: Jede Sektion hatte dieselbe Form —
+Label, Überschrift links, Text, Haarlinien-Liste — und alles saß im selben
+1200px-Raster. Dagegen arbeiten jetzt vier Brüche:
+
+- **`Statement`** — Vollbreiten-Bahn auf dunklem Grund mit `--text-mega`,
+  der größten Schrift der Seite. Ein Wort trägt den Akzent, nicht der Satz.
+- **`BereichListe`** — horizontale Bahn: Die Sektion bleibt stehen, die
+  fünf Bereiche laufen seitlich vorbei. Unter 1024px und bei
+  `prefers-reduced-motion` schlicht eine Liste untereinander.
+- **`BildBahn`** — Bild von Kante zu Kante, ohne Radius und ohne Container.
+- **`Leiter`** — nummerierter Zickzack statt der vierten Liste in Folge.
+
+`--text-mega` ist Hero und Statement vorbehalten. Wenn alles groß ist, ist
+nichts groß.
+
 Drei Merkmale tragen das Erscheinungsbild und dürfen nicht verwässert werden:
 
 1. Display-Überschriften in Gewicht 300 bei Zeilenhöhe 1.0 — nie fett.

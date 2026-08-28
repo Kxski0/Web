@@ -20,6 +20,19 @@ export const prozessSection = {
   text: 'Wir verkaufen kein Produkt, sondern einen Weg. Fünf Schritte, die aufeinander aufbauen.',
 };
 
+/**
+ * Die Positionierung in einem Satz, gross gesetzt.
+ *
+ * Bewusst kurz: Diese Bahn laeuft ueber die volle Breite und traegt die
+ * groesste Schrift der Seite. Ein langer Satz wuerde dort zur Textwand.
+ */
+export const statement = {
+  zeilen: ['Ein Ansprechpartner.', 'Nicht zehn.'],
+  /** Das Wort, das den Akzent traegt. */
+  betont: 'Nicht zehn.',
+  text: 'Für den Tarif eine Firma, für die Anlage eine zweite, für die Heizung eine dritte. Jede kennt ihren Ausschnitt. Wir sehen das Ganze — und bleiben derselbe Ansprechpartner, wenn es an die Umsetzung geht.',
+};
+
 export const warum = {
   label: 'UNTERSCHIED',
   headline: 'Warum Energie Zentrum Saar?',

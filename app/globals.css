@@ -88,6 +88,14 @@
   --text-display--line-height: 1;
   --text-display--letter-spacing: 0.01em;
 
+  /* Eine Stufe ueber Display, fuer die wenigen Momente, die tragen sollen:
+     Hero und Statement. Sparsam einsetzen — wenn alles gross ist, ist
+     nichts gross. Zeilenhoehe unter 1, weil bei dieser Groesse sonst
+     Loecher zwischen den Zeilen entstehen. */
+  --text-mega: clamp(2.75rem, 8vw, 6.5rem);
+  --text-mega--line-height: 0.92;
+  --text-mega--letter-spacing: -0.015em;
+
   --font-weight-light: 300;
   --font-weight-normal: 400;
 

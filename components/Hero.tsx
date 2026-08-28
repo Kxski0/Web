@@ -45,7 +45,7 @@ export function Hero({
       />
 
       <div className="container-page auftritt relative w-full pb-24 pt-40">
-        <DisplayHeading as="h1" inverse className="max-w-3xl">
+        <DisplayHeading as="h1" inverse className="max-w-4xl text-mega">
           {headline.map((zeile) => (
             <span key={zeile} className="zeile">
               <span>{zeile}</span>
@@ -58,6 +58,17 @@ export function Hero({
         ) : null}
 
         {children ? <div className="mt-10">{children}</div> : null}
+      </div>
+
+      {/* Scroll-Hinweis: eine Linie, die nach unten zeigt. Kein Icon. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-8 right-6 hidden items-center gap-3 md:flex"
+      >
+        <span className="text-label uppercase tracking-[0.12em] text-paper-white/50">
+          Scrollen
+        </span>
+        <span className="block h-12 w-px bg-gradient-to-b from-paper-white/50 to-transparent" />
       </div>
     </section>
   );

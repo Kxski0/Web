@@ -10,6 +10,9 @@ import { ProzessSequenz } from '@/components/ProzessSequenz';
 import { Vertrauen } from '@/components/Vertrauen';
 import { ReferenzStrip } from '@/components/ReferenzStrip';
 import { CTAAbschluss } from '@/components/CTAAbschluss';
+import { Statement } from '@/components/Statement';
+import { Leiter } from '@/components/Leiter';
+import { BildBahn } from '@/components/BildBahn';
 import {
   hero,
   optimieren,
@@ -37,6 +40,9 @@ export default function Startseite() {
         </div>
       </Hero>
 
+      {/* Die Positionierung, gross und ueber die volle Breite */}
+      <Statement />
+
       {/* Was koennen wir fuer Sie optimieren? */}
       <Section label={optimieren.label} id="bereiche">
         <Reveal>
@@ -59,13 +65,15 @@ export default function Startseite() {
         <ProzessSequenz />
       </Section>
 
-      {/* Leistungsausblick */}
+      {/* Leistungsausblick: Bild ueber die volle Breite, Text darunter */}
+      <BildBahn szene="photovoltaik" foto={media.photovoltaik.foto} />
       <Section>
-        <div className="grid gap-12 md:grid-cols-2 md:items-center">
-          <Bild szene="photovoltaik" foto={media.photovoltaik.foto} aspect="aspect-[5/4]" />
-          <Reveal delay={100}>
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16">
+          <Reveal>
             <DisplayHeading enthuellen>Ihre Energie. Auf Ihrem Dach.</DisplayHeading>
-            <p className="mt-6 max-w-md text-body text-text-muted">
+          </Reveal>
+          <Reveal delay={100} className="md:pt-2">
+            <p className="max-w-md text-body text-text-muted">
               Photovoltaik ist unser sichtbarster Leistungsbereich — aber nur einer
               von zehn. Was zu Ihrer Immobilie passt, zeigt die Analyse.
             </p>
@@ -101,18 +109,7 @@ export default function Startseite() {
             {warum.headline}
           </DisplayHeading>
         </Reveal>
-        <ul className="border-t border-hairline">
-          {warum.punkte.map((p, i) => (
-            <Reveal as="li" key={p.titel} delay={i * 60}>
-              <div className="grid gap-2 border-b border-hairline py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:gap-12">
-                <h3 className="text-subheading font-normal text-carbon-warm">
-                  {p.titel}
-                </h3>
-                <p className="max-w-xl text-body text-text-muted">{p.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
+        <Leiter punkte={warum.punkte} />
       </Section>
 
       {/* Ueber uns */}
