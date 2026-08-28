@@ -87,7 +87,7 @@ export function Nav() {
           aria-label="Hauptnavigation"
           className="surface-dark pointer-events-auto flex items-center justify-between gap-6 rounded-[var(--radius-nav)] border border-hairline-inverse bg-carbon-warm px-6 py-[18px]"
         >
-          <Link href="/" aria-label="EnergieSaar — zur Startseite">
+          <Link href="/" aria-label="Energie Zentrum Saar — zur Startseite">
             <Logo inverse />
           </Link>
 

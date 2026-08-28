@@ -9,12 +9,15 @@ import { SectionLabel } from './SectionLabel';
  */
 export function Section({
   label,
+  labelAs,
   children,
   className,
   surface = 'vellum',
   id,
 }: {
   label?: string;
+  /** 'h2', wenn das Label die Sektion inhaltlich benennt. */
+  labelAs?: 'p' | 'h2';
   children: React.ReactNode;
   className?: string;
   surface?: 'vellum' | 'white';
@@ -30,7 +33,11 @@ export function Section({
       )}
     >
       <div className="container-page">
-        {label ? <SectionLabel className="mb-6">{label}</SectionLabel> : null}
+        {label ? (
+          <SectionLabel as={labelAs} className="mb-6">
+            {label}
+          </SectionLabel>
+        ) : null}
         {children}
       </div>
     </section>

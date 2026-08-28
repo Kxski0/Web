@@ -1,16 +1,23 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { Section } from '@/components/Section';
+import { unternehmen } from '@/content/unternehmen';
 
-export const metadata: Metadata = { title: 'Impressum' };
+export const metadata: Metadata = {
+  title: 'Impressum',
+  description:
+    'Impressum und Anbieterkennzeichnung der EZS GmbH, Energie Zentrum Saar, Saarwellingen.',
+  robots: { index: false, follow: true },
+};
 
 /**
- * PFLICHTSEITE nach § 5 DDG (frueher § 5 TMG).
+ * PFLICHTSEITE nach § 5 DDG.
  *
- * Struktur steht, Inhalte sind Platzhalter. Die Angaben muessen vom
- * Unternehmen kommen und rechtlich geprueft werden — insbesondere
- * Rechtsform, Vertretungsberechtigte, Registereintrag und
- * Umsatzsteuer-Identifikationsnummer.
+ * Anschrift und Kontakt sind echt. Rechtsform-Details (Vertretungsberechtigte,
+ * Registergericht, Registernummer, Umsatzsteuer-Identifikationsnummer) liegen
+ * nicht vor und sind als Platzhalter markiert — sie muessen vom Unternehmen
+ * kommen und rechtlich geprueft werden. Erfundene Registerdaten waeren nicht
+ * nur falsch, sondern abmahnfaehig.
  */
 export default function ImpressumSeite() {
   return (
@@ -20,30 +27,30 @@ export default function ImpressumSeite() {
         <div className="max-w-2xl space-y-10 text-body">
           <div>
             <h2 className="text-subheading font-normal">Angaben gemäß § 5 DDG</h2>
-            {/* PLATZHALTER — vom Unternehmen zu ergaenzen */}
             <p className="mt-3 text-text-muted">
-              EnergieSaar
+              {unternehmen.traeger}
               <br />
-              Musterstraße 1
+              {unternehmen.marke}
               <br />
-              66111 Saarbrücken
+              {unternehmen.strasse}
+              <br />
+              {unternehmen.plz} {unternehmen.ort}
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-subheading font-normal">Kontakt</h2>
+            <p className="mt-3 text-text-muted">
+              Telefon: {unternehmen.telefon}
+              <br />
+              E-Mail: {unternehmen.email}
             </p>
           </div>
 
           <div>
             <h2 className="text-subheading font-normal">Vertreten durch</h2>
-            {/* PLATZHALTER */}
+            {/* PLATZHALTER — vom Unternehmen zu ergänzen */}
             <p className="mt-3 text-text-muted">Geschäftsführung: —</p>
-          </div>
-
-          <div>
-            <h2 className="text-subheading font-normal">Kontakt</h2>
-            {/* PLATZHALTER */}
-            <p className="mt-3 text-text-muted">
-              Telefon: +49 681 000000
-              <br />
-              E-Mail: info@energiesaar.de
-            </p>
           </div>
 
           <div>

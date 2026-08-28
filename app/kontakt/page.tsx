@@ -1,67 +1,77 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { Section } from '@/components/Section';
-import { Button } from '@/components/Button';
-import { kontakt } from '@/content/site';
+import { KontaktFormular } from '@/components/KontaktFormular';
+import { Reveal } from '@/components/Reveal';
+import { unternehmen } from '@/content/unternehmen';
 
-export const metadata: Metadata = { title: 'Kontakt' };
+export const metadata: Metadata = {
+  title: 'Kontakt',
+  description: `Energie Zentrum Saar, ${unternehmen.strasse}, ${unternehmen.plz} ${unternehmen.ort}. Telefon ${unternehmen.telefon}, ${unternehmen.email}.`,
+};
 
-/**
- * Bewusst ohne Formular.
- *
- * Ein Kontaktformular braucht eine Entscheidung ueber die Gegenstelle
- * (Mailversand, Empfaengeradresse, Einwilligungstext nach DSGVO). Solange
- * die nicht getroffen ist, waere ein Formular, das Eingaben ins Leere
- * schickt, schlechter als keines. Bis dahin: direkter Kontaktweg.
- */
 export default function KontaktSeite() {
   return (
     <>
-      <PageHeader label="KONTAKT" headline={kontakt.headline} intro={kontakt.intro} />
-      <Section>
-        <dl className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <dt className="text-label uppercase tracking-[0.12em] text-text-muted">
-              Anschrift
-            </dt>
-            {/* PLATZHALTER */}
-            <dd className="mt-2 text-body">
-              EnergieSaar
-              <br />
-              Musterstraße 1
-              <br />
-              66111 Saarbrücken
-            </dd>
-          </div>
-          <div>
-            <dt className="text-label uppercase tracking-[0.12em] text-text-muted">
-              Telefon
-            </dt>
-            {/* PLATZHALTER */}
-            <dd className="mt-2 text-body">
-              <a href="tel:+4968100000000" className="transition-opacity hover:opacity-65">
-                +49 681 000000
-              </a>
-            </dd>
-          </div>
-          <div>
-            <dt className="text-label uppercase tracking-[0.12em] text-text-muted">
-              E-Mail
-            </dt>
-            {/* PLATZHALTER */}
-            <dd className="mt-2 text-body">
-              <a
-                href="mailto:info@energiesaar.de"
-                className="transition-opacity hover:opacity-65"
-              >
-                info@energiesaar.de
-              </a>
-            </dd>
-          </div>
-        </dl>
+      <PageHeader
+        label="KONTAKT"
+        headline="Sagen Sie uns, worum es geht."
+        intro="Ein kurzer Hinweis genügt — wir melden uns und klären den Rest im Gespräch. Die Erstberatung kostet Sie nichts."
+      />
 
-        <div className="mt-12">
-          <Button href="mailto:info@energiesaar.de">E-Mail schreiben</Button>
+      <Section>
+        <div className="grid gap-16 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:gap-24">
+          <KontaktFormular />
+
+          <div className="md:pt-2">
+            <Reveal>
+              <dl className="space-y-8">
+                <div>
+                  <dt className="text-label uppercase tracking-[0.12em] text-text-muted">
+                    Telefon
+                  </dt>
+                  <dd className="mt-2 text-subheading font-light">
+                    <a
+                      href={unternehmen.telefonHref}
+                      className="transition-opacity hover:opacity-65"
+                    >
+                      {unternehmen.telefon}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-label uppercase tracking-[0.12em] text-text-muted">
+                    E-Mail
+                  </dt>
+                  <dd className="mt-2 text-body">
+                    <a
+                      href={unternehmen.emailHref}
+                      className="transition-opacity hover:opacity-65"
+                    >
+                      {unternehmen.email}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-label uppercase tracking-[0.12em] text-text-muted">
+                    Standort
+                  </dt>
+                  <dd className="mt-2 text-body">
+                    <address className="not-italic">
+                      {unternehmen.traeger}
+                      <br />
+                      {unternehmen.strasse}
+                      <br />
+                      {unternehmen.plz} {unternehmen.ort}
+                    </address>
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-8 border-t border-hairline pt-6 text-body-sm text-text-muted">
+                {unternehmen.einzugsgebiet}
+              </p>
+            </Reveal>
+          </div>
         </div>
       </Section>
     </>

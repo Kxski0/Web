@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
 
-type Variant = 'filled' | 'ghost';
+type Variant = 'filled' | 'ghost' | 'invers' | 'ghostInvers';
 
 /**
  * Button in zwei Varianten — ein aufeinander abgestimmtes Paar, das sich nur
@@ -14,6 +14,12 @@ type Variant = 'filled' | 'ghost';
  * Schatten bleiben nur Fuellungstausch und Deckkraft:
  *   filled → Hover wechselt Carbon auf Onyx
  *   ghost  → Hover fuellt sich mit Carbon, wird also zum Zwilling
+ *
+ * Fuer dunkle Flaechen gibt es eigene Varianten statt Ueberschreibungen per
+ * className: Konkurrieren zwei Tailwind-Utilities fuer dieselbe Eigenschaft,
+ * entscheidet die Reihenfolge im erzeugten Stylesheet und nicht die im
+ * Attribut. Genau daran ist der Abschluss-CTA einmal unsichtbar geworden
+ * (weisse Schrift auf weisser Flaeche) — deshalb hier explizite Varianten.
  */
 const base =
   'inline-flex items-center justify-center rounded-[var(--radius-pill)] ' +
@@ -27,6 +33,12 @@ const variants: Record<Variant, string> = {
   ghost:
     'border border-carbon-warm bg-transparent text-carbon-warm ' +
     'hover:bg-carbon-warm hover:text-paper-white',
+  // Auf dunklen Flaechen: helle Fuellung, dunkle Schrift.
+  invers:
+    'border border-transparent bg-paper-white text-carbon-warm hover:bg-vellum',
+  ghostInvers:
+    'border border-paper-white bg-transparent text-paper-white ' +
+    'hover:bg-paper-white hover:text-carbon-warm',
 };
 
 type CommonProps = {

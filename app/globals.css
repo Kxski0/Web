@@ -132,6 +132,39 @@
     outline-color: var(--color-paper-white);
   }
 
+  /*
+     Einblend-Animation, ausfallsicher.
+
+     Der versteckte Startzustand gilt ausschliesslich, wenn JavaScript
+     nachweislich laeuft (data-js wird per Inline-Skript gesetzt). Ohne
+     JavaScript bliebe sonst der halbe Seiteninhalt dauerhaft unsichtbar —
+     die Animation darf nie darueber entscheiden, ob Inhalt lesbar ist.
+  */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 700ms ease-out,
+      transform 700ms ease-out;
+  }
+
+  [data-js='true'] .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  [data-js='true'] .reveal[data-sichtbar='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js='true'] .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   ::selection {
     background-color: var(--color-carbon-warm);
     color: var(--color-paper-white);

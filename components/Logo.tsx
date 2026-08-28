@@ -1,12 +1,11 @@
 import { cn } from '@/lib/cn';
 
 /**
- * Wortmarke.
+ * Wortmarke Energie Zentrum Saar.
  *
- * Vorlaeufig: Sobald eine echte Wortmarke von EnergieSaar vorliegt, wird
- * dieses Textzeichen dagegen ausgetauscht. Der Gewichtssprung 300 → 400
- * arbeitet ausschliesslich mit den beiden Schnitten, die das System kennt,
- * und kommt ohne zweite Farbe aus.
+ * Vorlaeufig, solange keine gestaltete Marke vorliegt. Der Gewichtssprung
+ * 300 → 400 auf "Saar" arbeitet ausschliesslich mit den beiden Schnitten,
+ * die das System kennt, und kommt ohne zweite Farbe aus.
  */
 export function Logo({
   inverse = false,
@@ -18,12 +17,12 @@ export function Logo({
   return (
     <span
       className={cn(
-        'text-body-sm tracking-[0.02em] whitespace-nowrap',
+        'whitespace-nowrap text-body-sm tracking-[0.02em]',
         inverse ? 'text-paper-white' : 'text-carbon-warm',
         className,
       )}
     >
-      <span className="font-light">Energie</span>
+      <span className="font-light">Energie Zentrum </span>
       <span className="font-normal">Saar</span>
     </span>
   );

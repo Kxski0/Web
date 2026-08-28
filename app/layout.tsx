@@ -2,14 +2,16 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
+import { JsonLd } from '@/components/JsonLd';
+import { unternehmen } from '@/content/unternehmen';
 import './globals.css';
 
 /**
  * Inter als Ersatz fuer T1 Sans (nicht oeffentlich verfuegbar).
  *
- * next/font/google laedt die Dateien zur Build-Zeit herunter und liefert sie
- * anschliessend von der eigenen Domain aus — es entsteht also keine
- * Laufzeitverbindung zu Google, was die DSGVO-Frage entschaerft.
+ * next/font/google laedt die Dateien zur Build-Zeit und liefert sie
+ * anschliessend von der eigenen Domain — es entsteht keine Laufzeitverbindung
+ * zu Google, was die DSGVO-Frage entschaerft.
  */
 const inter = Inter({
   subsets: ['latin'],
@@ -17,12 +19,23 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+/** Beim Deployment auf die echte Domain setzen. */
+const basis = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.energie-zentrum-saar.de';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(basis),
   title: {
-    default: 'EnergieSaar',
-    template: '%s — EnergieSaar',
+    default: `${unternehmen.marke} — ${unternehmen.claim}`,
+    template: `%s — ${unternehmen.marke}`,
   },
-  description: 'EnergieSaar',
+  description:
+    'Ein Ansprechpartner für Energie, Kostenoptimierung, Sanierung, Bauen und Immobilien: Wir analysieren, beraten und begleiten die Umsetzung.',
+  openGraph: {
+    type: 'website',
+    locale: 'de_DE',
+    siteName: unternehmen.marke,
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -30,6 +43,18 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="de" className={inter.variable}>
+      <head>
+        {/*
+          Markiert das Dokument als JavaScript-faehig, bevor CSS angewendet
+          wird. Nur dann gilt der versteckte Startzustand der Einblend-
+          Animation — ohne JavaScript bleibt aller Inhalt sichtbar.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.dataset.js='true'",
+          }}
+        />
+      </head>
       <body>
         <a
           href="#inhalt"
@@ -40,6 +65,31 @@ export default function RootLayout({
         <Nav />
         <main id="inhalt">{children}</main>
         <Footer />
+
+        {/*
+          Strukturierte Daten zum Unternehmen. Nur belegte Angaben — keine
+          Bewertungen, Preise oder Oeffnungszeiten, die nicht bestaetigt sind.
+        */}
+        <JsonLd
+          daten={{
+            '@context': 'https://schema.org',
+            '@type': 'LocalBusiness',
+            name: unternehmen.marke,
+            legalName: unternehmen.traeger,
+            slogan: unternehmen.claim,
+            url: basis,
+            telephone: unternehmen.telefon,
+            email: unternehmen.email,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: unternehmen.strasse,
+              postalCode: unternehmen.plz,
+              addressLocality: unternehmen.ort,
+              addressRegion: unternehmen.region,
+              addressCountry: unternehmen.land,
+            },
+          }}
+        />
       </body>
     </html>
   );

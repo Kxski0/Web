@@ -1,6 +1,14 @@
-# EnergieSaar — Web
+# Energie Zentrum Saar — Web
 
-Website für EnergieSaar. Next.js 15 (App Router) mit Tailwind v4.
+Website für Energie Zentrum Saar, eine Marke der EZS GmbH in Saarwellingen.
+Next.js 15 (App Router) mit Tailwind v4.
+
+## Positionierung
+
+Die Website verkauft keine Photovoltaik, sondern **einen Ansprechpartner**:
+Analyse → Beratung → Lösung → Umsetzung → Betreuung. Photovoltaik ist einer
+von zehn Leistungsbereichen, nicht die Geschichte. Wer das beim Weiterbauen
+umdreht, bricht die Positionierung.
 
 ## Entwicklung
 
@@ -35,6 +43,7 @@ Vier Stellen weichen ab, jeweils im Code begründet:
 | `--radius-image` | fluide statt fest 80px | 80px auf 375px Breite wirkt wie ein Kreis; Decke bleibt exakt 80px |
 | `Hero` | schwacher Verlauf hinter dem Text | Ohne ihn ist weißer Text in Gewicht 300 auf beliebigen Fotos nicht garantiert lesbar |
 | `Nav` | helle Hairline | Eine reine Carbon-Fläche verschwindet auf dunklen Fotos; Rahmen statt Schatten |
+| `ProzessSequenz` | Hierarchie über Farbstufen | Inaktive Schritte über Deckkraft abzudunkeln wäre ein schöner Fokuseffekt, aber nicht mehr lesbar |
 
 Ergänzt wurden außerdem Interaktionszustände, mobile Navigation und ein
 Fokusring — die Vorgabe definiert davon nichts, ohne sie ist die Seite aber
@@ -46,14 +55,39 @@ verwendet (Carbon mit 65 % Deckkraft). Mercury erreicht auf Vellum nur
 
 ## Inhalte
 
-Sämtliche Texte liegen in `content/site.ts`, sämtliche Bildquellen in
-`content/media.ts`. Beides sind derzeit **Platzhalter**.
+Alle Inhalte liegen zentral in `content/`:
 
-Bilder sollen von Unsplash kommen; `images.unsplash.com` ist in
-`next.config.ts` bereits freigeschaltet. Vorerst stehen tonale Platzhalter aus
-`public/platzhalter/` in `content/media.ts`, weil sich konkrete Foto-URLs aus
-der Entwicklungsumgebung heraus nicht prüfen ließen. Umstellung = Strings in
-dieser einen Datei ersetzen.
+| Datei | Inhalt |
+|---|---|
+| `unternehmen.ts` | Name, Anschrift, Kontakt — einzige Quelle, wird überall referenziert |
+| `leistungen.ts` | Alle zehn Leistungen mit SEO-Title, Description, Umfang und FAQ; steuert Übersicht, Landingpages, Footer und Sitemap |
+| `prozess.ts` | Die fünf Schritte der Scroll-Sequenz |
+| `startseite.ts` | Texte der Startseite |
+| `referenzen.ts` | Kundennamen |
+| `media.ts` | Alle Bildquellen |
+
+### Was noch fehlt
+
+**Bilder.** `content/media.ts` verweist auf tonale Platzhalter aus
+`public/platzhalter/`. Vorgesehen sind große Aufnahmen aus Architektur,
+Energie-Infrastruktur und realen Projekten — ausdrücklich keine generischen
+Solar-Stockfotos. `images.unsplash.com` ist in `next.config.ts` freigeschaltet;
+die Umstellung ist ein Ersetzen der Strings in dieser einen Datei. Der Absatz
+zu Drittanbieter-Bildern in der Datenschutzerklärung schaltet sich dabei
+automatisch zu (`nutztExterneBilder`).
+
+**Kundenstimmen.** `content/referenzen.ts` enthält nur die Namen. Zitate sind
+bewusst leer: Der Wortlaut der echten Aussagen liegt nicht vor, und erfundene
+Zitate namentlich genannten Unternehmen zuzuschreiben wäre eine
+Falschdarstellung. Sobald `zitat` gefüllt ist, schaltet `ReferenzStrip`
+selbstständig von der Namensliste auf die Zitatdarstellung um.
+
+**Registerdaten im Impressum** und offene Stellen auf `/jobs`.
+
+**Formularversand.** Setzen Sie `CONTACT_WEBHOOK_URL` — die Serveraktion sendet
+die Anfrage als JSON dorthin. Ohne die Variable meldet das Formular das
+ehrlich und verweist auf Telefon und E-Mail, statt Eingaben zu verwerfen.
+Ebenfalls zu setzen: `NEXT_PUBLIC_SITE_URL` für Sitemap und Canonicals.
 
 ## Rechtliches
 
@@ -64,3 +98,20 @@ müssen vom Unternehmen kommen und rechtlich geprüft werden.
 Die Schrift wird über `next/font/google` eingebunden; Next lädt die Dateien zur
 Build-Zeit und liefert sie von der eigenen Domain — es entsteht keine
 Laufzeitverbindung zu Google.
+
+## Fallstricke beim Weiterbauen
+
+**Button-Farben nie per `className` überschreiben.** Konkurrieren zwei
+Tailwind-Utilities für dieselbe Eigenschaft, entscheidet die Reihenfolge im
+erzeugten Stylesheet — nicht die im Attribut. Genau daran war der
+Abschluss-CTA einmal weiß auf weiß und damit unsichtbar. Für dunkle Flächen
+gibt es die Varianten `invers` und `ghostInvers`.
+
+**Der versteckte Startzustand der Einblendungen gilt nur unter
+`[data-js='true']`.** Ohne diese Absicherung bliebe ohne JavaScript der halbe
+Seiteninhalt dauerhaft auf `opacity: 0`. Wer die Regel in `globals.css`
+anfasst, muss das mitdenken.
+
+**Keine erfundenen Zahlen, Zitate oder Registerdaten.** Die Vertrauens-Section
+argumentiert bewusst qualitativ statt numerisch, solange keine belastbaren
+Unternehmenszahlen vorliegen.

@@ -9,15 +9,21 @@ import { cn } from '@/lib/cn';
 export function SectionLabel({
   children,
   inverse = false,
+  as: Tag = 'p',
   className,
 }: {
   children: React.ReactNode;
   /** Auf dunklen Flaechen (Carbon, Onyx). */
   inverse?: boolean;
+  /**
+   * Als Ueberschrift rendern, wenn das Label die Sektion inhaltlich
+   * benennt — sonst entstehen Luecken in der Ueberschriftenhierarchie.
+   */
+  as?: 'p' | 'h2';
   className?: string;
 }) {
   return (
-    <p
+    <Tag
       className={cn(
         'flex items-center text-label font-normal uppercase',
         inverse ? 'text-paper-white' : 'text-carbon-warm',
@@ -32,6 +38,6 @@ export function SectionLabel({
         )}
       />
       {children}
-    </p>
+    </Tag>
   );
 }

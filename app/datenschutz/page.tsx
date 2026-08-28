@@ -1,15 +1,24 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { Section } from '@/components/Section';
+import { unternehmen } from '@/content/unternehmen';
+import { nutztExterneBilder } from '@/content/media';
 
-export const metadata: Metadata = { title: 'Datenschutz' };
+export const metadata: Metadata = {
+  title: 'Datenschutzerklärung',
+  description:
+    'Informationen zur Verarbeitung personenbezogener Daten auf der Website von Energie Zentrum Saar.',
+  robots: { index: false, follow: true },
+};
 
 /**
  * PFLICHTSEITE nach Art. 13 DSGVO.
  *
- * Struktur steht, Inhalte sind Platzhalter und muessen rechtlich geprueft
- * werden. Zwei Punkte sind technisch bereits jetzt belegbar und deshalb
- * ausformuliert: die Einbindung von Unsplash und die Schriftauslieferung.
+ * Die technisch belegbaren Absaetze (Formular, Schriftarten, Bilder, Cookies)
+ * sind ausformuliert und beschreiben den tatsaechlichen Zustand der Anwendung.
+ * Der Absatz zu externen Bildern erscheint nur, wenn wirklich Bilder von
+ * Dritten geladen werden — so behauptet die Erklaerung nie etwas Falsches.
+ * Die uebrigen Angaben muessen rechtlich geprueft werden.
  */
 export default function DatenschutzSeite() {
   return (
@@ -19,15 +28,17 @@ export default function DatenschutzSeite() {
         <div className="max-w-2xl space-y-10 text-body">
           <div>
             <h2 className="text-subheading font-normal">Verantwortliche Stelle</h2>
-            {/* PLATZHALTER */}
             <p className="mt-3 text-text-muted">
-              EnergieSaar, Musterstraße 1, 66111 Saarbrücken
+              {unternehmen.traeger}, {unternehmen.strasse}, {unternehmen.plz}{' '}
+              {unternehmen.ort}
+              <br />
+              Telefon: {unternehmen.telefon} — E-Mail: {unternehmen.email}
             </p>
           </div>
 
           <div>
             <h2 className="text-subheading font-normal">Server-Logfiles</h2>
-            {/* PLATZHALTER — abhaengig vom spaeteren Hosting */}
+            {/* PLATZHALTER — abhängig vom späteren Hosting */}
             <p className="mt-3 text-text-muted">
               Der Hosting-Anbieter erhebt und speichert automatisch Informationen
               in Server-Logfiles, die Ihr Browser übermittelt. Angaben zu
@@ -37,14 +48,14 @@ export default function DatenschutzSeite() {
           </div>
 
           <div>
-            <h2 className="text-subheading font-normal">Bilder von Unsplash</h2>
+            <h2 className="text-subheading font-normal">Kontaktformular</h2>
             <p className="mt-3 text-text-muted">
-              Auf dieser Website werden Bilder eingebunden, die vom Dienst
-              Unsplash (Unsplash Inc., Kanada) über die Domain
-              images.unsplash.com ausgeliefert werden. Beim Aufruf einer Seite
-              baut Ihr Browser dadurch eine direkte Verbindung zu diesem
-              Anbieter auf und übermittelt dabei technisch notwendige Daten,
-              insbesondere Ihre IP-Adresse.
+              Wenn Sie uns über das Kontaktformular eine Anfrage senden, werden
+              Ihre Angaben aus dem Formular einschließlich Name, E-Mail-Adresse,
+              Telefonnummer und Ihrer Nachricht zum Zweck der Bearbeitung der
+              Anfrage verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw.
+              lit. f DSGVO. Wir geben diese Daten nicht ohne Ihre Einwilligung
+              weiter.
             </p>
           </div>
 
@@ -58,6 +69,24 @@ export default function DatenschutzSeite() {
           </div>
 
           <div>
+            <h2 className="text-subheading font-normal">Bilder</h2>
+            {nutztExterneBilder ? (
+              <p className="mt-3 text-text-muted">
+                Auf dieser Website werden Bilder eingebunden, die vom Dienst
+                Unsplash (Unsplash Inc., Kanada) ausgeliefert werden. Beim Aufruf
+                einer Seite baut Ihr Browser dadurch eine direkte Verbindung zu
+                diesem Anbieter auf und übermittelt dabei technisch notwendige
+                Daten, insbesondere Ihre IP-Adresse.
+              </p>
+            ) : (
+              <p className="mt-3 text-text-muted">
+                Alle Bilder dieser Website werden von unserem eigenen Server
+                ausgeliefert. Es werden keine Bilder von Dritten nachgeladen.
+              </p>
+            )}
+          </div>
+
+          <div>
             <h2 className="text-subheading font-normal">Cookies</h2>
             <p className="mt-3 text-text-muted">
               Diese Website setzt keine Cookies, die nicht für den Betrieb
@@ -68,7 +97,6 @@ export default function DatenschutzSeite() {
 
           <div>
             <h2 className="text-subheading font-normal">Ihre Rechte</h2>
-            {/* PLATZHALTER */}
             <p className="mt-3 text-text-muted">
               Sie haben das Recht auf Auskunft, Berichtigung, Löschung,
               Einschränkung der Verarbeitung, Datenübertragbarkeit sowie

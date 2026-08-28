@@ -17,12 +17,14 @@ export function Hero({
   src,
   alt,
   headline,
+  subline,
   children,
   className,
 }: {
   src: string;
   alt: string;
   headline: React.ReactNode;
+  subline?: string;
   /** Buttons oder Karten unterhalb der Ueberschrift. */
   children?: React.ReactNode;
   className?: string;
@@ -53,7 +55,10 @@ export function Hero({
         <DisplayHeading as="h1" inverse className="max-w-3xl">
           {headline}
         </DisplayHeading>
-        {children ? <div className="mt-8">{children}</div> : null}
+        {subline ? (
+          <p className="mt-6 max-w-xl text-body text-paper-white/80">{subline}</p>
+        ) : null}
+        {children ? <div className="mt-10">{children}</div> : null}
       </div>
     </section>
   );
