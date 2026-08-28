@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { Section } from '@/components/Section';
 import { DisplayHeading } from '@/components/DisplayHeading';
 import { SectionLabel } from '@/components/SectionLabel';
-import { ImageCard } from '@/components/ImageCard';
+import { Bild } from '@/components/Bild';
 import { Button } from '@/components/Button';
 import { Reveal } from '@/components/Reveal';
 import { FAQ } from '@/components/FAQ';
@@ -16,7 +16,7 @@ import {
   leistungNachSlug,
   leistungenNachCluster,
 } from '@/content/leistungen';
-import { bildFuerCluster } from '@/content/media';
+import { bildFuerLeistung } from '@/content/media';
 import { unternehmen } from '@/content/unternehmen';
 
 /**
@@ -71,7 +71,11 @@ export default async function LeistungsSeite({
           <SectionLabel className="mb-6">{l.name.toUpperCase()}</SectionLabel>
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
-              <DisplayHeading as="h1">{l.h1}</DisplayHeading>
+              <Reveal>
+                <DisplayHeading as="h1" enthuellen>
+                  {l.h1}
+                </DisplayHeading>
+              </Reveal>
               <p className="mt-6 max-w-xl text-body text-text-muted">{l.intro}</p>
               <div className="mt-10 flex flex-wrap gap-4">
                 <Button href="/kontakt">{l.ctaLabel}</Button>
@@ -80,9 +84,12 @@ export default async function LeistungsSeite({
                 </Button>
               </div>
             </div>
-            <Reveal delay={100}>
-              <ImageCard src={bildFuerCluster(l.cluster)} alt="" priority />
-            </Reveal>
+            <Bild
+              szene={bildFuerLeistung(l.slug, l.cluster).szene}
+              src={bildFuerLeistung(l.slug, l.cluster).foto}
+              aspect="aspect-[5/4]"
+              priority
+            />
           </div>
         </div>
       </section>
@@ -90,7 +97,7 @@ export default async function LeistungsSeite({
       {/* Leistungsumfang */}
       <Section label="UMFANG" surface="white">
         <Reveal>
-          <DisplayHeading className="mb-12 max-w-2xl">
+          <DisplayHeading enthuellen className="mb-12 max-w-2xl">
             Was dazugehört.
           </DisplayHeading>
         </Reveal>
@@ -116,7 +123,7 @@ export default async function LeistungsSeite({
         <Section label="HÄUFIGE FRAGEN">
           <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:items-start">
             <Reveal>
-              <DisplayHeading>Fragen, die häufig kommen.</DisplayHeading>
+              <DisplayHeading enthuellen>Fragen, die häufig kommen.</DisplayHeading>
             </Reveal>
             <FAQ eintraege={l.faq} />
           </div>

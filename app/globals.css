@@ -165,6 +165,151 @@
     }
   }
 
+  /* ==================================================================
+     Bewegung
+
+     Alles Folgende ist Zutat, nie Voraussetzung: Der versteckte oder
+     verschobene Startzustand gilt ausschliesslich unter [data-js='true'],
+     und bei prefers-reduced-motion faellt er ersatzlos weg. Ohne
+     JavaScript und ohne Bewegungswunsch steht jede Seite vollstaendig da.
+     ================================================================== */
+
+  /* --- Bildenthuellung ---------------------------------------------
+     Der Container gibt das Motiv von unten nach oben frei, waehrend das
+     Motiv selbst aus einer leichten Ueberzeichnung in seine Endgroesse
+     faehrt. Zwei Geschwindigkeiten, damit die Bewegung Tiefe bekommt.   */
+  /* Die Maske liegt bewusst INNEN: clip-path fliesst in die Berechnung des
+     IntersectionObserver ein. Laege sie auf dem beobachteten Container,
+     meldete das zugeklappte Bild nie "sichtbar" und bliebe fuer immer zu. */
+  [data-js='true'] .bildmaske {
+    clip-path: inset(0 0 100% 0 round var(--radius-image));
+    transition: clip-path 1100ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .bildmaske {
+    clip-path: inset(0 0 0 0 round var(--radius-image));
+  }
+
+  [data-js='true'] .bild .szene {
+    transform: scale(1.07);
+    transition: transform 1500ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .szene {
+    transform: scale(1);
+  }
+
+  /* --- Linienzeichnung der Szenen -----------------------------------
+     Die Pfade tragen pathLength=1, deshalb genuegt dasarray/offset 1.
+     Die Gruppen laufen leicht versetzt, damit die Zeichnung sich
+     aufbaut statt auf einmal zu erscheinen.                            */
+  [data-js='true'] .szene .zeichnen > path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen > path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1600ms cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen:nth-of-type(2) > path {
+    transition-delay: 160ms;
+  }
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen:nth-of-type(3) > path {
+    transition-delay: 320ms;
+  }
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen:nth-of-type(4) > path {
+    transition-delay: 480ms;
+  }
+
+  /* --- Gestaffelter Auftritt ---------------------------------------
+     Fuer den Hero und andere Gruppen, die beim Laden nacheinander
+     eintreten sollen. Der Versatz kommt ueber --stufe.                 */
+  [data-js='true'] .auftritt > * {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: auftritt 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    animation-delay: calc(var(--stufe, 0) * 1ms + 120ms);
+  }
+
+  [data-js='true'] .auftritt > *:nth-child(2) { --stufe: 130; }
+  [data-js='true'] .auftritt > *:nth-child(3) { --stufe: 260; }
+  [data-js='true'] .auftritt > *:nth-child(4) { --stufe: 390; }
+
+  @keyframes auftritt {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* --- Zeilenweise Enthuellung grosser Ueberschriften ---------------- */
+  [data-js='true'] .zeile {
+    display: block;
+    overflow: hidden;
+  }
+
+  /* Der verschobene Startzustand gilt ausschliesslich innerhalb einer
+     <Reveal>-Huelle — nur die setzt data-sichtbar und holt die Zeile
+     zurueck. Ohne diese Einschraenkung bliebe jede Ueberschrift ohne
+     Huelle dauerhaft aus der Maske geschoben und damit unsichtbar. */
+  [data-js='true'] .reveal .zeile > span {
+    display: block;
+    transform: translateY(102%);
+    transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-js='true'] .reveal[data-sichtbar='true'] .zeile > span {
+    transform: none;
+  }
+
+  [data-js='true'] .zeile:nth-child(2) > span { transition-delay: 90ms; }
+
+  /* --- Navigations-Aufklappen --------------------------------------- */
+  .navpanel {
+    transform-origin: top;
+    transition:
+      opacity 220ms ease,
+      transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      visibility 260ms;
+  }
+
+  .navpanel[data-offen='false'] {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scaleY(0.98);
+    pointer-events: none;
+  }
+
+  .navpanel[data-offen='true'] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  /* Bewegung ist Zutat: Wer sie abbestellt, bekommt den Endzustand. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-js='true'] .bildmaske,
+    [data-js='true'] .bild[data-sichtbar='true'] .bildmaske {
+      clip-path: none;
+    }
+    [data-js='true'] .bild .szene {
+      transform: none;
+    }
+    [data-js='true'] .szene .zeichnen > path {
+      stroke-dashoffset: 0;
+    }
+    [data-js='true'] .auftritt > * {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    [data-js='true'] .reveal .zeile > span {
+      transform: none;
+    }
+  }
+
   ::selection {
     background-color: var(--color-carbon-warm);
     color: var(--color-paper-white);

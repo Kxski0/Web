@@ -68,13 +68,17 @@ Alle Inhalte liegen zentral in `content/`:
 
 ### Was noch fehlt
 
-**Bilder.** `content/media.ts` verweist auf tonale Platzhalter aus
-`public/platzhalter/`. Vorgesehen sind große Aufnahmen aus Architektur,
-Energie-Infrastruktur und realen Projekten — ausdrücklich keine generischen
-Solar-Stockfotos. `images.unsplash.com` ist in `next.config.ts` freigeschaltet;
-die Umstellung ist ein Ersetzen der Strings in dieser einen Datei. Der Absatz
-zu Drittanbieter-Bildern in der Datenschutzerklärung schaltet sich dabei
-automatisch zu (`nutztExterneBilder`).
+**Bilder.** Die Bildebene tragen derzeit gezeichnete Szenen
+(`components/szenen.tsx`): technische Architekturzeichnungen in der Farbwelt
+der Marke. Es liegen keine eigenen Aufnahmen vor, und aus der
+Entwicklungsumgebung ist kein Bildhost erreichbar (Unsplash, Pexels, Picsum
+und Pixabay antworten alle nicht).
+
+Umstellung auf echte Fotos: in `content/media.ts` beim jeweiligen Eintrag
+`foto` statt `szene` setzen. `<Bild>` nimmt beides, und der Absatz zu
+Drittanbieter-Bildern in der Datenschutzerklärung schaltet sich über
+`nutztExterneBilder` selbst zu. `images.unsplash.com` ist in
+`next.config.ts` bereits freigeschaltet.
 
 **Kundenstimmen.** `content/referenzen.ts` enthält nur die Namen. Zitate sind
 bewusst leer: Der Wortlaut der echten Aussagen liegt nicht vor, und erfundene
@@ -111,6 +115,17 @@ gibt es die Varianten `invers` und `ghostInvers`.
 `[data-js='true']`.** Ohne diese Absicherung bliebe ohne JavaScript der halbe
 Seiteninhalt dauerhaft auf `opacity: 0`. Wer die Regel in `globals.css`
 anfasst, muss das mitdenken.
+
+**`clip-path` niemals auf das Element legen, das ein IntersectionObserver
+beobachtet.** Der Zuschnitt fließt in die Sichtbarkeitsberechnung ein: Ein
+zugeklapptes Bild meldet sich nie als sichtbar und bleibt damit für immer zu.
+Deshalb sitzt die Maske in `Bild.tsx` auf einem inneren Element
+(`.bildmaske`), beobachtet wird der äußere Container.
+
+**Die Zeilen-Enthüllung (`enthuellen` an `DisplayHeading`) braucht eine
+`<Reveal>`-Hülle.** Ohne sie bliebe die Überschrift aus ihrer Maske geschoben
+und wäre unsichtbar. Die CSS-Regel ist deshalb auf `.reveal .zeile` begrenzt —
+eine Überschrift ohne Hülle steht einfach da, statt zu verschwinden.
 
 **Keine erfundenen Zahlen, Zitate oder Registerdaten.** Die Vertrauens-Section
 argumentiert bewusst qualitativ statt numerisch, solange keine belastbaren

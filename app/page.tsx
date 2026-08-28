@@ -1,7 +1,7 @@
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { DisplayHeading } from '@/components/DisplayHeading';
-import { ImageCard } from '@/components/ImageCard';
+import { Bild } from '@/components/Bild';
 import { Button } from '@/components/Button';
 import { Reveal } from '@/components/Reveal';
 import { BereichListe } from '@/components/BereichListe';
@@ -9,7 +9,6 @@ import { ProzessSequenz } from '@/components/ProzessSequenz';
 import { Vertrauen } from '@/components/Vertrauen';
 import { ReferenzStrip } from '@/components/ReferenzStrip';
 import { CTAAbschluss } from '@/components/CTAAbschluss';
-import { media } from '@/content/media';
 import {
   hero,
   optimieren,
@@ -22,18 +21,7 @@ import {
 export default function Startseite() {
   return (
     <>
-      <Hero
-        src={media.hero}
-        alt=""
-        headline={
-          <>
-            {hero.headline[0]}
-            <br />
-            {hero.headline[1]}
-          </>
-        }
-        subline={hero.subline}
-      >
+      <Hero headline={hero.headline} subline={hero.subline}>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <Button href={hero.ctaPrimaer.href} className="self-start">
             {hero.ctaPrimaer.label}
@@ -52,7 +40,7 @@ export default function Startseite() {
       <Section label={optimieren.label} id="bereiche">
         <Reveal>
           <div className="mb-12 max-w-2xl">
-            <DisplayHeading>{optimieren.headline}</DisplayHeading>
+            <DisplayHeading enthuellen>{optimieren.headline}</DisplayHeading>
             <p className="mt-6 text-body text-text-muted">{optimieren.text}</p>
           </div>
         </Reveal>
@@ -63,7 +51,7 @@ export default function Startseite() {
       <Section label={prozessSection.label} surface="white">
         <Reveal>
           <div className="mb-16 max-w-2xl">
-            <DisplayHeading>{prozessSection.headline}</DisplayHeading>
+            <DisplayHeading enthuellen>{prozessSection.headline}</DisplayHeading>
             <p className="mt-6 text-body text-text-muted">{prozessSection.text}</p>
           </div>
         </Reveal>
@@ -72,12 +60,10 @@ export default function Startseite() {
 
       {/* Leistungsausblick */}
       <Section>
-        <div className="grid gap-12 md:grid-cols-2">
-          <Reveal>
-            <ImageCard src={media.photovoltaik} alt="" />
-          </Reveal>
-          <Reveal delay={100} className="flex flex-col justify-center">
-            <DisplayHeading>Ihre Energie. Auf Ihrem Dach.</DisplayHeading>
+        <div className="grid gap-12 md:grid-cols-2 md:items-center">
+          <Bild szene="photovoltaik" aspect="aspect-[5/4]" />
+          <Reveal delay={100}>
+            <DisplayHeading enthuellen>Ihre Energie. Auf Ihrem Dach.</DisplayHeading>
             <p className="mt-6 max-w-md text-body text-text-muted">
               Photovoltaik ist unser sichtbarster Leistungsbereich — aber nur einer
               von zehn. Was zu Ihrer Immobilie passt, zeigt die Analyse.
@@ -95,7 +81,7 @@ export default function Startseite() {
       {/* Worauf Sie sich verlassen koennen */}
       <Section label={vertrauen.label} surface="white">
         <Reveal>
-          <DisplayHeading className="mb-12 max-w-2xl">
+          <DisplayHeading enthuellen className="mb-12 max-w-2xl">
             {vertrauen.headline}
           </DisplayHeading>
         </Reveal>
@@ -110,7 +96,9 @@ export default function Startseite() {
       {/* Warum Energie Zentrum Saar */}
       <Section label={warum.label} surface="white">
         <Reveal>
-          <DisplayHeading className="mb-12 max-w-2xl">{warum.headline}</DisplayHeading>
+          <DisplayHeading enthuellen className="mb-12 max-w-2xl">
+            {warum.headline}
+          </DisplayHeading>
         </Reveal>
         <ul className="border-t border-hairline">
           {warum.punkte.map((p, i) => (
@@ -128,9 +116,9 @@ export default function Startseite() {
 
       {/* Ueber uns */}
       <Section label={ueberUns.label}>
-        <div className="grid gap-12 md:grid-cols-2">
+        <div className="grid gap-12 md:grid-cols-2 md:items-center">
           <Reveal>
-            <DisplayHeading>{ueberUns.headline}</DisplayHeading>
+            <DisplayHeading enthuellen>{ueberUns.headline}</DisplayHeading>
             <div className="mt-6 space-y-4">
               {ueberUns.text.map((t) => (
                 <p key={t.slice(0, 24)} className="max-w-md text-body text-text-muted">
@@ -144,9 +132,7 @@ export default function Startseite() {
               </Button>
             </div>
           </Reveal>
-          <Reveal delay={100}>
-            <ImageCard src={media.gebaeude} alt="" />
-          </Reveal>
+          <Bild szene="unternehmen" aspect="aspect-[5/4]" />
         </div>
       </Section>
 

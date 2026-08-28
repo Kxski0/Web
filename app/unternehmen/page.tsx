@@ -2,12 +2,11 @@ import type { Metadata } from 'next';
 import { PageHeader } from '@/components/PageHeader';
 import { Section } from '@/components/Section';
 import { DisplayHeading } from '@/components/DisplayHeading';
-import { ImageCard } from '@/components/ImageCard';
+import { Bild } from '@/components/Bild';
 import { Reveal } from '@/components/Reveal';
 import { Vertrauen } from '@/components/Vertrauen';
 import { ReferenzStrip } from '@/components/ReferenzStrip';
 import { CTAAbschluss } from '@/components/CTAAbschluss';
-import { media } from '@/content/media';
 import { ueberUns, warum, vertrauen } from '@/content/startseite';
 import { unternehmen, positionierung } from '@/content/unternehmen';
 
@@ -41,19 +40,19 @@ export default function UnternehmenSeite() {
               </p>
             </div>
           </Reveal>
-          <Reveal delay={100}>
-            {/*
-              Hier gehören echte Aufnahmen des Unternehmens hin — Gebäude,
-              Team, umgesetzte Projekte. Bis dahin ein tonaler Platzhalter.
-            */}
-            <ImageCard src={media.team} alt="" />
-          </Reveal>
+          {/*
+            Hier gehören echte Aufnahmen des Unternehmens hin — Gebäude,
+            Team, umgesetzte Projekte. Bis dahin eine gezeichnete Szene.
+          */}
+          <Bild szene="unternehmen" aspect="aspect-[5/4]" />
         </div>
       </Section>
 
       <Section label={warum.label} surface="white">
         <Reveal>
-          <DisplayHeading className="mb-12 max-w-2xl">{warum.headline}</DisplayHeading>
+          <DisplayHeading enthuellen className="mb-12 max-w-2xl">
+            {warum.headline}
+          </DisplayHeading>
         </Reveal>
         <ul className="border-t border-hairline">
           {warum.punkte.map((p, i) => (
@@ -71,7 +70,9 @@ export default function UnternehmenSeite() {
 
       <Section label={vertrauen.label}>
         <Reveal>
-          <DisplayHeading className="mb-12 max-w-2xl">{vertrauen.headline}</DisplayHeading>
+          <DisplayHeading enthuellen className="mb-12 max-w-2xl">
+            {vertrauen.headline}
+          </DisplayHeading>
         </Reveal>
         <Vertrauen />
       </Section>

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Platzhalter">
-  <rect width="1200" height="900" fill="#d9d7ce"/>
-  <g stroke="#322d2a" stroke-width="1" opacity="0.16">
-    <path d="M0 180h1200M0 360h1200M0 540h1200M0 720h1200M240 0v900M480 0v900M720 0v900M960 0v900"/>
-  </g>
-  <path d="M180 640 L420 420 L660 640 Z" fill="#322d2a" opacity="0.10"/>
-  <rect x="740" y="420" width="260" height="220" fill="#322d2a" opacity="0.07"/>
-</svg>
