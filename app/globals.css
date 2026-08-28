@@ -1,0 +1,361 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   EnergieSaar — Design Tokens
+   Abgeleitet aus EnergieSaarDESIGN.md. Abweichungen von der Vorgabe sind
+   jeweils direkt an Ort und Stelle begruendet.
+   ========================================================================== */
+
+@theme {
+  /* --- Farben -------------------------------------------------------------
+     Sechs Werte, sonst nichts. Keine Akzentfarbe — die Abwesenheit von Farbe
+     ist das Design. Neue Farbwerte gehoeren nicht in diese Datei.            */
+  --color-vellum: #f0efe9;
+  --color-paper-white: #ffffff;
+  --color-carbon-warm: #322d2a;
+  --color-onyx-depth: #0f0e12;
+  --color-mercury: #8b8b8b;
+  --color-pure-black: #000000;
+
+  /* Abgeleitete Rollen — keine neuen Farben, nur Carbon mit Deckkraft.
+     Mercury (#8b8b8b) erreicht auf Vellum nur 2.96:1 und faellt damit durch
+     WCAG AA. Fuer gedaempften, aber lesbaren Text daher Carbon @ 65 %
+     (~7.0:1). Mercury bleibt echten Disabled-Zustaenden vorbehalten.
+     Weisse Hairlines lieferten auf Vellum 1.15:1 — unsichtbar; Carbon bei
+     voller Deckung ist zu hart, 18 % ist der stimmige Kompromiss.            */
+  --color-text-muted: color-mix(in srgb, var(--color-carbon-warm) 65%, transparent);
+  --color-hairline: color-mix(in srgb, var(--color-carbon-warm) 18%, transparent);
+  --color-hairline-inverse: color-mix(in srgb, var(--color-paper-white) 22%, transparent);
+
+  /* --- Akzent -------------------------------------------------------------
+     Die Design-Vorgabe verbietet Akzentfarben ausdruecklich ("die Abwesenheit
+     von Farbe ist das Design"). Der Kunde hat sich anders entschieden: zu
+     farblos. Die Vorgabe ist Referenz, nicht Gesetz — der Akzent kommt also
+     rein, aber sparsam und mit klarer Aufgabe: Er markiert Handlung und
+     Ergebnis, sonst nichts.
+
+     Zwei Tonstufen, weil gerechnet und nicht geschaetzt: Kein einziger
+     Kupferton besteht auf hellem UND dunklem Grund. Was auf Vellum als Text
+     durchgeht, faellt auf Carbon auf unter 2.4:1; was auf Carbon traegt,
+     verfehlt auf Vellum die 4.5:1.
+
+       --color-kupfer       5.05:1 auf Vellum, Weiss darauf 5.81:1
+       --color-kupfer-hell  5.15:1 auf Carbon, 7.28:1 auf Onyx            */
+  --color-kupfer: #a8481f;
+  --color-kupfer-hell: #e08a5a;
+
+  /* --- Typografie ---------------------------------------------------------
+     T1 Sans ist nicht oeffentlich verfuegbar; die Vorgabe nennt Inter oder
+     Soehne als Ersatz. Soehne ist lizenzpflichtig (Klim) → Inter.
+     Nur die Schnitte 300 und 400 — mehr gibt das System nicht her.           */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+
+  /* Zeilenhoehe und Laufweite als verschachtelte Keys — nur so verdrahtet
+     Tailwind v4 sie mit der jeweiligen text-*-Utility. Die im Quelldokument
+     vorgeschlagenen separaten --leading- und --tracking-Variablen haetten
+     hier keinerlei Wirkung gehabt.                                           */
+
+  /* Versalien-Label. Laufweite bewusst 0.12em statt der 0.12px aus der
+     Token-Tabelle: die Komponentenbeschreibung und beide Beispiel-Prompts
+     nennen 0.12em, und Versalien in 12px brauchen die weite Laufweite.       */
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.3;
+  --text-label--letter-spacing: 0.12em;
+
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.3;
+  --text-body-sm--letter-spacing: 0.01em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.4;
+  --text-body--letter-spacing: 0.01em;
+
+  --text-subheading: 1.375rem;
+  --text-subheading--line-height: 1.3;
+  --text-subheading--letter-spacing: 0.01em;
+
+  --text-heading: 2rem;
+  --text-heading--line-height: 1.2;
+  --text-heading--letter-spacing: 0.01em;
+
+  /* Display: fluide statt fest 52px. Deutsche Komposita
+     ("Photovoltaik-Freiflaechenanlagen") brechen sonst bei Zeilenhoehe 1.0
+     auf schmalen Viewports aus dem Layout. Die Decke liegt bei exakt
+     3.25rem = 52px, der Vorgabewert wird auf Desktop also punktgenau
+     erreicht.                                                                */
+  --text-display: clamp(2rem, 6.5vw, 3.25rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: 0.01em;
+
+  /* Eine Stufe ueber Display, fuer die wenigen Momente, die tragen sollen:
+     Hero und Statement. Sparsam einsetzen — wenn alles gross ist, ist
+     nichts gross. Zeilenhoehe unter 1, weil bei dieser Groesse sonst
+     Loecher zwischen den Zeilen entstehen. */
+  --text-mega: clamp(2.75rem, 8vw, 6.5rem);
+  --text-mega--line-height: 0.92;
+  --text-mega--letter-spacing: -0.015em;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+
+  /* --- Radien -------------------------------------------------------------
+     Die Vorgabe widerspricht sich beim Button: Radius-Tabelle 16px, aber
+     Komponenten, Do's und Beispiel-Prompts nennen uebereinstimmend 100px.
+     Entschieden: 100px (volle Pille).                                        */
+  --radius-pill: 100px;
+  --radius-nav: 16px;
+  --radius-card: 12px;
+  --radius-small: 8px;
+
+  /* Bildradius fluide: 80px auf einem 340px breiten Bild wirkt wie ein
+     Kreis. Decke exakt 5rem = 80px.                                          */
+  --radius-image: clamp(2rem, 8vw, 5rem);
+
+  /* --- Layout ------------------------------------------------------------- */
+  --page-max-width: 1200px;
+  --section-gap: 48px;
+  --card-padding: 22px;
+  --element-gap: 8px;
+}
+
+/* ==========================================================================
+   Basis
+   ========================================================================== */
+
+@layer base {
+  html {
+    /* Deutsche Komposita brauchen Trennung, sonst reissen sie das enge
+       Display-Raster auf. Greift nur zusammen mit lang="de" im <html>.       */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  body {
+    background-color: var(--color-vellum);
+    color: var(--color-carbon-warm);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-body);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Fokusring. In der Vorgabe nicht definiert — ohne ihn ist die Seite per
+     Tastatur unbedienbar. Outline statt box-shadow, damit die
+     Schattenlosigkeit des Systems unangetastet bleibt.                       */
+  :focus-visible {
+    outline: 2px solid var(--color-carbon-warm);
+    outline-offset: 2px;
+    border-radius: var(--radius-small);
+  }
+
+  /* Auf dunklen Flaechen kehrt sich der Ring um. */
+  .surface-dark :focus-visible {
+    outline-color: var(--color-paper-white);
+  }
+
+  /*
+     Einblend-Animation, ausfallsicher.
+
+     Der versteckte Startzustand gilt ausschliesslich, wenn JavaScript
+     nachweislich laeuft (data-js wird per Inline-Skript gesetzt). Ohne
+     JavaScript bliebe sonst der halbe Seiteninhalt dauerhaft unsichtbar —
+     die Animation darf nie darueber entscheiden, ob Inhalt lesbar ist.
+  */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 700ms ease-out,
+      transform 700ms ease-out;
+  }
+
+  [data-js='true'] .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  [data-js='true'] .reveal[data-sichtbar='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js='true'] .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ==================================================================
+     Bewegung
+
+     Alles Folgende ist Zutat, nie Voraussetzung: Der versteckte oder
+     verschobene Startzustand gilt ausschliesslich unter [data-js='true'],
+     und bei prefers-reduced-motion faellt er ersatzlos weg. Ohne
+     JavaScript und ohne Bewegungswunsch steht jede Seite vollstaendig da.
+     ================================================================== */
+
+  /* --- Bildenthuellung ---------------------------------------------
+     Der Container gibt das Motiv von unten nach oben frei, waehrend das
+     Motiv selbst aus einer leichten Ueberzeichnung in seine Endgroesse
+     faehrt. Zwei Geschwindigkeiten, damit die Bewegung Tiefe bekommt.   */
+  /* Die Maske liegt bewusst INNEN: clip-path fliesst in die Berechnung des
+     IntersectionObserver ein. Laege sie auf dem beobachteten Container,
+     meldete das zugeklappte Bild nie "sichtbar" und bliebe fuer immer zu. */
+  [data-js='true'] .bildmaske {
+    clip-path: inset(0 0 100% 0 round var(--radius-image));
+    transition: clip-path 1100ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .bildmaske {
+    clip-path: inset(0 0 0 0 round var(--radius-image));
+  }
+
+  [data-js='true'] .bild .szene {
+    transform: scale(1.07);
+    transition: transform 1500ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .szene {
+    transform: scale(1);
+  }
+
+  /* --- Linienzeichnung der Szenen -----------------------------------
+     Die Pfade tragen pathLength=1, deshalb genuegt dasarray/offset 1.
+     Die Gruppen laufen leicht versetzt, damit die Zeichnung sich
+     aufbaut statt auf einmal zu erscheinen.                            */
+  [data-js='true'] .szene .zeichnen > path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen > path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1600ms cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen:nth-of-type(2) > path {
+    transition-delay: 160ms;
+  }
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen:nth-of-type(3) > path {
+    transition-delay: 320ms;
+  }
+  [data-js='true'] .bild[data-sichtbar='true'] .szene .zeichnen:nth-of-type(4) > path {
+    transition-delay: 480ms;
+  }
+
+  /* --- Gestaffelter Auftritt ---------------------------------------
+     Fuer den Hero und andere Gruppen, die beim Laden nacheinander
+     eintreten sollen. Der Versatz kommt ueber --stufe.                 */
+  [data-js='true'] .auftritt > * {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: auftritt 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    animation-delay: calc(var(--stufe, 0) * 1ms + 120ms);
+  }
+
+  [data-js='true'] .auftritt > *:nth-child(2) { --stufe: 130; }
+  [data-js='true'] .auftritt > *:nth-child(3) { --stufe: 260; }
+  [data-js='true'] .auftritt > *:nth-child(4) { --stufe: 390; }
+
+  @keyframes auftritt {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* --- Zeilenweise Enthuellung grosser Ueberschriften ---------------- */
+  [data-js='true'] .zeile {
+    display: block;
+    overflow: hidden;
+  }
+
+  /* Der verschobene Startzustand gilt ausschliesslich innerhalb einer
+     <Reveal>-Huelle — nur die setzt data-sichtbar und holt die Zeile
+     zurueck. Ohne diese Einschraenkung bliebe jede Ueberschrift ohne
+     Huelle dauerhaft aus der Maske geschoben und damit unsichtbar. */
+  [data-js='true'] .reveal .zeile > span {
+    display: block;
+    transform: translateY(102%);
+    transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-js='true'] .reveal[data-sichtbar='true'] .zeile > span {
+    transform: none;
+  }
+
+  [data-js='true'] .zeile:nth-child(2) > span { transition-delay: 90ms; }
+
+  /* --- Navigations-Aufklappen --------------------------------------- */
+  .navpanel {
+    transform-origin: top;
+    transition:
+      opacity 220ms ease,
+      transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      visibility 260ms;
+  }
+
+  .navpanel[data-offen='false'] {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scaleY(0.98);
+    pointer-events: none;
+  }
+
+  .navpanel[data-offen='true'] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  /* Bewegung ist Zutat: Wer sie abbestellt, bekommt den Endzustand. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-js='true'] .bildmaske,
+    [data-js='true'] .bild[data-sichtbar='true'] .bildmaske {
+      clip-path: none;
+    }
+    [data-js='true'] .bild .szene {
+      transform: none;
+    }
+    [data-js='true'] .szene .zeichnen > path {
+      stroke-dashoffset: 0;
+    }
+    [data-js='true'] .auftritt > * {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    [data-js='true'] .reveal .zeile > span {
+      transform: none;
+    }
+  }
+
+  ::selection {
+    background-color: var(--color-carbon-warm);
+    color: var(--color-paper-white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Hilfsklassen
+   ========================================================================== */
+
+@utility container-page {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
