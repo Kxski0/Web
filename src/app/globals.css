@@ -1,0 +1,224 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   SOLBAUTEC — Design tokens
+   Single source of truth. No hardcoded colour, size or timing anywhere else.
+   Palette is pinned by the Master Concept §5 and is not open to interpretation.
+   ========================================================================== */
+
+@theme {
+  /* --- Colour ------------------------------------------------------------ */
+  --color-graphite: #101211;
+  --color-graphite-raised: #171a18;
+  --color-graphite-sunk: #0a0c0b;
+  --color-offwhite: #f1f0eb;
+  --color-grey: #858883;
+  --color-amber: #d7a843;
+
+  /* Hairlines instead of shadows — precision reads as drawn, not floated. */
+  --color-hairline: rgb(241 240 235 / 0.12);
+  --color-hairline-strong: rgb(241 240 235 / 0.22);
+  --color-hairline-dark: rgb(16 18 17 / 0.14);
+
+  /* --- Type -------------------------------------------------------------- */
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display: clamp(3.25rem, 10.5vw, 10.5rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.035em;
+
+  --text-headline: clamp(2.25rem, 5.5vw, 4.75rem);
+  --text-headline--line-height: 0.98;
+  --text-headline--letter-spacing: -0.028em;
+
+  --text-title: clamp(1.5rem, 2.6vw, 2.25rem);
+  --text-title--line-height: 1.12;
+  --text-title--letter-spacing: -0.02em;
+
+  --text-lede: clamp(1.0625rem, 1.35vw, 1.375rem);
+  --text-lede--line-height: 1.5;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-eyebrow: 0.72rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* --- Layout ------------------------------------------------------------ */
+  --spacing-gutter: clamp(1.25rem, 4vw, 6rem);
+  --container-page: 1600px;
+
+  /* --- Motion ------------------------------------------------------------ */
+  /* Built-in CSS easings are too weak to read as intentional. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+
+  /* Micro-interaction vs. editorial reveal are different budgets entirely. */
+  --duration-press: 140ms;
+  --duration-ui: 220ms;
+  --duration-reveal: 820ms;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    /* Square by default. The edge is the brand; radius is the exception. */
+    border-radius: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-graphite);
+    color: var(--color-offwhite);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* Amber means energy, focus and active state — never decoration. */
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-amber);
+    color: var(--color-graphite);
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   Fewer and gentler, not zero. Opacity and colour still carry meaning;
+   movement is what causes harm, so movement is what goes.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, color, background-color, border-color !important;
+    transition-duration: 200ms !important;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@utility page-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--spacing-gutter);
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility page-bounds {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Editorial reveals: the line rides up out of a mask rather than fading in.
+   Set by the reveal components; declared here so a JS failure leaves text visible. */
+@utility reveal-line {
+  display: block;
+  overflow: hidden;
+}
+
+/*
+ * Static film grain. Keeps large flat graphite fields from banding and reads as
+ * printed rather than rendered. Deliberately NOT animated: a perpetual loop is
+ * both a repaint cost and an animation with no message.
+ */
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+}
+
+/* Hairline rule used as a structural divider throughout. */
+@utility rule-top {
+  border-top: 1px solid var(--color-hairline);
+}
+
+@utility eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-grey);
+  font-weight: 500;
+}

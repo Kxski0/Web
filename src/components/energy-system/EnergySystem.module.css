@@ -1,0 +1,441 @@
+/* ==========================================================================
+   Energy system — pinned, phase-stepped section
+   ========================================================================== */
+
+.section {
+  position: relative;
+  background-color: var(--color-graphite);
+  /* Scroll distance per phase. The progress maths reads the real height, so
+     this number can change without touching the component. */
+  min-height: calc(var(--phase-count) * 78svh);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  /* Clears the fixed header, which would otherwise sit on the eyebrow. */
+  padding-block: clamp(5.5rem, 12vh, 7.5rem) clamp(1.5rem, 5vh, 3rem);
+}
+
+.inner {
+  width: 100%;
+  align-items: center;
+  row-gap: clamp(1.5rem, 4vh, 3rem);
+}
+
+/* --- Left column ---------------------------------------------------------- */
+
+.intro {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-block: clamp(1rem, 2.5vh, 1.75rem) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+/* --- Progress rail -------------------------------------------------------- */
+
+/*
+ * Compact phase indicator for narrow screens. The vertical rail does not fit
+ * beside a full-width diagram, but the sequence still has to be readable as
+ * text rather than inferred from the drawing.
+ */
+.railCompact {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.railCompactCount {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  color: var(--color-grey);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.railCompactTicks {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.railCompactTick {
+  flex: 1;
+  height: 2px;
+  background-color: var(--color-hairline);
+  transition: background-color var(--duration-ui) var(--ease-out);
+}
+
+.railCompactTick[data-active='true'] {
+  background-color: var(--color-amber);
+}
+
+.railCompactTick[data-passed='true'] {
+  background-color: var(--color-hairline-strong);
+}
+
+.rail {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--color-hairline);
+}
+
+.railItem {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.4375rem 0 0.4375rem 1rem;
+  position: relative;
+  color: var(--color-grey);
+  transition: color var(--duration-ui) var(--ease-out);
+}
+
+/* The tick is the only amber on the rail — it marks position, nothing else. */
+.railTick {
+  position: absolute;
+  inset-inline-start: -1px;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  background-color: var(--color-amber);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+.railItem[data-active='true'] {
+  color: var(--color-offwhite);
+}
+
+.railItem[data-active='true'] .railTick,
+.railItem[data-passed='true'] .railTick {
+  transform: scaleY(1);
+}
+
+.railItem[data-passed='true'] .railTick {
+  background-color: var(--color-hairline-strong);
+}
+
+.railIndex {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  font-variant-numeric: tabular-nums;
+}
+
+.railLabel {
+  font-size: 0.9375rem;
+}
+
+/* --- Caption -------------------------------------------------------------- */
+
+.caption {
+  grid-column: 1 / -1;
+}
+
+.captionIndex {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  color: var(--color-amber);
+  margin-bottom: 0.75rem;
+}
+
+.captionTitle {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-bottom: 0.75rem;
+}
+
+.captionBody {
+  color: var(--color-grey);
+  max-width: 46ch;
+}
+
+/*
+ * The caption is keyed on the phase id, so React remounts it and the entrance
+ * replays. Opacity and a small rise only: the text is being replaced, and a
+ * larger move would read as the layout jumping.
+ */
+.caption {
+  animation: caption-in 320ms var(--ease-out) both;
+}
+
+@keyframes caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* --- Stage ---------------------------------------------------------------- */
+
+.stage {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+
+.diagram {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+}
+
+/* --- Diagram layers ------------------------------------------------------- */
+
+.layer {
+  opacity: 1;
+  transition: opacity 520ms var(--ease-out);
+}
+
+.layer[data-on='false'] {
+  opacity: 0;
+}
+
+/*
+ * Every stroked path carries pathLength="1", so one dash covers the whole line
+ * regardless of its real length and the draw-in is a single dashoffset
+ * transition. No plugin, no per-path measurement, and it runs off the main
+ * thread as a plain CSS transition.
+ */
+.structure,
+.structureThin,
+.conductor,
+.conductorDashed {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 900ms var(--ease-out);
+}
+
+.layer[data-on='false'] .structure,
+.layer[data-on='false'] .structureThin,
+.layer[data-on='false'] .conductor,
+.layer[data-on='false'] .conductorDashed {
+  stroke-dashoffset: 1;
+}
+
+.ground {
+  stroke: var(--color-hairline);
+  stroke-width: 1;
+}
+
+.structure {
+  stroke: var(--color-offwhite);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.structureThin {
+  stroke: var(--color-hairline-strong);
+  stroke-width: 1;
+}
+
+.array {
+  fill: rgb(241 240 235 / 0.1);
+  stroke: var(--color-offwhite);
+  stroke-width: 1.25;
+  transition: opacity 520ms var(--ease-out);
+}
+
+.arrayDivision {
+  stroke: var(--color-offwhite);
+  stroke-width: 0.75;
+  opacity: 0.6;
+}
+
+.sun {
+  fill: none;
+  stroke: var(--color-amber);
+  stroke-width: 1.25;
+}
+
+.component {
+  fill: var(--color-graphite);
+  stroke: var(--color-offwhite);
+  stroke-width: 1.25;
+}
+
+.componentDetail {
+  fill: none;
+  stroke: var(--color-hairline-strong);
+  stroke-width: 1;
+}
+
+.componentAccent {
+  fill: var(--color-graphite);
+  stroke: var(--color-amber);
+  stroke-width: 1.25;
+}
+
+.emsCore {
+  fill: var(--color-amber);
+}
+
+.node {
+  fill: var(--color-graphite);
+  stroke: var(--color-offwhite);
+  stroke-width: 1.25;
+}
+
+.leader {
+  stroke: var(--color-hairline);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+/*
+ * SVG text scales with the viewBox, so at phone width these captions land near
+ * five effective pixels. They are hidden there rather than shrunk: the phase
+ * copy names every component as it appears, and the full description stays on
+ * the <svg> element for assistive technology.
+ */
+.label,
+.leader {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .label,
+  .leader {
+    display: initial;
+  }
+}
+
+.label {
+  fill: var(--color-grey);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-anchor: middle;
+}
+
+.conductor {
+  stroke: var(--color-hairline-strong);
+  stroke-width: 1;
+}
+
+.conductorDashed {
+  stroke: var(--color-hairline-strong);
+  stroke-width: 1;
+  stroke-dasharray: 0.012 0.018;
+}
+
+/*
+ * The pulse rides the same geometry as the conductor beneath it, so the light
+ * follows the actual wiring. One thin dash, slow, continuous — an indication of
+ * direction, not a light show.
+ */
+.pulse {
+  fill: none;
+  stroke: var(--color-amber);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.06 0.94;
+  stroke-dashoffset: 1;
+  animation: flow 3.6s linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Static preference: the conductors still draw, the light just stops moving. */
+.diagram[data-still='true'] .pulse {
+  animation: none;
+  stroke-dashoffset: 0.5;
+  opacity: 0.7;
+}
+
+/* --- Transcript ----------------------------------------------------------- */
+
+/*
+ * Visually hidden while the pinned version is running, but never removed: it
+ * stays in the DOM and in the accessibility tree so the sequence is readable
+ * without motion, and indexable regardless.
+ */
+.transcript[data-visual-hidden='true'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.transcriptList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(2.5rem, 6vh, 4rem);
+  padding-block: clamp(3rem, 8vh, 6rem);
+}
+
+.transcriptItem {
+  max-width: 46ch;
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+
+/*
+ * No pin, no stepping, no scroll dependency: the finished system is shown once
+ * and all seven phases are read as ordinary prose.
+ */
+.section[data-reduced='true'] {
+  min-height: 0;
+}
+
+.section[data-reduced='true'] .sticky {
+  position: static;
+  height: auto;
+  padding-block: clamp(4rem, 10vh, 7rem);
+}
+
+.section[data-reduced='true'] .caption {
+  animation: none;
+}
+
+/* --- Breakpoints ---------------------------------------------------------- */
+
+@media (min-width: 64rem) {
+  .intro {
+    grid-column: 1 / span 4;
+    grid-row: 1;
+  }
+
+  .caption {
+    grid-column: 1 / span 4;
+    grid-row: 2;
+  }
+
+  .stage {
+    grid-column: 5 / span 8;
+    grid-row: 1 / span 2;
+  }
+
+  .rail {
+    display: block;
+  }
+
+  .railCompact {
+    display: none;
+  }
+}

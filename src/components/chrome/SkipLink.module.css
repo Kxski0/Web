@@ -1,0 +1,26 @@
+/*
+ * Kept in the accessibility tree and focusable at all times; only moved out of
+ * view. `display: none` would remove it from the tab order entirely.
+ */
+.skip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  transform: translateY(-120%);
+  padding: 0.875rem 1.25rem;
+  background-color: var(--color-offwhite);
+  color: var(--color-graphite);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+/*
+ * :focus, not :focus-visible. A skip link exists precisely for the case where
+ * focus arrives programmatically or from assistive technology, and those routes
+ * do not always set the focus-visible heuristic. If it has focus, it must show.
+ */
+.skip:focus {
+  transform: translateY(0);
+}
