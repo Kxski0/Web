@@ -131,6 +131,7 @@
 .furtherLink {
   display: inline-flex;
   align-items: baseline;
+  min-height: 24px;
   gap: 0.625rem;
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2vw, 1.625rem);

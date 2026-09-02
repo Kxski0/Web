@@ -41,6 +41,8 @@ node scripts/a11y-check.mjs                      # Reduced Motion, Fokus, Skip-L
 node scripts/typography-check.mjs                # verwaiste Headline-Zeilen
 node scripts/console-check.mjs                   # Konsolenfehler, 404er
 node scripts/routes-check.mjs                    # jede Route: Status, h1, Meta, Links
+node scripts/responsive-check.mjs                # 375-1920: Overflow, Textgröße, Klickziele
+node scripts/perf-check.mjs                      # LCP, CLS, Transfergewicht je Route
 ```
 
 Alle vier Skripte messen statt zu schätzen und geben bei Fehlern einen
@@ -59,6 +61,15 @@ Exit-Code ungleich null zurück:
   eindeutigen Title und eindeutige Description, Canonical, strukturierte Daten,
   `lang="de"` und horizontalen Overflow. Danach werden alle internen Links
   aufgerufen und müssen 200 liefern.
+- `responsive-check.mjs` — 375, 768, 1280 und 1920px: horizontaler Overflow,
+  Elemente jenseits des Viewports, Text unter 12px und Klickziele unter 24×24
+  (WCAG 2.2 SC 2.5.8). Bewusst ausgenommen: der Honeypot und der
+  visuell versteckte Transkript-Block, die absichtlich außerhalb liegen, sowie
+  alles, was ein Vorfahre mit `overflow: hidden` beschneidet.
+- `perf-check.mjs` — LCP, CLS, TTFB und Transfergewicht je Ressourcentyp.
+  Die Gewichte kommen aus der Resource-Timing-API, nicht aus Response-Headern:
+  Next liefert JS und CSS komprimiert und ohne `content-length`, eine
+  Header-Auswertung meldet dafür stillschweigend null.
 
 ## Umgebungsvariablen
 

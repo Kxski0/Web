@@ -42,7 +42,9 @@
   --text-body: 1rem;
   --text-body--line-height: 1.65;
 
-  --text-eyebrow: 0.72rem;
+  /* 12px floor. At 0.72rem these labels rendered at 11.52px, which is small
+     for tracked uppercase and reads as cramped on a phone. */
+  --text-eyebrow: 0.75rem;
   --text-eyebrow--line-height: 1;
   --text-eyebrow--letter-spacing: 0.18em;
 

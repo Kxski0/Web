@@ -22,7 +22,11 @@
   gap: 0.5rem;
 }
 
+/* WCAG 2.2 SC 2.5.8 asks for 24 by 24 CSS pixels. The text alone was 19 high. */
 .link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
   transition: color var(--duration-ui) var(--ease-out);
 }
 

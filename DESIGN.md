@@ -161,6 +161,18 @@ the text fits its column, so `scripts/typography-check.mjs` measures the
 rendered line boxes and fails when a final line is narrower than a third of the
 widest — a stacked headline is the composition, a stranded word is a defect.
 
+## Targets and text size
+
+Interactive targets meet WCAG 2.2 SC 2.5.8: at least 24 by 24 CSS pixels. Text
+links in navigation contexts therefore carry `min-height: 24px` with
+`inline-flex` centring rather than relying on their line box, which measured 19
+pixels. The header's menu button is 44px, a comfortable thumb target.
+
+`--text-eyebrow` sits at 0.75rem. It was 0.72rem, which renders at 11.52px and
+reads as cramped in tracked uppercase at phone size.
+
+`scripts/responsive-check.mjs` asserts both across 375 to 1920px.
+
 ## Facts
 
 Nothing in `src/content/` may be invented. Projects, reviews, certificates,
