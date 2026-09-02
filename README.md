@@ -73,8 +73,17 @@ Exit-Code ungleich null zurück:
 
 ## Umgebungsvariablen
 
-`cp .env.example .env.local`. Ohne gesetzte `CONTACT_WEBHOOK_URL` antwortet das
-Kontaktformular bewusst mit HTTP 503, statt einen Erfolg vorzutäuschen.
+`cp .env.example .env.local`.
+
+- `CONTACT_WEBHOOK_URL` — Ziel für Formularanfragen. Nicht gesetzt: `/api/kontakt`
+  antwortet bewusst mit HTTP 503, statt einen Erfolg vorzutäuschen.
+- `SITE_INDEXABLE` — nur `true` erlaubt Indexierung. Standard ist aus:
+  `robots.txt` liefert dann ein vollständiges Disallow und jede Seite ein
+  `noindex`.
+- `NEXT_PUBLIC_SITE_URL` — kanonischer Ursprung. Ohne Angabe wird auf Vercel die
+  Produktionsdomain verwendet.
+
+Deployment auf Vercel: siehe `DEPLOY.md`.
 
 ## Seitenstruktur
 
@@ -95,5 +104,7 @@ Kontaktformular bewusst mit HTTP 503, statt einen Erfolg vorzutäuschen.
 ## Weiterführend
 
 - `DESIGN.md` — verbindliches Designsystem: Farbe, Typografie, Raster, Motion.
+- `DEPLOY.md` — Vercel-Setup, Umgebungsvariablen, Domain, Sicherheits-Header
+  und die Punkte, die vor dem Livegang zu klären sind.
 - `CONTENT-TODO.md` — Inhalte, die noch von SolBauTec kommen müssen. Erfundene
   Fakten sind ausgeschlossen; fehlende Inhalte werden nicht gerendert.

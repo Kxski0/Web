@@ -5,6 +5,7 @@ import { Footer } from '@/components/chrome/Footer';
 import { Header } from '@/components/chrome/Header';
 import { SkipLink } from '@/components/chrome/SkipLink';
 import { SITE } from '@/content/site';
+import { INDEXABLE } from '@/lib/env';
 import { organizationSchema } from '@/lib/schema';
 import './globals.css';
 
@@ -37,7 +38,8 @@ export const metadata: Metadata = {
     url: SITE.url,
     images: [{ url: '/images/hero-energy-system.webp', width: 1536, height: 1024 }],
   },
-  robots: { index: true, follow: true },
+  // Mirrors robots.txt: closed unless the deployment is explicitly cleared.
+  robots: { index: INDEXABLE, follow: INDEXABLE },
 };
 
 export const viewport: Viewport = {

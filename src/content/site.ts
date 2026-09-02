@@ -26,6 +26,8 @@ export type SiteContact = {
   address: PostalAddress | null;
 };
 
+import { siteOrigin } from '@/lib/env';
+
 export const SITE = {
   name: 'SolBauTec',
   /** Positioning, not a slogan. §1 */
@@ -36,8 +38,11 @@ export const SITE = {
   region: 'Augsburg und Umgebung',
   locale: 'de_DE',
   lang: 'de',
-  /** Replace once the production domain is confirmed. */
-  url: 'https://www.solbautec.de',
+  /**
+   * Resolved per deployment: NEXT_PUBLIC_SITE_URL, else the Vercel production
+   * domain, else the assumed domain. See src/lib/env.ts.
+   */
+  url: siteOrigin(),
 } as const;
 
 export const CONTACT: SiteContact = {
