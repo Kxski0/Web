@@ -25,7 +25,7 @@ export const SOLUTIONS: Solution[] = [
     title: 'Das Dach wird zur Energiequelle.',
     body: 'Zuerst das Dach: Neigung, Ausrichtung, Verschattung, Statik und Zustand der Eindeckung. Erst danach steht die Belegung fest — und damit, was die Anlage über das Jahr tatsächlich leisten kann.',
     image: IMAGES.pvInstallationRooftop,
-    href: '#photovoltaik',
+    href: '/photovoltaik/',
   },
   {
     id: 'stromspeicher',
@@ -34,7 +34,7 @@ export const SOLUTIONS: Solution[] = [
     title: 'Energie, wenn Sie sie brauchen.',
     body: 'Ein Speicher rechnet sich über den Eigenverbrauch, nicht über die Kapazität. Wir legen ihn nach Ihrem Lastprofil aus, nicht nach Datenblatt.',
     image: IMAGES.batteryStorageDetail,
-    href: '#stromspeicher',
+    href: '/stromspeicher/',
   },
   {
     id: 'waermepumpe',
@@ -43,7 +43,7 @@ export const SOLUTIONS: Solution[] = [
     title: 'Wärme, die mit Ihrem Haus arbeitet.',
     body: 'Je niedriger die Vorlauftemperatur, desto effizienter die Wärmepumpe. Deshalb beginnt die Planung bei Heizflächen und Gebäudehülle — nicht beim Gerät.',
     image: IMAGES.heatPumpArchitecture,
-    href: '#waermepumpe',
+    href: '/waermepumpe/',
   },
   {
     id: 'energiemanagement',
@@ -52,7 +52,7 @@ export const SOLUTIONS: Solution[] = [
     title: 'Die Intelligenz zwischen den Komponenten.',
     body: 'Ohne Steuerung laufen Photovoltaik, Speicher und Wärmepumpe nebeneinander her. Das Energiemanagement entscheidet, wohin der eigene Strom zuerst fließt.',
     image: IMAGES.energyManagement,
-    href: '#energiemanagement',
+    href: '/energiemanagement/',
   },
 ];
 
@@ -66,12 +66,12 @@ export const FURTHER_SOLUTIONS = [
     id: 'klima',
     label: 'Klimasysteme',
     body: 'Kühlung und Lüftung planen wir gemeinsam mit der Wärmeerzeugung. Beides greift auf dieselbe Gebäudetechnik zu.',
-    href: '#klima',
+    href: '/klima/',
   },
   {
     id: 'carports',
     label: 'Carports und Terrassenüberdachungen',
     body: 'Überdachte Flächen sind nutzbare Flächen. Carport und Terrassendach lassen sich belegen, wenn Statik und Ausrichtung es hergeben.',
-    href: '#carports',
+    href: '/carports-terrassenueberdachungen/',
   },
 ] as const;

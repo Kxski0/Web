@@ -28,10 +28,10 @@ export function FinalCta() {
           </p>
 
           <div className={styles.actions}>
-            <Button href="#kontaktformular" variant="primary">
+            <Button href="/kontakt/" variant="primary">
               Projekt besprechen
             </Button>
-            <Button href="#loesungen" variant="secondary" arrow={false}>
+            <Button href="/#loesungen" variant="secondary" arrow={false}>
               Lösungen entdecken
             </Button>
           </div>

@@ -36,6 +36,7 @@ node scripts/audit.mjs                           # Headline-Kontrast + Overflow
 node scripts/a11y-check.mjs                      # Reduced Motion, Fokus, Skip-Link
 node scripts/typography-check.mjs                # verwaiste Headline-Zeilen
 node scripts/console-check.mjs                   # Konsolenfehler, 404er
+node scripts/routes-check.mjs                    # jede Route: Status, h1, Meta, Links
 ```
 
 Alle vier Skripte messen statt zu schätzen und geben bei Fehlern einen
@@ -50,6 +51,31 @@ Exit-Code ungleich null zurück:
   Restzeile nicht.
 - `console-check.mjs` — scrollt die Seite komplett durch und meldet
   Konsolenfehler, Warnungen und fehlgeschlagene Requests.
+- `routes-check.mjs` — prüft jede Route auf Status 200, genau ein `h1`,
+  eindeutigen Title und eindeutige Description, Canonical, strukturierte Daten,
+  `lang="de"` und horizontalen Overflow. Danach werden alle internen Links
+  aufgerufen und müssen 200 liefern.
+
+## Umgebungsvariablen
+
+`cp .env.example .env.local`. Ohne gesetzte `CONTACT_WEBHOOK_URL` antwortet das
+Kontaktformular bewusst mit HTTP 503, statt einen Erfolg vorzutäuschen.
+
+## Seitenstruktur
+
+```
+/                                     Startseite, Story 01-09
+/photovoltaik/                        Leistungsseiten, je eigene Komposition
+/stromspeicher/                       mit Tageskurve als Signature-Grafik
+/waermepumpe/
+/energiemanagement/                   mit Prioritätsleiter
+/klima/
+/carports-terrassenueberdachungen/
+/projekte/                            rendert Referenzen, sobald belegt
+/ueber-uns/
+/kontakt/                             Formular, serverseitig validiert
+/impressum/  /datenschutz/            noindex, siehe CONTENT-TODO.md
+```
 
 ## Weiterführend
 

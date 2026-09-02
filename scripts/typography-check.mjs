@@ -9,6 +9,18 @@
 import { chromium } from 'playwright';
 
 const ORPHAN_RATIO = 0.34;
+const ROUTES = [
+  '/',
+  '/photovoltaik/',
+  '/stromspeicher/',
+  '/waermepumpe/',
+  '/energiemanagement/',
+  '/klima/',
+  '/carports-terrassenueberdachungen/',
+  '/projekte/',
+  '/ueber-uns/',
+  '/kontakt/',
+];
 
 const browser = await chromium.launch({
   executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
@@ -23,8 +35,11 @@ for (const vp of [
 ]) {
   const ctx = await browser.newContext({ viewport: vp });
   const page = await ctx.newPage();
-  await page.goto('http://127.0.0.1:3100/', { waitUntil: 'networkidle' });
-  await page.waitForTimeout(900);
+  console.log(`\n### ${vp.name}`);
+
+  for (const route of ROUTES) {
+  await page.goto('http://127.0.0.1:3100' + route, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
 
   const rows = await page.evaluate((ratio) => {
     const out = [];
@@ -56,12 +71,13 @@ for (const vp of [
     return out;
   }, ORPHAN_RATIO);
 
-  console.log(`\n### ${vp.name}`);
   for (const row of rows) {
-    if (row.orphan) failures++;
+    if (!row.orphan) continue;
+    failures++;
     console.log(
-      `${row.orphan ? 'FAIL' : 'PASS'}  ${row.lines} lines, last=${row.lastRatio} of widest  "${row.text}"`,
+      `FAIL  ${route}  ${row.lines} lines, last=${row.lastRatio} of widest  "${row.text}"`,
     );
+  }
   }
   await ctx.close();
 }

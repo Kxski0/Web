@@ -1,0 +1,29 @@
+.head {
+  position: relative;
+  background-color: var(--color-graphite);
+  padding-block: clamp(7rem, 18vh, 11rem) clamp(2.5rem, 7vh, 4rem);
+}
+
+.intro {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.032em;
+  margin-block: clamp(0.875rem, 2vh, 1.25rem) clamp(1.25rem, 3vh, 1.75rem);
+}
+
+.lede {
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-grey);
+  max-width: 44ch;
+}
+
+@media (min-width: 64rem) {
+  .intro {
+    grid-column: 1 / span 7;
+  }
+}

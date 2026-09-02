@@ -122,10 +122,10 @@ export function Hero() {
           </p>
 
           <div className={styles.actions} data-hero-fade>
-            <Button href="#kontakt" variant="primary">
+            <Button href="/kontakt/" variant="primary">
               Projekt besprechen
             </Button>
-            <Button href="#loesungen" variant="secondary" arrow={false}>
+            <Button href="/#loesungen" variant="secondary" arrow={false}>
               Lösungen entdecken
             </Button>
           </div>
