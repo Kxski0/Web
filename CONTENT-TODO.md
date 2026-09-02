@@ -68,7 +68,15 @@ Wird in Push 1 nicht gebraucht. Falls es nachkommt: in
 `scripts/process-images.mjs` unter `MAP` ergänzen und `pnpm images <quellordner>`
 laufen lassen.
 
-## 5. Produktionsdomain
+## 5. Logo
+
+`src/app/icon.svg` ist ein **Platzhalter**, kein Firmenlogo. Es ist aus der
+Bildsprache der Seite gezeichnet (Giebel und Modulfläche aus dem
+Energiesystem-Diagramm), weil kein Logo vorlag und ein erfundenes ausgeschlossen
+ist. Bitte durch das echte Markenzeichen ersetzen — idealerweise als SVG plus
+eine Fassung für kleine Größen.
+
+## 6. Produktionsdomain
 
 `SITE.url` in `src/content/site.ts` steht auf `https://www.solbautec.de`. Bei
 abweichender Domain hier ändern — Canonical, Open Graph, Sitemap und robots.txt

@@ -122,6 +122,25 @@ wide frame will destroy a narrow one, because the gradient line is long relative
 to the box. Wide layouts get a horizontal scrim that clears the building; narrow
 layouts get a vertical one that only covers the text.
 
+## Surfaces
+
+The page alternates grounds — dark, image, light, dark — which is the rhythm the
+brief asks for. Two consequences are load-bearing:
+
+- Any section on the off-white ground carries `data-surface="light"`. The fixed
+  header observes those sections and inverts over them; a dark glass bar on an
+  off-white ground reads as a grey slab dropped onto the page.
+- Photographs on the graphite ground get a hairline frame. The darkest images in
+  the set are near-black, and without an edge they dissolve into the background
+  and their captions appear to label nothing.
+
+## Headlines
+
+Display line breaks are authored, not left to the browser. That only works if
+the text fits its column, so `scripts/typography-check.mjs` measures the
+rendered line boxes and fails when a final line is narrower than a third of the
+widest — a stacked headline is the composition, a stranded word is a defect.
+
 ## Facts
 
 Nothing in `src/content/` may be invented. Projects, reviews, certificates,

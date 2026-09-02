@@ -75,9 +75,15 @@ export function Hero() {
         });
       }
 
-      // Fonts land after first paint; without this the pinned/parallax offsets
-      // are computed against the fallback metrics.
+      // Fonts and images both land after first paint and both change layout.
+      // Without a refresh, every reveal below the fold is measured against
+      // stale offsets and can sit clipped at the wrong scroll position.
       document.fonts?.ready.then(() => ScrollTrigger.refresh());
+      if (document.readyState === 'complete') {
+        ScrollTrigger.refresh();
+      } else {
+        window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+      }
     },
     { scope: section },
   );

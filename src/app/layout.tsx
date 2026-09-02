@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { Manrope } from 'next/font/google';
+import { Footer } from '@/components/chrome/Footer';
 import { Header } from '@/components/chrome/Header';
 import { SkipLink } from '@/components/chrome/SkipLink';
 import { SITE } from '@/content/site';
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SkipLink />
         <Header />
         <main id="hauptinhalt">{children}</main>
+        <Footer />
         <script
           type="application/ld+json"
           // Built from confirmed fields only — see src/lib/schema.ts.

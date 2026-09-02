@@ -18,6 +18,18 @@
   border-bottom-color: var(--color-hairline);
 }
 
+/* Over an off-white section the bar inverts instead of sitting on it as a slab. */
+.header[data-on-light='true'][data-scrolled='true'] {
+  background-color: rgb(241 240 235 / 0.82);
+  border-bottom-color: var(--color-hairline-dark);
+}
+
+.header[data-on-light='true'] .link,
+.header[data-on-light='true'] .menuButton,
+.header[data-on-light='true'] :global(span) {
+  color: var(--color-graphite);
+}
+
 .inner {
   display: flex;
   align-items: center;

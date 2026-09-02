@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    Placeholder mark, not a corporate logo.
+
+    SolBauTec has not supplied a logo, and inventing one is out of the question.
+    So this is drawn from the site's own language instead: the gable and the
+    array face from the energy-system diagram, in the pinned palette. It reads
+    at 16px and should be replaced the moment a real mark exists.
+  -->
+  <rect width="32" height="32" fill="#101211"/>
+  <path d="M6 25V14L16 6l10 8v11" fill="none" stroke="#F1F0EB" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M16.8 7.4 25 14v3.6l-8.2-6.6z" fill="#D7A843"/>
+</svg>

@@ -33,10 +33,23 @@ anhand des Bildinhalts vorgenommen, nicht anhand der Dateinamen.
 pnpm build && PORT=3100 pnpm start &
 SHOT_DIR=./shots node scripts/shoot.mjs pass     # Screenshots, vier Viewports
 node scripts/audit.mjs                           # Headline-Kontrast + Overflow
+node scripts/a11y-check.mjs                      # Reduced Motion, Fokus, Skip-Link
+node scripts/typography-check.mjs                # verwaiste Headline-Zeilen
+node scripts/console-check.mjs                   # Konsolenfehler, 404er
 ```
 
-`scripts/audit.mjs` misst den Kontrast der Hero-Headline gegen die tatsächlich
-dahinterliegenden Pixel und meldet den ungünstigsten Wert je Zeile.
+Alle vier Skripte messen statt zu schätzen und geben bei Fehlern einen
+Exit-Code ungleich null zurück:
+
+- `audit.mjs` — Kontrast der Hero-Headline gegen die tatsächlich dahinterliegenden
+  Pixel, gemessen über die Glyphenausdehnung, plus horizontaler Overflow.
+- `a11y-check.mjs` — Reduced Motion, Fokusfalle im Mobilmenü, Escape,
+  Fokusrückgabe, Scroll-Lock, Skip-Link.
+- `typography-check.mjs` — meldet Headlines, deren letzte Zeile als kurze Waise
+  stehen bleibt. Mehrzeilige Headlines sind gewollt, eine gestrandete
+  Restzeile nicht.
+- `console-check.mjs` — scrollt die Seite komplett durch und meldet
+  Konsolenfehler, Warnungen und fehlgeschlagene Requests.
 
 ## Weiterführend
 

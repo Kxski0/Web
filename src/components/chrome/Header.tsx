@@ -9,6 +9,7 @@ import styles from './Header.module.css';
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [onLight, setOnLight] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -29,9 +30,40 @@ export function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    /*
+     * The page alternates dark and light grounds. A fixed dark glass bar sitting
+     * on the off-white section reads as a grey slab dropped onto the page, so
+     * the header takes the surface it is currently over.
+     *
+     * An IntersectionObserver with a one-pixel-tall root region at the header's
+     * vertical centre answers exactly the question being asked — which surface
+     * is under the bar — without a scroll handler measuring rectangles.
+     */
+    const lightSections = document.querySelectorAll('[data-surface="light"]');
+    if (lightSections.length === 0) return;
+
+    const headerHeight = 78;
+    const probe = Math.round(headerHeight / 2);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          entry.target.setAttribute('data-under-header', String(entry.isIntersecting));
+        }
+        setOnLight(
+          document.querySelector('[data-surface="light"][data-under-header="true"]') !== null,
+        );
+      },
+      { rootMargin: `-${probe}px 0px -${window.innerHeight - probe - 1}px 0px`, threshold: 0 },
+    );
+
+    lightSections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
-      <header className={styles.header} data-scrolled={scrolled}>
+      <header className={styles.header} data-scrolled={scrolled} data-on-light={onLight}>
         <div className={`${styles.inner} page-bounds`}>
           <Link href="/" aria-label="SolBauTec — zur Startseite">
             <Wordmark />
