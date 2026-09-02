@@ -108,13 +108,36 @@ Erfahrungen mit Gestaltungssatzungen und Denkmalschutz in bestimmten Vierteln,
 sowie regionale Referenzen. Liefern Sie dazu Material, entstehen daraus echte
 Seiten.
 
-## 8. Logo
+## 8. Logo — Negativfassung fehlt
 
-`src/app/icon.svg` ist ein **Platzhalter**, kein Firmenlogo. Es ist aus der
-Bildsprache der Seite gezeichnet (Giebel und Modulfläche aus dem
-Energiesystem-Diagramm), weil kein Logo vorlag und ein erfundenes ausgeschlossen
-ist. Bitte durch das echte Markenzeichen ersetzen — idealerweise als SVG plus
-eine Fassung für kleine Größen.
+Das echte Logo ist eingebaut. Der Platzhalter ist entfernt.
+
+**Das Problem:** Das Logo ist für helle Hintergründe gezeichnet. Gemessen gegen
+den Graphit-Grund der Seite liegen **50,2 % der sichtbaren Logofläche unter 3:1
+Kontrast** — das „Bau" im Schriftzug, das Haus und das Modul sind nahezu
+schwarz und verschwinden. Übrig bliebe „Sol Tec" unter einer Sonne.
+
+Die Grafik wurde deshalb **nicht** umgefärbt. Stattdessen:
+
+- **Footer** — helle Fläche, volles Lockup mit Claim. Der Footer läuft eigens
+  hell, damit die Marke eine Fläche hat, auf der sie funktioniert.
+- **Header über heller Section** — kompaktes Lockup ohne Claim.
+- **Header über dunkler Section** — typografischer Schriftzug als Übergang.
+- **Favicon und App-Icon** — Bildmarke auf hellem Grund.
+
+**Benötigt:** die offizielle Negativfassung des Logos für dunkle Hintergründe
+(als SVG, mit heller Wortmarke und hellem Haus). Damit ersetzen wir den
+typografischen Übergang, und das Logo wird auf der ganzen Seite sichtbar.
+
+**Zur Bestätigung:** Für den Header nutzen wir eine Fassung **ohne die Zeile
+SMART · NACHHALTIG · ZUKUNFTSSTARK**, weil sie in einer Kopfleiste etwa fünf
+Pixel hoch würde und als Rauschen liest. Das Weglassen des Claims bei kleinen
+Anwendungen ist üblich, ist aber eine Anpassung an einem gelieferten Asset —
+bitte kurz bestätigen oder widersprechen.
+
+Alle Ableitungen entstehen reproduzierbar aus der Originaldatei über
+`node scripts/brand-assets.mjs <pfad-zum-logo>`; es wird nur zugeschnitten,
+nie umgefärbt.
 
 ## 9. Produktionsdomain
 

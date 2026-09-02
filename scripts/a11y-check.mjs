@@ -123,6 +123,34 @@ const check = (name, ok, detail = '') => {
   await ctx.close();
 }
 
+// --- Header glass layer ----------------------------------------------------
+/*
+ * Regression guard. Hand-writing the -webkit- prefix beside the standard
+ * property once made the CSS minifier collapse the pair and ship only the
+ * prefixed form, so the header silently stopped blurring. Computed style is the
+ * only place that catches it — the markup and the source CSS both looked right.
+ */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(BASE, { waitUntil: 'networkidle' });
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.5));
+  await page.waitForTimeout(700);
+  const r = await page.evaluate(() => {
+    const h = document.querySelector('header');
+    const cs = getComputedStyle(h);
+    return {
+      scrolled: h.getAttribute('data-scrolled'),
+      backdrop: cs.backdropFilter,
+      background: cs.backgroundColor,
+    };
+  });
+  check('header: enters scrolled state', r.scrolled === 'true');
+  check('header: glass layer actually blurs', /blur/.test(r.backdrop), r.backdrop);
+  check('header: has a background once scrolled', r.background !== 'rgba(0, 0, 0, 0)');
+  await ctx.close();
+}
+
 // --- Skip link -------------------------------------------------------------
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });

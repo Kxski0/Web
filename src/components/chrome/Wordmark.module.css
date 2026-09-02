@@ -1,0 +1,47 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Sized by width so the two lockups, which have different ratios, sit
+   consistently rather than each finding its own footprint from a shared height. */
+.logo {
+  width: 7.25rem;
+  height: auto;
+  display: none;
+}
+
+.root[data-variant='light'] .logo {
+  width: clamp(9.5rem, 15vw, 12.5rem);
+}
+
+.fallback {
+  display: inline-flex;
+}
+
+/*
+ * The header sets data-on-light on itself; the logo appears only there, where
+ * its dark elements have something to sit against.
+ */
+:global([data-on-light='true']) .logo,
+.root[data-variant='light'] .logo {
+  display: block;
+}
+
+:global([data-on-light='true']) .fallback,
+.root[data-variant='light'] .fallback {
+  display: none;
+}
+
+.type {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.16em;
+}
+
+@media (min-width: 64rem) {
+  .logo {
+    width: 8rem;
+  }
+}

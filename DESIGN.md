@@ -25,6 +25,26 @@ architecture practice's technical documentation, brought to life.
 section of a house that assembles itself into a working energy system while a
 single amber pulse travels the actual conductor paths.
 
+## The logo, and where it can go
+
+The supplied logo is drawn for light backgrounds. Measured against the site's
+graphite ground, **50.2% of its visible artwork falls below 3:1 contrast** — the
+"Bau" of the wordmark, the house and the module are all near-black and vanish,
+leaving "Sol Tec" floating under a sun.
+
+The artwork is therefore never recoloured, and never placed on graphite:
+
+- **Footer** — off-white ground, full lockup including the descriptor. The footer
+  runs light specifically so the mark has one surface where it reads correctly.
+- **Header over a light section** — the compact lockup (mark plus wordmark,
+  without the descriptor, which renders around five pixels tall in a header bar).
+- **Header over a dark section** — a typographic wordmark, as an interim.
+- **Icons** — the mark centred on an off-white plate; a favicon supplies its own
+  ground anyway.
+
+The proper fix is the official negative version of the logo. Until it exists,
+the typographic fallback stands. See CONTENT-TODO.md.
+
 ## Colour
 
 | Token | Value | Use |
@@ -147,6 +167,16 @@ Nothing in `src/content/` may be invented. Projects, reviews, certificates,
 partners, team size and any figure stay empty until documented, and consumers
 render nothing on empty input. Structured data degrades from `LocalBusiness` to
 `Organization` while the address is unconfirmed. See `CONTENT-TODO.md`.
+
+## Vendor prefixes
+
+Never hand-write them. Writing `-webkit-backdrop-filter` beside the standard
+property made the build's CSS minifier collapse the pair and ship only the
+prefixed form, which current Chromium does not implement — the glass header
+silently stopped blurring in production, while both the markup and the source
+CSS still looked correct. The build adds whatever prefixes the target browsers
+need. `scripts/a11y-check.mjs` now asserts the computed blur so this cannot
+return unnoticed.
 
 ## Deliberately not used
 

@@ -13,8 +13,14 @@
 /* Transparent over the hero; a quiet glass layer once the page moves under it. */
 .header[data-scrolled='true'] {
   background-color: rgb(16 18 17 / 0.72);
+  /*
+   * Standard property only. Writing the -webkit- prefix by hand next to it made
+   * the build's CSS minifier collapse the pair and keep ONLY the prefixed form,
+   * which current Chromium does not implement — the glass layer silently stopped
+   * blurring in production. The build adds whatever prefixes the target browsers
+   * need; hand-prefixing fights it.
+   */
   backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom-color: var(--color-hairline);
 }
 
@@ -25,8 +31,7 @@
 }
 
 .header[data-on-light='true'] .link,
-.header[data-on-light='true'] .menuButton,
-.header[data-on-light='true'] :global(span) {
+.header[data-on-light='true'] .menuButton {
   color: var(--color-graphite);
 }
 
@@ -36,6 +41,9 @@
   justify-content: space-between;
   gap: var(--spacing-gutter);
   padding-block: 1.375rem;
+  /* Constant height whichever mark is showing, so the bar does not jump as the
+     page scrolls from a dark surface onto a light one. */
+  min-height: 4.75rem;
 }
 
 .nav {

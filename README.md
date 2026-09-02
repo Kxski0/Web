@@ -22,7 +22,11 @@ Quellbilder liegen nicht im Repository. Aus einem Quellordner erzeugen:
 ```bash
 node scripts/process-images.mjs <quellordner>   # Slots als WebP
 node scripts/hero-variants.mjs                  # AVIF/WebP-Varianten für den Hero
+node scripts/brand-assets.mjs <logo.png>        # Lockups, Bildmarke, Favicon
 ```
+
+`brand-assets.mjs` schneidet ausschließlich zu und färbt nichts um. Die
+Zuschnittgrenzen stammen aus dem Alpha-Profil der Datei, nicht aus Schätzung.
 
 Die Zuordnung Quelle → Slot steht in `scripts/process-images.mjs` und wurde
 anhand des Bildinhalts vorgenommen, nicht anhand der Dateinamen.
