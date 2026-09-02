@@ -5,6 +5,31 @@ Ausgabe erkennt Vercel selbst.
 
 ---
 
+## Ist-Stand
+
+| | |
+| --- | --- |
+| Vercel-Projekt | `solbautec` im Team `maxweidenbruch-1006s-projects` |
+| Verknüpft mit | GitHub `Kxski0/Web`, Deployment bei jedem Push |
+| Produktionsbranch | `main` |
+| URL | `https://solbautec.vercel.app` |
+| Zugriff | **Vercel-Authentifizierung aktiv** — nur für das Konto erreichbar, nicht öffentlich |
+| Indexierung | aus (`robots.txt` liefert `Disallow: /`, jede Seite `noindex`) |
+| Laufzeit | Node 24.x, Framework automatisch als Next.js erkannt |
+| Build | erfolgreich in rund 35 Sekunden |
+
+Das erste Deployment kam vom Feature-Branch und belegt derzeit die
+Produktions-URL. Solange `main` noch keinen Build hat, erzeugen weitere Pushes
+auf den Feature-Branch **Vorschau**-Deployments unter eigenen URLs; die
+Produktions-URL bleibt auf diesem Stand stehen. Nach dem Merge des Pull Requests
+löst jeder Push auf `main` ein reguläres Produktions-Deployment aus.
+
+**Die Seite öffentlich erreichbar machen:** Project → Settings → Deployment
+Protection → Vercel Authentication abschalten. Erst tun, wenn die drei Punkte
+unten geklärt sind.
+
+---
+
 ## Vor dem ersten Livegang
 
 Diese drei Punkte blockieren die Produktion. Details in `CONTENT-TODO.md`.
