@@ -1,0 +1,14 @@
+Die Schriftdateien in diesem Verzeichnis stehen unter der SIL Open Font
+License 1.1 — https://openfontlicense.org
+
+Archivo (Variable, Achsen wdth 62–125 und wght 100–900)
+  Copyright 2020 The Archivo Project Authors
+  https://github.com/Omnibus-Type/Archivo
+
+IBM Plex Mono (400)
+  Copyright 2017 IBM Corp.
+  https://github.com/IBM/plex
+
+Beide Familien werden bewusst selbst ausgeliefert statt ueber die
+Google-Fonts-CDN: das vermeidet eine Drittanbieter-Verbindung beim
+Seitenaufruf und die damit verbundene Uebertragung der IP-Adresse.

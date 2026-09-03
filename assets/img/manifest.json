@@ -1,0 +1,289 @@
+{
+  "abnahme": {
+    "alt": "Zwei Gestalter beugen sich ueber ausgelegte Schwarzweiss-Abzuege und Layoutboegen auf einem schwarzen Tisch.",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "avif": [
+      {
+        "w": 1536,
+        "file": "abnahme-1536.avif",
+        "bytes": 46079
+      },
+      {
+        "w": 800,
+        "file": "abnahme-800.avif",
+        "bytes": 19005
+      },
+      {
+        "w": 400,
+        "file": "abnahme-400.avif",
+        "bytes": 7225
+      }
+    ],
+    "webp": [
+      {
+        "w": 1536,
+        "file": "abnahme-1536.webp",
+        "bytes": 87154
+      },
+      {
+        "w": 800,
+        "file": "abnahme-800.webp",
+        "bytes": 36352
+      },
+      {
+        "w": 400,
+        "file": "abnahme-400.webp",
+        "bytes": 13946
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA0APu1mq04ppaQiMAgBMB2JaQAAUgNQU+aK93CAAPRX40i4BT9UWsyib32IFN9GPf0hRUdgGBHEPei+9AAA"
+  },
+  "kontaktbogen": {
+    "alt": "Kontaktboegen und Druckproben ueberlappen auf einer schwarzen Tischplatte, daneben ein aufgeklappter Laptop und eine dunkle Mappe mit Praegung.",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "avif": [
+      {
+        "w": 1536,
+        "file": "kontaktbogen-1536.avif",
+        "bytes": 44411
+      },
+      {
+        "w": 800,
+        "file": "kontaktbogen-800.avif",
+        "bytes": 16089
+      },
+      {
+        "w": 400,
+        "file": "kontaktbogen-400.avif",
+        "bytes": 6183
+      }
+    ],
+    "webp": [
+      {
+        "w": 1536,
+        "file": "kontaktbogen-1536.webp",
+        "bytes": 83044
+      },
+      {
+        "w": 800,
+        "file": "kontaktbogen-800.webp",
+        "bytes": 33228
+      },
+      {
+        "w": 400,
+        "file": "kontaktbogen-400.webp",
+        "bytes": 13034
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAA0APu1iqU2ppaOiMAgBMB2JaQAAW8q9FSAh7XAAAP4fCSBlnr/J6II0SQnwKwJtWRGV2Hc1BULMYeQAAA=="
+  },
+  "atelier": {
+    "alt": "Weiter Blick ins Studio: ein Gestalter am Eichentisch vor einem Monitor mit Bildraster, dahinter Betonwand und Fensterfront.",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "avif": [
+      {
+        "w": 1536,
+        "file": "atelier-1536.avif",
+        "bytes": 40504
+      },
+      {
+        "w": 800,
+        "file": "atelier-800.avif",
+        "bytes": 15969
+      },
+      {
+        "w": 400,
+        "file": "atelier-400.avif",
+        "bytes": 6158
+      }
+    ],
+    "webp": [
+      {
+        "w": 1536,
+        "file": "atelier-1536.webp",
+        "bytes": 75472
+      },
+      {
+        "w": 800,
+        "file": "atelier-800.webp",
+        "bytes": 31088
+      },
+      {
+        "w": 400,
+        "file": "atelier-400.webp",
+        "bytes": 11716
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAwCdASoUAA0APu1iqk2ppaQiMAgBMB2JZwDDNB4meom4xEOxzTgMAP7c1PAvF5WM2OTmMojUkK1G3bBa11ZwOvz6DzkXUISkdAAA"
+  },
+  "skizze": {
+    "alt": "Ueber die Schulter fotografiert: eine Hand zeichnet Wireframes ins Skizzenbuch, ringsum liegen Abzuege, im Hintergrund ein Monitor voller Bildkader.",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "avif": [
+      {
+        "w": 1536,
+        "file": "skizze-1536.avif",
+        "bytes": 32164
+      },
+      {
+        "w": 800,
+        "file": "skizze-800.avif",
+        "bytes": 14349
+      },
+      {
+        "w": 400,
+        "file": "skizze-400.avif",
+        "bytes": 6070
+      }
+    ],
+    "webp": [
+      {
+        "w": 1536,
+        "file": "skizze-1536.webp",
+        "bytes": 58140
+      },
+      {
+        "w": 800,
+        "file": "skizze-800.webp",
+        "bytes": 25896
+      },
+      {
+        "w": 400,
+        "file": "skizze-400.webp",
+        "bytes": 11334
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAA0APu1mqk4ppaOiMAgBMB2JaQAAW4bLIhZi2xoG18AA/unKzeeUrqvJng2QngCDbgpL9qYWPlidpiQAAA=="
+  },
+  "entwurf": {
+    "alt": "Ein Gestalter arbeitet im Profil an Layoutboegen mit Diagrammen, daneben Laptop und ein praegegestempeltes Notizbuch.",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "avif": [
+      {
+        "w": 1536,
+        "file": "entwurf-1536.avif",
+        "bytes": 30876
+      },
+      {
+        "w": 800,
+        "file": "entwurf-800.avif",
+        "bytes": 13667
+      },
+      {
+        "w": 400,
+        "file": "entwurf-400.avif",
+        "bytes": 5389
+      }
+    ],
+    "webp": [
+      {
+        "w": 1536,
+        "file": "entwurf-1536.webp",
+        "bytes": 53880
+      },
+      {
+        "w": 800,
+        "file": "entwurf-800.webp",
+        "bytes": 23348
+      },
+      {
+        "w": 400,
+        "file": "entwurf-400.webp",
+        "bytes": 9696
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAA0APu1mqk2ppaQiMAgBMB2JZwDCgCGR0nBpQwZGqgAA/ujTOd8aUK8j/lnhc1PbVKuuu3iQRldlYX1uciK94U79pqwPQAA="
+  },
+  "praegung": {
+    "alt": "Detailaufnahme: das blindgepraegte Monogramm auf einem schwarzen Notizbuch und einer schwarzen Visitenkarte, daneben Druckbleistift und Stahllineal.",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "avif": [
+      {
+        "w": 1536,
+        "file": "praegung-1536.avif",
+        "bytes": 63290
+      },
+      {
+        "w": 800,
+        "file": "praegung-800.avif",
+        "bytes": 18275
+      },
+      {
+        "w": 400,
+        "file": "praegung-400.avif",
+        "bytes": 4939
+      }
+    ],
+    "webp": [
+      {
+        "w": 1536,
+        "file": "praegung-1536.webp",
+        "bytes": 112850
+      },
+      {
+        "w": 800,
+        "file": "praegung-800.webp",
+        "bytes": 32578
+      },
+      {
+        "w": 400,
+        "file": "praegung-400.webp",
+        "bytes": 8486
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQBACdASoUAA0APu1krU2ppaSiMAgBMB2JaQDKACFN7Ec6t8LrOkA1iAD+6+/A0rdLcXkGP8zjUQ9mZTTixsFuoZq3Bs0F3S1oAAAA"
+  },
+  "portrait": {
+    "alt": "Portrait eines Gestalters am Fenster, im Ruecken eine Wand mit aufgehaengten Schwarzweiss-Abzuegen.",
+    "width": 1122,
+    "height": 1402,
+    "ratio": 0.8003,
+    "avif": [
+      {
+        "w": 1122,
+        "file": "portrait-1122.avif",
+        "bytes": 26392
+      },
+      {
+        "w": 800,
+        "file": "portrait-800.avif",
+        "bytes": 15503
+      },
+      {
+        "w": 400,
+        "file": "portrait-400.avif",
+        "bytes": 6295
+      }
+    ],
+    "webp": [
+      {
+        "w": 1122,
+        "file": "portrait-1122.webp",
+        "bytes": 42494
+      },
+      {
+        "w": 800,
+        "file": "portrait-800.webp",
+        "bytes": 25202
+      },
+      {
+        "w": 400,
+        "file": "portrait-400.webp",
+        "bytes": 9860
+      }
+    ],
+    "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwBACdASoUABkAPu1ys1MppqSiqAgBMB2JZwDM0A9oVLTsPPsI6VZxghtydxYAAP6BTKTVIQNT8h/SLKxzs5k2qEvHmTEY2GOB4cp5lXhdXBXocuE2zCFfEAAAAA=="
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "nocturne-web",
+  "private": true,
+  "type": "module",
+  "description": "Studio-Website \u2014 statischer Onepager, kein Build-Step fuer die Seite selbst.",
+  "scripts": {
+    "images": "node tools/optimize-images.mjs",
+    "serve": "python3 -m http.server 8080",
+    "verify": "node tools/verify.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "sharp": "^0.35.4"
+  }
+}
