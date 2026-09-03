@@ -142,10 +142,14 @@ def check_page(slug, html):
                           ('name="twitter:card"', "twitter:card")):
         if needle not in html:
             fail(slug, "%s fehlt" % label)
-    if not noindex and "application/ld+json" not in html:
+    if slug in INDEXABLE and "application/ld+json" not in html:
         fail(slug, "Kein strukturiertes Datenobjekt")
     if slug in ("impressum", "datenschutz") and not noindex:
         fail(slug, "Rechtsseite ohne noindex")
+    # Solange Platzhalter in den Pflichtangaben stehen, darf keine Seite
+    # indexierbar sein.
+    if html.count("TODO_ECHTDATEN") and not noindex:
+        fail(slug, "Platzhalter vorhanden, aber Seite nicht auf noindex")
 
     # 12 Wortzahl
     n = len(wordlist)

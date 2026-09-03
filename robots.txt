@@ -1,6 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /impressum/
-Disallow: /datenschutz/
-
-Sitemap: https://netzexpert.de/sitemap.xml
+Disallow: /

@@ -50,6 +50,11 @@ def sitemap():
 
 
 def robots():
+    if not SITE["indexable"]:
+        # Geschlossener Standard, solange Platzhalter in den Pflichtangaben
+        # stehen. Wird mit SITE["indexable"] = True geoeffnet.
+        return ("User-agent: *\n"
+                "Disallow: /\n")
     return ("User-agent: *\n"
             "Allow: /\n"
             "Disallow: /impressum/\n"

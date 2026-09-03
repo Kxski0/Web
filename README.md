@@ -31,6 +31,19 @@ den strukturierten Daten, in der Sitemap und in `llms.txt`.
 
 `validate.py` zählt die verbliebenen Marker und meldet sie als Warnung.
 
+### Indexierung freischalten
+
+`SITE["indexable"]` steht auf `False`. Solange das so ist, liefert **jede**
+Seite `noindex,nofollow` und `robots.txt` ein vollständiges `Disallow: /`.
+Die Seite ist damit erreichbar, aber nicht auffindbar.
+
+Das ist Absicht: Ein indexierter Platzhalter ist schwerer zurückzuholen als
+ein späterer Eintrag, weil Cache, Archive und fremde Kopien bleiben. Erst
+wenn alle `TODO_ECHTDATEN` ersetzt sind und das Impressum vollständig ist,
+den Schalter auf `True` setzen und `build.py` erneut laufen lassen. Der
+Validator meldet einen Fehler, wenn eine Seite mit Platzhaltern indexierbar
+wäre.
+
 **Referenzen sind Platzhalter.** Die beiden Fälle auf der Startseite
 beschreiben Projekttypen ohne Firmennamen, Zahlen oder Logos. Bewusst wurde
 nichts erfunden, was als Behauptung durchgehen könnte. Vor dem Livegang

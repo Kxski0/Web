@@ -30,6 +30,11 @@ SITE = {
     "region":     "NRW",                                # TODO_ECHTDATEN
     "owner":      "Vorname Nachname",                   # TODO_ECHTDATEN
     "founded":    "2019",                               # TODO_ECHTDATEN
+
+    # Auf True stellen, sobald alle TODO_ECHTDATEN ersetzt sind und das
+    # Impressum vollstaendig ist. Vorher liefert jede Seite noindex und
+    # robots.txt ein vollstaendiges Disallow.
+    "indexable":  False,
 }
 
 NAV = [
@@ -185,7 +190,10 @@ def footer():
 def page(slug, title, description, body, active="", schema=None,
          noindex=False, og_image="atelier-1536.webp", light_footer=False):
     canonical = SITE["url"] + ("/" if slug == "index" else "/%s/" % slug)
-    robots = '<meta name="robots" content="noindex,nofollow">\n' if noindex else ''
+    # Rechtsseiten sind immer noindex. Alle uebrigen so lange, bis die
+    # echten Daten stehen.
+    blocked = noindex or not SITE["indexable"]
+    robots = '<meta name="robots" content="noindex,nofollow">\n' if blocked else ''
     schema_block = ""
     if schema:
         schema_block = '<script type="application/ld+json">%s</script>\n' % json.dumps(
