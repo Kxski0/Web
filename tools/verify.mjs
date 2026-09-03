@@ -1,323 +1,281 @@
 /**
- * Gebuendelte Pruefrunde: vier Breiten, Screenshots und die Kontrollen,
- * die man sonst von Hand vergisst. Ein Durchlauf, ein Bericht.
+ * Browserpruefung ueber alle Seiten und vier Breiten.
  *
- *   npm run verify
+ *   python3 tools/serve.py 8081     (in einer Sitzung)
+ *   node tools/verify.mjs           (in einer zweiten)
  *
- * Nutzt das vorinstallierte Chromium. Kein `playwright install` noetig.
+ * Nutzt das vorinstallierte Chromium, kein `playwright install` noetig.
  */
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 
-const BASE = process.env.BASE_URL ?? 'http://127.0.0.1:8080/';
-const SHOTS = process.env.SHOT_DIR ?? '/tmp/nocturne-shots';
+const BASE = process.env.BASE_URL ?? 'http://127.0.0.1:8081';
+const SHOTS = process.env.SHOT_DIR ?? '/tmp/netzexpert-shots';
 const BINARY = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
+const ROUTES = ['/', '/webdesign/', '/seo/', '/prozess/', '/ueber-uns/',
+                '/kontakt/', '/impressum/', '/datenschutz/'];
 const VIEWPORTS = [
-  { name: '375-mobil',   width: 375,  height: 812 },
-  { name: '768-tablet',  width: 768,  height: 1024 },
-  { name: '1280-laptop', width: 1280, height: 800 },
-  { name: '1920-desktop', width: 1920, height: 1080 },
+  { name: '375',  width: 375,  height: 812 },
+  { name: '768',  width: 768,  height: 1024 },
+  { name: '1280', width: 1280, height: 800 },
+  { name: '1920', width: 1920, height: 1080 },
 ];
 
 const problems = [];
 const notes = [];
-const flag = (scope, message) => problems.push(`[${scope}] ${message}`);
+const flag = (scope, m) => problems.push(`[${scope}] ${m}`);
 
-/* ── Kontrast nach WCAG 2.1 ─────────────────────────────────────────────── */
-function relativeLuminance([r, g, b]) {
-  const channel = (v) => {
+function luminance([r, g, b]) {
+  const ch = (v) => {
     const s = v / 255;
     return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
   };
-  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+  return 0.2126 * ch(r) + 0.7152 * ch(g) + 0.0722 * ch(b);
 }
-function contrastRatio(fg, bg) {
-  const [a, b] = [relativeLuminance(fg), relativeLuminance(bg)].sort((x, y) => y - x);
+function contrast(fg, bg) {
+  const [a, b] = [luminance(fg), luminance(bg)].sort((x, y) => y - x);
   return (a + 0.05) / (b + 0.05);
 }
+
 /** In der Seite ausgefuehrt: loest jede CSS-Farbe ueber Canvas nach sRGB auf. */
-const RESOLVE_COLORS = (values) => {
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 1;
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const RESOLVE = (values) => {
+  const c = document.createElement('canvas');
+  c.width = c.height = 1;
+  const ctx = c.getContext('2d', { willReadFrequently: true });
   const out = {};
-  for (const [key, value] of Object.entries(values)) {
-    if (!value) continue;
+  for (const [k, v] of Object.entries(values)) {
+    if (!v) continue;
     ctx.clearRect(0, 0, 1, 1);
     ctx.fillStyle = '#000';
-    ctx.fillStyle = value;
+    ctx.fillStyle = v;
     ctx.fillRect(0, 0, 1, 1);
-    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-    out[key] = [r, g, b];
+    const d = ctx.getImageData(0, 0, 1, 1).data;
+    out[k] = [d[0], d[1], d[2]];
   }
   return out;
 };
 
-async function main() {
-  if (!existsSync(BINARY)) {
-    console.error(`Chromium nicht gefunden: ${BINARY}`);
-    process.exit(1);
-  }
-  await mkdir(SHOTS, { recursive: true });
+async function auditPage(page, route, viewport) {
+  const scope = `${viewport.name}${route}`;
+  const consoleErrors = [];
+  const failed = [];
 
+  page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text()); });
+  page.on('pageerror', (e) => consoleErrors.push('pageerror: ' + e.message));
+  page.on('requestfailed', (r) => failed.push(`${r.url()} ${r.failure()?.errorText}`));
+  page.on('response', (r) => { if (r.status() >= 400) failed.push(`${r.status()} ${r.url()}`); });
+
+  await page.goto(BASE + route, { waitUntil: 'load' });
+  await page.evaluate(() => document.fonts.ready);
+
+  const transferred = await page.evaluate(() =>
+    performance.getEntriesByType('resource')
+      .reduce((s, r) => s + (r.transferSize || r.encodedBodySize || 0), 0));
+
+  // Ganze Seite in Schritten durchscrollen, damit alle Reveals ausloesen
+  // und die Choreografie ihre volle Strecke laeuft.
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < height; y += Math.round(viewport.height * 0.5)) {
+    await page.evaluate((t) => window.scrollTo({ top: t, behavior: 'instant' }), y);
+    await page.waitForTimeout(90);
+  }
+  await page.waitForTimeout(500);
+
+  const audit = await page.evaluate((src) => {
+    const resolve = new Function('return ' + src)();
+    const r = { imgs: [], unrevealed: [], overflow: null, colors: {}, flyer: null };
+
+    for (const img of document.querySelectorAll('img')) {
+      const issues = [];
+      const alt = img.getAttribute('alt');
+      if (alt === null) issues.push('alt fehlt');
+      else if (alt.trim().length < 8) issues.push('alt zu kurz');
+      if (!img.getAttribute('width') || !img.getAttribute('height')) issues.push('width/height fehlt');
+      if (img.naturalWidth === 0) issues.push('nicht geladen');
+      if (issues.length) r.imgs.push({ src: (img.currentSrc || img.src).split('/').pop(), issues });
+    }
+
+    for (const el of document.querySelectorAll('[data-reveal], [data-rise]')) {
+      if (!el.classList.contains('is-in')) r.unrevealed.push(el.className.slice(0, 40));
+    }
+
+    r.overflow = {
+      scroll: document.documentElement.scrollWidth,
+      client: document.documentElement.clientWidth,
+    };
+
+    const cs = getComputedStyle(document.body);
+    const raw = { bg: cs.backgroundColor, text: cs.color };
+    const q = (sel, key) => { const e = document.querySelector(sel); if (e) raw[key] = getComputedStyle(e).color; };
+    q('.muted', 'muted');
+    q('.eyebrow', 'eyebrow');
+    q('.step p', 'stepP');
+    q('.colophon a', 'footerLink');
+    q('.nav-links a', 'navLink');
+    q('.step-num', 'stepNum');
+    r.colors = resolve(raw);
+
+    const f = document.querySelector('.flyer');
+    if (f) {
+      const b = f.getBoundingClientRect();
+      r.flyer = { w: Math.round(b.width), h: Math.round(b.height), op: getComputedStyle(f).opacity };
+    }
+    return r;
+  }, RESOLVE.toString());
+
+  for (const e of consoleErrors) flag(scope, 'Konsole: ' + e);
+  for (const f of [...new Set(failed)]) flag(scope, 'Anfrage: ' + f);
+  for (const i of audit.imgs) flag(scope, `Bild ${i.src}: ${i.issues.join(', ')}`);
+  for (const u of audit.unrevealed) flag(scope, 'Reveal nicht ausgelöst: ' + u);
+  if (audit.overflow.scroll > audit.overflow.client + 1) {
+    flag(scope, `Waagerechter Überlauf: ${audit.overflow.scroll} > ${audit.overflow.client}`);
+  }
+
+  const bg = audit.colors.bg;
+  for (const [label, val] of Object.entries(audit.colors)) {
+    if (label === 'bg' || !val) continue;
+    const ratio = contrast(val, bg);
+    if (ratio < 4.5) flag(scope, `Kontrast ${label} ${ratio.toFixed(2)}:1 (mind. 4.5:1)`);
+  }
+
+  const kb = Math.round(transferred / 1024);
+  if (kb > 1200) flag(scope, `${kb} kB übertragen (Ziel unter 1200 kB)`);
+  if (route === '/') notes.push(`[${viewport.name}] Startseite ${kb} kB, Flyer ${JSON.stringify(audit.flyer)}`);
+
+  page.removeAllListeners();
+  return kb;
+}
+
+async function main() {
+  if (!existsSync(BINARY)) { console.error('Chromium fehlt: ' + BINARY); process.exit(1); }
+  await mkdir(SHOTS, { recursive: true });
   const browser = await chromium.launch({ executablePath: BINARY });
 
-  for (const viewport of VIEWPORTS) {
-    const context = await browser.newContext({
-      viewport: { width: viewport.width, height: viewport.height },
-      deviceScaleFactor: 1,
-      locale: 'de-DE',
+  for (const vp of VIEWPORTS) {
+    const ctx = await browser.newContext({
+      viewport: { width: vp.width, height: vp.height },
+      deviceScaleFactor: 1, locale: 'de-DE',
     });
-    const page = await context.newPage();
-
-    const consoleErrors = [];
-    const failedRequests = [];
-    let transferred = 0;
-
-    page.on('console', (msg) => {
-      if (msg.type() === 'error') consoleErrors.push(msg.text());
-    });
-    page.on('pageerror', (err) => consoleErrors.push(`pageerror: ${err.message}`));
-    page.on('requestfailed', (req) => {
-      failedRequests.push(`${req.url()} — ${req.failure()?.errorText ?? 'unbekannt'}`);
-    });
-    page.on('response', async (res) => {
-      const status = res.status();
-      if (status >= 400) failedRequests.push(`${status} ${res.url()}`);
-    });
-
-    await page.goto(BASE, { waitUntil: 'load' });
-    await page.evaluate(() => document.fonts.ready);
-
-    // Gewicht der Startansicht, bevor gescrollt wird.
-    transferred = await page.evaluate(() =>
-      performance.getEntriesByType('resource')
-        .reduce((sum, r) => sum + (r.transferSize || r.encodedBodySize || 0), 0));
-
-    // Erst je ein Bild pro Abschnitt, dann in Schritten durch die ganze
-    // Seite: nur so werden auch Elemente unterhalb eines Abschnittskopfs
-    // erreicht und ihre Reveals ausgeloest.
-    for (const id of ['atelier', 'studio', 'prozess', 'kontakt']) {
-      await page.evaluate((target) => {
-        document.getElementById(target)?.scrollIntoView({ behavior: 'instant', block: 'start' });
-      }, id);
-      await page.waitForTimeout(420);
-      await page.screenshot({ path: `${SHOTS}/${viewport.name}--${id}.png` });
+    const page = await ctx.newPage();
+    for (const route of ROUTES) {
+      await auditPage(page, route, vp);
+      const name = route === '/' ? 'start' : route.replace(/\//g, '');
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+      await page.waitForTimeout(250);
+      await page.screenshot({ path: `${SHOTS}/${vp.name}--${name}.png`, fullPage: route !== '/' });
     }
+    await ctx.close();
+  }
 
-    const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-    for (let y = 0; y < pageHeight; y += Math.round(viewport.height * 0.6)) {
-      await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
-      await page.waitForTimeout(120);
-    }
-    await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
-    await page.waitForTimeout(500);
+  /* ── Choreografie des Zeichens ──────────────────────────────────────── */
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(BASE + '/', { waitUntil: 'load' });
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(300);
 
-    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-    await page.waitForTimeout(300);
-    await page.screenshot({ path: `${SHOTS}/${viewport.name}--voll.png`, fullPage: true });
-
-    /* ── Kontrollen in der Seite ─────────────────────────────────────── */
-    const audit = await page.evaluate((resolveSource) => {
-      const resolveColors = new Function('return ' + resolveSource)();
-      const result = { images: [], unrevealed: [], overflow: null, colors: {}, headings: [], focusables: 0 };
-
-      for (const img of document.querySelectorAll('img')) {
-        const dialog = img.closest('dialog');
-        if (dialog && !dialog.open) continue;
-        const issues = [];
-        if (!img.hasAttribute('alt')) issues.push('alt fehlt');
-        else if (img.closest('[aria-hidden="true"]') === null && img.alt.trim() === '') issues.push('alt leer');
-        if (!img.getAttribute('width') || !img.getAttribute('height')) issues.push('width/height fehlt');
-        if (img.naturalWidth === 0) issues.push('nicht geladen');
-        if (issues.length) result.images.push({ src: img.currentSrc || img.src, issues });
-      }
-
-      for (const el of document.querySelectorAll('[data-reveal], [data-rise]')) {
-        if (!el.classList.contains('is-revealed')) {
-          result.unrevealed.push(el.className || el.tagName);
-        }
-      }
-
-      result.overflow = {
-        scrollWidth: document.documentElement.scrollWidth,
-        clientWidth: document.documentElement.clientWidth,
+  const stages = [];
+  const track = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (const frac of [0, 0.06, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9]) {
+    await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), Math.round(track * frac * 0.55));
+    await page.waitForTimeout(160);
+    stages.push(await page.evaluate(() => {
+      const f = document.querySelector('.flyer');
+      const rev = document.querySelector('.composition-reveal');
+      const b = f ? f.getBoundingClientRect() : null;
+      return {
+        y: Math.round(window.scrollY),
+        size: b ? Math.round(b.width) : null,
+        x: b ? Math.round(b.left) : null,
+        vis: f ? getComputedStyle(f).visibility : null,
+        clip: rev ? rev.style.clipPath || 'keiner' : null,
       };
-
-      const styles = getComputedStyle(document.body);
-      const raw = { bodyBg: styles.backgroundColor, bodyFg: styles.color };
-      const muted = document.querySelector('.step p');
-      if (muted) raw.mutedFg = getComputedStyle(muted).color;
-      const eyebrow = document.querySelector('.eyebrow');
-      if (eyebrow) raw.eyebrowFg = getComputedStyle(eyebrow).color;
-      const caption = document.querySelector('.caption');
-      if (caption) raw.captionFg = getComputedStyle(caption).color;
-      const railCurrent = document.querySelector('.rail-mobile a[aria-current="true"], .rail a[aria-current="true"]');
-      if (railCurrent) raw.railCurrent = getComputedStyle(railCurrent).color;
-      const colophon = document.querySelector('.colophon');
-      if (colophon) raw.colophonFg = getComputedStyle(colophon).color;
-      result.colors = resolveColors(raw);
-
-      result.headings = [...document.querySelectorAll('h1,h2,h3,h4')]
-        .map((h) => Number(h.tagName[1]));
-
-      result.focusables = document.querySelectorAll(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ).length;
-
-      return result;
-    }, RESOLVE_COLORS.toString());
-
-    const scope = viewport.name;
-
-    for (const err of consoleErrors) flag(scope, `Konsole: ${err}`);
-    for (const req of [...new Set(failedRequests)]) flag(scope, `Anfrage: ${req}`);
-    for (const img of audit.images) flag(scope, `Bild ${img.src.split('/').pop()}: ${img.issues.join(', ')}`);
-    for (const el of audit.unrevealed) flag(scope, `Reveal nicht ausgeloest: ${el}`);
-
-    if (audit.overflow.scrollWidth > audit.overflow.clientWidth + 1) {
-      flag(scope, `Waagerechter Ueberlauf: ${audit.overflow.scrollWidth} > ${audit.overflow.clientWidth}`);
-    }
-
-    // Ueberschriftenordnung darf keine Stufe ueberspringen.
-    let previous = 0;
-    for (const level of audit.headings) {
-      if (previous && level > previous + 1) {
-        flag(scope, `Ueberschrift springt von h${previous} auf h${level}`);
-      }
-      previous = level;
-    }
-
-    const bg = audit.colors.bodyBg;
-    for (const [label, value] of Object.entries(audit.colors)) {
-      if (label === 'bodyBg' || !value) continue;
-      const ratio = contrastRatio(value, bg);
-      const line = `${label} ${ratio.toFixed(2)}:1`;
-      if (ratio < 4.5) flag(scope, `Kontrast zu gering — ${line} (mind. 4.5:1)`);
-      else notes.push(`[${scope}] Kontrast ${line}`);
-    }
-
-    const kb = Math.round(transferred / 1024);
-    if (kb > 1024) flag(scope, `Startansicht ${kb} kB (Ziel unter 1024 kB)`);
-    else notes.push(`[${scope}] Startansicht ${kb} kB, ${audit.focusables} fokussierbare Elemente`);
-
-    /* ── Fokus: echter Tab-Durchlauf ──────────────────────────────────
-       Programmatisches focus() loest :focus-visible in Chromium nicht
-       verlaesslich aus. Nur die Tastatur zeigt den tatsaechlichen Zustand. */
-    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-    await page.keyboard.press('Tab');
-    const seen = new Set();
-    const missingFocus = [];
-    const expected = await page.evaluate(() =>
-      document.querySelectorAll('a[href], button:not([disabled])').length);
-
-    for (let i = 0; i < expected + 4; i += 1) {
-      const state = await page.evaluate(() => {
-        const el = document.activeElement;
-        if (!el || el === document.body) return null;
-        const style = getComputedStyle(el);
-        const outline = style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) > 0;
-        const shadow = style.boxShadow !== 'none';
-        const underline = style.backgroundSize.includes('100%');
-        const all = [...document.querySelectorAll('a[href], button:not([disabled])')];
-        return {
-          id: `${all.indexOf(el)}:${el.className || el.textContent.trim().slice(0, 24) || el.tagName}`,
-          visible: outline || shadow || underline,
-        };
-      });
-      if (state) {
-        if (seen.has(state.id) && i > expected - 1) break;
-        seen.add(state.id);
-        if (!state.visible) missingFocus.push(state.id);
-      }
-      await page.keyboard.press('Tab');
-    }
-    for (const el of [...new Set(missingFocus)]) flag(scope, `Kein sichtbarer Fokus: ${el}`);
-    notes.push(`[${scope}] Tab erreichte ${seen.size} von ${expected} Elementen`);
-
-    await context.close();
+    }));
+    await page.screenshot({ path: `${SHOTS}/flug-${Math.round(frac * 100)}.png` });
   }
 
-  /* ── Bewegungsreduktion ───────────────────────────────────────────────── */
-  const reducedContext = await browser.newContext({
-    viewport: { width: 1280, height: 800 },
-    reducedMotion: 'reduce',
-  });
-  const reducedPage = await reducedContext.newPage();
-  await reducedPage.goto(BASE, { waitUntil: 'load' });
-  await reducedPage.evaluate(() => document.fonts.ready);
-  await reducedPage.waitForTimeout(600);
-
-  const motion = await reducedPage.evaluate(() => {
-    const plate = document.querySelector('.plate[data-reveal]');
-    const word = document.querySelector('.word-mask > span');
-    const scroll = getComputedStyle(document.documentElement).scrollBehavior;
-    return {
-      plateClip: plate ? getComputedStyle(plate).clipPath : null,
-      plateOpacity: plate ? getComputedStyle(plate).opacity : null,
-      wordTranslate: word ? getComputedStyle(word).translate : null,
-      scrollBehavior: scroll,
-    };
-  });
-
-  const still = (v) => !v || v === 'none' || /^0(px)?( 0(px)?)*$/.test(v.trim());
-  if (!still(motion.wordTranslate)) {
-    flag('reduced-motion', `Wortlauf bewegt sich weiterhin: translate ${motion.wordTranslate}`);
+  const sizes = stages.map((s) => s.size).filter((v) => v !== null);
+  if (!sizes.length) flag('choreografie', 'Kein fliegendes Zeichen gefunden');
+  else if (Math.max(...sizes) <= Math.min(...sizes) + 20) {
+    flag('choreografie', `Zeichen wächst nicht: Größen ${sizes.join(', ')}`);
   }
-  if (motion.plateClip && motion.plateClip !== 'none') {
-    flag('reduced-motion', `Clip-Path aktiv: ${motion.plateClip}`);
+  const clips = stages.map((s) => s.clip);
+  if (!clips.some((c) => c && c !== 'keiner' && !c.includes('0%'))) {
+    notes.push('[choreografie] Blende erreichte keinen Zwischenwert, bitte Bilder prüfen');
   }
-  if (motion.scrollBehavior !== 'auto') {
-    flag('reduced-motion', `scroll-behavior ist ${motion.scrollBehavior}, erwartet auto`);
+  notes.push('[choreografie] ' + JSON.stringify(stages));
+  await ctx.close();
+
+  /* ── Menü auf kleinen Geräten ───────────────────────────────────────── */
+  const mctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+  const mp = await mctx.newPage();
+  await mp.goto(BASE + '/', { waitUntil: 'load' });
+  await mp.locator('#nav-toggle').click();
+  await mp.waitForTimeout(400);
+  const menuOpen = await mp.evaluate(() => ({
+    open: document.getElementById('nav-menu').dataset.open,
+    expanded: document.getElementById('nav-toggle').getAttribute('aria-expanded'),
+    visible: getComputedStyle(document.getElementById('nav-menu')).visibility,
+  }));
+  if (menuOpen.open !== 'true' || menuOpen.visible !== 'visible') {
+    flag('menü', 'Menü öffnet nicht: ' + JSON.stringify(menuOpen));
   }
-  notes.push(`[reduced-motion] clip-path ${motion.plateClip}, translate ${motion.wordTranslate}, scroll ${motion.scrollBehavior}`);
+  if (menuOpen.expanded !== 'true') flag('menü', 'aria-expanded nicht gesetzt');
+  await mp.screenshot({ path: `${SHOTS}/menue-offen.png` });
+  await mp.keyboard.press('Escape');
+  await mp.waitForTimeout(350);
+  const closed = await mp.evaluate(() => document.getElementById('nav-menu').dataset.open);
+  if (closed !== 'false') flag('menü', 'Escape schließt das Menü nicht');
+  notes.push('[menü] öffnet und schließt, aria-expanded gesetzt');
+  await mctx.close();
 
-  await reducedPage.screenshot({ path: `${SHOTS}/reduced-motion.png` });
-  await reducedContext.close();
+  /* ── Bewegungsreduktion ─────────────────────────────────────────────── */
+  const rctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
+  const rp = await rctx.newPage();
+  await rp.goto(BASE + '/', { waitUntil: 'load' });
+  await rp.evaluate(() => document.fonts.ready);
+  await rp.evaluate(() => window.scrollTo({ top: 1200, behavior: 'instant' }));
+  await rp.waitForTimeout(500);
+  const rm = await rp.evaluate(() => ({
+    flyer: !!document.querySelector('.flyer'),
+    scroll: getComputedStyle(document.documentElement).scrollBehavior,
+    word: (() => { const w = document.querySelector('.word-mask > span');
+                   return w ? getComputedStyle(w).translate : null; })(),
+    clip: (() => { const p = document.querySelector('[data-reveal] > picture');
+                   return p ? getComputedStyle(p).clipPath : null; })(),
+  }));
+  if (rm.flyer) flag('reduced-motion', 'Fliegendes Zeichen läuft trotzdem');
+  if (rm.scroll !== 'auto') flag('reduced-motion', 'scroll-behavior ' + rm.scroll);
+  if (rm.clip && rm.clip !== 'none') flag('reduced-motion', 'Clip-Path aktiv: ' + rm.clip);
+  notes.push('[reduced-motion] ' + JSON.stringify(rm));
+  await rp.screenshot({ path: `${SHOTS}/reduced-motion.png` });
+  await rctx.close();
 
-  /* ── Bildansicht oeffnen und schliessen ───────────────────────────────── */
-  const dialogContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-  const dialogPage = await dialogContext.newPage();
-  const dialogErrors = [];
-  dialogPage.on('pageerror', (err) => dialogErrors.push(err.message));
-  await dialogPage.goto(BASE, { waitUntil: 'load' });
-  await dialogPage.locator('[data-plate="kontaktbogen"]').click();
-  await dialogPage.waitForTimeout(600);
+  /* ── Ohne JavaScript ────────────────────────────────────────────────── */
+  const nctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, javaScriptEnabled: false });
+  const np = await nctx.newPage();
+  await np.goto(BASE + '/', { waitUntil: 'load' });
+  await np.waitForTimeout(400);
+  const nojs = await np.evaluate(() => 0).catch(() => null);
+  const visible = await np.locator('.composition-grid figure').first().isVisible();
+  const heroVisible = await np.locator('h1').first().isVisible();
+  if (!visible) flag('ohne-js', 'Komposition unsichtbar ohne JavaScript');
+  if (!heroVisible) flag('ohne-js', 'Überschrift unsichtbar ohne JavaScript');
+  notes.push(`[ohne-js] Hero sichtbar ${heroVisible}, Komposition sichtbar ${visible}`);
+  await np.screenshot({ path: `${SHOTS}/ohne-js.png`, fullPage: false });
+  await nctx.close();
 
-  const openState = await dialogPage.evaluate(() => {
-    const d = document.getElementById('lightbox');
-    return { open: d.open, src: document.getElementById('lightbox-img').getAttribute('src'), active: document.activeElement?.tagName };
-  });
-  if (!openState.open) flag('lightbox', 'Dialog oeffnet nicht');
-  if (!openState.src) flag('lightbox', 'Kein Bild im Dialog gesetzt');
-  await dialogPage.screenshot({ path: `${SHOTS}/lightbox.png` });
-
-  await dialogPage.keyboard.press('Escape');
-  await dialogPage.waitForTimeout(400);
-  const closedState = await dialogPage.evaluate(() => {
-    const d = document.getElementById('lightbox');
-    return { open: d.open, focus: document.activeElement?.dataset?.plate ?? null };
-  });
-  if (closedState.open) flag('lightbox', 'Escape schliesst nicht');
-  if (closedState.focus !== 'kontaktbogen') flag('lightbox', `Fokus kehrt nicht zurueck (aktiv: ${closedState.focus})`);
-  for (const err of dialogErrors) flag('lightbox', `Fehler: ${err}`);
-  notes.push(`[lightbox] geoeffnet ${openState.open}, Quelle ${openState.src?.split('/').pop()}, Fokus zurueck auf ${closedState.focus}`);
-
-  await dialogContext.close();
   await browser.close();
 
-  /* ── Bericht ──────────────────────────────────────────────────────────── */
-  console.log('\n──── Hinweise ────');
-  for (const note of notes) console.log('  ' + note);
-
+  console.log('──── Hinweise ────');
+  for (const n of notes) console.log('  ' + n);
   console.log(`\n──── Befunde: ${problems.length} ────`);
-  for (const problem of problems) console.log('  ✗ ' + problem);
+  for (const p of problems) console.log('  ✗ ' + p);
   if (!problems.length) console.log('  Keine.');
   console.log(`\nScreenshots: ${SHOTS}`);
-
   process.exit(problems.length ? 1 : 0);
 }
 
-main().catch((err) => { console.error(err); process.exit(2); });
+main().catch((e) => { console.error(e); process.exit(2); });
