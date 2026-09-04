@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Faq } from '@/components/page/Faq';
 import { MediaBand } from '@/components/page/MediaBand';
 import { PageCta } from '@/components/page/PageCta';
@@ -139,6 +140,36 @@ export default function WaermepumpePage() {
           Warmwasserbereitung und hydraulischer Abgleich. Eine gut eingestellte Wärmepumpe
           unterscheidet sich von einer schlecht eingestellten um einen erheblichen Teil der
           Jahresarbeitszahl — bei identischem Gerät.
+        </p>
+        <p>
+          Für Gebäude in Augsburg kommen das bayerische Abstandsflächenrecht und die kommunale
+          Wärmeplanung dazu. Beides steht auf der Seite zur
+          <Link href="/waermepumpe-augsburg/">Wärmepumpe in Augsburg</Link>.
+        </p>
+      </Prose>
+
+      <Prose eyebrow="Die Kennzahl" title="Die Jahresarbeitszahl entsteht nach dem Einbau." align="right">
+        <p>
+          Der COP im Datenblatt beschreibt ein Gerät auf einem Prüfstand bei definierten
+          Temperaturen. Was Sie am Ende bezahlen, entscheidet die Jahresarbeitszahl — und die ist zu
+          großen Teilen kein Produktmerkmal, sondern das Ergebnis der Installation.
+        </p>
+        <p>
+          <strong>Die Vorlauftemperatur</strong> ist der stärkste Hebel. Jedes Grad weniger kostet
+          den Verdichter spürbar weniger Arbeit. Deshalb ist der hydraulische Abgleich der
+          Heizflächen keine Feinarbeit am Schluss, sondern eine der wenigen Maßnahmen mit direkter
+          Wirkung auf die Stromrechnung.
+        </p>
+        <p>
+          <strong>Das Takten</strong> ist der zweite. Eine überdimensionierte Wärmepumpe erreicht
+          ihre Zieltemperatur zu schnell, schaltet ab, kühlt aus und startet erneut. Jeder Start
+          kostet Wirkungsgrad und Lebensdauer. Ein Gerät, das kleiner ausgelegt ist und länger
+          durchläuft, ist in der Praxis fast immer das effizientere.
+        </p>
+        <p>
+          <strong>Die Warmwasserbereitung</strong> ist der dritte. Sie verlangt die höchsten
+          Temperaturen im ganzen System und drückt den Jahreswert entsprechend. Wo sie zeitlich in
+          die Mittagsstunden gelegt werden kann, arbeitet sie mit der Erzeugung statt gegen sie.
         </p>
       </Prose>
 

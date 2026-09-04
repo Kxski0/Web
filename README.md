@@ -59,7 +59,10 @@ Exit-Code ungleich null zurück:
   Konsolenfehler, Warnungen und fehlgeschlagene Requests.
 - `routes-check.mjs` — prüft jede Route auf Status 200, genau ein `h1`,
   eindeutigen Title und eindeutige Description, Canonical, strukturierte Daten,
-  `lang="de"` und horizontalen Overflow. Danach werden alle internen Links
+  `lang="de"` und horizontalen Overflow. Zusätzlich der Wortumfang gegen das
+  Budget aus §38 (Startseite 700–1200, Leistungsseiten 900–1500, regionale
+  Seiten 1000–1800); FAQ-Antworten werden dafür aufgeklappt, weil `innerText`
+  geschlossene `<details>` überspringt. Danach werden alle internen Links
   aufgerufen und müssen 200 liefern.
 - `responsive-check.mjs` — 375, 768, 1280 und 1920px: horizontaler Overflow,
   Elemente jenseits des Viewports, Text unter 12px und Klickziele unter 24×24
@@ -99,7 +102,19 @@ Deployment auf Vercel: siehe `DEPLOY.md`.
 /ueber-uns/
 /kontakt/                             Formular, serverseitig validiert
 /impressum/  /datenschutz/            noindex, siehe CONTENT-TODO.md
+
+/photovoltaik-augsburg/               regionale Seiten. Sie existieren nur dort,
+/waermepumpe-augsburg/                wo es belegbaren lokalen Inhalt gibt:
+/stromspeicher-augsburg/              Netzbetreiber, bayerisches Bau- und
+/energiemanagement-augsburg/          Denkmalrecht, kommunale Wärmeplanung.
 ```
+
+Die regionalen Seiten sind bewusst keine Textkopien mit ausgetauschtem
+Ortsnamen. Jede regionale oder rechtliche Aussage darauf steht am Seitenende in
+einem Belege-Register mit der Stelle, die sie veröffentlicht (`SourceList`) —
+Regeln und Planungsstände ändern sich, und eine Behauptung ohne Quelle lässt
+sich nicht nachprüfen. Eine weitere Region bekommt erst dann eine Seite, wenn es
+für sie eigene belegbare Fakten gibt.
 
 ## Weiterführend
 

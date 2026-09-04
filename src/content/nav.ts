@@ -25,3 +25,16 @@ export const SOLUTION_ROUTES = [
   { label: 'Klima', href: '/klima/' },
   { label: 'Carports und Terrassenüberdachungen', href: '/carports-terrassenueberdachungen/' },
 ] as const;
+
+/**
+ * Regional pages. These exist only where there is genuinely local material to
+ * publish — grid operator, state building law, the city's heat planning (§9).
+ * The list stays short on purpose: a region without its own facts does not get
+ * a page.
+ */
+export const REGION_ROUTES = [
+  { label: 'Photovoltaik Augsburg', href: '/photovoltaik-augsburg/' },
+  { label: 'Wärmepumpe Augsburg', href: '/waermepumpe-augsburg/' },
+  { label: 'Stromspeicher Augsburg', href: '/stromspeicher-augsburg/' },
+  { label: 'Energiemanagement Augsburg', href: '/energiemanagement-augsburg/' },
+] as const;

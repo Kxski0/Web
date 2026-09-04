@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Faq } from '@/components/page/Faq';
 import { MediaBand } from '@/components/page/MediaBand';
 import { PageCta } from '@/components/page/PageCta';
@@ -123,6 +124,36 @@ export default function EnergiemanagementPage() {
           Deshalb steht die Frage nach der Kombinierbarkeit bei uns vor der Komponentenauswahl und
           nicht danach. Es ist der Punkt, an dem sich entscheidet, ob aus vier Geräten ein System
           wird oder vier Geräte an einer Wand.
+        </p>
+        <p>
+          Welche Netzentgeltmodule bei LEW Verteilnetz zur Wahl stehen und was die Augsburger
+          Wärmeplanung für die Auslegung bedeutet, steht auf der Seite zum
+          <Link href="/energiemanagement-augsburg/">Energiemanagement in Augsburg</Link>.
+        </p>
+      </Prose>
+
+      <Prose eyebrow="Die Voraussetzung" title="Steuern kann nur, wer misst." align="left">
+        <p>
+          Vor jeder Regel steht eine Messung. Ein System, das nicht weiß, wie viel gerade erzeugt
+          wird, wie viel das Haus zieht und was davon auf welchen Verbraucher entfällt, kann keine
+          Entscheidung treffen — es kann nur Zeitpläne abarbeiten.
+        </p>
+        <p>
+          Der Mindestumfang ist ein Zähler am Netzverknüpfungspunkt, der in beide Richtungen misst
+          und seine Werte schnell genug liefert, damit die Regelung einem wandernden Wolkenfeld
+          folgen kann. Alles Weitere ist eine Frage dessen, was Sie später wissen wollen: getrennte
+          Messung für Wärmepumpe und Ladepunkt macht sichtbar, wohin der Strom tatsächlich geht.
+        </p>
+        <p>
+          <strong>Das ist mehr als Statistik.</strong> Ein separat gemessener Wärmepumpenkreis zeigt
+          die tatsächliche Jahresarbeitszahl statt einer geschätzten. Er zeigt eine Anlage, die
+          taktet. Und er zeigt, ob eine Einstellung, die vor zwei Wintern richtig war, es noch immer
+          ist. Ohne diese Trennung bleibt der gesamte Hausverbrauch eine einzige Zahl, aus der sich
+          nichts ableiten lässt.
+        </p>
+        <p>
+          Wir planen die Messstellen deshalb mit ein, wenn der Zählerschrank ohnehin geöffnet wird.
+          Nachträglich ist es dieselbe Arbeit ein zweites Mal.
         </p>
       </Prose>
 

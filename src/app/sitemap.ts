@@ -16,6 +16,14 @@ const ROUTES: { path: string; priority: number }[] = [
   { path: '/projekte/', priority: 0.6 },
   { path: '/ueber-uns/', priority: 0.7 },
   { path: '/kontakt/', priority: 0.8 },
+  // Regional pages ship only where there is genuinely local material to publish
+  // (§9). Each of these four carries facts that differ by region — grid
+  // operator, building law, municipal heat planning — not one text with the
+  // place name swapped.
+  { path: '/photovoltaik-augsburg/', priority: 0.8 },
+  { path: '/waermepumpe-augsburg/', priority: 0.8 },
+  { path: '/stromspeicher-augsburg/', priority: 0.8 },
+  { path: '/energiemanagement-augsburg/', priority: 0.8 },
   // Legal pages are noindex; they stay out of the sitemap by design.
 ];
 

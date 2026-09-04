@@ -8,7 +8,7 @@
 import { chromium } from 'playwright';
 
 const BASE = 'http://127.0.0.1:3100';
-const ROUTES = ['/', '/photovoltaik/', '/stromspeicher/', '/kontakt/'];
+const ROUTES = ['/', '/photovoltaik/', '/stromspeicher/', '/kontakt/', '/energiemanagement-augsburg/'];
 
 // LCP 2500ms and CLS 0.1 are the "good" thresholds for Core Web Vitals.
 const BUDGET = { lcp: 2500, cls: 0.1, jsKb: 300, totalKb: 1400 };

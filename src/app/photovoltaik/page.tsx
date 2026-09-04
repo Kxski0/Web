@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Faq } from '@/components/page/Faq';
 import { MediaBand } from '@/components/page/MediaBand';
 import { PageCta } from '@/components/page/PageCta';
@@ -45,7 +46,16 @@ const FAQ = [
     question: 'Kann ich später erweitern?',
     answer:
       'Ja, wenn die Anlage von Anfang an dafür ausgelegt ist. Reserve im Wechselrichter, ausreichend dimensionierte Leitungswege und Platz im Zählerschrank kosten bei der Erstinstallation wenig und sparen später viel. Wir planen diese Reserve mit ein, wenn ein Speicher, eine Wärmepumpe oder eine Wallbox absehbar sind.',
+  },  {
+    question: 'Liefert die Anlage bei einem Stromausfall weiter?',
+    answer:
+      'Standardmäßig nicht. Der Netz- und Anlagenschutz trennt den Wechselrichter bei Netzausfall ab — das ist eine Sicherheitsanforderung, damit niemand an einer vermeintlich toten Leitung arbeitet, während Ihre Anlage einspeist. Wenn Sie Versorgung im Ausfall wollen, braucht es eine Ersatzstrom- oder Inselfunktion und in aller Regel einen Speicher. Das ist eine bewusste Entscheidung mit eigenem Aufwand, kein Nebeneffekt.',
   },
+  {
+    question: 'Wie viel Wartung braucht eine Photovoltaikanlage?',
+    answer:
+      'Wenig, aber nicht nichts. Auf einem geneigten Dach reinigt der Regen die Module in aller Regel ausreichend; auf flach geneigten Flächen und unter Bäumen sieht das anders aus. Was tatsächlich zählt, ist die Beobachtung: Ein Ertragsmonitoring zeigt einen ausgefallenen String oder einen degradierten Optimierer innerhalb von Tagen. Ohne Monitoring fällt so etwas oft erst bei der Jahresabrechnung auf — dann ist der Ertrag eines halben Jahres bereits verloren.',
+  }
 ];
 
 export default function PhotovoltaikPage() {
@@ -166,6 +176,11 @@ export default function PhotovoltaikPage() {
           Anmeldung beim Netzbetreiber, Inbetriebsetzung und Eintrag im Marktstammdatenregister
           übernehmen wir. Sie bekommen die Dokumentation der Anlage: Strangpläne, Datenblätter,
           Prüfprotokoll und Übergabe.
+        </p>
+        <p>
+          Wenn Ihr Gebäude in Augsburg steht, kommt der lokale Rahmen dazu — Netzbetreiber,
+          Anmeldeweg und, in der Altstadt, der Denkmalschutz. Das steht auf der Seite zur
+          <Link href="/photovoltaik-augsburg/">Photovoltaik in Augsburg</Link>.
         </p>
       </Prose>
 

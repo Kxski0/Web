@@ -53,6 +53,33 @@
   color: var(--color-graphite);
 }
 
+/* Cross-links inside running text. Amber underline only — the accent stays a
+   1px line, never a filled surface (§5). */
+.body a {
+  color: var(--color-offwhite);
+  text-decoration: underline;
+  text-decoration-color: var(--color-amber);
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color var(--duration-ui) var(--ease-out);
+  /*
+   * WCAG 2.2 SC 2.5.8 exempts links inside a sentence, but the exemption is a
+   * concession, not a target. Vertical padding on an inline box grows the hit
+   * area without touching the line box, so the target clears 24px and the text
+   * does not move.
+   */
+  padding-block: 3px;
+}
+
+.section[data-surface-tone='light'] .body a {
+  color: var(--color-graphite);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .body a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
 .body ul {
   margin: 0;
   padding: 0;

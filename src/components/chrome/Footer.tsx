@@ -1,4 +1,4 @@
-import { NAV, SOLUTION_ROUTES } from '@/content/nav';
+import { NAV, REGION_ROUTES, SOLUTION_ROUTES } from '@/content/nav';
 import { CONTACT, SITE } from '@/content/site';
 import { Wordmark } from './Wordmark';
 import styles from './Footer.module.css';
@@ -26,6 +26,15 @@ export function Footer() {
         <nav className={styles.column} aria-label="Lösungen">
           <h2 className={styles.columnTitle}>Lösungen</h2>
           {SOLUTION_ROUTES.map((item) => (
+            <a key={item.href} href={item.href} className={styles.link}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <nav className={styles.column} aria-label="Region">
+          <h2 className={styles.columnTitle}>Region</h2>
+          {REGION_ROUTES.map((item) => (
             <a key={item.href} href={item.href} className={styles.link}>
               {item.label}
             </a>
