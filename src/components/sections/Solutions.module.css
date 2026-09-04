@@ -1,0 +1,188 @@
+.section {
+  background-color: var(--color-offwhite);
+  color: var(--color-graphite);
+  padding-block: clamp(4.5rem, 14vh, 9rem);
+}
+
+.intro {
+  margin-bottom: clamp(3rem, 9vh, 6rem);
+}
+
+.introText {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-top: clamp(0.875rem, 2vh, 1.5rem);
+}
+
+/* Eyebrow and body grey both need to darken on the light ground. */
+.section :global(.eyebrow) {
+  color: color-mix(in srgb, var(--color-graphite) 55%, transparent);
+}
+
+/* --- Items ---------------------------------------------------------------- */
+
+.list {
+  display: grid;
+  gap: clamp(3.5rem, 11vh, 7.5rem);
+}
+
+.item {
+  align-items: center;
+  row-gap: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.media {
+  grid-column: 1 / -1;
+}
+
+.mediaFrame {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+
+/*
+ * A tall subject keeps a tall frame. Forcing every photograph into the same
+ * rectangle is what makes a page look like a template.
+ */
+.item[data-portrait='true'] .mediaFrame {
+  aspect-ratio: 4 / 5;
+}
+
+.body {
+  grid-column: 1 / -1;
+}
+
+.index {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: color-mix(in srgb, var(--color-graphite) 16%, transparent);
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-block: 0.625rem 0.875rem;
+  max-width: 18ch;
+}
+
+.copy {
+  color: color-mix(in srgb, var(--color-graphite) 70%, transparent);
+  max-width: 46ch;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-graphite) 25%, transparent);
+  transition:
+    border-color var(--duration-ui) var(--ease-out),
+    gap var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    border-bottom-color: var(--color-amber);
+    gap: 0.875rem;
+  }
+}
+
+/* --- Further offerings ---------------------------------------------------- */
+
+.further {
+  margin-top: clamp(4rem, 12vh, 8rem);
+  padding-top: clamp(2rem, 5vh, 3rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-graphite) 15%, transparent);
+  row-gap: clamp(1.5rem, 4vh, 2rem);
+}
+
+.furtherTitle {
+  grid-column: 1 / -1;
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--color-graphite) 55%, transparent);
+}
+
+.furtherList {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.75rem, 4vh, 2.5rem);
+}
+
+.furtherLink {
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 24px;
+  gap: 0.625rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  transition: color var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .furtherLink:hover {
+    color: color-mix(in srgb, var(--color-graphite) 62%, transparent);
+  }
+}
+
+/* --- Breakpoints ---------------------------------------------------------- */
+
+@media (min-width: 64rem) {
+  .introText {
+    grid-column: 1 / span 7;
+  }
+
+  /* Alternating sides, and never a straight 50/50 — the split is 7/5 either way. */
+  .item[data-side='left'] .media {
+    grid-column: 1 / span 7;
+  }
+
+  .item[data-side='left'] .body {
+    grid-column: 9 / span 4;
+  }
+
+  .item[data-side='right'] .media {
+    grid-column: 6 / span 7;
+    grid-row: 1;
+  }
+
+  .item[data-side='right'] .body {
+    grid-column: 1 / span 4;
+    grid-row: 1;
+  }
+
+  .mediaFrame {
+    aspect-ratio: 3 / 2;
+  }
+
+  .furtherList {
+    grid-column: 1 / span 9;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .furtherTitle {
+    grid-column: 1 / span 9;
+  }
+}

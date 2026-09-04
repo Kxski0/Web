@@ -1,7 +1,0 @@
-<!-- Nachzeichnung nach der beigestellten Logodatei. Sollte durch die
-     originale Vektordatei ersetzt werden, sobald sie vorliegt. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 128" fill="currentColor" role="img" aria-label="Netzexpert">
-  <path d="M0 24 24 0v128H0z"/>
-  <path d="M30 0h18l68 128H98z"/>
-  <path d="M92 0h24v128H92z"/>
-</svg>

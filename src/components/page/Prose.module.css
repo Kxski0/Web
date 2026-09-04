@@ -1,0 +1,109 @@
+.section {
+  padding-block: clamp(3rem, 9vh, 5.5rem);
+}
+
+.section[data-surface-tone='dark'] {
+  background-color: var(--color-graphite);
+}
+
+.section[data-surface-tone='light'] {
+  background-color: var(--color-offwhite);
+  color: var(--color-graphite);
+}
+
+.inner {
+  row-gap: clamp(1.25rem, 3vh, 2rem);
+  align-items: start;
+}
+
+.head,
+.body {
+  grid-column: 1 / -1;
+}
+
+.title {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-top: 0.75rem;
+  max-width: 20ch;
+}
+
+.body {
+  display: grid;
+  gap: 1.125rem;
+  color: var(--color-grey);
+  max-width: 62ch;
+}
+
+.section[data-surface-tone='light'] .body {
+  color: color-mix(in srgb, var(--color-graphite) 72%, transparent);
+}
+
+.section[data-surface-tone='light'] :global(.eyebrow) {
+  color: color-mix(in srgb, var(--color-graphite) 55%, transparent);
+}
+
+.body strong {
+  color: var(--color-offwhite);
+  font-weight: 600;
+}
+
+.section[data-surface-tone='light'] .body strong {
+  color: var(--color-graphite);
+}
+
+.body ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.body li {
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+/* A rule, not a bullet — the same hairline language as the rest of the page. */
+.body li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.72em;
+  width: 10px;
+  height: 1px;
+  background-color: var(--color-amber);
+}
+
+@media (min-width: 64rem) {
+  /* Heading beside its text, heading first in the reading direction. */
+  .section[data-align='left'] .head {
+    grid-column: 1 / span 4;
+  }
+
+  .section[data-align='left'] .body {
+    grid-column: 6 / span 6;
+  }
+
+  /*
+   * The alternate rhythm shifts the whole block to the right half and stacks it,
+   * rather than moving the heading to the right of its own body. A heading that
+   * sits to the right of the text it introduces is read second, which is a
+   * comprehension bug dressed as an editorial layout.
+   */
+  .section[data-align='right'] .head {
+    grid-column: 6 / span 7;
+    grid-row: 1;
+  }
+
+  .section[data-align='right'] .body {
+    grid-column: 6 / span 7;
+    grid-row: 2;
+  }
+
+  .section[data-align='right'] .title {
+    max-width: 26ch;
+  }
+}

@@ -1,5 +1,11 @@
 node_modules/
-package-lock.json
+.next/
+out/
+build/
 .DS_Store
-__pycache__/
-*.pyc
+*.pem
+.env*
+!.env.example
+.vercel
+next-env.d.ts
+*.tsbuildinfo

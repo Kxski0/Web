@@ -1,0 +1,67 @@
+.section {
+  background-color: var(--color-graphite-sunk);
+  padding-block: clamp(3rem, 9vh, 5.5rem);
+}
+
+.figure {
+  margin: 0;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  max-width: 900px;
+}
+
+.axis {
+  stroke: var(--color-hairline-strong);
+  stroke-width: 1;
+}
+
+.tick {
+  fill: var(--color-grey);
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-anchor: middle;
+}
+
+.generation {
+  fill: none;
+  stroke: var(--color-offwhite);
+  stroke-width: 1.75;
+}
+
+.consumption {
+  fill: none;
+  stroke: var(--color-grey);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+/* The only filled area on the page: the surplus the storage exists to catch. */
+.surplus {
+  fill: color-mix(in srgb, var(--color-amber) 22%, transparent);
+}
+
+.label {
+  fill: var(--color-grey);
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+}
+
+.labelSurplus {
+  fill: var(--color-amber);
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+}
+
+.caption {
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  color: var(--color-grey);
+  max-width: 56ch;
+}

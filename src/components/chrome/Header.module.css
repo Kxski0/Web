@@ -1,0 +1,113 @@
+.header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 100;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out),
+    backdrop-filter var(--duration-ui) var(--ease-out);
+}
+
+/* Transparent over the hero; a quiet glass layer once the page moves under it. */
+.header[data-scrolled='true'] {
+  background-color: rgb(16 18 17 / 0.72);
+  /*
+   * Standard property only. Writing the -webkit- prefix by hand next to it made
+   * the build's CSS minifier collapse the pair and keep ONLY the prefixed form,
+   * which current Chromium does not implement — the glass layer silently stopped
+   * blurring in production. The build adds whatever prefixes the target browsers
+   * need; hand-prefixing fights it.
+   */
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--color-hairline);
+}
+
+/* Over an off-white section the bar inverts instead of sitting on it as a slab. */
+.header[data-on-light='true'][data-scrolled='true'] {
+  background-color: rgb(241 240 235 / 0.82);
+  border-bottom-color: var(--color-hairline-dark);
+}
+
+.header[data-on-light='true'] .link,
+.header[data-on-light='true'] .menuButton {
+  color: var(--color-graphite);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-gutter);
+  padding-block: 1.375rem;
+  /* Constant height whichever mark is showing, so the bar does not jump as the
+     page scrolls from a dark surface onto a light one. */
+  min-height: 4.75rem;
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font-size: 0.9375rem;
+  color: var(--color-offwhite);
+  padding-block: 0.25rem;
+}
+
+/* The rule draws in from the leading edge rather than the element fading. */
+.link::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 1px;
+  background-color: var(--color-amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.cta {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  /* Comfortable thumb target, well past the 24px WCAG minimum. */
+  min-height: 44px;
+  padding-inline: 0.25rem;
+  margin-inline-end: -0.25rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-offwhite);
+}
+
+@media (min-width: 64rem) {
+  .nav,
+  .cta {
+    display: flex;
+  }
+
+  .menuButton {
+    display: none;
+  }
+}

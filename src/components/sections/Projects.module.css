@@ -1,0 +1,80 @@
+.section {
+  background-color: var(--color-graphite);
+  padding-block: clamp(4.5rem, 14vh, 9rem);
+}
+
+.intro {
+  margin-bottom: clamp(3rem, 9vh, 5.5rem);
+}
+
+.introText {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-top: clamp(0.875rem, 2vh, 1.5rem);
+}
+
+.list {
+  display: grid;
+  gap: clamp(4rem, 12vh, 8rem);
+}
+
+.item {
+  row-gap: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.media {
+  grid-column: 1 / -1;
+}
+
+/* A project is allowed to take almost the whole screen (§07). */
+.frame {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+
+.meta {
+  grid-column: 1 / -1;
+  margin: 0;
+  display: grid;
+  gap: 0.875rem;
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: minmax(6rem, 8rem) 1fr;
+  gap: 1rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.metaRow dt {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-grey);
+}
+
+.metaRow dd {
+  margin: 0;
+}
+
+@media (min-width: 64rem) {
+  .introText {
+    grid-column: 1 / span 7;
+  }
+
+  .frame {
+    aspect-ratio: 21 / 9;
+  }
+
+  .meta {
+    grid-column: 7 / span 6;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 3rem);
+  }
+}

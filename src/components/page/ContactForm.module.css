@@ -1,0 +1,214 @@
+.form {
+  display: grid;
+  gap: clamp(1.75rem, 4vh, 2.5rem);
+}
+
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+/* Chips rather than a select: six options are quicker to scan than to open. */
+.choice {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6875rem 1.125rem;
+  border: 1px solid var(--color-hairline-strong);
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-ui) var(--ease-out),
+    background-color var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out);
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.choice:has(.radio:checked) {
+  background-color: var(--color-offwhite);
+  border-color: var(--color-offwhite);
+  color: var(--color-graphite);
+}
+
+/* The native input is visually hidden, so the ring has to be drawn here. */
+.choice:has(.radio:focus-visible) {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .choice:hover {
+    border-color: var(--color-offwhite);
+  }
+}
+
+.grid {
+  display: grid;
+  gap: clamp(1.25rem, 3vh, 1.75rem);
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-grey);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.8125rem 0.9375rem;
+  background-color: var(--color-graphite-raised);
+  border: 1px solid var(--color-hairline);
+  border-radius: 2px;
+  color: var(--color-offwhite);
+  font: inherit;
+  transition: border-color var(--duration-ui) var(--ease-out);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--color-amber);
+}
+
+.input[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: #e0705f;
+}
+
+.file {
+  font: inherit;
+  color: var(--color-grey);
+  font-size: 0.9375rem;
+}
+
+.file::file-selector-button {
+  font: inherit;
+  font-size: 0.875rem;
+  margin-right: 0.875rem;
+  padding: 0.5rem 0.875rem;
+  background: none;
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: 2px;
+  color: var(--color-offwhite);
+  cursor: pointer;
+  transition: border-color var(--duration-ui) var(--ease-out);
+}
+
+.file::file-selector-button:hover {
+  border-color: var(--color-offwhite);
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: var(--color-grey);
+}
+
+/* Not display:none — hidden fields are skipped by the bots this catches. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.error {
+  font-size: 0.875rem;
+  color: #e0705f;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.0625rem 1.75rem;
+  background-color: var(--color-offwhite);
+  color: var(--color-graphite);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition:
+    transform var(--duration-press) var(--ease-out),
+    background-color var(--duration-ui) var(--ease-out),
+    opacity var(--duration-ui) var(--ease-out);
+}
+
+.submit:active {
+  transform: scale(0.97);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .submit:not(:disabled):hover {
+    background-color: var(--color-amber);
+  }
+}
+
+.status:not(:empty) {
+  color: #e0705f;
+  font-size: 0.9375rem;
+}
+
+.done {
+  border: 1px solid var(--color-hairline-strong);
+  padding: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+.doneTitle {
+  font-size: var(--text-title);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-bottom: 0.75rem;
+}
+
+.doneBody {
+  color: var(--color-grey);
+  max-width: 44ch;
+}
+
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}

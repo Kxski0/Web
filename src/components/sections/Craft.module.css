@@ -1,0 +1,150 @@
+.section {
+  position: relative;
+  background-color: var(--color-graphite);
+  padding-block: clamp(4.5rem, 14vh, 9rem);
+}
+
+.intro {
+  margin-bottom: clamp(3rem, 9vh, 5.5rem);
+  align-items: start;
+  row-gap: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.introText {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-top: clamp(0.875rem, 2vh, 1.5rem);
+}
+
+.lede {
+  grid-column: 1 / -1;
+  color: var(--color-grey);
+  max-width: 44ch;
+}
+
+/* --- Material to system --------------------------------------------------- */
+
+.sequence {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(2.5rem, 8vh, 5rem);
+}
+
+.step {
+  row-gap: 1rem;
+}
+
+.figure {
+  margin: 0;
+  grid-column: 1 / -1;
+}
+
+/*
+ * A hairline around every frame. The material macro is a near-black clamp on a
+ * near-black tile: without an edge it dissolves into the graphite ground and
+ * the caption below appears to label nothing. The rule is also what the rest of
+ * the design system uses instead of shadows, so it costs nothing stylistically.
+ */
+.frame {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--color-hairline);
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.875rem;
+  margin-top: 1rem;
+  color: var(--color-grey);
+  font-size: 0.9375rem;
+}
+
+.stepLabel {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-amber);
+}
+
+/* --- People --------------------------------------------------------------- */
+
+.people {
+  margin-top: clamp(4rem, 12vh, 8rem);
+  align-items: end;
+  row-gap: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.peopleMedia {
+  grid-column: 1 / -1;
+}
+
+.peopleFrame {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--color-hairline);
+}
+
+.peopleText {
+  grid-column: 1 / -1;
+}
+
+.peopleTitle {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-bottom: 0.875rem;
+  max-width: 20ch;
+}
+
+.peopleCopy {
+  color: var(--color-grey);
+  max-width: 42ch;
+}
+
+@media (min-width: 64rem) {
+  .introText {
+    grid-column: 1 / span 7;
+  }
+
+  .lede {
+    grid-column: 9 / span 4;
+  }
+
+  /*
+   * The frames widen with the subject. The macro detail sits inset and small,
+   * the building runs almost edge to edge — the pull-back happens in the layout,
+   * not in a scroll handler.
+   */
+  .step[data-scale='0'] .figure {
+    grid-column: 3 / span 4;
+  }
+
+  .step[data-scale='1'] .figure {
+    grid-column: 5 / span 6;
+  }
+
+  .step[data-scale='2'] .figure {
+    grid-column: 1 / span 11;
+  }
+
+  .step[data-scale='2'] .frame {
+    aspect-ratio: 2 / 1;
+  }
+
+  .peopleMedia {
+    grid-column: 1 / span 7;
+  }
+
+  .peopleText {
+    grid-column: 9 / span 4;
+  }
+}

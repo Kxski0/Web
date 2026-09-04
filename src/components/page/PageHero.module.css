@@ -1,0 +1,72 @@
+.hero {
+  position: relative;
+  background-color: var(--color-graphite);
+  padding-block: clamp(7rem, 18vh, 11rem) clamp(3rem, 8vh, 5rem);
+}
+
+.inner {
+  align-items: center;
+  row-gap: clamp(2rem, 6vh, 3.5rem);
+}
+
+.text,
+.media {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.032em;
+  margin-block: clamp(0.875rem, 2vh, 1.25rem) clamp(1.25rem, 3vh, 1.75rem);
+}
+
+.line {
+  display: inline;
+}
+
+.lede {
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-grey);
+  max-width: 44ch;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid var(--color-hairline);
+}
+
+@media (min-width: 64rem) {
+  /* Three openings so consecutive pages do not begin with the same picture
+     in the same place at the same size. */
+  .hero[data-variant='split'] .text {
+    grid-column: 1 / span 5;
+  }
+
+  .hero[data-variant='split'] .media {
+    grid-column: 7 / span 6;
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero[data-variant='wide'] .text {
+    grid-column: 1 / span 7;
+  }
+
+  .hero[data-variant='wide'] .media {
+    grid-column: 1 / span 12;
+    grid-row: 2;
+    aspect-ratio: 21 / 9;
+  }
+
+  .hero[data-variant='inset'] .text {
+    grid-column: 1 / span 6;
+  }
+
+  .hero[data-variant='inset'] .media {
+    grid-column: 8 / span 4;
+    aspect-ratio: 3 / 4;
+  }
+}

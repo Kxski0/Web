@@ -1,0 +1,102 @@
+.section {
+  background-color: var(--color-graphite);
+  padding-block: clamp(4.5rem, 14vh, 9rem);
+}
+
+.inner {
+  row-gap: clamp(2.5rem, 7vh, 4rem);
+}
+
+.intro,
+.figures,
+.quotes,
+.credentials {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-top: clamp(0.875rem, 2vh, 1.5rem);
+}
+
+.figures {
+  margin: 0;
+  display: grid;
+  gap: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.figure {
+  border-top: 1px solid var(--color-hairline);
+  padding-top: 1rem;
+}
+
+/* Numbers as graphic elements, not as badges. */
+.figureValue {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.figureLabel {
+  margin: 0.5rem 0 0;
+  color: var(--color-grey);
+  font-size: 0.9375rem;
+}
+
+.quotes,
+.credentials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.75rem, 4vh, 2.5rem);
+}
+
+.quoteText {
+  margin: 0 0 0.75rem;
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  max-width: 42ch;
+}
+
+.quoteMeta {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-grey);
+}
+
+.credential {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-top: 1px solid var(--color-hairline);
+  padding-top: 0.875rem;
+}
+
+.credentialIssuer {
+  color: var(--color-grey);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 64rem) {
+  .intro {
+    grid-column: 1 / span 7;
+  }
+
+  .figures {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .quotes {
+    grid-column: 1 / span 7;
+  }
+
+  .credentials {
+    grid-column: 9 / span 4;
+  }
+}

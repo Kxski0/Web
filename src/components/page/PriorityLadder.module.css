@@ -1,0 +1,80 @@
+.section {
+  background-color: var(--color-graphite-sunk);
+  padding-block: clamp(3.5rem, 10vh, 6rem);
+}
+
+.inner {
+  row-gap: clamp(1.75rem, 5vh, 3rem);
+  align-items: start;
+}
+
+.headline {
+  grid-column: 1 / -1;
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  max-width: 18ch;
+}
+
+.list {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding-block: clamp(1.25rem, 3vh, 1.75rem);
+  border-top: 1px solid var(--color-hairline);
+}
+
+.step:last-child {
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.rank {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-amber);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The rung's weight drops as the priority drops — the list reads as a ranking. */
+.step:nth-child(2) .rank {
+  color: color-mix(in srgb, var(--color-amber) 78%, var(--color-grey));
+}
+
+.step:nth-child(3) .rank {
+  color: color-mix(in srgb, var(--color-amber) 48%, var(--color-grey));
+}
+
+.step:nth-child(4) .rank {
+  color: var(--color-grey);
+}
+
+.title {
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+}
+
+.body {
+  color: var(--color-grey);
+  max-width: 54ch;
+}
+
+@media (min-width: 64rem) {
+  .headline {
+    grid-column: 1 / span 4;
+  }
+
+  .list {
+    grid-column: 6 / span 7;
+  }
+}

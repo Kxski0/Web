@@ -1,0 +1,107 @@
+.section {
+  position: relative;
+  background-color: var(--color-graphite-sunk);
+  /* Scroll distance that the horizontal travel is mapped onto. */
+  min-height: calc(var(--step-count) * 62svh);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 6vh, 4rem);
+  overflow: hidden;
+  padding-block: clamp(5.5rem, 12vh, 7.5rem) clamp(2rem, 6vh, 4rem);
+}
+
+.head {
+  flex: none;
+}
+
+.headline {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-top: clamp(0.875rem, 2vh, 1.5rem);
+  max-width: 16ch;
+}
+
+.viewport {
+  overflow: hidden;
+}
+
+.track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.5rem, 4vh, 2rem);
+  padding-inline: var(--spacing-gutter);
+}
+
+.panel {
+  border-top: 1px solid var(--color-hairline);
+  padding-top: 1.25rem;
+}
+
+.panelIndex {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-amber);
+  margin-bottom: 0.75rem;
+}
+
+.panelLabel {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-bottom: 0.625rem;
+}
+
+.panelBody {
+  color: var(--color-grey);
+  max-width: 40ch;
+}
+
+@media (min-width: 64rem) {
+  .track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: clamp(2rem, 4vw, 4rem);
+    /* Trailing gutter so the last panel can reach the left edge cleanly. */
+    padding-inline-end: 50vw;
+    will-change: transform;
+  }
+
+  .panel {
+    flex: none;
+    width: min(30rem, 34vw);
+    padding-top: 1.75rem;
+  }
+}
+
+/* Vertical, unpinned, no transform — the order is what matters, not the motion. */
+.section[data-reduced='true'] {
+  min-height: 0;
+}
+
+.section[data-reduced='true'] .sticky {
+  position: static;
+  min-height: 0;
+  padding-block: clamp(4rem, 10vh, 7rem);
+}
+
+.section[data-reduced='true'] .track {
+  display: grid;
+  padding-inline-end: var(--spacing-gutter);
+  transform: none !important;
+}
+
+.section[data-reduced='true'] .panel {
+  width: auto;
+}

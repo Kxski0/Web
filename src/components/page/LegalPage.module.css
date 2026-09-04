@@ -1,0 +1,100 @@
+.page {
+  background-color: var(--color-graphite);
+  padding-block: clamp(7rem, 18vh, 10rem) clamp(4rem, 12vh, 7rem);
+}
+
+.inner {
+  row-gap: clamp(2rem, 5vh, 3rem);
+  align-items: start;
+}
+
+.head {
+  grid-column: 1 / -1;
+}
+
+.headline {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-block: clamp(0.875rem, 2vh, 1.25rem) 0;
+}
+
+.body {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: clamp(1.75rem, 4vh, 2.5rem);
+  max-width: 68ch;
+}
+
+.block h2 {
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.625rem;
+}
+
+.block p,
+.block li {
+  color: var(--color-grey);
+}
+
+.block p + p {
+  margin-top: 0.75rem;
+}
+
+.block ul {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.block li {
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.block li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.72em;
+  width: 10px;
+  height: 1px;
+  background-color: var(--color-amber);
+}
+
+.block address {
+  font-style: normal;
+  line-height: 1.7;
+  color: var(--color-offwhite);
+}
+
+/*
+ * Pending notice. Deliberately loud: an incomplete legal page is a liability,
+ * and this must not be mistaken for finished copy on a live site.
+ */
+.pending {
+  border: 1px solid var(--color-amber);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.pendingLabel {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-amber);
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 64rem) {
+  .head {
+    grid-column: 1 / span 3;
+    position: sticky;
+    top: 7rem;
+  }
+
+  .body {
+    grid-column: 5 / span 7;
+  }
+}

@@ -1,215 +1,110 @@
-# Netzexpert
+# SOLBAUTEC
 
-Website für eine Agentur für Webdesign und SEO. Statisches HTML ohne
-Redaktionssystem, ohne Framework, ohne Laufzeit-Abhängigkeiten. Die Seiten
-werden aus Python-Generatoren erzeugt, ausgeliefert wird reines HTML, CSS und
-etwas JavaScript.
+Website für SolBauTec — Energie- und Gebäudetechnik, Augsburg.
 
-```
-python3 build/build.py        # alle Seiten erzeugen
-python3 build/validate.py     # statische Prüfung
-python3 tools/serve.py 8081   # Vorschau mit sprechenden Adressen
-node tools/verify.mjs         # Browserprüfung über vier Breiten
-```
+## Stack
 
----
+Next.js 16 (App Router) · TypeScript · Tailwind v4 · GSAP 3.15
 
-## ⚠ Vor dem Livegang zu ersetzen
+## Entwicklung
 
-`build/parts.py` enthält oben ein `SITE`-Wörterbuch. Alles, was dort mit
-`TODO_ECHTDATEN` markiert ist, ist erfunden und muss ersetzt werden. Danach
-`build.py` erneut laufen lassen, dann stehen die Werte auf allen Seiten, in
-den strukturierten Daten, in der Sitemap und in `llms.txt`.
-
-| Was | Wo |
-|---|---|
-| Domain, E-Mail, Telefon, Anschrift, Region | `build/parts.py`, `SITE` |
-| Inhaber und Gründungsjahr | `build/parts.py`, `SITE` |
-| Persönlicher Absatz auf „Über uns" | `build/page_rest.py` |
-| Handelsregister, USt-IdNr., Hoster, Aufsichtsbehörde | `build/page_legal.py` |
-| Bildnachweis und Nutzungsrechte | `build/page_legal.py` |
-
-`validate.py` zählt die verbliebenen Marker und meldet sie als Warnung.
-
-### Indexierung freischalten
-
-`SITE["indexable"]` steht auf `False`. Solange das so ist, liefert **jede**
-Seite `noindex,nofollow` und `robots.txt` ein vollständiges `Disallow: /`.
-Die Seite ist damit erreichbar, aber nicht auffindbar.
-
-Das ist Absicht: Ein indexierter Platzhalter ist schwerer zurückzuholen als
-ein späterer Eintrag, weil Cache, Archive und fremde Kopien bleiben. Erst
-wenn alle `TODO_ECHTDATEN` ersetzt sind und das Impressum vollständig ist,
-den Schalter auf `True` setzen und `build.py` erneut laufen lassen. Der
-Validator meldet einen Fehler, wenn eine Seite mit Platzhaltern indexierbar
-wäre.
-
-**Referenzen sind Platzhalter.** Die beiden Fälle auf der Startseite
-beschreiben Projekttypen ohne Firmennamen, Zahlen oder Logos. Bewusst wurde
-nichts erfunden, was als Behauptung durchgehen könnte. Vor dem Livegang
-gehören dort echte Fälle hin oder der Abschnitt entfällt.
-
-**Fotografie ist Platzhalter.** Die eingebundenen Bilder zeigen eine
-Studioszene, nicht die Arbeit dieser Agentur. Das Konzept verlangt echte
-Editorial-Fotografie. Rechtelage vor der Veröffentlichung klären.
-
----
-
-## Warum Generatoren
-
-Bei acht Seiten von Hand gepflegt landet eine Änderung am Header
-zuverlässig auf sieben davon. Header, Fußzeile, Seitengerüst, Bildeinbindung
-und Schema liegen deshalb zentral in `build/parts.py`.
-
-**Korrekturen gehören immer in den Generator, nie in eine erzeugte
-HTML-Datei.** Sonst sind sie beim nächsten Build weg.
-
-```
-build/parts.py            SITE-Daten, CSS-Version, Kopf, Fuß, Gerüst, Schema, Bilder
-build/page_home.py        Startseite
-build/page_leistungen.py  Webdesign und SEO
-build/page_rest.py        Prozess, Über uns, Kontakt
-build/page_legal.py       Impressum, Datenschutz
-build/build.py            erzeugt alle Seiten, Sitemap, robots, llms.txt, .htaccess
-build/validate.py         zwölf statische Prüfungen
-tools/optimize-images.mjs Bildaufbereitung (einmalig)
-tools/verify.mjs          Browserprüfung
-tools/serve.py            Vorschauserver mit den Weiterleitungen der .htaccess
+```bash
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # Produktionsbuild
+pnpm lint
 ```
 
-Erzeugt werden acht HTML-Dateien im Wurzelverzeichnis plus `sitemap.xml`,
-`robots.txt`, `llms.txt`, `.htaccess` und `htaccess.txt`. Die sichtbare Kopie
-der Punktdatei liegt bei, weil `.htaccess` auf manchen Systemen unsichtbar ist
-und beim Hochladen sonst vergessen wird.
+## Bildverarbeitung
 
----
+Quellbilder liegen nicht im Repository. Aus einem Quellordner erzeugen:
 
-## Gestaltung
-
-Schwarz, Anthrazit, Graphit und warmes Off-White. **Kein Akzentton:** Farbe
-kommt ausschließlich aus der Fotografie. Das ist die Umsetzung von „wenige
-starke Elemente" und der Grund, warum die Seite nicht aussieht wie eine
-Agenturvorlage mit Neonakzent.
-
-Eine Schriftfamilie in zwei Rollen: **Archivo** als variable Schrift, deren
-Breitenachse die Auszeichnung trägt (122 % im Hero) und deren Normalbreite den
-Fließtext setzt. **IBM Plex Mono** für Beschriftungen und Meta-Angaben. Beide
-werden selbst ausgeliefert, zusammen 112 kB.
-
-Abschnittsabstände starten bewusst klein (`clamp(2.8rem, 5vw, 4.5rem)`). Bei
-zwei aufeinanderfolgenden Abschnitten addieren sich sonst obere und untere
-Polsterung zu einem Leerraum, der wie ein Fehler aussieht.
-
-### Das Markenzeichen
-
-Das Zeichen sitzt klein in der Navigation, löst sich beim Scrollen, wandert
-durch die ersten Abschnitte und legt sich groß über die Webdesign-Komposition.
-Dort hat es eine **echte Aufgabe**: sein Wachstum steuert die Blende, mit der
-sich die Komposition öffnet. Danach kehrt es zurück und verschwindet.
-
-Umgesetzt als ein einziges fixes Element mit einem Zustand pro Bild,
-ausschließlich über `transform` und `opacity`, ohne Bibliothek. Unter 62 rem
-und bei `prefers-reduced-motion` findet die Reise nicht statt: das Zeichen
-bleibt schlicht in der Navigation, die Komposition ist offen.
-
----
-
-## SEO
-
-- Strukturierte Daten je Seitentyp: `ProfessionalService` und `FAQPage` auf der
-  Startseite, `BreadcrumbList` mit `Service` und `FAQPage` auf den
-  Leistungsseiten, `ContactPage` auf der Kontaktseite
-- Brotkrume liegt **in** der Hero-Section. Als eigener Block davor entsteht ein
-  sichtbarer Streifen zwischen Kopfzeile und Bild
-- Karten nutzen das Muster mit gestrecktem Link (`::after { inset: 0 }`). Ein
-  unsichtbarer Overlay-Link zählt als leerer Link
-- Schrittbezeichnungen und Fußzeilentitel sind `span`, keine Überschriften.
-  Sonst bläht sich die Gliederung auf und es entstehen Sprünge
-- Zeichensatz steht im HTTP-Header, nicht nur im Meta-Tag
-- Rechtsseiten auf `noindex` und nicht in der Sitemap
-- `llms.txt` im Wurzelverzeichnis für Sprachmodelle
-- Kein Kontaktformular. Ein Formular ohne Schutz sammelt vor allem Werbemüll
-  und erzeugt Pflichten, die eine E-Mail nicht erzeugt
-
-### Ton
-
-Du-Ansprache, keine Gedankenstriche, keine Buzzwords. Ehrlichkeit als
-Positionierung: Auf mehreren Seiten steht, wann sich eine Leistung **nicht**
-lohnt. Das ist Absicht und sollte beim Weiterschreiben erhalten bleiben.
-
----
-
-## Prüfung
-
-`build/validate.py` prüft ohne Browser: genau eine H1, keine Sprünge in der
-Gliederung, höchstens 22 Überschriften, alle Wörter aus H1 und Title im
-Fließtext, keine leeren Links, keine doppelten Ankertexte, `alt` und
-`width`/`height` an jedem Bild, einheitliche CSS-Version, keine CSS-Variable
-ohne Definition, Canonical und OG und Schema, konsistente Kontaktdaten,
-Wortzahl je Seite.
-
-`tools/verify.mjs` fährt 375, 768, 1280 und 1920 px über alle acht Seiten,
-scrollt jede vollständig durch und prüft Konsolenfehler, fehlgeschlagene
-Anfragen, ausgelöste Reveals, waagerechten Überlauf, Kontrast nach WCAG 2.1,
-die Choreografie des Zeichens, das Menü auf kleinen Geräten,
-Bewegungsreduktion und die Darstellung ohne JavaScript.
-
-Letzter Stand: **beide Pipelines 0 Befunde.**
-
-| Messwert | Ergebnis |
-|---|---|
-| Startseite übertragen | 154 bis 188 kB |
-| Wortzahl je indexierbarer Seite | 776 bis 822 |
-| Bilder gesamt | 1,2 MB (aus 14,8 MB Ausgangsmaterial) |
-| Schriften | 112 kB, selbst ausgeliefert |
-| Laufzeit-Abhängigkeiten | keine |
-
-### Zugänglichkeit
-
-Ohne JavaScript bleibt die Seite vollständig lesbar: die Reveal-Zustände
-hängen an einer Klasse, die erst ein Inline-Skript setzt. Bei
-`prefers-reduced-motion` entfallen Bewegung und Blende, Deckkraft und Farbe
-bleiben. Das Menü meldet seinen Zustand über `aria-expanded` und schließt mit
-Escape.
-
----
-
-## Bilder austauschen
-
-`tools/optimize-images.mjs` enthält oben eine Liste aus Dateiname, Kennung und
-Alternativtext:
-
-```
-npm install
-SRC_DIR=/pfad/zu/den/originalen npm run images
+```bash
+node scripts/process-images.mjs <quellordner>   # Slots als WebP
+node scripts/hero-variants.mjs                  # AVIF/WebP-Varianten für den Hero
+node scripts/brand-assets.mjs <logo.png>        # Lockups, Bildmarke, Favicon
 ```
 
-Das Skript schreibt AVIF und WebP in drei Breiten, erzeugt `manifest.json` und
-gibt fertige `srcset`-Zeilen aus. Die unscharfen Platzhalter in `lqip.css`
-werden daraus abgeleitet. Originaldateien gehören nicht ins Repository.
+`brand-assets.mjs` schneidet ausschließlich zu und färbt nichts um. Die
+Zuschnittgrenzen stammen aus dem Alpha-Profil der Datei, nicht aus Schätzung.
 
-Die Alternativtexte auf den Seiten werden beim Einbinden gesetzt, nicht aus dem
-Manifest gezogen: dasselbe Bild braucht je nach Zusammenhang eine andere
-Beschreibung.
+Die Zuordnung Quelle → Slot steht in `scripts/process-images.mjs` und wurde
+anhand des Bildinhalts vorgenommen, nicht anhand der Dateinamen.
 
----
+## Visuelle Prüfung
 
-## Veröffentlichen
+```bash
+pnpm build && PORT=3100 pnpm start &
+SHOT_DIR=./shots node scripts/shoot.mjs pass     # Screenshots, vier Viewports
+node scripts/audit.mjs                           # Headline-Kontrast + Overflow
+node scripts/a11y-check.mjs                      # Reduced Motion, Fokus, Skip-Link
+node scripts/typography-check.mjs                # verwaiste Headline-Zeilen
+node scripts/console-check.mjs                   # Konsolenfehler, 404er
+node scripts/routes-check.mjs                    # jede Route: Status, h1, Meta, Links
+node scripts/responsive-check.mjs                # 375-1920: Overflow, Textgröße, Klickziele
+node scripts/perf-check.mjs                      # LCP, CLS, Transfergewicht je Route
+```
 
-Alles außer `build/`, `tools/`, `node_modules/` und `package*.json` gehört auf
-den Server. Die `.htaccess` erzwingt HTTPS, entfernt `www`, setzt den
-Zeichensatz im HTTP-Header, bildet die sprechenden Adressen auf die flachen
-HTML-Dateien ab und regelt die Zwischenspeicherung.
+Alle vier Skripte messen statt zu schätzen und geben bei Fehlern einen
+Exit-Code ungleich null zurück:
 
-Vor dem Livegang: Verweisprofil der Domain ziehen und alte Adressen mit echten
-Verweisen in Abschnitt 2b der `.htaccess` direkt auf die passende neue Seite
-weiterleiten. Ein 301 aufs Ziel, keine Ketten.
+- `audit.mjs` — Kontrast der Hero-Headline gegen die tatsächlich dahinterliegenden
+  Pixel, gemessen über die Glyphenausdehnung, plus horizontaler Overflow.
+- `a11y-check.mjs` — Reduced Motion, Fokusfalle im Mobilmenü, Escape,
+  Fokusrückgabe, Scroll-Lock, Skip-Link.
+- `typography-check.mjs` — meldet Headlines, deren letzte Zeile als kurze Waise
+  stehen bleibt. Mehrzeilige Headlines sind gewollt, eine gestrandete
+  Restzeile nicht.
+- `console-check.mjs` — scrollt die Seite komplett durch und meldet
+  Konsolenfehler, Warnungen und fehlgeschlagene Requests.
+- `routes-check.mjs` — prüft jede Route auf Status 200, genau ein `h1`,
+  eindeutigen Title und eindeutige Description, Canonical, strukturierte Daten,
+  `lang="de"` und horizontalen Overflow. Danach werden alle internen Links
+  aufgerufen und müssen 200 liefern.
+- `responsive-check.mjs` — 375, 768, 1280 und 1920px: horizontaler Overflow,
+  Elemente jenseits des Viewports, Text unter 12px und Klickziele unter 24×24
+  (WCAG 2.2 SC 2.5.8). Bewusst ausgenommen: der Honeypot und der
+  visuell versteckte Transkript-Block, die absichtlich außerhalb liegen, sowie
+  alles, was ein Vorfahre mit `overflow: hidden` beschneidet.
+- `perf-check.mjs` — LCP, CLS, TTFB und Transfergewicht je Ressourcentyp.
+  Die Gewichte kommen aus der Resource-Timing-API, nicht aus Response-Headern:
+  Next liefert JS und CSS komprimiert und ohne `content-length`, eine
+  Header-Auswertung meldet dafür stillschweigend null.
 
-Bei jeder Designänderung `CSS_VER` in `build/parts.py` hochziehen. Sonst sieht
-der Kunde eine alte Fassung aus dem Cache und meldet einen Fehler, der keiner
-ist.
+## Umgebungsvariablen
 
-## Lizenz
+`cp .env.example .env.local`.
 
-Die Schriften stehen unter der SIL Open Font License 1.1, siehe
-`assets/fonts/LICENSE.txt`. Für die Fotografien ist keine Lizenz hinterlegt.
+- `CONTACT_WEBHOOK_URL` — Ziel für Formularanfragen. Nicht gesetzt: `/api/kontakt`
+  antwortet bewusst mit HTTP 503, statt einen Erfolg vorzutäuschen.
+- `SITE_INDEXABLE` — nur `true` erlaubt Indexierung. Standard ist aus:
+  `robots.txt` liefert dann ein vollständiges Disallow und jede Seite ein
+  `noindex`.
+- `NEXT_PUBLIC_SITE_URL` — kanonischer Ursprung. Ohne Angabe wird auf Vercel die
+  Produktionsdomain verwendet.
+
+Deployment auf Vercel: siehe `DEPLOY.md`.
+
+## Seitenstruktur
+
+```
+/                                     Startseite, Story 01-09
+/photovoltaik/                        Leistungsseiten, je eigene Komposition
+/stromspeicher/                       mit Tageskurve als Signature-Grafik
+/waermepumpe/
+/energiemanagement/                   mit Prioritätsleiter
+/klima/
+/carports-terrassenueberdachungen/
+/projekte/                            rendert Referenzen, sobald belegt
+/ueber-uns/
+/kontakt/                             Formular, serverseitig validiert
+/impressum/  /datenschutz/            noindex, siehe CONTENT-TODO.md
+```
+
+## Weiterführend
+
+- `DESIGN.md` — verbindliches Designsystem: Farbe, Typografie, Raster, Motion.
+- `DEPLOY.md` — Vercel-Setup, Umgebungsvariablen, Domain, Sicherheits-Header
+  und die Punkte, die vor dem Livegang zu klären sind.
+- `CONTENT-TODO.md` — Inhalte, die noch von SolBauTec kommen müssen. Erfundene
+  Fakten sind ausgeschlossen; fehlende Inhalte werden nicht gerendert.
