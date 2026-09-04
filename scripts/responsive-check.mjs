@@ -8,7 +8,17 @@
 import { chromium } from 'playwright';
 
 const BASE = 'http://127.0.0.1:3100';
-const ROUTES = ['/', '/photovoltaik/', '/energiemanagement/', '/kontakt/', '/ueber-uns/'];
+const ROUTES = [
+  '/',
+  '/photovoltaik/',
+  '/energiemanagement/',
+  '/kontakt/',
+  '/ueber-uns/',
+  // One regional page stands in for all four: they are built from the same
+  // primitives and differ only in copy. SourceList is the one layout on them
+  // that is not exercised anywhere else.
+  '/waermepumpe-augsburg/',
+];
 const VIEWPORTS = [
   { name: '375', width: 375, height: 812 },
   { name: '768', width: 768, height: 1024 },

@@ -20,6 +20,10 @@ const ROUTES = [
   '/projekte/',
   '/ueber-uns/',
   '/kontakt/',
+  '/photovoltaik-augsburg/',
+  '/waermepumpe-augsburg/',
+  '/stromspeicher-augsburg/',
+  '/energiemanagement-augsburg/',
 ];
 
 const browser = await chromium.launch({

@@ -1,0 +1,105 @@
+.section {
+  padding-block: clamp(3rem, 9vh, 5.5rem);
+  background-color: var(--color-graphite-sunk);
+}
+
+.inner {
+  row-gap: clamp(1.5rem, 4vh, 2.5rem);
+  align-items: start;
+}
+
+.head,
+.list {
+  grid-column: 1 / -1;
+}
+
+.title {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  margin-top: 0.75rem;
+  max-width: 18ch;
+}
+
+.intro {
+  margin-top: 1rem;
+  color: var(--color-grey);
+  max-width: 44ch;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.item {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 1.125rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.claim {
+  color: var(--color-offwhite);
+  max-width: 68ch;
+}
+
+.source {
+  color: var(--color-grey);
+  font-size: 0.875rem;
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-hairline-strong);
+  text-underline-offset: 0.25em;
+  transition: color var(--duration-ui) var(--ease-out),
+    text-decoration-color var(--duration-ui) var(--ease-out);
+  /*
+   * WCAG 2.2 SC 2.5.8 — the row is dense, the target must not be. Padding on an
+   * inline box grows the hit area past 24px without changing the line box.
+   *
+   * Deliberately NOT inline-block: an inline-block takes its baseline from its
+   * LAST line, so a source name that wraps to three lines would baseline-align
+   * its third line with the claim's first and float visibly above the row.
+   */
+  padding-block: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--color-offwhite);
+    text-decoration-color: var(--color-amber);
+  }
+}
+
+@media (min-width: 64rem) {
+  .head {
+    grid-column: 1 / span 4;
+    position: sticky;
+    top: clamp(6rem, 14vh, 9rem);
+  }
+
+  .list {
+    grid-column: 6 / span 7;
+    border-top: none;
+  }
+
+  .item {
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 1.5rem 2rem;
+  }
+
+  .item:first-child {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .source {
+    text-align: end;
+    max-width: 22ch;
+  }
+}

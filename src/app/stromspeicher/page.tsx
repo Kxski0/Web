@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Faq } from '@/components/page/Faq';
 import { MediaBand } from '@/components/page/MediaBand';
 import { PageCta } from '@/components/page/PageCta';
@@ -46,6 +47,11 @@ const FAQ = [
     question: 'Wo steht der Speicher?',
     answer:
       'Frostfrei, trocken, temperiert und zugänglich — Technikraum, Hauswirtschaftsraum oder Keller. Er braucht Abstand zur Wand, eine geeignete Wand oder einen tragfähigen Boden und einen kurzen Weg zum Wechselrichter. Die Garage ist wegen der Temperaturen selten die beste Wahl.',
+  },
+  {
+    question: 'Wie viel Energie geht im Speicher verloren?',
+    answer:
+      'Ein Teil jeder eingespeicherten Kilowattstunde kommt nicht wieder heraus. Verluste entstehen bei der Umwandlung, in der Zelle selbst und im Standby der Leistungselektronik, die rund um die Uhr mitläuft. Beim Vergleich zweier Geräte lohnt deshalb der Blick auf den Wirkungsgrad über den gesamten Pfad statt auf den Zellwirkungsgrad — und auf die Standby-Leistung, weil sie 8.760 Stunden im Jahr anliegt und bei kleinen Speichern einen überraschend großen Anteil ausmacht.',
   },
 ];
 
@@ -122,6 +128,46 @@ export default function StromspeicherPage() {
         <p>
           Diese Priorisierung übernimmt das Energiemanagement. Erst zusammen ergeben Speicher und
           Steuerung das, was den Eigenverbrauch tatsächlich hebt.
+        </p>
+        <p>
+          Anmeldung, Steuerbarkeit und Nachrüstung im Augsburger Bestand behandeln wir gesondert
+          auf der Seite zum
+          <Link href="/stromspeicher-augsburg/">Stromspeicher in Augsburg</Link>.
+        </p>
+      </Prose>
+
+      <Prose eyebrow="Die Alterung" title="Ein Speicher altert auch dann, wenn er nichts tut." align="left">
+        <p>
+          Batterien verlieren auf zwei voneinander unabhängigen Wegen Kapazität, und nur einer davon
+          steht üblicherweise im Prospekt.
+        </p>
+        <p>
+          <strong>Zyklische Alterung</strong> entsteht durch Nutzung: Jede Vollladung und Entladung
+          kostet einen kleinen Teil der nutzbaren Kapazität. Das ist der Wert, den Garantien in
+          Zyklen angeben, und der Grund, warum ein Speicher, der täglich einmal durchfährt, planbar
+          altert.
+        </p>
+        <p>
+          <strong>Kalendarische Alterung</strong> läuft unabhängig davon weiter. Sie hängt an
+          Temperatur und am durchschnittlichen Ladezustand: Eine Zelle, die dauerhaft warm und
+          dauerhaft voll steht, verliert schneller als eine kühl gelagerte im mittleren Bereich.
+          Diese Alterung findet auch im leerstehenden Haus statt.
+        </p>
+        <p>
+          Für die Auslegung folgt daraus etwas, das der Intuition widerspricht:{' '}
+          <strong>Ein deutlich zu großer Speicher ist keine sichere Bank.</strong> Er fährt weniger
+          Zyklen, altert kalendarisch aber genauso weiter — am Ende der Lebensdauer haben Sie für
+          Kapazität bezahlt, die nie gearbeitet hat.
+        </p>
+        <p>
+          Beim Vergleich von Garantien lohnt deshalb der Blick auf beide Bedingungen: die Zahl der
+          zugesicherten Zyklen <em>und</em> die garantierte Restkapazität nach einer festen Zahl von
+          Jahren. Ein Versprechen, das nur eines von beiden nennt, ist die Hälfte einer Aussage.
+        </p>
+        <p>
+          Ebenso gehört der Aufstellort dazu. Ein unbeheizter, aber frostfreier Raum ist besser als
+          ein warmer Technikraum neben der Heizung — und der Unterschied ist über fünfzehn Jahre
+          größer als der zwischen zwei Fabrikaten.
         </p>
       </Prose>
 

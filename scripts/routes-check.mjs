@@ -17,7 +17,30 @@ const ROUTES = [
   '/projekte/',
   '/ueber-uns/',
   '/kontakt/',
+  '/photovoltaik-augsburg/',
+  '/waermepumpe-augsburg/',
+  '/stromspeicher-augsburg/',
+  '/energiemanagement-augsburg/',
 ];
+
+/**
+ * §38 sets a word budget per page type. A landing page under the floor is thin
+ * content; one over the ceiling is a wall of text. Both are checked, because
+ * "roughly right" is not something you can eyeball across twelve routes.
+ */
+const WORD_BUDGET = {
+  '/': [700, 1200],
+  '/photovoltaik/': [900, 1500],
+  '/stromspeicher/': [900, 1500],
+  '/waermepumpe/': [900, 1500],
+  '/energiemanagement/': [900, 1500],
+  '/klima/': [900, 1500],
+  '/carports-terrassenueberdachungen/': [900, 1500],
+  '/photovoltaik-augsburg/': [1000, 1800],
+  '/waermepumpe-augsburg/': [1000, 1800],
+  '/stromspeicher-augsburg/': [1000, 1800],
+  '/energiemanagement-augsburg/': [1000, 1800],
+};
 
 const browser = await chromium.launch({
   executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
@@ -37,7 +60,13 @@ for (const route of ROUTES) {
   const response = await page.goto(BASE + route, { waitUntil: 'networkidle' });
   await page.waitForTimeout(600);
 
-  const info = await page.evaluate(() => ({
+  const info = await page.evaluate(() => {
+    // innerText skips content inside a closed <details>. The FAQ answers are
+    // real page content, so they are opened before the count is taken.
+    document.querySelectorAll('details').forEach((d) => {
+      d.open = true;
+    });
+    return {
     title: document.title,
     description: document.querySelector('meta[name="description"]')?.getAttribute('content') ?? '',
     canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? '',
@@ -47,7 +76,13 @@ for (const route of ROUTES) {
     jsonLd: document.querySelectorAll('script[type="application/ld+json"]').length,
     links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
     lang: document.documentElement.lang,
-  }));
+    // Chrome only: header and footer repeat on every route and would mask a
+    // thin page. <details> content counts — it is in the DOM and indexable.
+    words: (document.querySelector('main')?.innerText ?? '')
+      .split(/\s+/)
+      .filter((w) => /[\p{L}\p{N}]/u.test(w)).length,
+    };
+  });
 
   info.links.forEach((l) => internalLinks.add(l.split('#')[0] || '/'));
 
@@ -61,6 +96,10 @@ for (const route of ROUTES) {
   if (info.overflow > 1) problems.push(`horizontal overflow ${info.overflow}px`);
   if (info.jsonLd === 0) problems.push('no structured data');
   if (consoleErrors.length) problems.push(`console: ${consoleErrors[0].slice(0, 60)}`);
+  const budget = WORD_BUDGET[route];
+  if (budget && (info.words < budget[0] || info.words > budget[1])) {
+    problems.push(`${info.words} words, budget ${budget[0]}\u2013${budget[1]}`);
+  }
   if (titles.has(info.title)) problems.push(`title duplicates ${titles.get(info.title)}`);
   if (descriptions.has(info.description)) {
     problems.push(`description duplicates ${descriptions.get(info.description)}`);
@@ -70,7 +109,7 @@ for (const route of ROUTES) {
 
   if (problems.length) failures++;
   console.log(
-    `${problems.length ? 'FAIL' : 'PASS'}  ${route.padEnd(36)} ${problems.join('; ') || `h1 "${info.h1}"`}`,
+    `${problems.length ? 'FAIL' : 'PASS'}  ${route.padEnd(36)} ${problems.join('; ') || `h1 "${info.h1}" \u00b7 ${info.words} words`}`,
   );
   await ctx.close();
 }
