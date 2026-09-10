@@ -1,0 +1,69 @@
+{
+  "collectionId": "DashboardReferences",
+  "displayName": "Website Inspiration",
+  "displayField": "name",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "name",
+      "displayName": "Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "url",
+      "displayName": "URL",
+      "type": "url",
+      "required": true
+    },
+    {
+      "key": "category",
+      "displayName": "Kategorie",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: hero, animationen, navigation, typography, ux, 3d, mobile, landingpage, saas, agency, ecommerce, sonstiges"
+    },
+    {
+      "key": "tags",
+      "displayName": "Tags",
+      "type": "tags",
+      "required": false
+    },
+    {
+      "key": "likeReason",
+      "displayName": "Warum gefällt mir die Website?",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "takeaway",
+      "displayName": "Was möchte ich davon übernehmen?",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "screenshot",
+      "displayName": "Screenshot / Preview",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "analysis",
+      "displayName": "Analyse",
+      "type": "text",
+      "required": false,
+      "description": "Wird von „Website analysieren\" befüllt, kann aber frei bearbeitet werden."
+    },
+    {
+      "key": "notes",
+      "displayName": "Notizen",
+      "type": "text",
+      "required": false
+    }
+  ]
+}

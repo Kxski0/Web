@@ -1,0 +1,45 @@
+{
+  "collectionId": "DashboardActivity",
+  "displayName": "Aktivitätsverlauf",
+  "displayField": "text",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "at",
+      "displayName": "Zeitpunkt",
+      "type": "text",
+      "required": true,
+      "description": "ISO-Zeitstempel"
+    },
+    {
+      "key": "action",
+      "displayName": "Art",
+      "type": "text",
+      "required": true,
+      "description": "create, update, delete, system"
+    },
+    {
+      "key": "entityKey",
+      "displayName": "Bereich",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "entityId",
+      "displayName": "Datensatz",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "text",
+      "displayName": "Text",
+      "type": "text",
+      "required": true
+    }
+  ]
+}

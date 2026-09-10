@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Business Dashboard">
+  <rect width="512" height="512" rx="112" fill="#16181d"/>
+  <g fill="none" stroke="#ffffff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M136 344V232"/>
+    <path d="M224 344V168"/>
+    <path d="M312 344V272"/>
+    <path d="M400 344V200"/>
+  </g>
+</svg>
