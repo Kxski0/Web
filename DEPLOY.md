@@ -3,6 +3,16 @@
 Next.js 16 auf Vercel. Kein Sonderaufbau nötig — Framework, Build-Befehl und
 Ausgabe erkennt Vercel selbst.
 
+**Zwei Vercel-Projekte teilen sich dieses Repository:**
+
+| Projekt | Root-Verzeichnis | Inhalt |
+| --- | --- | --- |
+| `solbautec` | Projektstamm | die öffentliche Website (dieses Dokument) |
+| `business-dashboard` | `dashboard` | internes Business-Dashboard, siehe unten |
+
+Sie sind vollständig getrennt: eigene Build-Einstellungen, eigene URLs, eigene
+Zugriffsregeln. Ein Push baut beide, jedes aus seinem eigenen Verzeichnis.
+
 ---
 
 ## Ist-Stand
@@ -27,6 +37,37 @@ löst jeder Push auf `main` ein reguläres Produktions-Deployment aus.
 **Die Seite öffentlich erreichbar machen:** Project → Settings → Deployment
 Protection → Vercel Authentication abschalten. Erst tun, wenn die drei Punkte
 unten geklärt sind.
+
+---
+
+## Das Dashboard-Projekt
+
+| | |
+| --- | --- |
+| Vercel-Projekt | `business-dashboard` im Team `maxweidenbruch-1006s-projects` |
+| Root-Verzeichnis | `dashboard` |
+| Verknüpft mit | GitHub `Kxski0/Web`, Deployment bei jedem Push |
+| Produktionsbranch | `main` |
+| Build | `node build.mjs` → `dist` (Einstellungen in `dashboard/vercel.json`) |
+| Zugriff | **Vercel-Authentifizierung aktiv** — Login mit dem Vercel-Konto nötig |
+| Indexierung | aus (`X-Robots-Tag: noindex, nofollow, noarchive`) |
+
+Das Dashboard ist ein eigenständiges Paket mit eigener `package.json` und
+eigenem Lockfile. Es hat mit dem Next.js-Build im Projektstamm nichts zu tun und
+bringt als einzige Abhängigkeit esbuild mit.
+
+**Zu den Daten:** Es liegen keine Geschäftsdaten auf dem Server. Der
+eigenständige Betrieb speichert alles im `localStorage` des jeweiligen Browsers.
+Wer die URL ohne Anmeldung öffnete, sähe eine leere Anwendung — die Anmeldung
+schützt also die Nutzung, nicht die Daten. Umgekehrt heißt das: Die Daten hängen
+am Gerät und am Browserprofil. Regelmäßig unter *Einstellungen → Sicherung
+herunterladen* sichern, und für den Betrieb auf mehreren Geräten das
+Wix-Backend anbinden (siehe `dashboard/wix/README.md`).
+
+**Zugang ändern:** Project → Settings → Deployment Protection.
+*Vercel Authentication* abschalten macht die URL für jeden erreichbar, der sie
+kennt; *Password Protection* ist die Alternative, wenn ein Login mit dem
+Vercel-Konto auf dem iPad zu umständlich ist.
 
 ---
 
