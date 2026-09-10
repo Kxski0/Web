@@ -48,7 +48,9 @@ unten geklärt sind.
 | Root-Verzeichnis | `dashboard` |
 | Verknüpft mit | GitHub `Kxski0/Web`, Deployment bei jedem Push |
 | Produktionsbranch | `main` |
-| Build | `node build.mjs` → `dist` (Einstellungen in `dashboard/vercel.json`) |
+| URL | `https://business-dashboard-liart-gamma.vercel.app` |
+| Branch-URL | `https://business-dashboard-git-cla-003a6e-maxweidenbruch-1006s-projects.vercel.app` |
+| Build | `node build.mjs` → `dist`, rund 3 Sekunden (Einstellungen in `dashboard/vercel.json`) |
 | Zugriff | **Vercel-Authentifizierung aktiv** — Login mit dem Vercel-Konto nötig |
 | Indexierung | aus (`X-Robots-Tag: noindex, nofollow, noarchive`) |
 
@@ -63,6 +65,16 @@ schützt also die Nutzung, nicht die Daten. Umgekehrt heißt das: Die Daten hän
 am Gerät und am Browserprofil. Regelmäßig unter *Einstellungen → Sicherung
 herunterladen* sichern, und für den Betrieb auf mehreren Geräten das
 Wix-Backend anbinden (siehe `dashboard/wix/README.md`).
+
+Das erste Deployment kam vom Feature-Branch und belegt deshalb vorerst die
+Produktions-URL. Nach dem Merge nach `main` baut jeder Push dorthin die
+Produktionsfassung; Pushes auf andere Branches erzeugen Vorschau-URLs.
+
+**Das Repository ist öffentlich.** Der Quelltext des Dashboards ist damit für
+jeden lesbar. Das ist unkritisch, weil dort bauartbedingt keine Zugangsdaten
+liegen — alle Schlüssel gehören in den Wix Secrets Manager bzw. in die
+Vercel-Umgebungsvariablen, niemals in `dashboard/src/`. Wer das Repository
+später auf privat stellt, muss in Vercel nichts ändern.
 
 **Zugang ändern:** Project → Settings → Deployment Protection.
 *Vercel Authentication* abschalten macht die URL für jeden erreichbar, der sie
