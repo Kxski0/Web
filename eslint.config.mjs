@@ -9,7 +9,18 @@ import typescriptConfig from 'eslint-config-next/typescript';
 const config = [
   ...coreWebVitals,
   ...typescriptConfig,
-  { ignores: ['.next/**', 'node_modules/**', 'scripts/**', 'public/**'] },
+  {
+    ignores: [
+      '.next/**',
+      'node_modules/**',
+      'scripts/**',
+      'public/**',
+      // Das Dashboard ist framework-frei und bringt eigene Regeln mit
+      // (dashboard/eslint.config.mjs, Aufruf: `pnpm dashboard:lint`).
+      // Die Next.js- und TypeScript-Regeln hier passen darauf nicht.
+      'dashboard/**',
+    ],
+  },
 ];
 
 export default config;
