@@ -35,8 +35,24 @@ const MIME = {
   '.map': 'application/json; charset=utf-8',
 };
 
+/**
+ * Die Header aus vercel.json - damit die gebaute Fassung im Test unter genau
+ * der Content-Security-Policy laeuft, die spaeter ausgeliefert wird. Ein
+ * CSP-Verstoss faellt so hier auf und nicht erst nach dem Deployment.
+ */
+async function deployHeaders() {
+  const config = JSON.parse(await readFile(path.join(root, 'vercel.json'), 'utf8'));
+  const out = {};
+  for (const rule of config.headers || []) {
+    // Nur die Regel, die fuer alle Pfade gilt; Cache-Regeln sind hier egal.
+    if (rule.source !== '/(.*)') continue;
+    for (const { key, value } of rule.headers) out[key] = value;
+  }
+  return out;
+}
+
 /** Statischer Server für dashboard/ – die App läuft dabei als echte Website. */
-function serve() {
+function serve(distHeaders = {}) {
   const server = createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     let filePath = path.join(root, decodeURIComponent(url.pathname));
@@ -52,7 +68,11 @@ function serve() {
     }
     try {
       const body = await readFile(filePath);
-      res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream' });
+      const headers = { 'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream' };
+      // Die Auslieferungs-Header nur fuer die gebaute Fassung setzen; die
+      // Entwicklungsfassung laedt einzelne Module und laeuft ohne sie.
+      if (url.pathname.startsWith('/dist/')) Object.assign(headers, distHeaders);
+      res.writeHead(200, headers);
       res.end(body);
     } catch (err) {
       res.writeHead(500).end(String(err));
@@ -182,7 +202,7 @@ async function statValue(page, label) {
 
 /* -------------------------------------------------------------- Lauf -- */
 
-const { server, port } = await serve();
+const { server, port } = await serve(await deployHeaders());
 const base = `http://127.0.0.1:${port}`;
 /**
  * In dieser Umgebung liegt Chromium unter einem festen Pfad. Ist der gesetzt
@@ -1026,16 +1046,31 @@ await check('Die App lädt nichts von fremden Servern', async () => {
 
 /* --- 13. Gebaute Fassung --------------------------------------------- */
 
-await check('Gebaute Fassung (dist) startet ebenfalls', async () => {
+await check('Gebaute Fassung laeuft unter der Auslieferungs-CSP', async () => {
   const distPage = await context.newPage();
   const distErrors = [];
+  const violations = [];
   distPage.on('pageerror', (err) => distErrors.push(String(err)));
   distPage.on('console', (msg) => {
-    if (msg.type() === 'error' && !msg.text().includes('favicon')) distErrors.push(msg.text());
+    const text = msg.text();
+    if (msg.type() !== 'error' || text.includes('favicon')) return;
+    if (/Content Security Policy|Refused to/i.test(text)) violations.push(text);
+    else distErrors.push(text);
   });
+
   await distPage.goto(`${base}/dist/index.html`, { waitUntil: 'networkidle' });
   await distPage.waitForSelector('.stat-value', { timeout: 10000 });
   assert(await distPage.locator('.stat').count() >= 9, 'Gebaute Fassung zeigt keine Kennzahlen');
+
+  // Auch die Teile ansteuern, die inline gesetzte Stile verwenden (Balken,
+  // Diagramme) und einen Dialog oeffnen - dort koennte die CSP zuschlagen.
+  await distPage.locator('.nav-item:has-text("Aufgaben")').first().click();
+  await distPage.waitForTimeout(250);
+  await distPage.locator('.page-actions .btn:has-text("Aufgabe anlegen")').click();
+  await distPage.waitForSelector('.modal');
+  await distPage.waitForTimeout(200);
+
+  assert(violations.length === 0, `CSP blockiert etwas:\n      ${violations.join('\n      ')}`);
   assert(distErrors.length === 0, `Fehler in der gebauten Fassung: ${distErrors.join(', ')}`);
   await distPage.close();
 });

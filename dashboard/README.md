@@ -12,18 +12,22 @@ der Build (esbuild) erzeugt daraus ein Bündel von rund 138 kB JavaScript und
 
 ## Sofort starten
 
-```bash
-# Abhängigkeiten (nur für Build und Tests nötig)
-pnpm install
+Das Dashboard ist ein eigenständiges Paket mit eigener `package.json`. Es wird
+getrennt von der Website im Projektstamm installiert und gebaut.
 
-# Bauen
-node dashboard/build.mjs
+```bash
+cd dashboard
+pnpm install      # nur esbuild, sonst nichts
+pnpm build
 
 # Öffnen: dashboard/dist/index.html
 ```
 
+Aus dem Projektstamm geht es auch: `pnpm dashboard:build`, `pnpm dashboard:test`,
+`pnpm dashboard:lint`.
+
 Für die Entwicklung reicht `dashboard/index.html` über einen beliebigen
-statischen Server – dort werden die Module nativ geladen, ohne Build.
+statischen Server – dort werden die Module nativ geladen, ganz ohne Build.
 
 Auf dem iPad: Seite in Safari öffnen, Teilen → *Zum Home-Bildschirm*. Die App
 startet dann im Vollbild ohne Browserleiste (Manifest und Icons liegen bei).
@@ -229,6 +233,29 @@ die Aufteilung „was kann Wix nativ / was braucht Velo / was braucht das CMS /
 was geht nicht" und die Liste der noch benötigten Angaben.
 
 ---
+
+## Hosting auf Vercel
+
+`vercel.json` liegt im Ordner und beschreibt alles, was Vercel wissen muss:
+Build-Befehl (`node build.mjs`), Ausgabeverzeichnis (`dist`) und die
+Auslieferungs-Header.
+
+Wichtig ist das **Root-Verzeichnis `dashboard`** in den Projekteinstellungen.
+Nur so bekommt das Dashboard eine eigene Konfiguration – die Website im
+Projektstamm ist ein anderes Vercel-Projekt und teilt sich mit ihm das
+Repository, aber nicht die Build-Einstellungen.
+
+Ausgeliefert wird mit einer strengen Content-Security-Policy: `script-src 'self'`
+ohne `unsafe-inline` (deshalb erzeugt der Build eine eigene `boot.js` statt eines
+Inline-Skripts), dazu `X-Robots-Tag: noindex`, `frame-ancestors 'none'` und
+`Referrer-Policy: no-referrer`. Der E2E-Test lädt die gebaute Fassung unter
+genau diesen Headern, damit ein Verstoß vor dem Deployment auffällt.
+
+Zwei Zugeständnisse in der Richtlinie, beide bewusst:
+`style-src` erlaubt `'unsafe-inline'`, weil Balken und Diagramme ihre Breite
+als Stil-Attribut setzen; `img-src`/`connect-src` erlauben `https:`, damit ein
+selbst konfigurierter Screenshot-Dienst bzw. Analyse-Endpunkt überhaupt
+erreichbar ist. Ohne diese Einstellungen greift keine der beiden Regeln.
 
 ## Tests
 

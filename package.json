@@ -12,11 +12,11 @@
     "start": "next start",
     "lint": "eslint",
     "images": "node scripts/process-images.mjs",
-    "dashboard:build": "node dashboard/build.mjs",
-    "dashboard:dev": "node dashboard/build.mjs --watch",
-    "dashboard:test": "node dashboard/scripts/core-test.mjs && node dashboard/scripts/e2e.mjs",
+    "dashboard:build": "pnpm --dir dashboard run build",
+    "dashboard:dev": "pnpm --dir dashboard run dev",
+    "dashboard:test": "pnpm --dir dashboard run test",
     "dashboard:lint": "eslint --config dashboard/eslint.config.mjs dashboard",
-    "dashboard:collections": "node dashboard/scripts/gen-wix-collections.mjs"
+    "dashboard:collections": "pnpm --dir dashboard run collections"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",
@@ -32,7 +32,6 @@
     "@types/node": "22.10.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "esbuild": "^0.28.2",
     "eslint": "9.18.0",
     "eslint-config-next": "16.3.4",
     "playwright": "^1.62.1",

@@ -49,7 +49,25 @@ async function buildStyles() {
 }
 
 /**
- * Eigenständige Seite. Anders als die Entwicklungsfassung lädt sie nur zwei
+ * Startskript der ausgelieferten Fassung.
+ *
+ * Bewusst eine eigene Datei statt eines Inline-Skripts: nur so kommt die
+ * Auslieferung mit `script-src 'self'` aus. Ein Inline-Block würde
+ * `'unsafe-inline'` erzwingen und damit den wirksamsten Teil der
+ * Content-Security-Policy aushebeln.
+ */
+const BOOT = `/* Startet die Anwendung. Erzeugt von build.mjs. */
+(function () {
+  var mount = document.getElementById('app');
+  BizDash.startApp({ container: mount }).catch(function (err) {
+    console.error(err);
+    mount.textContent = 'Start fehlgeschlagen: ' + err.message;
+  });
+}());
+`;
+
+/**
+ * Eigenständige Seite. Anders als die Entwicklungsfassung lädt sie nur drei
  * Dateien statt dreißig Module – das macht den Start auf dem iPad spürbar
  * schneller, besonders über Mobilfunk.
  */
@@ -60,19 +78,14 @@ async function buildHtml() {
     .replace(/ {2}<!--\n {4}Entwicklungsbetrieb[\s\S]*?-->\n/, '')
     .replace(
       / {2}<script type="module">[\s\S]*?<\/script>/,
-      `  <script src="./dashboard.js"></script>
-  <script>
-    BizDash.startApp({ container: document.getElementById('app') }).catch(function (err) {
-      console.error(err);
-      document.getElementById('app').textContent = 'Start fehlgeschlagen: ' + err.message;
-    });
-  </script>`,
+      '  <script src="./dashboard.js"></script>\n  <script src="./boot.js"></script>',
     )
     .replace('href="./public/manifest.webmanifest"', 'href="./manifest.webmanifest"')
     .replace('href="./public/icon.svg"', 'href="./icon.svg"')
     .replace('href="./public/icon-180.png"', 'href="./icon-180.png"');
 
   await writeFile(path.join(dist, 'index.html'), html, 'utf8');
+  await writeFile(path.join(dist, 'boot.js'), BOOT, 'utf8');
 }
 
 /**
