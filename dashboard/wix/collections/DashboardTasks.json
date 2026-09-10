@@ -1,0 +1,53 @@
+{
+  "collectionId": "DashboardTasks",
+  "displayName": "Aufgaben",
+  "displayField": "title",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "title",
+      "displayName": "Titel",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "projectId",
+      "displayName": "Projekt",
+      "type": "text",
+      "required": false,
+      "description": "Verweis auf DashboardProjects (_id)"
+    },
+    {
+      "key": "status",
+      "displayName": "Status",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: offen, in_arbeit, erledigt"
+    },
+    {
+      "key": "priority",
+      "displayName": "Priorität",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: niedrig, normal, hoch, dringend"
+    },
+    {
+      "key": "deadline",
+      "displayName": "Deadline",
+      "type": "text",
+      "required": false,
+      "description": "ISO-Tagesformat YYYY-MM-DD"
+    },
+    {
+      "key": "description",
+      "displayName": "Beschreibung",
+      "type": "text",
+      "required": false
+    }
+  ]
+}

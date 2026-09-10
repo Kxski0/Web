@@ -1,0 +1,74 @@
+{
+  "collectionId": "DashboardInvoices",
+  "displayName": "Rechnungen",
+  "displayField": "number",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "number",
+      "displayName": "Rechnungsnummer",
+      "type": "text",
+      "required": true,
+      "description": "Muss eindeutig sein (wird in der App geprüft)"
+    },
+    {
+      "key": "customerId",
+      "displayName": "Kunde",
+      "type": "text",
+      "required": true,
+      "description": "Verweis auf DashboardCustomers (_id)"
+    },
+    {
+      "key": "orderId",
+      "displayName": "Auftrag",
+      "type": "text",
+      "required": false,
+      "description": "Verweis auf DashboardOrders (_id)"
+    },
+    {
+      "key": "amount",
+      "displayName": "Betrag",
+      "type": "number",
+      "required": true
+    },
+    {
+      "key": "status",
+      "displayName": "Status",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: entwurf, offen, ueberfaellig, bezahlt, storniert"
+    },
+    {
+      "key": "issueDate",
+      "displayName": "Rechnungsdatum",
+      "type": "text",
+      "required": false,
+      "description": "ISO-Tagesformat YYYY-MM-DD"
+    },
+    {
+      "key": "dueDate",
+      "displayName": "Fälligkeitsdatum",
+      "type": "text",
+      "required": false,
+      "description": "ISO-Tagesformat YYYY-MM-DD"
+    },
+    {
+      "key": "paidDate",
+      "displayName": "Zahlungsdatum",
+      "type": "text",
+      "required": false,
+      "description": "ISO-Tagesformat YYYY-MM-DD · Wird beim Status „Bezahlt\" automatisch gesetzt."
+    },
+    {
+      "key": "notes",
+      "displayName": "Notiz",
+      "type": "text",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Business Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Business-Dashboard für Kunden, Aufträge, Rechnungen, Projekte und Websites.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+
+  <!-- Als App vom iPad-Homescreen starten. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Dashboard">
+  <meta name="theme-color" content="#f6f7f9">
+  <link rel="manifest" href="./public/manifest.webmanifest">
+  <link rel="icon" href="./public/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./public/icon-180.png">
+
+  <link rel="stylesheet" href="./src/app.css">
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; }
+    /* Der Wurzelknoten trägt die Kapselklasse, unter der das gesamte CSS liegt. */
+    #app { min-height: 100%; }
+    .no-js { padding: 40px; font: 16px -apple-system, system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="app" class="bizdash">
+    <noscript><p class="no-js">Diese Anwendung benötigt JavaScript.</p></noscript>
+  </div>
+
+  <!--
+    Entwicklungsbetrieb: native ES-Module, kein Build nötig.
+    Für die Auslieferung (auch nach Wix) erzeugt `node dashboard/build.mjs`
+    ein einzelnes Bündel unter dashboard/dist/.
+  -->
+  <script type="module">
+    import { startApp } from './src/main.js';
+
+    startApp({ container: document.getElementById('app') }).catch((err) => {
+      console.error(err);
+      document.getElementById('app').textContent = `Start fehlgeschlagen: ${err.message}`;
+    });
+  </script>
+</body>
+</html>

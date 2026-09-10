@@ -1,0 +1,56 @@
+{
+  "generatedFrom": "src/data/schema.js",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "collections": [
+    {
+      "collection": "DashboardCustomers",
+      "label": "Kunden",
+      "fields": 10
+    },
+    {
+      "collection": "DashboardOrders",
+      "label": "Aufträge",
+      "fields": 9
+    },
+    {
+      "collection": "DashboardInvoices",
+      "label": "Rechnungen",
+      "fields": 9
+    },
+    {
+      "collection": "DashboardWebsites",
+      "label": "Meine Websites",
+      "fields": 9
+    },
+    {
+      "collection": "DashboardReferences",
+      "label": "Website Inspiration",
+      "fields": 9
+    },
+    {
+      "collection": "DashboardProjects",
+      "label": "Projekte",
+      "fields": 11
+    },
+    {
+      "collection": "DashboardTasks",
+      "label": "Aufgaben",
+      "fields": 6
+    },
+    {
+      "collection": "DashboardActivity",
+      "label": "Aktivitätsverlauf",
+      "fields": 5
+    },
+    {
+      "collection": "DashboardSettings",
+      "label": "Einstellungen",
+      "fields": 6
+    }
+  ]
+}

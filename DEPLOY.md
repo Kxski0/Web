@@ -3,6 +3,16 @@
 Next.js 16 auf Vercel. Kein Sonderaufbau nötig — Framework, Build-Befehl und
 Ausgabe erkennt Vercel selbst.
 
+**Zwei Vercel-Projekte teilen sich dieses Repository:**
+
+| Projekt | Root-Verzeichnis | Inhalt |
+| --- | --- | --- |
+| `solbautec` | Projektstamm | die öffentliche Website (dieses Dokument) |
+| `business-dashboard` | `dashboard` | internes Business-Dashboard, siehe unten |
+
+Sie sind vollständig getrennt: eigene Build-Einstellungen, eigene URLs, eigene
+Zugriffsregeln. Ein Push baut beide, jedes aus seinem eigenen Verzeichnis.
+
 ---
 
 ## Ist-Stand
@@ -27,6 +37,49 @@ löst jeder Push auf `main` ein reguläres Produktions-Deployment aus.
 **Die Seite öffentlich erreichbar machen:** Project → Settings → Deployment
 Protection → Vercel Authentication abschalten. Erst tun, wenn die drei Punkte
 unten geklärt sind.
+
+---
+
+## Das Dashboard-Projekt
+
+| | |
+| --- | --- |
+| Vercel-Projekt | `business-dashboard` im Team `maxweidenbruch-1006s-projects` |
+| Root-Verzeichnis | `dashboard` |
+| Verknüpft mit | GitHub `Kxski0/Web`, Deployment bei jedem Push |
+| Produktionsbranch | `main` |
+| URL | `https://business-dashboard-liart-gamma.vercel.app` |
+| Branch-URL | `https://business-dashboard-git-cla-003a6e-maxweidenbruch-1006s-projects.vercel.app` |
+| Build | `node build.mjs` → `dist`, rund 3 Sekunden (Einstellungen in `dashboard/vercel.json`) |
+| Zugriff | **Vercel-Authentifizierung aktiv** — Login mit dem Vercel-Konto nötig |
+| Indexierung | aus (`X-Robots-Tag: noindex, nofollow, noarchive`) |
+
+Das Dashboard ist ein eigenständiges Paket mit eigener `package.json` und
+eigenem Lockfile. Es hat mit dem Next.js-Build im Projektstamm nichts zu tun und
+bringt als einzige Abhängigkeit esbuild mit.
+
+**Zu den Daten:** Es liegen keine Geschäftsdaten auf dem Server. Der
+eigenständige Betrieb speichert alles im `localStorage` des jeweiligen Browsers.
+Wer die URL ohne Anmeldung öffnete, sähe eine leere Anwendung — die Anmeldung
+schützt also die Nutzung, nicht die Daten. Umgekehrt heißt das: Die Daten hängen
+am Gerät und am Browserprofil. Regelmäßig unter *Einstellungen → Sicherung
+herunterladen* sichern, und für den Betrieb auf mehreren Geräten das
+Wix-Backend anbinden (siehe `dashboard/wix/README.md`).
+
+Das erste Deployment kam vom Feature-Branch und belegt deshalb vorerst die
+Produktions-URL. Nach dem Merge nach `main` baut jeder Push dorthin die
+Produktionsfassung; Pushes auf andere Branches erzeugen Vorschau-URLs.
+
+**Das Repository ist öffentlich.** Der Quelltext des Dashboards ist damit für
+jeden lesbar. Das ist unkritisch, weil dort bauartbedingt keine Zugangsdaten
+liegen — alle Schlüssel gehören in den Wix Secrets Manager bzw. in die
+Vercel-Umgebungsvariablen, niemals in `dashboard/src/`. Wer das Repository
+später auf privat stellt, muss in Vercel nichts ändern.
+
+**Zugang ändern:** Project → Settings → Deployment Protection.
+*Vercel Authentication* abschalten macht die URL für jeden erreichbar, der sie
+kennt; *Password Protection* ist die Alternative, wenn ein Login mit dem
+Vercel-Konto auf dem iPad zu umständlich ist.
 
 ---
 

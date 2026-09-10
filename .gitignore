@@ -9,3 +9,8 @@ build/
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+
+# Bildschirmfotos der Sichtprüfung (dashboard/scripts/shots.mjs)
+dashboard/.shots/
+# Build-Ergebnis des Dashboards
+dashboard/dist/

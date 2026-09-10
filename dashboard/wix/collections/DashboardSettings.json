@@ -1,0 +1,51 @@
+{
+  "collectionId": "DashboardSettings",
+  "displayName": "Einstellungen",
+  "displayField": "companyName",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "description": "Enthält genau einen Datensatz mit der _id \"settings\".",
+  "fields": [
+    {
+      "key": "revenueBasis",
+      "displayName": "Umsatzbasis",
+      "type": "text",
+      "required": false,
+      "description": "invoices oder orders"
+    },
+    {
+      "key": "widgets",
+      "displayName": "Widgets",
+      "type": "tags",
+      "required": false
+    },
+    {
+      "key": "previewProvider",
+      "displayName": "Vorschau-Dienst",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "previewTemplate",
+      "displayName": "Vorschau-Vorlage",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "analyzeEndpoint",
+      "displayName": "Analyse-Endpunkt",
+      "type": "url",
+      "required": false
+    },
+    {
+      "key": "companyName",
+      "displayName": "Anzeigename",
+      "type": "text",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "collectionId": "DashboardWebsites",
+  "displayName": "Meine Websites",
+  "displayField": "title",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "title",
+      "displayName": "Projektname",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "customerId",
+      "displayName": "Kunde",
+      "type": "text",
+      "required": false,
+      "description": "Verweis auf DashboardCustomers (_id)"
+    },
+    {
+      "key": "url",
+      "displayName": "URL",
+      "type": "url",
+      "required": true
+    },
+    {
+      "key": "status",
+      "displayName": "Status",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: entwicklung, live, ueberarbeitung, archiviert"
+    },
+    {
+      "key": "launchDate",
+      "displayName": "Erstellungsdatum",
+      "type": "text",
+      "required": false,
+      "description": "ISO-Tagesformat YYYY-MM-DD"
+    },
+    {
+      "key": "tech",
+      "displayName": "Verwendete Technologien",
+      "type": "tags",
+      "required": false,
+      "description": "Mit Komma trennen, z. B. Wix, Velo, GSAP"
+    },
+    {
+      "key": "description",
+      "displayName": "Beschreibung",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "thumbnail",
+      "displayName": "Vorschaubild",
+      "type": "text",
+      "required": false,
+      "description": "Bild hochladen oder Bild-URL einfügen. Ohne eigenes Bild wird die konfigurierte Vorschau genutzt."
+    },
+    {
+      "key": "notes",
+      "displayName": "Notizen",
+      "type": "text",
+      "required": false
+    }
+  ]
+}

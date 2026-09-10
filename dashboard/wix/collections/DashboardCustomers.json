@@ -1,0 +1,73 @@
+{
+  "collectionId": "DashboardCustomers",
+  "displayName": "Kunden",
+  "displayField": "company",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "company",
+      "displayName": "Firmenname",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "contact",
+      "displayName": "Ansprechpartner",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "email",
+      "displayName": "E-Mail",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "phone",
+      "displayName": "Telefonnummer",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "website",
+      "displayName": "Website",
+      "type": "url",
+      "required": false
+    },
+    {
+      "key": "street",
+      "displayName": "Straße und Hausnummer",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "zip",
+      "displayName": "PLZ",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "city",
+      "displayName": "Ort",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "country",
+      "displayName": "Land",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "notes",
+      "displayName": "Notizen",
+      "type": "text",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "collectionId": "DashboardProjects",
+  "displayName": "Projekte",
+  "displayField": "title",
+  "permissions": {
+    "read": "Admin",
+    "insert": "Admin",
+    "update": "Admin",
+    "remove": "Admin"
+  },
+  "fields": [
+    {
+      "key": "title",
+      "displayName": "Projektname",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "kind",
+      "displayName": "Art",
+      "type": "text",
+      "required": false,
+      "description": "Erlaubt: kundenprojekt, eigenes, intern, idee"
+    },
+    {
+      "key": "customerId",
+      "displayName": "Kunde",
+      "type": "text",
+      "required": false,
+      "description": "Verweis auf DashboardCustomers (_id)"
+    },
+    {
+      "key": "status",
+      "displayName": "Status",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: idee, geplant, in_arbeit, review, fertig, archiviert"
+    },
+    {
+      "key": "priority",
+      "displayName": "Priorität",
+      "type": "text",
+      "required": true,
+      "description": "Erlaubt: niedrig, normal, hoch, dringend"
+    },
+    {
+      "key": "deadline",
+      "displayName": "Deadline",
+      "type": "text",
+      "required": false,
+      "description": "ISO-Tagesformat YYYY-MM-DD"
+    },
+    {
+      "key": "budget",
+      "displayName": "Budget",
+      "type": "number",
+      "required": false
+    },
+    {
+      "key": "description",
+      "displayName": "Beschreibung",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "links",
+      "displayName": "Links",
+      "type": "tags",
+      "required": false,
+      "description": "Eine URL pro Zeile oder mit Komma getrennt."
+    },
+    {
+      "key": "files",
+      "displayName": "Dateien",
+      "type": "object",
+      "required": false,
+      "description": "Dateien werden im Browser gespeichert – für große Dateien besser einen Link hinterlegen."
+    },
+    {
+      "key": "notes",
+      "displayName": "Notizen",
+      "type": "text",
+      "required": false
+    }
+  ]
+}
