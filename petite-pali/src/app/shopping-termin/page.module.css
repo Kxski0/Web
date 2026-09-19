@@ -1,0 +1,86 @@
+.section {
+  padding-block: clamp(1rem, 3vw, 2rem) clamp(2rem, 6vw, 4rem);
+}
+
+.grid {
+  align-items: start;
+}
+
+.how {
+  grid-column: 1 / -1;
+}
+
+.form {
+  grid-column: 1 / -1;
+  margin-top: 3rem;
+}
+
+.heading,
+.formTitle {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  margin-bottom: 1.5rem;
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.num {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stepTitle {
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.stepText {
+  margin-top: 0.375rem;
+  color: var(--color-muted);
+}
+
+.note {
+  margin-top: 1.75rem;
+  max-width: 52ch;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.formTitle {
+  margin-bottom: 0.75rem;
+}
+
+.formLede {
+  color: var(--color-muted);
+  margin-bottom: 2rem;
+  max-width: 52ch;
+}
+
+@media (min-width: 62rem) {
+  .how {
+    grid-column: 1 / span 5;
+  }
+
+  .form {
+    grid-column: 7 / span 6;
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,141 @@
+.section {
+  padding-block: clamp(3.5rem, 9vw, 7rem);
+}
+
+.grid {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.media {
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  transition: transform 700ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover .image {
+    transform: scale(1.03);
+  }
+}
+
+.head {
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  line-height: 1.15;
+}
+
+.note {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.title {
+  margin-top: 1rem;
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.body {
+  margin-top: 0.625rem;
+  color: var(--color-muted);
+}
+
+.more {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.arrow {
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover .arrow {
+    transform: translateX(3px);
+  }
+}
+
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /*
+   * Die Spaltenbreiten sind gesetzt, nicht dem Zufall überlassen: 4+2, 2+4,
+   * 3+3. Jede Reihe füllt die sechs Spalten vollständig, und trotzdem hat
+   * jede eine andere Aufteilung. Aus dem Wechsel entsteht der redaktionelle
+   * Rhythmus; ein ausgefranster rechter Rand entstünde nur aus Nachlässigkeit.
+   *
+   * Zu jeder Breite gehört ein eigenes Bildformat — sonst stehen im selben
+   * Raster Hoch- und Querformate zufällig nebeneinander.
+   */
+  .item:nth-child(1),
+  .item:nth-child(4) {
+    grid-column: span 4;
+  }
+
+  .item:nth-child(2),
+  .item:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .item:nth-child(5),
+  .item:nth-child(6) {
+    grid-column: span 3;
+  }
+
+  .item:nth-child(1) .media,
+  .item:nth-child(4) .media {
+    aspect-ratio: 3 / 2;
+  }
+
+  .item:nth-child(2) .media,
+  .item:nth-child(3) .media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .item:nth-child(5) .media,
+  .item:nth-child(6) .media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

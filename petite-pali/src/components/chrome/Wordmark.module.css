@@ -1,33 +1,36 @@
-.compact {
+.wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.625rem;
 }
 
 .mark {
   width: auto;
-  height: 2.25rem;
-  /* Das Hasenmotiv ist freigestellt und bringt keinen eigenen Grund mit —
-     es liegt direkt auf der Seite und braucht keine Platte darunter. */
+  height: 2rem;
+  flex: none;
 }
 
 .name {
   font-family: var(--font-display);
-  font-size: 1.375rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
   line-height: 1;
-  color: var(--color-ink);
+  color: var(--color-text);
   white-space: nowrap;
+}
+
+/* Über dem Hero steht die Marke auf Bild und muss hell werden. */
+.onMedia .name {
+  color: #fdfbf7;
 }
 
 .full {
   width: auto;
   /*
-   * Der gezeichnete Schriftzug trägt die Zeile „Baby & Kinder Boutique“ mit.
-   * Unter etwa 180px Breite ist die nicht mehr zu lesen — deshalb kommt diese
-   * Fassung nur dort vor, wo wirklich Platz ist, und im Kopfbereich die
-   * gesetzte Variante daneben.
+   * Der gezeichnete Schriftzug trägt die Zeile „Baby & Kinder Boutique" mit.
+   * Unter etwa 180px Breite ist die nicht mehr lesbar — diese Fassung steht
+   * deshalb nur dort, wo Platz ist.
    */
   min-width: 180px;
 }

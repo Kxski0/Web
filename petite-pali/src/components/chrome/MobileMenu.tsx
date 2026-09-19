@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import { NAV, PRIMARY_CTA } from '@/content/nav';
+import { ACTIONS, NAV } from '@/content/nav';
 import { CONTACT } from '@/content/site';
 import { Wordmark } from './Wordmark';
 import styles from './MobileMenu.module.css';
@@ -19,8 +19,6 @@ export function MobileMenu({ open, onClose }: Props) {
     if (!open) return;
 
     restoreFocusTo.current = document.activeElement as HTMLElement | null;
-
-    // Die Seite hinter der Auflage festhalten, ohne die Scrollposition zu verlieren.
     const { overflow } = document.body.style;
     document.body.style.overflow = 'hidden';
 
@@ -41,7 +39,6 @@ export function MobileMenu({ open, onClose }: Props) {
       }
       if (event.key !== 'Tab' || !node) return;
 
-      // Falle: wer an einem Ende hinaustabbt, landet wieder am anderen.
       const items = Array.from(node.querySelectorAll<HTMLElement>(FOCUSABLE));
       if (items.length === 0) return;
       const first = items[0];
@@ -71,7 +68,6 @@ export function MobileMenu({ open, onClose }: Props) {
       ref={panel}
       className={styles.overlay}
       data-open={open}
-      // Geschlossen weder für Hilfsmittel noch für die Tabreihenfolge vorhanden.
       inert={!open ? true : undefined}
       role="dialog"
       aria-modal="true"
@@ -85,17 +81,30 @@ export function MobileMenu({ open, onClose }: Props) {
       </div>
 
       <nav className={`${styles.nav} page-bounds`} aria-label="Hauptnavigation mobil">
-        {NAV.map((item, index) => (
-          <Link key={item.href} href={item.href} className={styles.item} onClick={onClose}>
-            <span className={styles.itemIndex}>{String(index + 1).padStart(2, '0')}</span>
-            {item.label}
-          </Link>
+        {NAV.map((item) => (
+          <div key={item.href}>
+            <Link href={item.href} className={styles.item} onClick={onClose}>
+              {item.label}
+            </Link>
+            {item.children && (
+              <div className={styles.sub}>
+                {item.children.map((child) => (
+                  <Link key={child.href} href={child.href} className={styles.subLink} onClick={onClose}>
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </nav>
 
       <div className={`${styles.footer} page-bounds`}>
-        <Link href={PRIMARY_CTA.href} onClick={onClose} className={styles.footerCta}>
-          {PRIMARY_CTA.label} <span aria-hidden="true">→</span>
+        <Link href={ACTIONS[0].href} onClick={onClose} className={styles.cta}>
+          {ACTIONS[0].label}
+        </Link>
+        <Link href={ACTIONS[1].href} onClick={onClose} className={styles.ctaGhost}>
+          {ACTIONS[1].label}
         </Link>
         {CONTACT.verified && (
           <p className={styles.hours}>

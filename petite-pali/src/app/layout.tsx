@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import { Fraunces, Nunito_Sans } from 'next/font/google';
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Footer } from '@/components/chrome/Footer';
+import { StickyMobileBar } from '@/components/chrome/StickyMobileBar';
 import { Header } from '@/components/chrome/Header';
 import { SkipLink } from '@/components/chrome/SkipLink';
 import { SITE } from '@/content/site';
@@ -10,22 +11,24 @@ import { organizationSchema } from '@/lib/schema';
 import './globals.css';
 
 /**
- * Fraunces als Anzeigeschrift: ein weicher, leicht eigenwilliger Serif, der
- * neben dem handgezeichneten Logo bestehen kann, ohne es nachzuahmen. Die
- * `SOFT`- und `WONK`-Achsen sind bewusst mittig gesetzt — ganz weich wird es
- * niedlich, ganz hart verliert es den Ton des Ladens.
+ * Serif trägt Emotion, Sans trägt Information.
+ *
+ * Cormorant Garamond nur in 300/400 geladen: die Schrift lebt von ihren feinen
+ * Strichen, fett gesetzt verliert sie genau das. Halbfett und fett werden auf
+ * dieser Seite nirgends gebraucht — Betonung entsteht über Größe und Raum.
  */
-const fraunces = Fraunces({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-fraunces',
-  axes: ['SOFT', 'WONK', 'opsz'],
+  variable: '--font-cormorant',
+  weight: ['300', '400'],
+  style: ['normal', 'italic'],
 });
 
-const nunito = Nunito_Sans({
+const dmSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-nunito',
+  variable: '--font-dm-sans',
 });
 
 export const metadata: Metadata = {
@@ -47,18 +50,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#faf6ef',
+  themeColor: '#f7f3ec',
   colorScheme: 'light',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={SITE.lang} className={`${fraunces.variable} ${nunito.variable}`}>
+    <html lang={SITE.lang} className={`${cormorant.variable} ${dmSans.variable}`}>
       <body>
         <SkipLink />
         <Header />
         <main id="hauptinhalt">{children}</main>
         <Footer />
+        <StickyMobileBar />
         <script
           type="application/ld+json"
           // Aus geprüften Feldern gebaut, kein Nutzereingabewert.

@@ -117,17 +117,66 @@ const report = (name, ok, detail = '') => {
 
   const state = await page.evaluate(() => ({
     videoEls: document.querySelectorAll('video').length,
-    // Ausgeschriebene Fassung: alle sechs Phasen stehen gleichzeitig da.
-    phaseHeadings: document.querySelectorAll('#phasen h3').length,
+    // Ausgeschriebene Fassung: alle sechs Abschnitte stehen gleichzeitig da.
+    phaseHeadings: document.querySelectorAll('#groessen h3').length,
   }));
   report('Kein Video-Element bei reduzierter Bewegung', state.videoEls === 0, `${state.videoEls} gefunden`);
   report('Video wird gar nicht erst angefordert', videoRequests.length === 0, videoRequests.join(', '));
-  report('Phasen stehen ausgeschrieben', state.phaseHeadings === 6, `${state.phaseHeadings} Überschriften`);
+  report('Größenabschnitte stehen ausgeschrieben', state.phaseHeadings === 6, `${state.phaseHeadings} Überschriften`);
   await ctx.close();
 }
 
-/* --- 4./5. Bilder und Formularfelder --------------------------------------- */
-for (const route of ['/', '/sortiment/', '/kontakt/']) {
+/* --- 4. Galerie-Lightbox --------------------------------------------------- */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(BASE + '/galerie/', { waitUntil: 'load' });
+  await page.waitForTimeout(400);
+
+  const closedFirst = await page.evaluate(
+    () => document.querySelector('[role="dialog"][aria-label="Galerie"]')?.hasAttribute('inert') ?? false,
+  );
+  report('Lightbox ist geschlossen inert', closedFirst);
+
+  const firstThumb = page.locator('ul li button').first();
+  await firstThumb.click();
+  await page.waitForTimeout(400);
+
+  const opened = await page.evaluate(() => {
+    const dialog = document.querySelector('[role="dialog"][aria-label="Galerie"]');
+    return {
+      open: dialog?.getAttribute('data-open') === 'true',
+      focusInside: dialog?.contains(document.activeElement) ?? false,
+      modal: dialog?.getAttribute('aria-modal') === 'true',
+      scrollLocked: getComputedStyle(document.body).overflow === 'hidden',
+    };
+  });
+  report('Lightbox öffnet', opened.open);
+  report('Lightbox ist ein modaler Dialog', opened.modal);
+  report('Fokus springt in die Lightbox', opened.focusInside);
+  report('Seite dahinter ist scrollgesperrt', opened.scrollLocked);
+
+  const before = await page.evaluate(() => document.querySelector('[role="dialog"][aria-label="Galerie"] img')?.getAttribute('src'));
+  await page.keyboard.press('ArrowRight');
+  await page.waitForTimeout(300);
+  const after = await page.evaluate(() => document.querySelector('[role="dialog"][aria-label="Galerie"] img')?.getAttribute('src'));
+  report('Pfeiltaste blättert weiter', before !== after, `${before?.split('/').pop()} → ${after?.split('/').pop()}`);
+
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(400);
+  const closed = await page.evaluate(() => ({
+    open: document.querySelector('[role="dialog"][aria-label="Galerie"]')?.getAttribute('data-open') === 'true',
+    focusOnThumb: document.activeElement?.tagName === 'BUTTON',
+    scrollFree: getComputedStyle(document.body).overflow !== 'hidden',
+  }));
+  report('Escape schließt die Lightbox', !closed.open);
+  report('Fokus kehrt auf das Bild zurück', closed.focusOnThumb);
+  report('Scrollsperre wird aufgehoben', closed.scrollFree);
+  await ctx.close();
+}
+
+/* --- 5./6. Bilder und Formularfelder --------------------------------------- */
+for (const route of ['/', '/sortiment/', '/kontakt/', '/shopping-termin/', '/gutschein/', '/galerie/']) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(BASE + route, { waitUntil: 'load' });

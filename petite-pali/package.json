@@ -11,9 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "images": "node scripts/process-images.mjs",
     "video": "node scripts/hero-video.mjs",
-    "brand": "node scripts/brand-assets.mjs"
+    "brand": "node scripts/brand-assets.mjs",
+    "media": "node scripts/media.mjs"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",

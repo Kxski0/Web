@@ -3,17 +3,18 @@ import { PageCta } from '@/components/page/PageCta';
 import { PageHero } from '@/components/page/PageHero';
 import { Prose } from '@/components/page/Prose';
 import type { Crumb } from '@/components/page/Breadcrumbs';
-import { BRANDS } from '@/content/brands';
+import { BRANDS, MATERIALS, ORIGIN, TEAM } from '@/content/facts';
 import { SITE } from '@/content/site';
 import { IMAGES } from '@/lib/assets';
 import { pageMetadata } from '@/lib/seo';
+import styles from './page.module.css';
 
 export const metadata = pageMetadata({
   title: 'Über uns',
   description:
-    'Petite Pali ist eine kleine Baby- und Kinderboutique am Chlodwigplatz in Köln — was den Laden ausmacht und wie hier ausgesucht wird.',
+    'Petite Pali ist eine inhabergeführte Baby- und Kinderboutique in der Kölner Südstadt. Wer dahintersteht und wie hier ausgesucht wird.',
   path: '/ueber-uns/',
-  image: '/images/schaufenster.webp',
+  image: '/images/boutique-fenster.webp',
 });
 
 const TRAIL: Crumb[] = [
@@ -25,67 +26,97 @@ export default function UeberUns() {
   return (
     <>
       <PageHero
-        eyebrow="Über uns"
-        lines={['Ein kleiner Laden', 'mit einer', 'klaren Meinung.']}
+        label="Über uns"
+        lines={['Ein kleiner Laden', 'für ganz besondere', 'Anfänge.']}
         lede="Petite Pali liegt am Karolingerring, ein paar Schritte vom Chlodwigplatz. Klein genug, dass man in zehn Minuten alles gesehen hat — und dicht genug, dass man länger bleibt."
         trail={TRAIL}
-        image={IMAGES.schaufenster}
+        image={IMAGES.boutiqueFenster}
       />
 
-      <Prose title="Wie hier ausgesucht wird">
-        <p>
-          Jedes Teil wird einzeln entschieden. Die Frage ist nicht, ob es sich gut verkauft, sondern
-          ob sich im Laden begründen lässt, warum es hängt: wie sich der Stoff anfühlt, was er nach
-          dem fünften Waschgang macht, ob ein Kind den Schnitt allein anbekommt.
-        </p>
-        <p>
-          Das begrenzt das Sortiment. Es ist der Grund, warum man hier zu jedem Teil eine Antwort
-          bekommt, statt auf ein Regal gezeigt zu bekommen.
-        </p>
-      </Prose>
+      {/* Das Team steht so im bestehenden Auftritt. Porträts und ausführliche
+          Geschichten fehlen noch — sie stehen in CONTENT-TODO.md und werden
+          nicht erfunden. */}
+      <section className={styles.team}>
+        <div className="page-grid">
+          <div className={styles.teamHead}>
+            <p className={styles.label}>
+              <span className={styles.rule} aria-hidden="true" />
+              Wer dahintersteht
+            </p>
+            <h2 className={styles.teamTitle}>
+              {TEAM.owner} — {TEAM.ownerRole}.
+            </h2>
+          </div>
+          <div className={styles.teamBody}>
+            <p>
+              Im Rücken das Team: {TEAM.members.slice(0, -1).join(', ')} und{' '}
+              {TEAM.members[TEAM.members.length - 1]}. Jede kennt das Sortiment von A bis Z und
+              kann sagen, woher ein Teil kommt und warum es hier hängt.
+            </p>
+            <p>
+              Das ist keine Floskel, sondern der Unterschied: Beratung wird hier ernst genommen,
+              auch dann, wenn am Ende nichts gekauft wird.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <MediaBand
-        slot={IMAGES.ladenTisch}
-        caption="Nach Größen sortiert statt nach Marken — so wird tatsächlich gesucht."
+        slot={IMAGES.boutiqueAuswahl}
+        caption="Jedes Kleidungsstück, jedes Spielzeug, jedes Kuscheltier ist von Hand ausgesucht."
       />
 
-      <Prose title="Beratung, wenn sie gewünscht ist" align="right" tinted>
+      <Prose title="Unsere Auswahl">
+        <ul>
+          <li>
+            <strong>Material.</strong> {MATERIALS.join(', ')} — Naturfasern, weil sie den ganzen
+            Tag an der Haut liegen.
+          </li>
+          <li>
+            <strong>Herkunft.</strong> {ORIGIN.share} der Ware kommt aus {ORIGIN.where}.
+          </li>
+          <li>
+            <strong>Handverlesen.</strong> Jedes Teil wird einzeln entschieden. Was sich im Laden
+            nicht begründen lässt, wird nicht bestellt.
+          </li>
+        </ul>
+      </Prose>
+
+      <Prose title="Unsere Haltung" tinted>
         <p>
-          Wer zum ersten Mal eine Erstausstattung zusammenstellt, hat meist mehr Fragen als Zeit.
-          Dafür ist der Laden da: Größen einschätzen, Mengen einschätzen, aussortieren, was man
-          wirklich nicht braucht.
+          Ein Laden ist kein Lager mit Verkaufsfläche. Er ist der Ort, an dem man eine Frage
+          stellen kann, ohne vorher zu wissen, wie sie heißt.
         </p>
         <p>
-          Wer nur schauen möchte, wird nicht angesprochen. Beides ist in Ordnung.
+          Deshalb ist das Sortiment kleiner, als es sein könnte, und deshalb steht hier jemand,
+          der zu jedem Teil etwas sagen kann.
         </p>
       </Prose>
 
-      <Prose title="Von Frühchengröße bis Schulkind">
-        <p>
-          Der Laden deckt die ganze Strecke ab — von den Größen unterhalb der Neugeborenengröße bis
-          zur Grundschule, dazu Umstandsmode für die Monate davor. Wer zur Geburt hier war, muss für
-          den ersten Kindergartentag nicht woanders hin.
-        </p>
-      </Prose>
-
-      {/* Nur was belegt ist. Ohne Marken rendert der Block gar nicht. */}
       {BRANDS.length > 0 && (
-        <Prose title="Marken, die wir führen" align="right" tinted>
-          <p>{BRANDS.map((b) => b.name).join(' · ')}</p>
-          <p>
-            Eine Auswahl, keine vollständige Liste — das Sortiment wechselt mit der Saison. Was
-            gerade da ist, sehen Sie am besten im Laden oder auf{' '}
-            <a
-              href={SITE.instagram.url}
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{ color: 'var(--color-caramel)', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-            >
-              Instagram
-            </a>
-            .
-          </p>
-        </Prose>
+        <section className={styles.brands}>
+          <div className="page-bounds">
+            <p className={styles.label}>
+              <span className={styles.rule} aria-hidden="true" />
+              Marken, die wir führen
+            </p>
+            <ul className={styles.brandList}>
+              {BRANDS.map((b) => (
+                <li key={b.name} className={styles.brand}>
+                  {b.name}
+                </li>
+              ))}
+            </ul>
+            <p className={styles.brandNote}>
+              Eine Auswahl, keine vollständige Liste — das Sortiment wechselt mit der Saison. Was
+              gerade da ist, sehen Sie im Laden oder auf{' '}
+              <a href={SITE.instagram.url} rel="noopener noreferrer" target="_blank">
+                Instagram
+              </a>
+              .
+            </p>
+          </div>
+        </section>
       )}
 
       <PageCta

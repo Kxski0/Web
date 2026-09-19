@@ -56,9 +56,9 @@ export const SITE = {
   name: 'Petite Pali',
   descriptor: 'Baby & Kinder Boutique',
   /** Haltung, kein Werbespruch. */
-  claim: 'Kleine Sachen, mit Bedacht ausgesucht.',
+  claim: 'Für die kleinen Menschen. Und die großen Momente dazwischen.',
   description:
-    'Petite Pali ist eine Baby- und Kinderboutique am Chlodwigplatz in Köln: Mode von Frühchengröße bis Schulkind, Umstandsmode, Spielzeug und Geschenke — neu und secondhand, im Laden ausgesucht statt im Katalog bestellt.',
+    'Petite Pali ist eine inhabergeführte Baby- und Kinderboutique in der Kölner Südstadt: Mode ab Frühchengröße 44 bis Größe 122, Umstandsmode, Tragehilfen, Kinderwagen und ausgewählte Lieblingsstücke — handverlesen und persönlich beraten.',
   region: 'Köln',
   locale: 'de_DE',
   lang: 'de',

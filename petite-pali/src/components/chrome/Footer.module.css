@@ -1,7 +1,15 @@
 .footer {
-  background-color: var(--color-bark);
-  color: var(--color-cream);
-  padding-block: clamp(3rem, 8vw, 6rem) clamp(2rem, 4vw, 3rem);
+  margin-top: clamp(4rem, 10vw, 8rem);
+  border-top: 1px solid var(--color-border);
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 4vw, 3rem);
+  /* Platz für die mobile Aktionsleiste, damit sie nichts verdeckt. */
+  padding-bottom: calc(clamp(2rem, 4vw, 3rem) + 4rem);
+}
+
+@media (min-width: 64rem) {
+  .footer {
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
 }
 
 .grid {
@@ -10,48 +18,48 @@
   grid-template-columns: 1fr;
 }
 
-.brandBlock {
-  max-width: 34ch;
+.brand {
+  max-width: 30ch;
 }
 
 .claim {
-  margin-top: 1.25rem;
-  color: rgb(250 246 239 / 0.74);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--color-muted);
 }
 
 .heading {
   font-family: var(--font-body);
-  font-size: var(--text-eyebrow);
-  letter-spacing: var(--text-eyebrow--letter-spacing);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
   text-transform: uppercase;
-  font-weight: 600;
-  color: rgb(250 246 239 / 0.62);
+  font-weight: 500;
+  color: var(--color-muted);
   margin-bottom: 1rem;
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
+  display: grid;
+  gap: 0.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .link {
-  /* 24px hohe Klickfläche als Untergrenze, WCAG 2.2 SC 2.5.8. */
   display: inline-flex;
   align-items: center;
   min-height: 1.75rem;
-  color: rgb(250 246 239 / 0.86);
-  transition: color var(--duration-ui) var(--ease-out);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-ui) var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
-    color: var(--color-blush);
+    border-bottom-color: currentColor;
   }
 }
 
@@ -61,47 +69,40 @@
   gap: 1.5rem;
   min-height: 1.75rem;
   align-items: center;
-  color: rgb(250 246 239 / 0.86);
+}
+
+.hoursRow dd {
+  margin: 0;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.address {
+  font-style: normal;
+  line-height: 1.8;
 }
 
 .bottom {
-  margin-top: clamp(2.5rem, 6vw, 4rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
   padding-top: 1.5rem;
-  border-top: 1px solid var(--color-hairline-light);
+  border-top: 1px solid var(--color-border);
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 1.75rem;
+  gap: 0.75rem 1.75rem;
   align-items: center;
   justify-content: space-between;
   font-size: 0.875rem;
-  color: rgb(250 246 239 / 0.62);
+  color: var(--color-muted);
 }
 
 .bottomLinks {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
-}
-
-/* Die Marke steht im Fuß auf Dunkel. Der gezeichnete Schriftzug ist in
-   Karamell und Salbei gehalten und trägt seinen Kontrast nicht auf Rinde —
-   deshalb hier die gesetzte Fassung und nicht das Bild. */
-.wordmark {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  line-height: 1;
-  color: var(--color-cream);
-}
-
-.descriptor {
-  margin-top: 0.5rem;
-  font-size: var(--text-eyebrow);
-  letter-spacing: var(--text-eyebrow--letter-spacing);
-  text-transform: uppercase;
-  color: var(--color-blush);
 }
 
 @media (min-width: 48rem) {
   .grid {
-    grid-template-columns: 1.4fr 1fr 1.2fr;
+    grid-template-columns: 1.3fr 1fr 1fr 1.1fr;
   }
 }

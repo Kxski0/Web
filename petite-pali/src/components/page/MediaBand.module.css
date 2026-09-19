@@ -1,4 +1,5 @@
 .band {
+  margin: 0;
   padding-block: clamp(2rem, 5vw, 3.5rem);
 }
 
@@ -14,16 +15,7 @@
 }
 
 .narrow .inner {
-  max-width: 52rem;
-}
-
-.frame {
-  border-radius: var(--radius-image);
-  aspect-ratio: 16 / 10;
-}
-
-.wide .frame {
-  border-radius: 0;
+  max-width: 54rem;
 }
 
 .caption {
@@ -36,12 +28,4 @@
   margin-inline: auto;
   max-width: var(--container-page);
   padding-inline: var(--spacing-gutter);
-}
-
-@media (max-width: 47.99rem) {
-  /* Die Quellfotos sind Hochformat. Auf dem Telefon einen 16:10-Streifen
-     daraus zu schneiden, lässt von den meisten Motiven nichts übrig. */
-  .frame {
-    aspect-ratio: 4 / 3;
-  }
 }

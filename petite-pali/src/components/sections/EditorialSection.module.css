@@ -1,0 +1,80 @@
+.section {
+  padding-block: clamp(3.5rem, 9vw, 7rem);
+}
+
+.tinted {
+  background-color: var(--color-surface);
+}
+
+.grid {
+  align-items: center;
+}
+
+.media {
+  grid-column: 1 / -1;
+  position: relative;
+}
+
+.frame {
+  width: 100%;
+}
+
+.text {
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+}
+
+.body {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1.125rem;
+  max-width: 54ch;
+  color: var(--color-muted);
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+}
+
+.body strong {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+
+.caption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+@media (min-width: 62rem) {
+  /*
+   * Asymmetrisch und wechselnd: 6/5 und 5/6 mit einer leeren Spalte dazwischen.
+   * Ein durchgehendes 50/50 mit „Bild links, Text rechts" ist genau die
+   * Template-Anmutung, die vermieden werden soll.
+   */
+  .media {
+    grid-column: 1 / span 6;
+  }
+
+  .text {
+    grid-column: 8 / span 5;
+    margin-top: 0;
+  }
+
+  .reverse .media {
+    grid-column: 7 / span 6;
+    grid-row: 1;
+  }
+
+  .reverse .text {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+  }
+}

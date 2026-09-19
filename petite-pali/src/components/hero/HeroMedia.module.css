@@ -2,7 +2,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background-color: var(--color-linen);
+  background-color: var(--color-sand);
 }
 
 .layer {
@@ -16,7 +16,7 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 900ms var(--ease-out);
+  transition: opacity 1200ms var(--ease-out);
 }
 
 .video[data-ready='true'] {
@@ -24,16 +24,38 @@
 }
 
 /*
- * Ein warmer Schleier über dem Video. Die Aufnahme ist hell und unruhig; ohne
- * ihn liefe sie optisch gegen die ruhige Cremefläche der Seite an. Er dunkelt
- * nicht ab, um Schrift zu tragen — die Schrift steht auf einer eigenen Fläche,
- * nicht auf dem Bild.
+ * Schleier. Er ist kein Effekt, sondern die Bedingung dafür, dass Schrift auf
+ * bewegtem Bild lesbar ist. Die Werte sind nicht geschätzt: scripts/audit.mjs
+ * fotografiert den Hero und misst den Kontrast der Headline gegen die Pixel,
+ * die tatsächlich dahinter liegen — über die Ausdehnung der Glyphen, nicht
+ * gegen eine angenommene Hintergrundfarbe.
+ *
+ * Links kräftig, nach rechts auslaufend: der Text steht links, das Bild soll
+ * rechts frei bleiben.
  */
 .veil {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, rgb(47 40 35 / 0.18), rgb(47 40 35 / 0) 32%),
-    linear-gradient(to top, rgb(250 246 239 / 0.28), rgb(250 246 239 / 0) 45%);
+    linear-gradient(
+      100deg,
+      rgb(28 23 20 / 0.80) 0%,
+      rgb(28 23 20 / 0.70) 30%,
+      rgb(28 23 20 / 0.24) 62%,
+      rgb(28 23 20 / 0.04) 100%
+    ),
+    linear-gradient(to top, rgb(28 23 20 / 0.42), rgb(28 23 20 / 0) 42%),
+    /* Oben: damit die Kopfzeile auch rechts, wo der Seitenschleier ausläuft,
+       eine verlässliche Fläche hat. */
+    linear-gradient(to bottom, rgb(28 23 20 / 0.55), rgb(28 23 20 / 0) 20%);
+}
+
+@media (max-width: 47.99rem) {
+  /* Auf dem Telefon steht der Text über der ganzen Breite — der Schleier auch. */
+  .veil {
+    background:
+      linear-gradient(to top, rgb(28 23 20 / 0.86) 0%, rgb(28 23 20 / 0.66) 42%, rgb(28 23 20 / 0.28) 100%),
+      linear-gradient(to bottom, rgb(28 23 20 / 0.55), rgb(28 23 20 / 0) 22%);
+  }
 }

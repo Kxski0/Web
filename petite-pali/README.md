@@ -45,17 +45,23 @@ pnpm lint
 Quelldateien liegen nicht im Repository, die erzeugten Dateien schon.
 
 ```bash
-node scripts/process-images.mjs <quellordner>   # Instagram-Screenshots → Bild-Slots
-node scripts/hero-video.mjs <quelldatei.mp4>    # Ladenrundgang → Hero-Schleife + Poster
-node scripts/brand-assets.mjs <quelldatei.png>  # Logo freistellen, Favicons
+node scripts/media.mjs <screenshot-ordner> <video.mp4>   # alle Bild-Slots
+node scripts/hero-video.mjs <quelldatei.mp4>             # Hero-Schleife + Poster
+node scripts/brand-assets.mjs <quelldatei.png>           # Logo freistellen, Favicons
 ```
 
 Alle drei messen, statt zu schätzen:
 
-- `process-images.mjs` findet das Foto im Bildschirmfoto über das Zeilenprofil
-  der Luminanz — die App-Oberfläche ist praktisch schwarz *und* praktisch
-  einfarbig, beides zusammen erkennt sie zuverlässig, ohne dunkle Bildinhalte
-  wegzuschneiden. Anschließend wird auf das Quellformat 3:4 normiert.
+- `media.mjs` zieht Standbilder aus dem Ladenrundgang und Fotos aus den
+  Instagram-Bildschirmfotos. Die Video-Frames sind nicht nach Gefühl gewählt:
+  über den ganzen Clip wird je Sekunde die Varianz des Laplace-Operators
+  gemessen, verwacklete Sekunden fallen dadurch heraus. Bei den Screenshots
+  findet das Luminanz-Zeilenprofil die App-Oberfläche — praktisch schwarz *und*
+  praktisch einfarbig, beides zusammen erkennt sie zuverlässig, ohne dunkle
+  Bildinhalte wegzuschneiden —, danach wird auf das Quellformat 3:4 normiert.
+  Zuletzt bekommt jeder Slot einen **bewussten Zuschnitt** aus dem MANIFEST
+  (`focus`, `zoom`, `aspect`); die Rohbilder sind Schnappschüsse mit viel totem
+  Boden und Straße.
 - `brand-assets.mjs` findet die Logoscheibe über ihre Farbe, trennt Hasenmotiv
   und Schriftzug an der breitesten tintenfreien Lücke und stellt den Butterton
   frei. Es schneidet ausschließlich zu und färbt nichts um.
@@ -67,6 +73,10 @@ Bild-Slots werden ausschließlich über `src/lib/assets.ts` angesprochen. Werden
 später Originalfotos geliefert, ersetzen sie dieselben Dateien, ohne dass eine
 Zeile Anwendungscode geändert werden muss.
 
+Die Quellen sind 720 bzw. 828 px breit — das ist die Auflösungsgrenze. Für
+halbseitige Flächen reicht sie, für vollflächige Bänder über 1440 px wird es
+weich. Deshalb trägt der Hero Video statt Standbild.
+
 ## Prüfung
 
 ```bash
@@ -76,8 +86,8 @@ export BASE=http://localhost:3200
 
 node scripts/routes-check.mjs        # Status, ein h1, Titel/Description eindeutig, Canonical, JSON-LD, interne Links
 node scripts/responsive-check.mjs    # 375–1920: Overflow, Textgröße, Klickziele
-node scripts/a11y-check.mjs          # Skip-Link, Fokusfalle, Escape, Fokusrückgabe, Scrollsperre, reduzierte Bewegung
-node scripts/audit.mjs               # Kontrast gegen die tatsächlich gerenderte Seite
+node scripts/a11y-check.mjs          # Skip-Link, Mobilmenü, Lightbox, reduzierte Bewegung, alt-Texte, Formularlabels
+node scripts/audit.mjs               # Kontrast, inkl. Messung an echten Pixeln über Bild/Video
 node scripts/console-check.mjs       # Konsolenfehler und 404er beim Durchscrollen
 node scripts/typography-check.mjs    # verwaiste Überschriftenzeilen
 node scripts/perf-check.mjs          # LCP, CLS, Transfergewicht je Route
@@ -98,6 +108,12 @@ Bewegung zerlegt SplitText die Überschrift in Zeilen-Container, deren Rechtecke
 Zeilen vortäuschen, die es typografisch nicht gibt. Der Umbruch selbst ist in
 beiden Fällen derselbe.
 
+`audit.mjs` schätzt nicht, wo Text auf Bild oder Video steht: es schaltet die
+Textstelle unsichtbar, fotografiert ihr Rechteck und wertet die Luminanz der
+Fläche dahinter aus. Verglichen wird gegen das ungünstigste Perzentil. Ein
+Abschnitt, der Bildmaterial unter Text legt, markiert sich dafür mit
+`data-surface="media"`.
+
 ## Umgebungsvariablen
 
 `cp .env.example .env.local`
@@ -113,18 +129,30 @@ beiden Fällen derselbe.
 
 ## Seitenstruktur
 
+Sie folgt der bestehenden Website, ist aber gestrafft: aus fünf gleichrangigen
+Einzelseiten unter „Leistungen" wird ein Sortiment mit Unterseiten.
+
 ```
-/                    Startseite, Abschnitte 01–08
-/sortiment/          Kategorien im Detail
-/secondhand/         Neu & Secondhand — das Unterscheidungsmerkmal
-/ueber-uns/          Die Boutique
-/kontakt/            Öffnungszeiten, Anfahrt, Formular
-/impressum/          noindex
-/datenschutz/        noindex
+/                              Startseite
+/sortiment/                    Übersicht
+/sortiment/fruehchen/          ab Größe 44
+/sortiment/baby-und-kind/      bis Größe 122
+/sortiment/fuer-mama/          Schwangerschaft & Stillzeit
+/sortiment/tragehilfen/        Tragehilfen & Trageberatung
+/sortiment/kinderwagen/        BEQOONI®-Showroom
+/sortiment/dies-das/           Geschenke & Accessoires
+/shopping-termin/              Terminanfrage
+/gutschein/                    Gutscheinanfrage
+/ueber-uns/                    Nina und das Team
+/galerie/                      Lightbox, tastaturbedienbar
+/aktuelles/                    Journal
+/kontakt/                      Öffnungszeiten, Anfahrt, Formular
+/impressum/  /datenschutz/     noindex
 ```
 
-Die Seite „Aktuelles" der alten Website entfällt bewusst: Neuigkeiten laufen
-real über Instagram. Eine Seite, die niemand pflegt, ist schlechter als keine.
+Der Signature-Abschnitt der Startseite ist **„Grow with us"**: die Größenleiter
+44 → 122, beim Scrollen durchlaufen — sie beantwortet die im Laden häufigste
+Frage, bevor sie gestellt wird.
 
 ## Weiterführend
 

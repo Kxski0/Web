@@ -5,181 +5,190 @@ widersprechen, gilt dieses Dokument.
 
 ## 1. Haltung
 
-Eine kleine Boutique am Chlodwigplatz, in der Sachen einzeln ausgesucht werden.
-Die Seite soll sich anfühlen wie der Laden: warm, hell, aufgeräumt, ohne
-Marktschreierei. Verkauft wird nicht auf der Seite — verkauft wird im Laden. Die
-Seite hat genau eine Aufgabe: jemanden dazu bringen, hinzugehen.
+Ein hochwertiges Remake, kein Rebranding. Marke, Inhalte und Charakter von
+Petite Pali bleiben; was sich ändert, ist die Qualität der digitalen Darstellung.
+
+Die Seite soll sich anfühlen wie ein Blick in eine echte Boutique: persönlich,
+warm, ruhig, hochwertig, europäisch, redaktionell. Sie darf nie wie ein großer
+anonymer Onlineshop wirken — und auch nicht wie eine Luxusmarke, die sich
+verstellt.
 
 **Bewusste Gegenposition zum Schwesterprojekt im selben Repository.** Dort:
-dunkles Graphit, Radius 0, Schweizer Präzision, Amber als Energiesignal. Hier
-wäre das falsch. Kein Token, keine Regel und keine Komponente wurde von dort
-übernommen, ohne für diesen Laden neu entschieden zu werden.
+dunkles Graphit, Amber als Energiesignal, Swiss-Präzision. Kein Token und keine
+Regel wurde von dort übernommen, ohne für diesen Laden neu entschieden zu werden.
 
 ## 2. Farbe
 
 | Token | Wert | Rolle |
 | --- | --- | --- |
-| `--color-cream` | `#faf6ef` | Seitengrund |
-| `--color-butter` | `#fcfae3` | Logoscheibe, weiche Blöcke, Karten ohne Foto |
-| `--color-linen` | `#f2eade` | erhöhte Fläche, getönte Abschnitte |
-| `--color-caramel` | `#90592d` | Primärakzent, Fokusring, Aufzählungspunkte |
-| `--color-cocoa` | `#7a5a3e` | Sekundärbraun, Fehlermeldungen |
-| `--color-bark` | `#2f2823` | dunkle Fläche: Fuß, Signature-Abschnitt, CTA |
-| `--color-ink` | `#332c25` | Fließtext |
-| `--color-muted` | `#6f6459` | Sekundärtext auf hellem Grund |
-| `--color-muted-on-dark` | `#b9ada0` | Sekundärtext auf Rinde |
-| `--color-blush` | `#e7bcc2` | Zierfarbe |
+| `--color-bg` | `#f7f3ec` | Seitengrund |
+| `--color-surface` | `#efe9df` | getönter Abschnitt |
+| `--color-sand` | `#dccdba` | Fläche, Akzent auf Dunkel |
+| `--color-primary` | `#332b27` | dunkle Fläche, Knöpfe, Fokusring |
+| `--color-text` | `#302a27` | Fließtext |
+| `--color-muted` | `#5c544d` | Sekundärtext |
+| `--color-border` | `#d8d0c5` | Haarlinien |
+| `--color-rose` | `#c8a9a2` | Zierfarbe |
+| `--color-sage` | `#aab2a0` | Zierfarbe |
 
-Butter, Karamell und Altrosa sind aus dem Logo abgenommen — die Grundfarbe der
-Scheibe wurde von `brand-assets.mjs` mit `[250, 254, 221]` gemessen, nicht
-geschätzt.
+### Zwei Korrekturen am vorgegebenen System, beide gemessen
 
-### Gemessene Kontraste
+**Muted.** Vorgegeben war `#7c746d`. Gemessen erreicht das auf dem Seitengrund
+nur **4,15:1** und auf Sand **2,95:1** — unter der AA-Schwelle für Fließtext.
+Abgedunkelt auf `#5c544d`: 6,71:1 (Grund), 6,14:1 (Surface), 4,76:1 (Sand). Der
+Ton bleibt, die Zahl stimmt jetzt.
 
-Alle Werte sind nachgerechnet, nicht angenommen:
+**Rosé und Salbei sind Zierfarben, keine Textfarben.** Auf dem Seitengrund
+messen sie 1,97:1 und 1,98:1. Sie erscheinen als Fläche, als feine Linie und auf
+dunklem Grund (dort 6,37:1 bzw. 6,32:1) — nie als Träger einer Information, nie
+als Fokusring.
+
+### Weitere gemessene Werte
 
 | Kombination | Verhältnis |
 | --- | --- |
-| Tinte auf Creme | 12,76:1 |
-| Tinte auf Leinen | 11,52:1 |
-| Tinte auf Butter | 13,04:1 |
-| Muted auf Creme | 5,35:1 |
-| Muted auf Leinen | 4,83:1 |
-| Karamell auf Creme | 5,34:1 |
-| Karamell auf Leinen | 4,82:1 |
-| Karamell auf Butter | 5,45:1 |
-| Kakao auf Creme | 5,80:1 |
-| Creme auf Rinde | 13,46:1 |
-| Muted-auf-Dunkel auf Rinde | 6,59:1 |
-| Altrosa auf Rinde | 8,54:1 |
-| **Altrosa auf Creme** | **1,58:1 — unbrauchbar für Text** |
+| Text auf Grund | 12,78:1 |
+| Text auf Surface | 11,70:1 |
+| Text auf Sand | 9,07:1 |
+| Grund auf Primary | 12,53:1 |
+| Sand auf Primary | 8,90:1 |
 
-Karamell war zunächst `#a26a38` und erreichte damit nur 4,19:1. Es wurde auf
-`#90592d` abgedunkelt, bis es auf **allen drei** hellen Flächen über 4,5:1 liegt.
-Der Farbton stimmt, die Zahl war falsch — geändert wurde die Zahl.
+## 3. Kante statt Rundung
 
-`--color-muted` misst auf Rinde nur 2,51:1. Deshalb gibt es
-`--color-muted-on-dark` als eigenes Token. Eine Deckkraftangabe an dieser Stelle
-wäre eine Schätzung, kein Wert.
+`border-radius: 0` als Standard, global gesetzt. Durchgehend abgerundete Karten
+und Pillen sind das Kennzeichen der Template-Optik, die diese Seite vermeiden
+soll. Die Kante ist hier das redaktionelle Mittel: Haarlinien gliedern, Flächen
+stoßen aneinander, Knöpfe sind Rechtecke.
 
-### Die Altrosa-Regel
-
-Altrosa erscheint in **genau drei Rollen**:
-
-1. Ziffernmarke der Abschnittsmarke (`Eyebrow`)
-2. Unterstrich der aktiven Navigation
-3. aktive Pille in der Lebensphasen-Leiste (dort auf Rinde, 8,54:1)
-
-Nie als Textfarbe. Nie als Fokusring. Nie großflächig. Und nie als *einziges*
-Signal: die aktive Navigation trägt zusätzlich `aria-current`, die aktive Phase
-zusätzlich eine gefüllte Fläche.
-
-## 3. Rundung
-
-Das Gegenstück zu `border-radius: 0` im Schwesterprojekt. Hier ist die Rundung
-die Marke:
-
-- `--radius-soft: 14px` — Karten, Eingabefelder, Hinweise
-- `--radius-image: 22px` — Bildrahmen, große Flächen
-- `--radius-pill: 999px` — Knöpfe, Pillen, Marken, Punkte
-
-Ein rechtwinkliges Element ist die Ausnahme und braucht einen Grund.
+Rundung ist die begründete Ausnahme und steht dann örtlich im jeweiligen Modul.
 
 ## 4. Typografie
 
-**Fraunces** (variabel, Achsen `SOFT`, `WONK`, `opsz`) als Anzeigeschrift:
-weich und leicht eigenwillig, kann neben dem handgezeichneten Logo bestehen,
-ohne es nachzuahmen. **Nunito Sans** für den Fließtext. Beide über `next/font`
-selbst gehostet — es geht keine Anfrage an einen fremden Server.
+**Serif trägt Emotion, Sans trägt Information.** Keine Ausnahmen.
 
-Skala: `display` → `headline` → `title` → `lede` → `body` → `eyebrow`, alle als
-`clamp()`. Untergrenze für Text: 12px, maschinell geprüft.
+- **Cormorant Garamond** (300/400, auch kursiv) für Hero-Headlines, große
+  Aussagen, Kategorienamen, Größenzahlen. Bewusst nur leichte Schnitte: die
+  Schrift lebt von feinen Strichen, fett verliert sie genau das. Betonung
+  entsteht über Größe und Raum, nicht über Gewicht.
+- **DM Sans** für Navigation, Fließtext, Knöpfe, Formulare, Labels.
+
+Beide über `next/font` selbst gehostet — es geht keine Anfrage an einen fremden
+Server, und es gibt keinen Grund für einen Einwilligungsbanner.
 
 Überschriften mit mehreren Zeilen werden **gesetzt, nicht dem Zufall
-überlassen** (`PageHero` nimmt ein `lines`-Array). Das letzte Wort darf nicht als
-Waise stehen bleiben; `typography-check.mjs` misst das über Range-Rechtecke.
+überlassen** (`PageHero` nimmt ein `lines`-Array, der Hero setzt seine beiden
+Sätze einzeln). Das Leerzeichen am Zeilenende ist dabei nicht kosmetisch: die
+Zeilen sind Blöcke, der zugängliche Name der Überschrift ist aber reiner Text —
+ohne es liest ein Screenreader „Was im Ladensteht".
 
-Bei gesetzten Zeilen steht am Zeilenende ein Leerzeichen. Das ist nicht
-kosmetisch: die Zeilen sind Blöcke, der zugängliche Name der Überschrift ist
-aber reiner Text — ohne das Leerzeichen liest ein Screenreader „Was im
-Ladensteht".
+`typography-check.mjs` meldet Überschriften, deren letzte Zeile als Waise
+stehen bleibt.
 
 ## 5. Raster
 
-12 Spalten, `--container-page: 1440px`, Rinne als `clamp(1.25rem, 4vw, 5rem)`.
-Asymmetrische Aufteilungen (5/6, 7/5, 4/6) statt Halbierungen.
+12 Spalten, `--container-page: 1560px`, Rinne `clamp(1.25rem, 4vw, 5.5rem)`.
+
+Asymmetrisch und wechselnd. `EditorialSection` setzt 6/5 und kehrt sich
+abwechselnd um; ein durchgehendes „Bild links, Text rechts" wäre genau die
+Template-Anmutung, die vermieden werden soll.
+
+Das Kategorienraster setzt die Spaltenbreiten **bewusst**: 4+2, 2+4, 3+3. Jede
+Reihe füllt die sechs Spalten vollständig, jede hat eine andere Aufteilung. Zu
+jeder Breite gehört ein eigenes Bildformat (3:2, 4:5, 4:3) — sonst stünden Hoch-
+und Querformate zufällig nebeneinander.
 
 ## 6. Bewegung
 
-Zwei getrennte Budgets:
-
 | Art | Dauer |
 | --- | --- |
-| Tastendruck | 140ms |
-| Bedienelement | 240ms |
-| redaktionelle Einblendung | 780ms |
+| Tastendruck | 140 ms |
+| Bedienelement | 260 ms |
+| redaktionelle Einblendung | 900 ms |
 
-Erlaubt sind nur `transform`, `opacity` und `clip-path`. **Nie `transition: all`.**
-Hover nur hinter `@media (hover: hover) and (pointer: fine)`.
-
-Bei `prefers-reduced-motion` gilt: weniger und sanfter, nicht nichts. Deckkraft
-und Farbe tragen weiter Bedeutung, die Bewegung geht.
+Erlaubt sind `transform`, `opacity`, `clip-path`. **Nie `transition: all`.**
+Hover nur hinter `@media (hover: hover) and (pointer: fine)`. Bildvergrößerung
+beim Überfahren höchstens 1,03.
 
 Wo das Markup selbst abweichen muss, entscheidet `useReducedMotion`:
 
-- Der Hero lädt dann **gar kein Video** — nicht ein verstecktes. Wer Bewegung
-  reduziert hat, soll die 1,2 MB nicht bezahlen.
-- Die Lebensphasen-Leiste rendert alle sechs Phasen ausgeschrieben
-  untereinander, ohne Pinning.
+- Der Hero lädt bei reduzierter Bewegung **gar kein Video** — nicht ein
+  verstecktes. Wer Bewegung reduziert hat, soll die 1,2 MB nicht bezahlen.
+  Dafür gibt es `useHydrated`: das Video wird erst nach der Hydration
+  eingehängt, weil ein Video-Element im Serverausgabe seine Datei lädt, bevor
+  React entscheiden könnte, es zu entfernen.
+- „Grow with us" rendert alle sechs Abschnitte untereinander statt gepinnt.
 
 `visibility` gehört in keinen Übergang. Sie ist eine diskrete Eigenschaft und
 springt mitten in der Dauer um — ein `.focus()` direkt nach dem Öffnen läuft
-dann ins Leere. Das Mobilmenü arbeitet stattdessen mit `opacity`,
-`pointer-events` und `inert`.
+dann ins Leere. Mobilmenü und Lightbox arbeiten mit `opacity`, `pointer-events`
+und `inert`.
 
-## 7. Fotografie
+## 7. Der Signature-Moment
 
-Alle Ladenaufnahmen stammen aus dem Instagram-Auftritt des Geschäfts und liegen
-im Hochformat **3:4** vor. Das ist das Format der Quelle, keine Wahl — und der
-Grund, warum `MediaBand` unter 48rem auf 4:3 wechselt statt einen 16:10-Streifen
-herauszuschneiden, von dem bei einem Hochformat nichts übrig bliebe.
+**Grow with us**: die Größenleiter 44 → 122, beim Scrollen durchlaufen. Er ist
+nicht Dekoration, sondern beantwortet die im Laden häufigste Frage („habt ihr
+das auch in Größe …?") und zeigt, was die Boutique ausmacht: sie deckt die
+ganze Strecke ab.
+
+Technisch schlicht: `position: sticky` plus ein auf einen Frame gedrosselter
+Scroll-Handler, der die Position in einen Index auflöst; alles Sichtbare läuft
+über CSS-Transitions. Kein GSAP-Pinning, kein WebGL.
+
+## 8. Text auf Bild — gemessen, nicht geschätzt
+
+Text darf über Bild oder Video stehen, aber nur mit einem Schleier, dessen
+Wirkung nachgewiesen ist. `scripts/audit.mjs` schaltet die Textstelle
+unsichtbar, fotografiert ihr Rechteck und wertet die Luminanz der Fläche
+dahinter aus — verglichen wird gegen das ungünstigste Perzentil (bei heller
+Schrift gegen die hellsten Pixel).
+
+Aktuelle Messwerte auf der Startseite: Hero-Kicker 10,20:1, Unterzeile 7,81:1,
+Hero-Knopf 9,03:1, Navigation 6,07–11,61:1, Marke 16,48:1.
+
+Wo ein Abschnitt Bildmaterial unter Text legt, trägt er `data-surface="media"`.
+Das ist keine Dekoration: der Prüfer nimmt es als Grenze und misst ab dort an
+Pixeln statt gegen die Seitenfarbe.
+
+## 9. Fotografie
+
+Zwei Quellen, beide vom Laden selbst:
+
+1. **Der einminütige Ladenrundgang** (720×1280). Die Frames sind nicht nach
+   Gefühl gewählt: über den ganzen Clip wurde je Sekunde die Varianz des
+   Laplace-Operators gemessen und aus den schärfsten Sekunden nach Bildinhalt
+   ausgewählt. Verwacklete Frames kommen gar nicht erst in die Auswahl.
+2. **Bildschirmfotos des eigenen Instagram-Auftritts** (828 px). Die
+   App-Oberfläche wird über das Luminanz-Zeilenprofil entfernt.
+
+Jeder Slot bekommt einen **bewussten Zuschnitt** (`focus`, `zoom`, `aspect` im
+MANIFEST von `scripts/media.mjs`). Die Rohbilder sind Schnappschüsse mit viel
+totem Boden, Straße und Autos; ohne Zuschnitt sähe die Seite danach aus.
+
+**Auflösungsgrenze, offen benannt:** 720 bzw. 828 px. Für halbseitige und
+kleinere Flächen reicht das; für vollflächige Bänder über 1440 px wird es weich.
+Deshalb trägt der Hero Video statt Standbild — und deshalb steht
+„Originaldateien anfordern" in `CONTENT-TODO.md`.
 
 Bilder werden über **Slots** angesprochen (`src/lib/assets.ts`), nie über Pfade.
-Jeder Slot hält Eigengröße, Bildschwerpunkt und einen deutschen, beschreibenden
-Alternativtext.
 
-## 8. Text auf Bild
+## 10. Bedienbarkeit
 
-**Text steht nie auf bewegtem Bild.** Der Hero legt seinen Text auf eine eigene
-Cremefläche, statt ihn über das Video zu setzen. Das ist eine
-Gestaltungsentscheidung und zugleich die einzige verlässliche: Schrift auf einem
-hellen, ständig wechselnden Video hat keinen messbaren Kontrast, Tinte auf Creme
-hat 12,76:1.
-
-Aus demselben Grund liegt die Kopfleiste immer auf getrübtem Creme — auch ganz
-oben. Eine durchsichtige Leiste über dem Video wäre schöner und wäre nicht
-lesbar.
-
-`audit.mjs` meldet jede Textstelle über Bildmaterial eigens. Diese Meldung soll
-leer bleiben; sie ist die Kontrolle für diese Regel.
-
-## 9. Bedienbarkeit
-
-- Klickziele mindestens 24×24 (WCAG 2.2 SC 2.5.8), Knöpfe 44px hoch.
+- Klickziele mindestens 24×24 (WCAG 2.2 SC 2.5.8), Knöpfe 48 px hoch.
   Ausgenommen sind Verweise mitten im Satz — die Ausnahme steht in der Norm und
   wird im Prüfskript *geprüft*, nicht angenommen.
-- Fokusring in Karamell, 2px, 3px Abstand.
-- Das Mobilmenü ist ein Dialog mit Fokusfalle, Escape, Fokusrückgabe und
-  Scrollsperre. Geschlossen nimmt `inert` es aus Tabreihenfolge und
-  Hilfsmittelbaum.
-- Im Signature-Abschnitt sind alle sechs Phasen im Baum für Hilfsmittel, obwohl
-  visuell nur eine sichtbar ist: wer sie vorgelesen bekommt, bekommt sie
-  vollständig vorgelesen, statt auf Scrollen angewiesen zu sein.
+- Fokusring in Primary, 2 px, 3 px Abstand.
+- Mobilmenü und Galerie-Lightbox sind Dialoge mit Fokusfalle, Escape,
+  Fokusrückgabe und Scrollsperre; geschlossen nimmt `inert` sie aus
+  Tabreihenfolge und Hilfsmittelbaum. Die Lightbox blättert zusätzlich mit den
+  Pfeiltasten.
+- In „Grow with us" sind alle sechs Abschnitte im Hilfsmittelbaum, obwohl
+  visuell nur einer sichtbar ist.
 
-## 10. Bewusst nicht verwendet
+## 11. Bewusst nicht verwendet
 
-Karussells auf der Startseite · Popups und Newsletter-Overlays · eingebettete
-Instagram-Feeds (verlinkt statt eingebettet — spart Skripte Dritter und die
-Einwilligung) · eingebettete Karten-iframes · Zählerbalken und Rabatt-Störer ·
-animierte Körnung · Cookie-Banner (es gibt keine Cookies, also nichts
-einzuwilligen) · eigene Mauszeiger · Parallax über mehrere Abschnitte.
+Karussells · Popups und Newsletter-Overlays · eingebettete Instagram-Feeds
+(verlinkt statt eingebettet) · eingebettete Karten-iframes · Cookie-Banner (es
+gibt keine Cookies, also nichts einzuwilligen) · Farbverläufe als Flächen ·
+Glasflächen · Neon · 3D · WebGL · animierte Körnung · eigene Mauszeiger ·
+durchgehend abgerundete Karten · gleichförmige Sechser-Raster · Stockfotos ·
+KI-Bilder.

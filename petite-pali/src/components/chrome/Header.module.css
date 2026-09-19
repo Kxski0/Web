@@ -1,62 +1,54 @@
-/*
- * Die Leiste liegt immer auf getrübtem Creme, auch ganz oben über dem
- * Hero-Video. Eine durchsichtige Leiste über bewegtem Bild wäre schöner und
- * wäre nicht lesbar: das Video ist hell, wechselt ständig und trägt keine
- * verlässliche Fläche für Schrift. Getrübtes Creme hält Tinte bei 12,76:1,
- * unabhängig davon, was darunter durchläuft.
- */
 .header {
   position: fixed;
   inset-inline: 0;
   top: 0;
   z-index: 50;
-  background-color: rgb(250 246 239 / 0.86);
-  backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
-  transition: border-color var(--duration-ui) var(--ease-out);
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out);
 }
 
-/* Erst beim Scrollen bekommt die Leiste eine Kante — vorher schwebt sie
-   randlos auf dem Hero. */
-.header[data-scrolled='true'] {
-  border-bottom-color: var(--color-hairline);
+/* Über dem Hero liegt die Leiste ohne eigene Fläche auf dem Bild — dort sorgt
+   der Schleier des Heros für den Kontrast. Überall sonst trägt sie den
+   Seitengrund. */
+.header[data-solid='true'] {
+  background-color: var(--color-bg);
+  border-bottom-color: var(--color-border);
 }
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-gutter);
-  min-height: 4.5rem;
+  gap: clamp(1rem, 3vw, 3rem);
+  min-height: 4.75rem;
 }
 
 .nav {
   display: none;
   align-items: center;
-  gap: clamp(1rem, 2vw, 2.25rem);
+  gap: clamp(1rem, 2.2vw, 2.25rem);
 }
 
 .link {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--color-ink);
-  padding-block: 0.5rem;
   position: relative;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+  padding-block: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-/*
- * Aktive Navigation ist die zweite der drei Rollen von Altrosa. Sie ist nie das
- * einzige Signal: dieselbe Seite trägt aria-current, und der Unterstrich wäre
- * für sich genommen mit 1,58:1 gegen Creme ohnehin kein Signal.
- */
 .link::after {
   content: '';
   position: absolute;
   inset-inline: 0;
-  bottom: 0;
-  height: 2px;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-blush);
+  bottom: 1.15rem;
+  height: 1px;
+  background-color: currentColor;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--duration-ui) var(--ease-out);
@@ -72,47 +64,125 @@
   }
 }
 
-.cta {
-  display: none;
-  min-height: 2.5rem;
-  align-items: center;
-  gap: 0.4rem;
-  padding-inline: 1.125rem;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-bark);
-  color: var(--color-cream);
+.onMedia .link,
+.onMedia .actionLink,
+.onMedia .menuButton {
+  color: #fdfbf7;
+}
+
+.onMedia .menuButton {
+  border-color: rgb(253 251 247 / 0.45);
+}
+
+.onMedia .actionCta {
+  background-color: #fdfbf7;
+  color: var(--color-primary);
+}
+
+/* --- Untermenü ------------------------------------------------------------ */
+
+.hasMenu {
+  position: relative;
+}
+
+.chevron {
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+.hasMenu[data-open='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: -1rem;
+  min-width: 15rem;
+  padding: 0.5rem 0;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.4rem);
+  transition:
+    opacity var(--duration-ui) var(--ease-out),
+    transform var(--duration-ui) var(--ease-out);
+}
+
+.hasMenu[data-open='true'] .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.submenuLink {
+  display: block;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--color-text);
   transition: background-color var(--duration-ui) var(--ease-out);
 }
 
-/* Der CTA trägt keinen Unterstrich — er ist bereits eine Fläche. */
-.cta::after {
-  content: none;
+@media (hover: hover) and (pointer: fine) {
+  .submenuLink:hover {
+    background-color: var(--color-surface);
+  }
+}
+
+/* --- Aktionen ------------------------------------------------------------- */
+
+.actions {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.actionLink {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-ui) var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .cta:hover {
-    background-color: var(--color-caramel);
+  .actionLink:hover {
+    border-bottom-color: currentColor;
+  }
+}
+
+.actionCta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: 1.25rem;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background-color var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .actionCta:hover {
+    background-color: #4a3f39;
   }
 }
 
 .menuButton {
-  /* 44px hoch: bequem über der 24×24-Untergrenze aus WCAG 2.2 SC 2.5.8. */
   min-height: 2.75rem;
   padding-inline: 1.125rem;
-  border: 1px solid var(--color-hairline-strong);
-  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
   font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-ink);
+  font-weight: 500;
+  color: var(--color-text);
 }
 
-@media (min-width: 62rem) {
-  .nav {
+@media (min-width: 64rem) {
+  .nav,
+  .actions {
     display: flex;
-  }
-
-  .cta {
-    display: inline-flex;
   }
 
   .menuButton {

@@ -8,7 +8,24 @@
 import { launchBrowser } from './browser.mjs';
 
 const BASE = process.env.BASE ?? 'http://localhost:3200';
-const ROUTES = ['/', '/sortiment/', '/secondhand/', '/ueber-uns/', '/kontakt/', '/impressum/', '/datenschutz/'];
+const ROUTES = [
+  '/',
+  '/sortiment/',
+  '/sortiment/fruehchen/',
+  '/sortiment/baby-und-kind/',
+  '/sortiment/fuer-mama/',
+  '/sortiment/tragehilfen/',
+  '/sortiment/kinderwagen/',
+  '/sortiment/dies-das/',
+  '/shopping-termin/',
+  '/gutschein/',
+  '/ueber-uns/',
+  '/galerie/',
+  '/aktuelles/',
+  '/kontakt/',
+  '/impressum/',
+  '/datenschutz/',
+];
 
 const browser = await launchBrowser();
 let failures = 0;

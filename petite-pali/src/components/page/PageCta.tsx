@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
 import { CONTACT, formatPhone, telHref } from '@/content/site';
 import styles from './PageCta.module.css';
 
@@ -10,16 +10,16 @@ export function PageCta({ title, body }: Props) {
       <div className="page-bounds">
         <div className={styles.card}>
           <h2 className={styles.title}>{title}</h2>
-          <p className={styles.body}>{body}</p>
-          <div className={styles.actions}>
-            <Link href="/kontakt/" className={styles.primary}>
-              Besuch &amp; Kontakt <span aria-hidden="true">→</span>
-            </Link>
-            {CONTACT.verified && CONTACT.phone && (
-              <a href={telHref(CONTACT.phone)} className={styles.secondary}>
-                {formatPhone(CONTACT.phone)}
-              </a>
-            )}
+          <div className={styles.right}>
+            <p className={styles.body}>{body}</p>
+            <div className={styles.actions}>
+              <Button href="/shopping-termin/">Shopping-Termin</Button>
+              {CONTACT.verified && CONTACT.phone && (
+                <Button href={telHref(CONTACT.phone)} variant="quiet" arrow={false}>
+                  {formatPhone(CONTACT.phone)}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

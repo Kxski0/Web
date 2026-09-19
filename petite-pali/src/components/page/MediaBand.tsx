@@ -6,16 +6,18 @@ type Props = {
   slot: ImageSlot;
   caption?: string;
   width?: 'inset' | 'wide' | 'narrow';
+  /** Nur setzen, wenn der Zuschnitt aus scripts/media.mjs bewusst überschrieben wird. */
+  ratio?: string;
 };
 
-export function MediaBand({ slot, caption, width = 'inset' }: Props) {
+export function MediaBand({ slot, caption, width = 'inset', ratio }: Props) {
   return (
-    <figure className={`${styles.band} ${styles[width] ?? ''}`} style={{ margin: 0 }}>
+    <figure className={`${styles.band} ${styles[width] ?? ''}`}>
       <div className={styles.inner}>
         <RevealImage
           slot={slot}
-          className={styles.frame}
-          sizes={width === 'narrow' ? '(min-width: 52rem) 52rem, 92vw' : '100vw'}
+          ratio={ratio}
+          sizes={width === 'narrow' ? '(min-width: 54rem) 54rem, 92vw' : '100vw'}
         />
       </div>
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}

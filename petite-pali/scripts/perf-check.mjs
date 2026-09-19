@@ -10,7 +10,7 @@
 import { launchBrowser } from './browser.mjs';
 
 const BASE = process.env.BASE ?? 'http://localhost:3200';
-const ROUTES = ['/', '/sortiment/', '/secondhand/', '/ueber-uns/', '/kontakt/'];
+const ROUTES = ['/', '/sortiment/', '/sortiment/fruehchen/', '/sortiment/tragehilfen/', '/shopping-termin/', '/gutschein/', '/ueber-uns/', '/galerie/', '/aktuelles/', '/kontakt/'];
 
 /** Schwellen, ab denen eine Seite auffällig wird. */
 const BUDGET = { lcp: 2500, cls: 0.1, totalKb: 3000 };

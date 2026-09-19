@@ -7,18 +7,19 @@ import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
 export const metadata = pageMetadata({
-  title: 'Besuch & Kontakt',
+  title: 'Kontakt',
   description:
-    'Öffnungszeiten, Anfahrt und Kontakt: Petite Pali, Karolingerring 5, 50678 Köln — am Chlodwigplatz.',
+    'Öffnungszeiten, Anfahrt und Kontakt: Petite Pali, Karolingerring 5, 50678 Köln — am Chlodwigplatz, wenige Schritte von der KVB-Haltestelle.',
   path: '/kontakt/',
-  image: '/images/eingang.webp',
+  image: '/images/tuer.webp',
 });
 
 const TRAIL: Crumb[] = [
   { name: 'Startseite', path: '/' },
-  { name: 'Besuch & Kontakt', path: '/kontakt/' },
+  { name: 'Kontakt', path: '/kontakt/' },
 ];
 
+/** Kartenlink statt eingebetteter Karte: kein fremdes Skript, keine Einwilligung. */
 function mapsHref() {
   if (!CONTACT.address) return null;
   const query = `${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.city}`;
@@ -31,11 +32,11 @@ export default function Kontakt() {
   return (
     <>
       <PageHero
-        eyebrow="Besuch & Kontakt"
+        label="Kontakt"
         lines={['Am', 'Chlodwigplatz.']}
         lede="Der Laden liegt am Karolingerring, wenige Schritte vom Chlodwigplatz. Am schnellsten geht alles vor Ort — für alles andere gibt es Telefon, E-Mail und das Formular."
         trail={TRAIL}
-        image={IMAGES.eingang}
+        image={IMAGES.tuer}
       />
 
       <section className={styles.section}>
@@ -43,8 +44,8 @@ export default function Kontakt() {
           <div className={styles.facts}>
             {/* Jeder Block hängt an bestätigten Angaben. Ohne sie steht hier nichts. */}
             {CONTACT.verified && CONTACT.hours.length > 0 && (
-              <div className={styles.card}>
-                <h2 className={styles.cardHeading}>Öffnungszeiten</h2>
+              <div className={styles.block}>
+                <h2 className={styles.heading}>Öffnungszeiten</h2>
                 <dl className={styles.hours}>
                   {CONTACT.hours.map((h) => (
                     <div key={h.label} className={styles.hoursRow}>
@@ -55,19 +56,23 @@ export default function Kontakt() {
                     </div>
                   ))}
                 </dl>
-                <p className={styles.route}>
-                  An Sonn- und Feiertagen ist der Laden geschlossen. Abweichungen kündigen wir auf{' '}
+                <p className={styles.note}>
+                  An Sonn- und Feiertagen geschlossen. Abweichungen kündigen wir auf{' '}
                   <a className={styles.link} href={SITE.instagram.url} rel="noopener noreferrer" target="_blank">
                     Instagram
                   </a>{' '}
-                  an.
+                  an. Außerhalb der Öffnungszeiten ist ein{' '}
+                  <a className={styles.link} href="/shopping-termin/">
+                    Shopping-Termin
+                  </a>{' '}
+                  möglich.
                 </p>
               </div>
             )}
 
             {CONTACT.verified && (
-              <div className={styles.card}>
-                <h2 className={styles.cardHeading}>Adresse &amp; Kontakt</h2>
+              <div className={styles.block}>
+                <h2 className={styles.heading}>Adresse &amp; Kontakt</h2>
                 <address className={styles.lines}>
                   <span>
                     {CONTACT.address?.street}
@@ -96,21 +101,24 @@ export default function Kontakt() {
                     </a>
                   )}
                 </address>
-
-                <p className={styles.route}>
-                  Mit der KVB bis Chlodwigplatz — Stadtbahn 15, 16 und 17, dazu die Buslinien
-                  106, 132, 133 und 142. Von dort sind es wenige Schritte.
-                  {maps && (
-                    <>
-                      {' '}
-                      <a className={styles.link} href={maps} rel="noopener noreferrer" target="_blank">
-                        Auf der Karte ansehen
-                      </a>
-                    </>
-                  )}
-                </p>
               </div>
             )}
+
+            <div className={styles.block}>
+              <h2 className={styles.heading}>Anfahrt</h2>
+              <p className={styles.note}>
+                Mit der KVB bis Chlodwigplatz — Stadtbahn 15, 16 und 17, dazu die Buslinien 106,
+                132, 133 und 142. Von dort sind es wenige Schritte.
+                {maps && (
+                  <>
+                    {' '}
+                    <a className={styles.link} href={maps} rel="noopener noreferrer" target="_blank">
+                      Auf der Karte ansehen
+                    </a>
+                  </>
+                )}
+              </p>
+            </div>
           </div>
 
           <div className={styles.form}>
@@ -118,7 +126,7 @@ export default function Kontakt() {
             <p className={styles.formLede}>
               Für Fragen, die keinen Anruf brauchen. Wenn es eilig ist, ist das Telefon schneller.
             </p>
-            <ContactForm />
+            <ContactForm kind="kontakt" />
           </div>
         </div>
       </section>

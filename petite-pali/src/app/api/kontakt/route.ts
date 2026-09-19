@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 
 /**
- * Endpunkt des Kontaktformulars.
+ * Endpunkt für alle drei Formulare: Kontakt, Shopping-Termin und Gutschein.
+ *
+ * Ein Endpunkt statt drei, weil sich nur die Felder unterscheiden, nicht der
+ * Weg: prüfen, Honigtopf abfangen, als JSON weiterreichen.
  *
  * Die Zustellung ist austauschbar und in diesem Repository NICHT konfiguriert.
  * Es gibt keinen Mailanbieter, keinen Schlüssel und kein Postfach — statt einen
@@ -9,17 +12,34 @@ import { NextResponse } from 'next/server';
  * Handler die Eingaben und antwortet ausdrücklich mit 503, solange
  * CONTACT_WEBHOOK_URL fehlt. Siehe CONTENT-TODO.md.
  *
- * Sobald die Variable auf einen Endpunkt zeigt, der einen JSON-POST annimmt,
- * ist das Formular ohne Codeänderung scharf.
- *
- * Kein Dateiupload, anders als im Schwesterprojekt: eine Boutique braucht kein
- * Foto vom Kunden, und was nicht erhoben wird, muss auch nicht gespeichert,
- * begründet und wieder gelöscht werden.
+ * Kein Dateiupload und keine Zahlungsfunktion. Der Gutschein wird wie bisher
+ * persönlich ausgestellt; eine Zahlungsstrecke zu erfinden, die es im Laden
+ * nicht gibt, wäre ein Versprechen, das niemand einlösen kann.
  */
 
-const SUBJECTS = ['artikel', 'verfuegbarkeit', 'geschenk', 'secondhand', 'sonstiges'] as const;
+const FORMS = {
+  kontakt: {
+    subjects: ['artikel', 'verfuegbarkeit', 'geschenk', 'sonstiges'],
+    required: ['name', 'email', 'nachricht'] as const,
+  },
+  termin: {
+    subjects: ['erstausstattung', 'trageberatung', 'kinderwagen', 'umstandsmode', 'sonstiges'],
+    required: ['name', 'email', 'nachricht'] as const,
+  },
+  gutschein: {
+    subjects: [],
+    required: ['name', 'email', 'betrag'] as const,
+  },
+} as const;
 
-type FieldErrors = Record<string, string>;
+type FormKey = keyof typeof FORMS;
+
+const LABELS: Record<string, string> = {
+  name: 'Bitte geben Sie Ihren Namen an.',
+  email: 'Bitte geben Sie eine gültige E-Mail-Adresse an.',
+  nachricht: 'Ein, zwei Sätze helfen uns weiter.',
+  betrag: 'Bitte geben Sie den gewünschten Betrag an.',
+};
 
 export async function POST(request: Request) {
   let form: FormData;
@@ -31,29 +51,43 @@ export async function POST(request: Request) {
 
   const get = (key: string) => (form.get(key) ?? '').toString().trim();
 
-  const payload = {
-    subject: get('subject'),
-    name: get('name'),
-    email: get('email'),
-    telefon: get('telefon'),
-    nachricht: get('nachricht'),
-  };
-
   // Honigtopf: ein Feld, das Menschen nicht sehen und einfache Bots ausfüllen.
   if (get('website') !== '') {
     return NextResponse.json({ ok: true });
   }
 
-  const errors: FieldErrors = {};
-  if (!SUBJECTS.includes(payload.subject as (typeof SUBJECTS)[number])) {
-    errors.subject = 'Bitte wählen Sie aus, worum es geht.';
+  const kind = get('form') as FormKey;
+  const config = FORMS[kind];
+  if (!config) {
+    return NextResponse.json({ error: 'Unbekanntes Formular.' }, { status: 400 });
   }
-  if (payload.name.length < 2) errors.name = 'Bitte geben Sie Ihren Namen an.';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) {
-    errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse an.';
+
+  const payload: Record<string, string> = { form: kind };
+  for (const key of ['subject', 'name', 'email', 'telefon', 'nachricht', 'betrag', 'empfaenger', 'anlass', 'termin']) {
+    const value = get(key);
+    if (value) payload[key] = value;
   }
-  if (payload.nachricht.length < 10) {
-    errors.nachricht = 'Ein, zwei Sätze helfen uns weiter.';
+
+  const errors: Record<string, string> = {};
+
+  if (config.subjects.length > 0) {
+    const subject = get('subject');
+    if (!(config.subjects as readonly string[]).includes(subject)) {
+      errors.subject = 'Bitte wählen Sie aus, worum es geht.';
+    }
+  }
+
+  for (const field of config.required) {
+    const value = get(field);
+    if (field === 'email') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) errors.email = LABELS.email;
+      continue;
+    }
+    if (field === 'nachricht') {
+      if (value.length < 10) errors.nachricht = LABELS.nachricht;
+      continue;
+    }
+    if (value.length < 2) errors[field] = LABELS[field] ?? 'Bitte füllen Sie dieses Feld aus.';
   }
 
   if (Object.keys(errors).length > 0) {
@@ -65,7 +99,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          'Das Kontaktformular ist noch nicht freigeschaltet. Rufen Sie uns bitte solange an oder schreiben Sie uns direkt eine E-Mail.',
+          'Das Formular ist noch nicht freigeschaltet. Rufen Sie uns bitte solange an oder schreiben Sie uns direkt eine E-Mail.',
         code: 'delivery_not_configured',
       },
       { status: 503 },

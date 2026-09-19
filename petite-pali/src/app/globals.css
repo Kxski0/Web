@@ -4,85 +4,73 @@
    PETITE PALI — Gestaltungstoken
    Einzige Quelle der Wahrheit. Keine Farbe, keine Größe, keine Dauer wird
    irgendwo anders hart hingeschrieben.
-
-   Die Palette ist aus dem Logo und den Ladenfotos abgenommen, nicht erfunden:
-   der Butterton ist die gemessene Grundfarbe der Logoscheibe, das Karamell die
-   Farbe des Schriftzugs, das Altrosa die der Wangen und Sterne.
    ========================================================================== */
 
 @theme {
   /* --- Farbe ------------------------------------------------------------- */
-  --color-cream: #faf6ef;
-  --color-butter: #fcfae3;
-  --color-linen: #f2eade;
-  --color-caramel: #90592d;
-  --color-cocoa: #7a5a3e;
-  --color-bark: #2f2823;
-  --color-ink: #332c25;
-  --color-muted: #6f6459;
+  --color-bg: #f7f3ec;
+  --color-surface: #efe9df;
+  --color-sand: #dccdba;
+  --color-primary: #332b27;
+  --color-text: #302a27;
+  --color-border: #d8d0c5;
+
   /*
-   * Sekundärtext auf Rinde. Das normale Muted misst dort nur 2,51:1 und ist
-   * damit unlesbar — auf dunklem Grund braucht dieselbe Rolle eine eigene
-   * Farbe, keine Deckkraftschätzung. Dieser Ton erreicht 6,59:1.
+   * Sekundärtext. Vorgegeben war #7c746d — gemessen erreicht das auf dem
+   * Seitengrund nur 4,15:1 und auf Sand 2,95:1, liegt also unter der
+   * AA-Schwelle für Fließtext. Abgedunkelt auf 6,71:1 (Grund), 6,14:1
+   * (Surface) und 4,76:1 (Sand). Der Ton bleibt, die Zahl stimmt jetzt.
    */
-  --color-muted-on-dark: #b9ada0;
+  --color-muted: #5c544d;
+
   /*
-   * Altrosa ist Zierfarbe, nie Textfarbe: auf Creme misst es 1,58:1. Es
-   * erscheint in genau drei Rollen — Eyebrow-Marker, aktive Navigation,
-   * trennende Zierform — und nie großflächig.
+   * Rosé und Salbei sind ZIERFARBEN. Auf dem Seitengrund messen sie 1,97:1
+   * bzw. 1,98:1 — als Text oder als Fokusring wären sie unbrauchbar. Sie
+   * erscheinen als Fläche, als feine Linie und auf dunklem Grund (dort 6,37:1
+   * bzw. 6,32:1), nie als Träger einer Information.
    */
-  --color-blush: #e7bcc2;
+  --color-rose: #c8a9a2;
+  --color-sage: #aab2a0;
 
-  /* Haarlinien statt Schatten: gezeichnet, nicht schwebend. */
-  --color-hairline: rgb(51 44 37 / 0.14);
-  --color-hairline-strong: rgb(51 44 37 / 0.26);
-  --color-hairline-light: rgb(250 246 239 / 0.22);
+  /* --- Schrift -----------------------------------------------------------
+     Serif trägt Emotion, Sans trägt Information. Keine Ausnahmen. */
+  --font-display: var(--font-cormorant), ui-serif, Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 
-  /* --- Radius ------------------------------------------------------------
-     Die Rundung ist hier die Marke. Alles bekommt eine, und zwar eine
-     spürbare — das ist der Unterschied zwischen „Boutique“ und „Katalog“. */
-  --radius-soft: 14px;
-  --radius-image: 22px;
-  --radius-pill: 999px;
+  --text-display: clamp(2.75rem, 7.5vw, 6.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.015em;
 
-  /* --- Schrift ----------------------------------------------------------- */
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --text-headline: clamp(2rem, 4.4vw, 3.5rem);
+  --text-headline--line-height: 1.08;
+  --text-headline--letter-spacing: -0.01em;
 
-  --text-display: clamp(2.75rem, 8.5vw, 7.5rem);
-  --text-display--line-height: 0.98;
-  --text-display--letter-spacing: -0.02em;
+  --text-title: clamp(1.375rem, 2.2vw, 1.875rem);
+  --text-title--line-height: 1.2;
 
-  --text-headline: clamp(2rem, 4.8vw, 4rem);
-  --text-headline--line-height: 1.04;
-  --text-headline--letter-spacing: -0.015em;
-
-  --text-title: clamp(1.375rem, 2.4vw, 2rem);
-  --text-title--line-height: 1.18;
-  --text-title--letter-spacing: -0.01em;
-
-  --text-lede: clamp(1.0625rem, 1.3vw, 1.3125rem);
-  --text-lede--line-height: 1.58;
+  --text-lede: clamp(1.0625rem, 1.25vw, 1.25rem);
+  --text-lede--line-height: 1.62;
 
   --text-body: 1rem;
   --text-body--line-height: 1.7;
 
   /* 12px-Untergrenze: darunter wird gesperrte Versalschrift unleserlich. */
-  --text-eyebrow: 0.75rem;
-  --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.16em;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.14em;
 
   /* --- Raster ------------------------------------------------------------ */
-  --spacing-gutter: clamp(1.25rem, 4vw, 5rem);
-  --container-page: 1440px;
+  --spacing-gutter: clamp(1.25rem, 4vw, 5.5rem);
+  --container-page: 1560px;
+  --container-text: 62ch;
 
   /* --- Bewegung ---------------------------------------------------------- */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
   --duration-press: 140ms;
-  --duration-ui: 240ms;
-  --duration-reveal: 780ms;
+  --duration-ui: 260ms;
+  --duration-reveal: 900ms;
 }
 
 /* ==========================================================================
@@ -94,6 +82,13 @@
   *::before,
   *::after {
     box-sizing: border-box;
+    /*
+     * Rechtwinklig als Standard. Die Kante ist hier das redaktionelle Mittel;
+     * durchgehend abgerundete Karten sind genau die Template-Optik, die diese
+     * Seite vermeiden soll. Rundung ist die begründete Ausnahme und steht
+     * dann örtlich im Modul.
+     */
+    border-radius: 0;
   }
 
   html {
@@ -103,8 +98,8 @@
 
   body {
     margin: 0;
-    background-color: var(--color-cream);
-    color: var(--color-ink);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: var(--font-body);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
@@ -117,11 +112,10 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
-    font-weight: 500;
     margin: 0;
+    font-weight: 400;
     text-wrap: balance;
-    color: var(--color-ink);
+    color: var(--color-text);
   }
 
   p {
@@ -129,22 +123,14 @@
     text-wrap: pretty;
   }
 
-  /*
-   * Fokus in Karamell, nicht in Altrosa. Gemessen gegen die Flächen, auf denen
-   * der Ring tatsächlich vorkommt: Altrosa erreicht auf Creme 1,58:1 und wäre
-   * als Fokusanzeige unbrauchbar (SC 1.4.11 verlangt 3:1). Karamell erreicht
-   * 5,34:1 auf Creme, 4,82:1 auf Leinen und 5,45:1 auf Butter — damit trägt es
-   * auch Fließtext, nicht nur den Ring.
-   */
   :focus-visible {
-    outline: 2px solid var(--color-caramel);
+    outline: 2px solid var(--color-primary);
     outline-offset: 3px;
-    border-radius: 2px;
   }
 
   ::selection {
-    background-color: var(--color-blush);
-    color: var(--color-bark);
+    background-color: var(--color-sand);
+    color: var(--color-primary);
   }
 
   img,
@@ -167,12 +153,18 @@
     color: inherit;
     text-decoration: none;
   }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 0;
+  }
 }
 
 /* ==========================================================================
    Reduzierte Bewegung
-   Weniger und sanfter, nicht nichts. Deckkraft und Farbe tragen weiter
-   Bedeutung; die Bewegung ist das, was schadet, also geht die Bewegung.
+   Weniger und sanfter, nicht nichts: Deckkraft und Farbe tragen weiter
+   Bedeutung, die Bewegung ist das, was schadet.
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -218,17 +210,34 @@
   overflow: hidden;
 }
 
-@utility eyebrow {
-  font-family: var(--font-body);
-  font-size: var(--text-eyebrow);
-  line-height: var(--text-eyebrow--line-height);
-  letter-spacing: var(--text-eyebrow--letter-spacing);
-  text-transform: uppercase;
-  color: var(--color-muted);
-  font-weight: 600;
+/* Nur für Hilfsmittel: Text, der gelesen, aber nicht gesehen wird. Nicht
+   display:none — das nähme ihn auch aus dem Hilfsmittelbaum. */
+@utility sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* Feine Trennlinie als tragendes Gliederungsmittel. */
-@utility rule-top {
-  border-top: 1px solid var(--color-hairline);
+@utility label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+/* Anzeigeschrift für Überschriften — bewusst als Hilfsklasse und nicht global
+   auf h1–h4, damit Informationsüberschriften in der Sans gesetzt werden können. */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-optical-sizing: auto;
 }

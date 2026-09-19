@@ -9,9 +9,18 @@ import { SITE } from '@/content/site';
  */
 const ROUTES: { path: string; priority: number }[] = [
   { path: '/', priority: 1 },
-  { path: '/sortiment/', priority: 0.8 },
-  { path: '/secondhand/', priority: 0.8 },
+  { path: '/sortiment/', priority: 0.9 },
+  { path: '/sortiment/fruehchen/', priority: 0.8 },
+  { path: '/sortiment/baby-und-kind/', priority: 0.8 },
+  { path: '/sortiment/fuer-mama/', priority: 0.8 },
+  { path: '/sortiment/tragehilfen/', priority: 0.8 },
+  { path: '/sortiment/kinderwagen/', priority: 0.8 },
+  { path: '/sortiment/dies-das/', priority: 0.7 },
+  { path: '/shopping-termin/', priority: 0.8 },
+  { path: '/gutschein/', priority: 0.7 },
   { path: '/ueber-uns/', priority: 0.6 },
+  { path: '/galerie/', priority: 0.5 },
+  { path: '/aktuelles/', priority: 0.5 },
   { path: '/kontakt/', priority: 0.7 },
 ];
 

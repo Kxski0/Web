@@ -1,9 +1,14 @@
+import Link from 'next/link';
 import { RevealText } from '@/components/motion/RevealText';
-import { Button } from '@/components/ui/Button';
-import { Wordmark } from '@/components/chrome/Wordmark';
 import { CONTACT, SITE } from '@/content/site';
 import { HeroMedia } from './HeroMedia';
 import styles from './Hero.module.css';
+
+const Arrow = () => (
+  <svg className={styles.arrow} width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+    <path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 export function Hero() {
   return (
@@ -11,35 +16,46 @@ export function Hero() {
       <HeroMedia />
 
       <div className={`${styles.inner} page-bounds`}>
-        <div className={styles.panel}>
-          <Wordmark variant="full" width={280} />
+        <div className={styles.text}>
+          <p className={styles.kicker}>
+            <span>{SITE.name}</span>
+            <span className={styles.kickerRule} aria-hidden="true" />
+            <span>Baby- &amp; Kinderboutique in Köln</span>
+          </p>
 
-          <RevealText as="h1" className={styles.claim} on="load">
-            {SITE.claim}
+          {/*
+            * Der Umbruch ist gesetzt, nicht dem Zufall überlassen: die beiden
+            * Sätze gehören je auf eine eigene Zeile. Das Leerzeichen am
+            * Zeilenende ist nicht kosmetisch — die Zeilen sind Blöcke, der
+            * zugängliche Name der Überschrift ist aber reiner Text.
+            */}
+          <RevealText as="h1" className={styles.headline} on="load">
+            <span className={styles.line}>Für die kleinen Menschen. </span>
+            <span className={styles.line}>Und die großen Momente dazwischen.</span>
           </RevealText>
 
-          <p className={styles.lede}>
-            Baby- und Kindermode von Frühchengröße bis Schulkind, Umstandsmode, Spielzeug und
-            Geschenke — ausgesucht im Laden, nicht bestellt im Katalog.
+          <p className={styles.sub}>
+            Baby- und Kindermode, Frühchenkleidung, Umstandsmode und ausgewählte Lieblingsstücke in
+            der Kölner Südstadt.
           </p>
 
           <div className={styles.actions}>
-            <Button href="/sortiment/">Sortiment ansehen</Button>
-            <Button href="/kontakt/" variant="secondary" arrow={false}>
-              Öffnungszeiten &amp; Anfahrt
-            </Button>
+            <Link href="/sortiment/" className={styles.primary}>
+              Boutique entdecken <Arrow />
+            </Link>
+            <Link href="/shopping-termin/" className={styles.secondary}>
+              Shopping-Termin <Arrow />
+            </Link>
           </div>
 
           {CONTACT.verified && CONTACT.address && (
-            <p className={styles.where}>
-              <span className={styles.whereItem}>
-                <span className={styles.dot} aria-hidden="true" />
+            <p className={styles.meta}>
+              <span>
                 {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.city}
               </span>
-              {CONTACT.neighbourhood && (
-                <span className={styles.whereItem}>
-                  <span className={styles.dot} aria-hidden="true" />
-                  {CONTACT.neighbourhood}
+              {CONTACT.hours[0] && (
+                <span>
+                  {CONTACT.hours[0].label} {CONTACT.hours[0].opens}–{CONTACT.hours[0].closes} Uhr
                 </span>
               )}
             </p>

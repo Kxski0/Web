@@ -10,10 +10,12 @@ type Props = {
    * Schriftzug samt Zusatzzeile und braucht entsprechend Platz.
    */
   variant?: 'compact' | 'full';
+  /** Über Bildmaterial wird der gesetzte Name hell. */
+  onMedia?: boolean;
   width?: number;
 };
 
-export function Wordmark({ variant = 'compact', width = 260 }: Props) {
+export function Wordmark({ variant = 'compact', onMedia = false, width = 260 }: Props) {
   if (variant === 'full') {
     return (
       <Image
@@ -29,7 +31,7 @@ export function Wordmark({ variant = 'compact', width = 260 }: Props) {
   }
 
   return (
-    <span className={styles.compact}>
+    <span className={`${styles.wordmark} ${onMedia ? styles.onMedia : ''}`}>
       <Image
         src={BRAND.marke.src}
         width={BRAND.marke.width}

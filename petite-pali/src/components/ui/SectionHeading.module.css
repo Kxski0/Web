@@ -1,0 +1,51 @@
+.head {
+  max-width: 44rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.rule {
+  width: 2rem;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.title {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+}
+
+.lede {
+  margin-top: 1.25rem;
+  max-width: 48ch;
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-muted);
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.center .label {
+  justify-content: center;
+}
+
+.center .lede {
+  margin-inline: auto;
+}

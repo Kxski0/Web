@@ -17,7 +17,7 @@
 import { launchBrowser } from './browser.mjs';
 
 const BASE = process.env.BASE ?? 'http://localhost:3200';
-const ROUTES = ['/', '/sortiment/', '/secondhand/', '/ueber-uns/', '/kontakt/'];
+const ROUTES = ['/', '/sortiment/', '/sortiment/fruehchen/', '/sortiment/tragehilfen/', '/shopping-termin/', '/gutschein/', '/ueber-uns/', '/galerie/', '/aktuelles/', '/kontakt/'];
 const WIDTHS = [375, 768, 1280, 1920];
 
 const browser = await launchBrowser();

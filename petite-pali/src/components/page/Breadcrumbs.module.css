@@ -14,19 +14,20 @@
   display: inline-flex;
   align-items: center;
   min-height: 1.75rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-ui) var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .link:hover {
-    color: var(--color-caramel);
+    border-bottom-color: var(--color-border);
   }
 }
 
 .sep {
-  color: var(--color-hairline-strong);
+  color: var(--color-border);
 }
 
 .current {
-  color: var(--color-ink);
-  font-weight: 600;
+  color: var(--color-text);
 }
