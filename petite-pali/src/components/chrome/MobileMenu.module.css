@@ -15,8 +15,8 @@
   pointer-events: none;
   transform: translateY(-1rem);
   transition:
-    opacity var(--duration-ui) var(--ease-out),
-    transform var(--duration-ui) var(--ease-out);
+    opacity var(--duration-ui) var(--ease-drawer),
+    transform var(--duration-ui) var(--ease-drawer);
   overflow-y: auto;
 }
 
@@ -24,6 +24,16 @@
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+/*
+ * Der Ausgang ist kürzer als der Eingang. Beim Öffnen entscheidet jemand und
+ * sieht hin; beim Schließen hat er bereits entschieden und will die Seite
+ * zurück. Gleich lange Wege in beide Richtungen fühlen sich beim Schließen
+ * zäh an.
+ */
+.overlay[data-open='false'] {
+  transition-duration: var(--duration-exit);
 }
 
 .bar {

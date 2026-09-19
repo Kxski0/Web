@@ -1,5 +1,12 @@
 /**
- * Meldet Überschriften, deren letzte Zeile als kurze Waise stehen bleibt.
+ * Zwei typografische Prüfungen:
+ *
+ *  1. Satzspiegel — Zeichen je Zeile im Fließtext. Gezählt werden echte
+ *     Zeichen über Range-Rechtecke, nicht aus der Breite geschätzt: `ch` ist
+ *     die Breite der Ziffer Null und bei DM Sans deutlich breiter als das
+ *     durchschnittliche Zeichen. 62ch ergaben gemessene 89 Zeichen — eine
+ *     Schätzung hätte diesen Fehler nie gezeigt.
+ *  2. Waisen — Überschriften, deren letzte Zeile als kurzer Rest stehen bleibt.
  *
  * Mehrzeilige Überschriften sind gewollt — eine gestrandete Restzeile aus einem
  * oder zwei kurzen Wörtern ist es nicht. Gemessen wird über Range-Rechtecke:
@@ -20,6 +27,9 @@ const BASE = process.env.BASE ?? 'http://localhost:3200';
 const ROUTES = ['/', '/sortiment/', '/sortiment/fruehchen/', '/sortiment/tragehilfen/', '/shopping-termin/', '/gutschein/', '/ueber-uns/', '/galerie/', '/aktuelles/', '/kontakt/'];
 const WIDTHS = [375, 768, 1280, 1920];
 
+/** Obergrenze für Fließtext. Darüber verliert das Auge beim Zeilenwechsel den Anschluss. */
+const MAX_CHARS_PER_LINE = 68;
+
 const browser = await launchBrowser();
 let failures = 0;
 
@@ -33,6 +43,37 @@ for (const route of ROUTES) {
     await page.goto(BASE + route, { waitUntil: 'load' });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
+
+    const measure = await page.evaluate((limit) => {
+      function charsPerLine(el) {
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        const perLine = new Map();
+        const range = document.createRange();
+        let node;
+        while ((node = walker.nextNode())) {
+          const text = node.textContent;
+          for (let i = 0; i < text.length; i++) {
+            if (text[i] === '\n') continue;
+            range.setStart(node, i);
+            range.setEnd(node, i + 1);
+            const rect = range.getClientRects()[0];
+            if (!rect) continue;
+            const key = Math.round(rect.top);
+            perLine.set(key, (perLine.get(key) ?? 0) + 1);
+          }
+        }
+        const lines = [...perLine.values()];
+        if (lines.length < 2) return null;
+        // Die letzte Zeile ist immer kurz und verfälscht den Schnitt.
+        lines.pop();
+        return Math.round(lines.reduce((a, b) => a + b, 0) / lines.length);
+      }
+
+      return [...document.querySelectorAll('p, li')]
+        .filter((el) => el.textContent.trim().length > 150)
+        .map((el) => ({ chars: charsPerLine(el), text: el.textContent.trim().slice(0, 30) }))
+        .filter((x) => x.chars && x.chars > limit);
+    }, MAX_CHARS_PER_LINE);
 
     const orphans = await page.evaluate(() => {
       const found = [];
@@ -63,14 +104,20 @@ for (const route of ROUTES) {
       return found;
     });
 
-    if (orphans.length) failures++;
+    const measureProblems = measure.map((m) => `${m.chars} Zeichen/Zeile „${m.text}…"`);
+    const all = [...measureProblems, ...orphans];
+    if (all.length) failures++;
     console.log(
-      `${orphans.length ? 'FEHL' : ' OK '}  ${route.padEnd(16)} ${String(width).padStart(4)}  ${orphans.join(' | ')}`,
+      `${all.length ? 'FEHL' : ' OK '}  ${route.padEnd(28)} ${String(width).padStart(4)}  ${all.join(' | ')}`,
     );
     await ctx.close();
   }
 }
 
 await browser.close();
-console.log(failures === 0 ? '\nKeine verwaisten Überschriftenzeilen.' : `\n${failures} Fall/Fälle.`);
+console.log(
+  failures === 0
+    ? `\nSatzspiegel überall unter ${MAX_CHARS_PER_LINE} Zeichen, keine verwaisten Überschriftenzeilen.`
+    : `\n${failures} Fall/Fälle.`,
+);
 process.exit(failures === 0 ? 0 : 1);

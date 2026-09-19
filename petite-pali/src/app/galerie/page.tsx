@@ -17,10 +17,15 @@ const TRAIL: Crumb[] = [
   { name: 'Galerie', path: '/galerie/' },
 ];
 
+/*
+ * Modus: Experience. Die Besucherin ist im Gezeigten selbst — der Kopf ordnet
+ * nur ein, die Bilder führen. Deshalb die knappe Fassung des Seitenkopfs.
+ */
 export default function Galerie() {
   return (
     <>
       <PageHero
+        size="compact"
         label="Galerie"
         lines={['Ein Blick', 'in den Laden.']}
         lede="Alle Aufnahmen stammen aus der Boutique selbst — keine Kataloge, keine Stockfotos. Zum Vergrößern anklicken; mit den Pfeiltasten lässt sich blättern."

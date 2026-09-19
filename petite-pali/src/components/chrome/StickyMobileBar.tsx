@@ -39,17 +39,17 @@ export function StickyMobileBar() {
   return (
     <nav className={styles.bar} aria-label="Schnellzugriff">
       {CONTACT.verified && CONTACT.phone && (
-        <a href={telHref(CONTACT.phone)} className={styles.item}>
+        <a href={telHref(CONTACT.phone)} className={`pressable ${styles.item}`}>
           <Phone />
           Anrufen
         </a>
       )}
-      <a href="/shopping-termin/" className={styles.item}>
+      <a href="/shopping-termin/" className={`pressable ${styles.item}`}>
         <Calendar />
         Termin
       </a>
       {maps && (
-        <a href={maps} className={styles.item} rel="noopener noreferrer" target="_blank">
+        <a href={maps} className={`pressable ${styles.item}`} rel="noopener noreferrer" target="_blank">
           <Pin />
           Route
         </a>

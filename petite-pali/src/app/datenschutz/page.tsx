@@ -25,6 +25,9 @@ export const metadata = {
  *
  * Wird daran etwas geändert, gehört dieser Text mit geändert.
  */
+/*
+ * Modus: Read. Pflichtangaben, die gefunden und gelesen werden müssen.
+ */
 export default function Datenschutz() {
   return (
     <div className={styles.page}>

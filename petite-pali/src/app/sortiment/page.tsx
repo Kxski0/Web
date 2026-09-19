@@ -20,6 +20,9 @@ const TRAIL: Crumb[] = [
   { name: 'Sortiment', path: '/sortiment/' },
 ];
 
+/*
+ * Modus: Persuade. Die Übersicht führt in die sechs Bereiche und endet auf einer Handlung.
+ */
 export default function Sortiment() {
   return (
     <>

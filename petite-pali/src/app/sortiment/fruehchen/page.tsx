@@ -41,6 +41,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Sensibler Anlass: die Handlung ist der Anruf, nicht der Kauf.
+ */
 export default function Fruehchen() {
   return (
     <>

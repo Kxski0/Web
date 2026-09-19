@@ -6,6 +6,7 @@ import { EditorialSection } from '@/components/sections/EditorialSection';
 import { StoreExperience } from '@/components/sections/StoreExperience';
 import { AppointmentTeaser } from '@/components/sections/AppointmentTeaser';
 import { GalleryTeaser } from '@/components/sections/GalleryTeaser';
+import { PageCta } from '@/components/page/PageCta';
 import { Button } from '@/components/ui/Button';
 import { STROLLER } from '@/content/facts';
 import { SITE } from '@/content/site';
@@ -20,6 +21,11 @@ export const metadata = pageMetadata({
   absoluteTitle: true,
 });
 
+/*
+ * Modus: Persuade. Die Besucherin entscheidet sich und handelt — die Seite ist
+ * hier das Produkt. Jeder Abschnitt trägt auf die eine Handlung am Ende zu:
+ * vorbeikommen.
+ */
 export default function Home() {
   return (
     <>
@@ -115,6 +121,16 @@ export default function Home() {
       <StoreExperience />
       <AppointmentTeaser />
       <GalleryTeaser />
+
+      {/*
+        * Die Seite endet auf genau einer Handlung. Zuvor lief sie im
+        * Galerie-Streifen aus — schön anzusehen, aber ohne Antwort auf die
+        * Frage, was jetzt zu tun ist.
+        */}
+      <PageCta
+        title="Kommen Sie vorbei."
+        body="Karolingerring 5, am Chlodwigplatz. Wer etwas Bestimmtes sucht, ruft am besten kurz vorher an — das spart den Weg."
+      />
     </>
   );
 }

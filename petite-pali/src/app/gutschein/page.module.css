@@ -25,7 +25,7 @@
 }
 
 .text {
-  max-width: 48ch;
+  max-width: var(--container-text);
   color: var(--color-muted);
   font-size: var(--text-lede);
   line-height: var(--text-lede--line-height);

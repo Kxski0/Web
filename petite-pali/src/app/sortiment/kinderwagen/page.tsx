@@ -41,6 +41,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Die Handlung ist das Ausprobieren vor Ort.
+ */
 export default function Kinderwagen() {
   return (
     <>

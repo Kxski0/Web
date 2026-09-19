@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Stagger } from '@/components/motion/Stagger';
 import { KATEGORIEN } from '@/content/kategorien';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import styles from './Kategorien.module.css';
@@ -14,10 +15,10 @@ export function Kategorien() {
           lede="Von der Frühchengröße bis zur Grundschule, dazu alles, was in dieser Zeit sonst noch gebraucht wird."
         />
 
-        <ul className={styles.grid}>
-          {KATEGORIEN.map((k) => (
-            <li key={k.id} className={styles.item}>
-              <Link href={k.href} className={styles.link}>
+        <Stagger as="ul" className={styles.grid}>
+          {KATEGORIEN.map((k, i) => (
+            <li key={k.id} className={styles.item} style={{ '--i': i } as React.CSSProperties}>
+              <Link href={k.href} className={`pressable-soft ${styles.link}`}>
                 <div className={styles.media}>
                   <Image
                     src={k.image.src}
@@ -47,7 +48,7 @@ export function Kategorien() {
               </Link>
             </li>
           ))}
-        </ul>
+        </Stagger>
       </div>
     </section>
   );

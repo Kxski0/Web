@@ -6,6 +6,12 @@ import { Breadcrumbs, type Crumb } from './Breadcrumbs';
 import styles from './PageHero.module.css';
 
 type Props = {
+  /**
+   * 'compact' nimmt dem Kopf Höhe und Schriftgröße. Für Oberflächen, auf denen
+   * das Gezeigte führen soll und die Überschrift nur einordnet — die Galerie
+   * etwa: dort gehören Bilder in den ersten Bildschirm, nicht eine Schlagzeile.
+   */
+  size?: 'default' | 'compact';
   label: string;
   /** Umbrüche werden gesetzt, nicht dem Zufall überlassen. */
   lines: string[];
@@ -15,9 +21,9 @@ type Props = {
   actions?: ReactNode;
 };
 
-export function PageHero({ label, lines, lede, trail, image, actions }: Props) {
+export function PageHero({ size = 'default', label, lines, lede, trail, image, actions }: Props) {
   return (
-    <section className={styles.hero}>
+    <section className={`${styles.hero} ${size === 'compact' ? styles.compact : ''}`}>
       <div className={`${styles.trail} page-bounds`}>
         <Breadcrumbs trail={trail} />
       </div>

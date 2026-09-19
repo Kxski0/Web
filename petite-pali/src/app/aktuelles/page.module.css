@@ -33,14 +33,14 @@
 
 .text {
   margin-top: 0.75rem;
-  max-width: 60ch;
+  max-width: var(--container-text);
   color: var(--color-muted);
   font-size: var(--text-lede);
   line-height: var(--text-lede--line-height);
 }
 
 .fallback {
-  max-width: 52rem;
+  max-width: 46rem;
   padding-block: clamp(2rem, 5vw, 3.5rem);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);

@@ -40,6 +40,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Die Handlung ist die Beratung, nicht das Produkt.
+ */
 export default function Tragehilfen() {
   return (
     <>

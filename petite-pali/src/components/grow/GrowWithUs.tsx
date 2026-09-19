@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { Stagger } from '@/components/motion/Stagger';
 import { useReducedMotion } from '@/components/motion/useReducedMotion';
 import { GROW_LADDER, GROW_STEPS } from '@/content/grow';
 import styles from './GrowWithUs.module.css';
@@ -81,9 +82,13 @@ export function GrowWithUs() {
       <section className={`${styles.section} ${styles.static}`} id="groessen">
         <div className="page-bounds">
           {Head}
-          <ol className={styles.staticList}>
-            {GROW_STEPS.map((step) => (
-              <li key={step.size} className={styles.staticItem}>
+          <Stagger as="ol" className={styles.staticList}>
+            {GROW_STEPS.map((step, i) => (
+              <li
+                key={step.size}
+                className={styles.staticItem}
+                style={{ '--i': i } as React.CSSProperties}
+              >
                 <p className={styles.staticSize}>
                   {step.size}
                   <span className={styles.sizeUnit}>Größe</span>
@@ -96,7 +101,7 @@ export function GrowWithUs() {
                 </div>
               </li>
             ))}
-          </ol>
+          </Stagger>
         </div>
       </section>
     );

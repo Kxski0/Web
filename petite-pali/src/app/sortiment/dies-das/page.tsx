@@ -39,6 +39,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Die Handlung ist der Besuch oder der Gutschein.
+ */
 export default function DiesDas() {
   return (
     <>

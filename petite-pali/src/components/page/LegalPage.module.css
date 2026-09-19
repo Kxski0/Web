@@ -2,8 +2,14 @@
   padding-block: clamp(7rem, 14vw, 10rem) clamp(3rem, 8vw, 6rem);
 }
 
+/*
+ * Lesemodus: die Zeilenlänge entscheidet hier über alles andere. Gemessen lief
+ * dieser Block bei 1440px auf 88 Zeichen — bei dieser Länge verliert das Auge
+ * beim Zeilenwechsel den Anschluss. `--container-text` bindet ihn an 62
+ * Zeichen, unabhängig von Schriftgröße und Fenster.
+ */
 .inner {
-  max-width: 44rem;
+  max-width: var(--container-text);
 }
 
 .title {

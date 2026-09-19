@@ -69,7 +69,7 @@
 .answer {
   padding-bottom: 1.25rem;
   color: var(--color-muted);
-  max-width: 62ch;
+  max-width: var(--container-text);
 }
 
 @media (min-width: 62rem) {

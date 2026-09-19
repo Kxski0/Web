@@ -22,6 +22,9 @@ const TRAIL: Crumb[] = [
   { name: 'Über uns', path: '/ueber-uns/' },
 ];
 
+/*
+ * Modus: Read. Hier wird verstanden, nicht entschieden — Satzspiegel und Lesetakt gehen vor Ausdruck.
+ */
 export default function UeberUns() {
   return (
     <>

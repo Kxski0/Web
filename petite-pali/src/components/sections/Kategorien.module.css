@@ -23,7 +23,7 @@
 
 .image {
   width: 100%;
-  transition: transform 700ms var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-state);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -64,8 +64,14 @@
   font-weight: 500;
 }
 
+/*
+ * Auch in einer Karte gilt der Satzspiegel. Die vier Spalten breiten Karten
+ * liefen ohne Begrenzung auf gemessene 110 Zeichen je Zeile — das liest
+ * niemand mehr als Absatz, sondern nur noch als Fläche.
+ */
 .body {
   margin-top: 0.625rem;
+  max-width: var(--container-text);
   color: var(--color-muted);
 }
 

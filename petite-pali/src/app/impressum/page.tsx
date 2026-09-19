@@ -19,6 +19,9 @@ const MISSING = [
   IMPRINT.vatId === null && IMPRINT.taxNumber === null && 'Umsatzsteuer-Identifikationsnummer oder Steuernummer',
 ].filter((x): x is string => typeof x === 'string');
 
+/*
+ * Modus: Read. Pflichtangaben, die gefunden und gelesen werden müssen.
+ */
 export default function Impressum() {
   return (
     <div className={styles.page}>

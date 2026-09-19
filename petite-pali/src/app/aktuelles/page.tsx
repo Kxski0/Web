@@ -20,6 +20,9 @@ const TRAIL: Crumb[] = [
   { name: 'Aktuelles', path: '/aktuelles/' },
 ];
 
+/*
+ * Modus: Read. Hier wird gelesen. Ohne gepflegte Beiträge verweist die Seite ehrlich weiter.
+ */
 export default function Aktuelles() {
   return (
     <>

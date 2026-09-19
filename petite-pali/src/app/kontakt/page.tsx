@@ -26,6 +26,9 @@ function mapsHref() {
   return `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
 }
 
+/*
+ * Modus: Operate. Hier wird eine Aufgabe erledigt: Öffnungszeiten finden, Weg finden, schreiben. Scanbarkeit vor Ausdruck.
+ */
 export default function Kontakt() {
   const maps = mapsHref();
 

@@ -26,7 +26,7 @@
 .thumb {
   width: 100%;
   height: auto;
-  transition: transform 700ms var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-state);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -64,6 +64,11 @@
 .overlay[data-open='true'] {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Kürzerer Ausgang als Eingang — siehe Mobilmenü. */
+.overlay[data-open='false'] {
+  transition-duration: var(--duration-exit);
 }
 
 .bar {
@@ -118,7 +123,7 @@
 
 .caption {
   padding: 0 clamp(1rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
-  max-width: 68ch;
+  max-width: var(--container-text);
   font-size: 0.9375rem;
   color: rgb(253 251 247 / 0.8);
 }

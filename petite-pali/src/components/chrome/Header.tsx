@@ -159,14 +159,14 @@ export function Header() {
             <Link href={ACTIONS[1].href} className={styles.actionLink}>
               {ACTIONS[1].label}
             </Link>
-            <Link href={ACTIONS[0].href} className={styles.actionCta}>
+            <Link href={ACTIONS[0].href} className={`pressable ${styles.actionCta}`}>
               {ACTIONS[0].label}
             </Link>
           </div>
 
           <button
             type="button"
-            className={styles.menuButton}
+            className={`pressable ${styles.menuButton}`}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen(true)}

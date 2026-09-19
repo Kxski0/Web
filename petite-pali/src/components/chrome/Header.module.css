@@ -93,6 +93,15 @@
   transform: rotate(180deg);
 }
 
+/*
+ * Das Untermenü wächst aus seinem Auslöser heraus, nicht aus der Mitte und
+ * nicht aus dem Nichts: `transform-origin` sitzt oben links, direkt unter
+ * „Sortiment". Ein Popover, das von woanders herkommt, wirkt wie ein fremdes
+ * Element, das über die Seite gelegt wurde.
+ *
+ * Startgröße 0.97 statt 0 — nichts in der Wirklichkeit erscheint aus dem
+ * Nichts. Und 200ms statt 240ms: Dropdowns liegen im Band 150–250ms.
+ */
 .submenu {
   position: absolute;
   top: 100%;
@@ -103,16 +112,22 @@
   border: 1px solid var(--color-border);
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-0.4rem);
+  transform-origin: top left;
+  transform: scale(0.97) translateY(-0.25rem);
   transition:
-    opacity var(--duration-ui) var(--ease-out),
-    transform var(--duration-ui) var(--ease-out);
+    opacity var(--duration-menu) var(--ease-out),
+    transform var(--duration-menu) var(--ease-out);
 }
 
 .hasMenu[data-open='true'] .submenu {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: scale(1) translateY(0);
+}
+
+/* Der Ausgang ist kürzer als der Eingang. */
+.hasMenu[data-open='false'] .submenu {
+  transition-duration: var(--duration-exit);
 }
 
 .submenuLink {

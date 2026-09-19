@@ -61,9 +61,8 @@
   }
 }
 
-.button:active {
-  transform: translateY(1px);
-}
+/* Das Druckfeedback liegt in der Hilfsklasse `pressable` — eine Regel für alle
+   drückbaren Flächen statt einer pro Komponente. */
 
 .arrow {
   transition: transform var(--duration-ui) var(--ease-out);

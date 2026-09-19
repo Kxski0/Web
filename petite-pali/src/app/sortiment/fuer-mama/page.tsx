@@ -34,6 +34,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Die Handlung ist der ruhige Anprobetermin.
+ */
 export default function FuerMama() {
   return (
     <>

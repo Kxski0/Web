@@ -43,6 +43,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Eine Handlung, zwei Wege: Formular oder Anruf.
+ */
 export default function Gutschein() {
   return (
     <>

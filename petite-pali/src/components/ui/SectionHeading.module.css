@@ -31,7 +31,7 @@
 
 .lede {
   margin-top: 1.25rem;
-  max-width: 48ch;
+  max-width: var(--container-text);
   font-size: var(--text-lede);
   line-height: var(--text-lede--line-height);
   color: var(--color-muted);

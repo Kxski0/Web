@@ -113,7 +113,7 @@ export function ContactForm({ kind = 'kontakt', extra }: { kind?: FormKind; extr
           </legend>
           <div className={styles.choices}>
             {subjects.map((subject) => (
-              <label key={subject.value} className={styles.choice}>
+              <label key={subject.value} className={`pressable ${styles.choice}`}>
                 <input type="radio" name="subject" value={subject.value} className={styles.radio} />
                 <span>{subject.label}</span>
               </label>
@@ -175,7 +175,7 @@ export function ContactForm({ kind = 'kontakt', extra }: { kind?: FormKind; extr
       </div>
 
       <div className={styles.actions}>
-        <button type="submit" className={styles.submit} disabled={status === 'sending'}>
+        <button type="submit" className={`pressable ${styles.submit}`} disabled={status === 'sending'}>
           {status === 'sending' ? 'Wird gesendet …' : 'Absenden'}
           <span aria-hidden="true">→</span>
         </button>

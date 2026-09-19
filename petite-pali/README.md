@@ -84,12 +84,13 @@ pnpm build
 PORT=3200 bash scripts/serve.sh                  # startet neu und wartet, bis er antwortet
 export BASE=http://localhost:3200
 
+node scripts/motion-check.mjs        # Bewegungsregeln an Quelle: transition:all, ease-in, Dauern, Druckfeedback
 node scripts/routes-check.mjs        # Status, ein h1, Titel/Description eindeutig, Canonical, JSON-LD, interne Links
 node scripts/responsive-check.mjs    # 375–1920: Overflow, Textgröße, Klickziele
 node scripts/a11y-check.mjs          # Skip-Link, Mobilmenü, Lightbox, reduzierte Bewegung, alt-Texte, Formularlabels
 node scripts/audit.mjs               # Kontrast, inkl. Messung an echten Pixeln über Bild/Video
 node scripts/console-check.mjs       # Konsolenfehler und 404er beim Durchscrollen
-node scripts/typography-check.mjs    # verwaiste Überschriftenzeilen
+node scripts/typography-check.mjs    # Zeichen je Zeile (≤68) und verwaiste Überschriftenzeilen
 node scripts/perf-check.mjs          # LCP, CLS, Transfergewicht je Route
 node scripts/shoot.mjs /             # Screenshots über vier Breiten
 ```

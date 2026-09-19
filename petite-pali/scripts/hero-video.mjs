@@ -14,9 +14,17 @@
  *    Ohne das springt jede Wiederholung.
  *  - Keine Tonspur. Autoplay ist nur stumm erlaubt, und eine Tonspur, die nie
  *    zu hören ist, wäre nur Gewicht.
- *  - Ein Format: MP4/H.264. Ein zusätzlich erzeugtes VP9-WebM war bei
- *    vergleichbarer Qualität größer als das MP4 (1456 KB gegen 1215 KB) — ein
- *    zweites Format, das schwerer ist als das erste, hilft keinem Browser.
+ *  - Zwei Formate: WebM/VP9 und MP4/H.264. Das WebM ist etwas schwerer
+ *    (rund 1456 KB gegen 1215 KB) — das kostet aber niemanden etwas, weil ein
+ *    Browser genau eine Quelle lädt und die andere nie anfragt.
+ *
+ *    Ein Format allein reicht nicht: H.264 ist ein lizenzpflichtiger Codec und
+ *    fehlt in quelloffenen Chromium-Bauten vollständig. Dort meldet das
+ *    Video-Element `DEMUXER_ERROR_NO_SUPPORTED_STREAMS` und bleibt bei
+ *    readyState 0 stehen — der Hero zeigt dann dauerhaft nur das Poster, ohne
+ *    dass irgendetwas nach einem Fehler aussieht. Genau dieser Fall ist hier
+ *    beim Prüfen aufgetreten.
+ *
  *    Dazu ein Poster, das vor dem ersten Frame steht und bei reduzierter
  *    Bewegung an die Stelle des Videos tritt.
  *
@@ -74,6 +82,16 @@ run([
   path.join(OUT_DIR, 'hero.mp4'),
 ]);
 
+run([
+  '-i', SRC,
+  '-filter_complex', FILTER,
+  '-map', '[v]',
+  '-an',
+  '-c:v', 'libvpx-vp9', '-crf', '40', '-b:v', '0', '-row-mt', '1',
+  '-deadline', 'good', '-cpu-used', '2',
+  path.join(OUT_DIR, 'hero.webm'),
+]);
+
 // Poster: der erste Frame des Ausschnitts — genau das Bild, das das Video
 // zeigt, bevor es läuft, und das Standbild bei reduzierter Bewegung.
 const framePng = path.join(OUT_DIR, '.poster.png');
@@ -88,7 +106,7 @@ await sharp(framePng).webp({ quality: 82, effort: 6 }).toFile(POSTER);
 await rm(framePng);
 
 const rows = [];
-for (const f of ['hero.mp4']) {
+for (const f of ['hero.webm', 'hero.mp4']) {
   rows.push({ datei: f, kb: Math.round((await stat(path.join(OUT_DIR, f))).size / 1024) });
 }
 rows.push({ datei: 'hero-poster.webp', kb: Math.round((await stat(POSTER)).size / 1024) });

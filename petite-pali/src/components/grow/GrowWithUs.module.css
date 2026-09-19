@@ -65,15 +65,26 @@
   order: 2;
 }
 
+/*
+ * Zwei Bilder, die übereinander auf- und abblenden, sind während der
+ * Überblendung als zwei Bilder zu erkennen — das liest sich wie ein Fehler,
+ * nicht wie eine Bewegung. Eine leichte Unschärfe auf dem jeweils inaktiven
+ * Bild verbindet die beiden Zustände: das Auge sieht ein Bild, das scharf
+ * wird, statt zweier, die sich überlagern.
+ */
 .shot {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 700ms var(--ease-out);
+  filter: blur(6px);
+  transition:
+    opacity 620ms var(--ease-out),
+    filter 620ms var(--ease-out);
 }
 
 .shot[data-active='true'] {
   opacity: 1;
+  filter: blur(0);
 }
 
 .shot img {

@@ -75,7 +75,7 @@ export function MobileMenu({ open, onClose }: Props) {
     >
       <div className={`${styles.bar} page-bounds`}>
         <Wordmark />
-        <button type="button" onClick={onClose} className={styles.close}>
+        <button type="button" onClick={onClose} className={`pressable ${styles.close}`}>
           Schließen
         </button>
       </div>
@@ -100,10 +100,10 @@ export function MobileMenu({ open, onClose }: Props) {
       </nav>
 
       <div className={`${styles.footer} page-bounds`}>
-        <Link href={ACTIONS[0].href} onClick={onClose} className={styles.cta}>
+        <Link href={ACTIONS[0].href} onClick={onClose} className={`pressable ${styles.cta}`}>
           {ACTIONS[0].label}
         </Link>
-        <Link href={ACTIONS[1].href} onClick={onClose} className={styles.ctaGhost}>
+        <Link href={ACTIONS[1].href} onClick={onClose} className={`pressable ${styles.ctaGhost}`}>
           {ACTIONS[1].label}
         </Link>
         {CONTACT.verified && (

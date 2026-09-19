@@ -40,10 +40,10 @@ export function Hero() {
           </p>
 
           <div className={styles.actions}>
-            <Link href="/sortiment/" className={styles.primary}>
+            <Link href="/sortiment/" className={`pressable ${styles.primary}`}>
               Boutique entdecken <Arrow />
             </Link>
-            <Link href="/shopping-termin/" className={styles.secondary}>
+            <Link href="/shopping-termin/" className={`pressable ${styles.secondary}`}>
               Shopping-Termin <Arrow />
             </Link>
           </div>

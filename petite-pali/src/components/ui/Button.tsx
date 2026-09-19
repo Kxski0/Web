@@ -21,7 +21,7 @@ const Arrow = () => (
 );
 
 export function Button({ href, variant = 'primary', arrow = true, children, className, external }: Props) {
-  const cls = [styles.button, styles[variant], className].filter(Boolean).join(' ');
+  const cls = ['pressable', styles.button, styles[variant], className].filter(Boolean).join(' ');
   const content = (
     <>
       <span>{children}</span>

@@ -59,6 +59,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Die stärkste Handlung der ganzen Seite; alles hier trägt auf das Formular zu.
+ */
 export default function ShoppingTermin() {
   return (
     <>

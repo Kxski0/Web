@@ -36,10 +36,10 @@ export function StoreExperience() {
               Laden gibt.
             </p>
             <div className={styles.actions}>
-              <Link href="/kontakt/" className={styles.primary}>
+              <Link href="/kontakt/" className={`pressable ${styles.primary}`}>
                 Boutique besuchen
               </Link>
-              <Link href="/shopping-termin/" className={styles.secondary}>
+              <Link href="/shopping-termin/" className={`pressable ${styles.secondary}`}>
                 Shopping-Termin
               </Link>
             </div>

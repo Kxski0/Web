@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Stagger } from '@/components/motion/Stagger';
 import { GALLERY, IMAGES, type ImageSlotName } from '@/lib/assets';
 import styles from './Gallery.module.css';
 
@@ -88,17 +89,20 @@ export function Gallery({ slots = GALLERY }: { slots?: ImageSlotName[] }) {
 
   return (
     <>
-      <ul className={styles.grid}>
+      <Stagger as="ul" className={styles.grid}>
         {slots.map((name, i) => {
           const slot = IMAGES[name];
           return (
-            <li key={name} className={styles.item}>
+            /* Der Versatz läuft nur über die ersten Reihen — bei fünfzehn
+               Bildern wäre eine durchgehende Staffelung am Ende eine
+               dreiviertel Sekunde Wartezeit. */
+            <li key={name} className={styles.item} style={{ '--i': Math.min(i, 5) } as React.CSSProperties}>
               <button
                 type="button"
                 ref={(el) => {
                   triggers.current[i] = el;
                 }}
-                className={styles.button}
+                className={`pressable-soft ${styles.button}`}
                 onClick={() => setOpenAt(i)}
                 aria-haspopup="dialog"
               >
@@ -114,7 +118,7 @@ export function Gallery({ slots = GALLERY }: { slots?: ImageSlotName[] }) {
             </li>
           );
         })}
-      </ul>
+      </Stagger>
 
       <div
         ref={overlay}
@@ -128,15 +132,15 @@ export function Gallery({ slots = GALLERY }: { slots?: ImageSlotName[] }) {
         <div className={styles.bar}>
           <span className={styles.counter}>{isOpen ? `${openAt + 1} / ${slots.length}` : ''}</span>
           <div className={styles.controls}>
-            <button type="button" className={styles.control} onClick={() => step(-1)}>
+            <button type="button" className={`pressable ${styles.control}`} onClick={() => step(-1)}>
               <span aria-hidden="true">←</span>
               <span className="sr-only">Vorheriges Bild</span>
             </button>
-            <button type="button" className={styles.control} onClick={() => step(1)}>
+            <button type="button" className={`pressable ${styles.control}`} onClick={() => step(1)}>
               <span aria-hidden="true">→</span>
               <span className="sr-only">Nächstes Bild</span>
             </button>
-            <button type="button" className={styles.control} onClick={close}>
+            <button type="button" className={`pressable ${styles.control}`} onClick={close}>
               Schließen
             </button>
           </div>

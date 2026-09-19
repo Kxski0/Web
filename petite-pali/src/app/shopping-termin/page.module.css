@@ -58,7 +58,7 @@
 
 .note {
   margin-top: 1.75rem;
-  max-width: 52ch;
+  max-width: var(--container-text);
   color: var(--color-muted);
   font-size: 0.9375rem;
   line-height: 1.7;
@@ -71,7 +71,7 @@
 .formLede {
   color: var(--color-muted);
   margin-bottom: 2rem;
-  max-width: 52ch;
+  max-width: var(--container-text);
 }
 
 @media (min-width: 62rem) {

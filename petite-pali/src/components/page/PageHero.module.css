@@ -6,6 +6,24 @@
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
+/*
+ * Knappe Fassung: weniger Höhe, kleinere Überschrift. Wo das Gezeigte führen
+ * soll, darf der Kopf den ersten Bildschirm nicht allein besetzen.
+ */
+.compact {
+  padding-block: clamp(6.5rem, 10vw, 8rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.compact .title {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+}
+
+.compact .lede {
+  margin-top: 1.25rem;
+}
+
 .grid {
   align-items: center;
 }
@@ -46,7 +64,7 @@
   font-size: var(--text-lede);
   line-height: var(--text-lede--line-height);
   color: var(--color-muted);
-  max-width: 48ch;
+  max-width: var(--container-text);
 }
 
 .actions {

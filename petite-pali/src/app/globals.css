@@ -62,15 +62,39 @@
   /* --- Raster ------------------------------------------------------------ */
   --spacing-gutter: clamp(1.25rem, 4vw, 5.5rem);
   --container-page: 1560px;
-  --container-text: 62ch;
+  /*
+   * Satzspiegel in em, nicht in ch. `ch` ist die Breite der Ziffer Null und
+   * bei DM Sans deutlich breiter als das durchschnittliche Zeichen: 62ch
+   * ergaben gemessene 89 Zeichen je Zeile. In em gerechnet stimmt die Zahl —
+   * ein Zeichen misst hier im Mittel 0,476em, 32em ergeben also rund 66
+   * Zeichen. Nachgemessen, nicht angenommen.
+   */
+  --container-text: 32em;
 
-  /* --- Bewegung ---------------------------------------------------------- */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* --- Bewegung ----------------------------------------------------------
+     Die eingebauten CSS-Kurven sind zu schwach; sie lassen Bewegung beiläufig
+     wirken statt gewollt. `ease-in` kommt nirgends vor: es beginnt langsam,
+     also genau in dem Moment, in dem am genauesten hingesehen wird. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* Eigene Kurve für die Mobil-Auflage — ruhiger Anlauf, weiches Ende. */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Hover ist keine Ein- oder Ausblendung, sondern eine Zustandsänderung. */
+  --ease-state: ease;
 
   --duration-press: 140ms;
-  --duration-ui: 260ms;
+  /* Dropdowns liegen im Band 150–250ms; 260ms lagen darüber. */
+  --duration-menu: 200ms;
+  --duration-ui: 240ms;
+  /*
+   * Ausgänge sind kürzer als Eingänge. Langsam, wo jemand entscheidet;
+   * schnell, wo das System nur noch antwortet.
+   */
+  --duration-exit: 180ms;
+  --duration-hover: 300ms;
   --duration-reveal: 900ms;
+  /* Abstand zwischen gestaffelt eintretenden Elementen. */
+  --stagger-step: 50ms;
 }
 
 /* ==========================================================================
@@ -210,6 +234,52 @@
   overflow: hidden;
 }
 
+/* ==========================================================================
+   Gestaffeltes Eintreten
+   Erscheinen mehrere Elemente gleichzeitig, liest das als Sprung; nacheinander
+   liest es als Bewegung. Der Abstand bleibt klein — lange Verzögerungen lassen
+   die Seite langsam wirken statt lebendig.
+
+   Ausgelöst wird beim Hineinscrollen, nicht beim Laden: eine Einblendung, die
+   weit unterhalb des Bildschirms abläuft, sieht niemand. Die Reihenfolge kommt
+   über `--i` vom Element, den Zustand setzt der Container über `data-in`.
+
+   Der Ruhezustand ist der SICHTBARE. Läuft kein JavaScript, steht der Inhalt
+   einfach da — eine Einblendung darf nie darüber entscheiden, ob etwas lesbar
+   ist.
+   ========================================================================== */
+
+[data-stagger] > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-stagger='pending'] > * {
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+[data-stagger='in'] > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out),
+    transform var(--duration-reveal) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger-step));
+}
+
+/* Bei reduzierter Bewegung bleibt die Einblendung, aber ohne Versatz und ohne
+   Staffelung: Deckkraft trägt weiter Bedeutung, Bewegung ist das, was schadet. */
+@media (prefers-reduced-motion: reduce) {
+  [data-stagger='pending'] > * {
+    transform: none;
+  }
+
+  [data-stagger='in'] > * {
+    transition-delay: 0ms;
+  }
+}
+
 /* Nur für Hilfsmittel: Text, der gelesen, aber nicht gesehen wird. Nicht
    display:none — das nähme ihn auch aus dem Hilfsmittelbaum. */
 @utility sr-only {
@@ -222,6 +292,34 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+
+/*
+ * Druckfeedback. Jede Fläche, die gedrückt werden kann, trägt das — eine
+ * gemeinsame Regel statt zehn Einzellösungen.
+ *
+ * `scale` und nicht `translateY`: Verschieben liest als Verrutschen, Skalieren
+ * als Druck. Und `scale` skaliert die Kinder mit, das Element gibt also als
+ * Ganzes nach. 0.97 ist die Grenze, an der es spürbar wird, ohne zu hüpfen.
+ */
+@utility pressable {
+  transition: transform var(--duration-press) var(--ease-out);
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/*
+ * Dieselbe Regel für große Flächen. Eine ganze Karte um 3 % zu stauchen wäre
+ * zu viel Bewegung; 1 % genügt, damit sie antwortet.
+ */
+@utility pressable-soft {
+  transition: transform var(--duration-press) var(--ease-out);
+
+  &:active {
+    transform: scale(0.99);
+  }
 }
 
 @utility label {

@@ -39,6 +39,9 @@ const FAQ: FaqEntry[] = [
   },
 ];
 
+/*
+ * Modus: Persuade. Zeigen, was es gibt — entschieden wird im Laden.
+ */
 export default function BabyUndKind() {
   return (
     <>

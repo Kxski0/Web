@@ -99,29 +99,106 @@ und Querformate zufällig nebeneinander.
 
 ## 6. Bewegung
 
-| Art | Dauer |
-| --- | --- |
-| Tastendruck | 140 ms |
-| Bedienelement | 260 ms |
-| redaktionelle Einblendung | 900 ms |
+Die Regeln hier sind nicht Geschmack, sondern gemessen und maschinell geprüft:
+`scripts/motion-check.mjs` liest die Stylesheets und Komponenten und schlägt
+fehl, sobald eine davon verletzt wird.
 
-Erlaubt sind `transform`, `opacity`, `clip-path`. **Nie `transition: all`.**
-Hover nur hinter `@media (hover: hover) and (pointer: fine)`. Bildvergrößerung
-beim Überfahren höchstens 1,03.
+### Kurven
 
+| Token | Wert | Wofür |
+| --- | --- | --- |
+| `--ease-out` | `cubic-bezier(0.23, 1, 0.32, 1)` | alles, was erscheint oder verschwindet |
+| `--ease-in-out` | `cubic-bezier(0.77, 0, 0.175, 1)` | was sich auf dem Bildschirm bewegt |
+| `--ease-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | die Mobil-Auflage |
+| `--ease-state` | `ease` | Hover und Farbwechsel |
+
+**`ease-in` kommt nirgends vor.** Es beginnt langsam — also genau in dem
+Moment, in dem am genauesten hingesehen wird. Eine Einblendung mit `ease-in`
+fühlt sich bei gleicher Dauer langsamer an als dieselbe mit `ease-out`.
+
+### Dauern
+
+| Token | Wert | Wofür |
+| --- | --- | --- |
+| `--duration-press` | 140 ms | Druckfeedback |
+| `--duration-menu` | 200 ms | Untermenü |
+| `--duration-ui` | 240 ms | Bedienelemente allgemein |
+| `--duration-exit` | 180 ms | **Ausgänge** |
+| `--duration-hover` | 300 ms | Bildvergrößerung beim Überfahren |
+| `--duration-reveal` | 900 ms | redaktionelle Einblendung |
+
+Obergrenze für Bedienelemente: **300 ms.** Redaktionelle Einblendungen und
+Bildüberblendungen sind ausgenommen — sie erzählen etwas, statt auf eine
+Eingabe zu antworten.
+
+### Druckfeedback
+
+Jede drückbare Fläche trägt `pressable` (`scale(0.97)`) oder bei großen Flächen
+`pressable-soft` (`scale(0.99)`). Skalieren und nicht Verschieben: Verschieben
+liest als Verrutschen, Skalieren als Druck — und `scale` skaliert die Kinder
+mit, das Element gibt also als Ganzes nach.
+
+Verweise mitten im Satz bekommen bewusst **kein** Druckfeedback: sie sind Text,
+keine Schaltfläche.
+
+### Ein- und Ausgänge sind nicht gleich lang
+
+Ausgänge laufen mit `--duration-exit` und damit kürzer als Eingänge. Beim
+Öffnen entscheidet jemand und sieht hin; beim Schließen hat er entschieden und
+will die Seite zurück.
+
+### Popover wachsen aus ihrem Auslöser
+
+Das Untermenü der Kopfzeile hat `transform-origin: top left` und startet bei
+`scale(0.97)` — nie bei `scale(0)`: nichts in der Wirklichkeit erscheint aus
+dem Nichts.
+
+### Gestaffeltes Eintreten
+
+Mehrere Elemente, die gleichzeitig erscheinen, lesen sich als Sprung. Der
+Container trägt `data-stagger`, jedes Kind seine Reihenfolge in `--i`, der
+Abstand ist `--stagger-step` (50 ms). Ausgelöst wird beim **Hineinscrollen**,
+nicht beim Laden — eine Einblendung weit unterhalb des Bildschirms sieht
+niemand. Der Ruhezustand im CSS ist der sichtbare: fällt JavaScript aus, steht
+der Inhalt einfach da.
+
+### Was nicht animiert wird
+
+Tastaturgetriebene Wiederholungen. Das Blättern in der Lightbox mit den
+Pfeiltasten wechselt das Bild **ohne** Übergang — eine Bewegung, die jemand
+dutzende Male hintereinander auslöst, macht die Oberfläche langsam.
+
+### Überblendungen bekommen eine Unschärfe
+
+Zwei Bilder, die übereinander auf- und abblenden, sind während der Überblendung
+als zwei Bilder zu erkennen. Eine leichte Unschärfe (6 px) auf dem inaktiven
+Bild verbindet die Zustände: das Auge sieht ein Bild, das scharf wird, statt
+zweier, die sich überlagern.
+
+### Reduzierte Bewegung
+
+Weniger und sanfter, nicht nichts. Deckkraft und Farbe tragen weiter Bedeutung.
 Wo das Markup selbst abweichen muss, entscheidet `useReducedMotion`:
 
-- Der Hero lädt bei reduzierter Bewegung **gar kein Video** — nicht ein
-  verstecktes. Wer Bewegung reduziert hat, soll die 1,2 MB nicht bezahlen.
-  Dafür gibt es `useHydrated`: das Video wird erst nach der Hydration
-  eingehängt, weil ein Video-Element im Serverausgabe seine Datei lädt, bevor
-  React entscheiden könnte, es zu entfernen.
+- Der Hero lädt **gar kein Video** — nicht ein verstecktes. Dafür gibt es
+  `useHydrated`: das Video wird erst nach der Hydration eingehängt, weil ein
+  Video-Element im Serverausgabe seine Datei lädt, bevor React entscheiden
+  könnte, es zu entfernen.
 - „Grow with us" rendert alle sechs Abschnitte untereinander statt gepinnt.
+- Der Stagger entfällt; das Druckfeedback bleibt.
 
 `visibility` gehört in keinen Übergang. Sie ist eine diskrete Eigenschaft und
 springt mitten in der Dauer um — ein `.focus()` direkt nach dem Öffnen läuft
-dann ins Leere. Mobilmenü und Lightbox arbeiten mit `opacity`, `pointer-events`
-und `inert`.
+dann ins Leere. Mobilmenü und Lightbox arbeiten mit `opacity`,
+`pointer-events` und `inert`.
+
+### Video: zwei Formate, nicht eines
+
+Der Hero liefert WebM/VP9 **und** MP4/H.264. Das WebM ist schwerer, kostet aber
+nichts: ein Browser lädt genau eine Quelle. H.264 ist lizenzpflichtig und fehlt
+in quelloffenen Chromium-Bauten vollständig — dort bleibt ein reines MP4 still
+bei `readyState 0` stehen und der Hero zeigt dauerhaft nur das Poster, ohne dass
+irgendetwas nach einem Fehler aussieht.
 
 ## 7. Der Signature-Moment
 
@@ -149,7 +226,34 @@ Wo ein Abschnitt Bildmaterial unter Text legt, trägt er `data-surface="media"`.
 Das ist keine Dekoration: der Prüfer nimmt es als Grenze und misst ab dort an
 Pixeln statt gegen die Seitenfarbe.
 
-## 9. Fotografie
+## 9. Modus je Oberfläche
+
+Jede Seite hat einen Modus, der oben in ihrer Datei steht. Er sagt, woran sich
+Gestaltungsentscheidungen auf dieser Seite messen lassen.
+
+| Modus | Routen | Maßstab |
+| --- | --- | --- |
+| **Persuade** | `/`, die sechs `/sortiment/*`, `/shopping-termin/`, `/gutschein/` | Die Seite endet auf genau einer Handlung |
+| **Read** | `/ueber-uns/`, `/aktuelles/`, `/impressum/`, `/datenschutz/` | Satzspiegel und Lesetakt vor Ausdruck |
+| **Operate** | `/kontakt/`, jeder Formularblock | Scanbarkeit und klare Fehlerwege |
+| **Experience** | `/galerie/` | Das Gezeigte führt ab dem ersten Bildschirm |
+
+### Satzspiegel
+
+Fließtext läuft nie über **68 Zeichen je Zeile**. Begrenzt wird über
+`--container-text`, und zwar in `em`, nicht in `ch`: `ch` ist die Breite der
+Ziffer Null und bei DM Sans deutlich breiter als das durchschnittliche Zeichen
+— gesetzte 62ch ergaben gemessene **89** Zeichen je Zeile. Der Wert steht in
+`em`, weil er so mit der Schriftgröße des jeweiligen Blocks mitgeht.
+
+`typography-check.mjs` zählt die Zeichen je Zeile auf jeder Route über
+Range-Rechtecke und schlägt über 68 fehl. Gemessen liegen alle Seiten bei
+57–67.
+
+Begrenzungen unter 40ch sind **Überschriften** und bleiben, wie sie gesetzt
+wurden — dort ist die Zeilenlänge eine Gestaltungsentscheidung, kein Lesemaß.
+
+## 10. Fotografie
 
 Zwei Quellen, beide vom Laden selbst:
 
@@ -171,7 +275,7 @@ Deshalb trägt der Hero Video statt Standbild — und deshalb steht
 
 Bilder werden über **Slots** angesprochen (`src/lib/assets.ts`), nie über Pfade.
 
-## 10. Bedienbarkeit
+## 11. Bedienbarkeit
 
 - Klickziele mindestens 24×24 (WCAG 2.2 SC 2.5.8), Knöpfe 48 px hoch.
   Ausgenommen sind Verweise mitten im Satz — die Ausnahme steht in der Norm und
@@ -184,7 +288,7 @@ Bilder werden über **Slots** angesprochen (`src/lib/assets.ts`), nie über Pfad
 - In „Grow with us" sind alle sechs Abschnitte im Hilfsmittelbaum, obwohl
   visuell nur einer sichtbar ist.
 
-## 11. Bewusst nicht verwendet
+## 12. Bewusst nicht verwendet
 
 Karussells · Popups und Newsletter-Overlays · eingebettete Instagram-Feeds
 (verlinkt statt eingebettet) · eingebettete Karten-iframes · Cookie-Banner (es
