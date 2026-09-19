@@ -1,0 +1,57 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  /* 44px hohe Klickfläche: WCAG 2.2 SC 2.5.8 verlangt 24×24, bequem ist mehr. */
+  min-height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  /* Nie `transition: all` — nur die Eigenschaften, die sich wirklich ändern. */
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.primary {
+  background-color: var(--color-bark);
+  color: var(--color-cream);
+  border: 1px solid var(--color-bark);
+}
+
+.secondary {
+  background-color: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline-strong);
+}
+
+/* Hover nur dort, wo es einen Zeiger gibt — auf dem Touchscreen bleibt der
+   Hover-Zustand sonst nach dem Tippen kleben. */
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover {
+    background-color: var(--color-caramel);
+    border-color: var(--color-caramel);
+  }
+
+  .secondary:hover {
+    border-color: var(--color-caramel);
+    color: var(--color-caramel);
+  }
+
+  .button:hover .arrow {
+    transform: translateX(3px);
+  }
+}
+
+.arrow {
+  transition: transform var(--duration-ui) var(--ease-out);
+}

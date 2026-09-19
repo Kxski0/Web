@@ -1,0 +1,60 @@
+.hero {
+  padding-block: clamp(7rem, 14vw, 10rem) clamp(2.5rem, 6vw, 4.5rem);
+}
+
+/*
+ * Die Brotkrumen stehen über dem Raster, nicht darin: unten ausgerichtet ließen
+ * sie zusammen mit dem hohen Hochformatbild rechts ein Loch von mehreren
+ * hundert Pixeln über der Überschrift stehen.
+ */
+.trail {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.grid {
+  align-items: center;
+}
+
+.text {
+  grid-column: 1 / -1;
+}
+
+.title {
+  margin-top: 1.25rem;
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+}
+
+.lede {
+  margin-top: 1.5rem;
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-muted);
+  max-width: 48ch;
+}
+
+.media {
+  grid-column: 1 / -1;
+  margin-top: 2.5rem;
+}
+
+.frame {
+  border-radius: var(--radius-image);
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 62rem) {
+  .text {
+    grid-column: 1 / span 7;
+  }
+
+  .media {
+    grid-column: 8 / span 5;
+    margin-top: 0;
+  }
+
+  .frame {
+    aspect-ratio: 3 / 4;
+  }
+}

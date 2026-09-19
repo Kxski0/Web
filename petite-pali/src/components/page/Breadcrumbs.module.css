@@ -1,0 +1,32 @@
+.trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--color-caramel);
+  }
+}
+
+.sep {
+  color: var(--color-hairline-strong);
+}
+
+.current {
+  color: var(--color-ink);
+  font-weight: 600;
+}

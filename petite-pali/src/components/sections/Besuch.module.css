@@ -1,0 +1,101 @@
+.section {
+  padding-block: clamp(4rem, 10vw, 8rem);
+}
+
+.grid {
+  align-items: start;
+}
+
+.head {
+  grid-column: 1 / -1;
+}
+
+.title {
+  margin-top: 1.5rem;
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  max-width: 16ch;
+}
+
+.lede {
+  margin-top: 1.25rem;
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-muted);
+  max-width: 46ch;
+}
+
+.actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.card {
+  grid-column: 1 / -1;
+  margin-top: 2.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-image);
+  background-color: var(--color-linen);
+}
+
+.cardHeading {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.hours {
+  margin: 0.875rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.hoursRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.hoursRow dt {
+  color: var(--color-ink);
+}
+
+.hoursRow dd {
+  margin: 0;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.address {
+  margin-top: 1.75rem;
+  font-style: normal;
+  line-height: 1.7;
+}
+
+.addressLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  color: var(--color-caramel);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 62rem) {
+  .head {
+    grid-column: 1 / span 5;
+  }
+
+  .card {
+    grid-column: 7 / span 6;
+    margin-top: 0;
+  }
+}

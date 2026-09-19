@@ -1,0 +1,121 @@
+/*
+ * Die Leiste liegt immer auf getrübtem Creme, auch ganz oben über dem
+ * Hero-Video. Eine durchsichtige Leiste über bewegtem Bild wäre schöner und
+ * wäre nicht lesbar: das Video ist hell, wechselt ständig und trägt keine
+ * verlässliche Fläche für Schrift. Getrübtes Creme hält Tinte bei 12,76:1,
+ * unabhängig davon, was darunter durchläuft.
+ */
+.header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 50;
+  background-color: rgb(250 246 239 / 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-ui) var(--ease-out);
+}
+
+/* Erst beim Scrollen bekommt die Leiste eine Kante — vorher schwebt sie
+   randlos auf dem Hero. */
+.header[data-scrolled='true'] {
+  border-bottom-color: var(--color-hairline);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-gutter);
+  min-height: 4.5rem;
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.25rem);
+}
+
+.link {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  padding-block: 0.5rem;
+  position: relative;
+}
+
+/*
+ * Aktive Navigation ist die zweite der drei Rollen von Altrosa. Sie ist nie das
+ * einzige Signal: dieselbe Seite trägt aria-current, und der Unterstrich wäre
+ * für sich genommen mit 1,58:1 gegen Creme ohnehin kein Signal.
+ */
+.link::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-blush);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+.link[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.cta {
+  display: none;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: 0.4rem;
+  padding-inline: 1.125rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bark);
+  color: var(--color-cream);
+  transition: background-color var(--duration-ui) var(--ease-out);
+}
+
+/* Der CTA trägt keinen Unterstrich — er ist bereits eine Fläche. */
+.cta::after {
+  content: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background-color: var(--color-caramel);
+  }
+}
+
+.menuButton {
+  /* 44px hoch: bequem über der 24×24-Untergrenze aus WCAG 2.2 SC 2.5.8. */
+  min-height: 2.75rem;
+  padding-inline: 1.125rem;
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+@media (min-width: 62rem) {
+  .nav {
+    display: flex;
+  }
+
+  .cta {
+    display: inline-flex;
+  }
+
+  .menuButton {
+    display: none;
+  }
+}

@@ -1,0 +1,76 @@
+.hero {
+  position: relative;
+  /* svh statt vh: auf dem Telefon bleibt der Abschnitt sonst unter der
+     Adressleiste hängen, sobald sie eingeblendet wird. */
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding-block: 7rem clamp(1.5rem, 5vw, 4rem);
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/*
+ * Der Text steht auf einer eigenen Cremefläche, nicht auf dem Video. Das ist
+ * eine Gestaltungsentscheidung und zugleich die einfachste verlässliche
+ * Lösung: Schrift auf bewegtem, hellem Bild ist nicht messbar kontraststark,
+ * Tinte auf Creme ist es mit 12,76:1 immer.
+ */
+.panel {
+  background-color: var(--color-cream);
+  border-radius: var(--radius-image);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  max-width: 44rem;
+}
+
+.claim {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+}
+
+.lede {
+  margin-top: 1rem;
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+  color: var(--color-muted);
+  max-width: 46ch;
+}
+
+.actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.where {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.whereItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-blush);
+}

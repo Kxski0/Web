@@ -1,0 +1,197 @@
+.form {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.legend {
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 0.875rem;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choice {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding-inline: 1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hairline-strong);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out);
+}
+
+/* Die Auswahl darf nicht allein an der Farbe hängen: die gewählte Pille wird
+   zusätzlich gefüllt und trägt fettere Schrift. */
+.choice:has(.radio:checked) {
+  background-color: var(--color-bark);
+  border-color: var(--color-bark);
+  color: var(--color-cream);
+  font-weight: 600;
+}
+
+.choice:has(.radio:focus-visible) {
+  outline: 2px solid var(--color-caramel);
+  outline-offset: 3px;
+}
+
+/* Der Radiobutton bleibt bedienbar und in der Tabreihenfolge, ist aber
+   visuell durch die Pille ersetzt. Kein display:none. */
+.radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: 1fr;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  font: inherit;
+  color: var(--color-ink);
+  background-color: var(--color-cream);
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: var(--radius-soft);
+  padding: 0.75rem 1rem;
+  min-height: 2.75rem;
+  width: 100%;
+  transition: border-color var(--duration-ui) var(--ease-out);
+}
+
+.textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--color-caramel);
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.error {
+  font-size: 0.875rem;
+  font-weight: 600;
+  /* Kakao statt Rot: die Palette kennt kein Rot, und 5,80:1 gegen Creme trägt
+     die Meldung. Die Meldung steht als Text da — Farbe ist nie das Signal. */
+  color: var(--color-cocoa);
+}
+
+/* Außerhalb des Bildes statt display:none — ein verstecktes Feld füllen Bots
+   nicht, ein ausgeblendetes schon. Die Prüfskripte nehmen es ausdrücklich aus. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bark);
+  color: var(--color-cream);
+  font-weight: 600;
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.submit:active {
+  transform: scale(0.97);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .submit:not(:disabled):hover {
+    background-color: var(--color-caramel);
+  }
+
+  .choice:hover {
+    border-color: var(--color-caramel);
+  }
+}
+
+.status {
+  font-size: 0.9375rem;
+  color: var(--color-cocoa);
+  min-height: 1.5rem;
+}
+
+.done {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-image);
+  background-color: var(--color-butter);
+}
+
+.doneTitle {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+}
+
+.doneBody {
+  margin-top: 0.875rem;
+  color: var(--color-muted);
+}
+
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

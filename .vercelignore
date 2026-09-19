@@ -1,0 +1,8 @@
+# Diese Datei gilt nur für das Vercel-Projekt mit Root Directory "." — also
+# SolBauTec. Das Petite-Pali-Projekt hat sein eigenes Root Directory und ist
+# davon nicht betroffen.
+#
+# SolBauTec braucht die Quellen der zweiten Marke nicht: sie werden weder
+# importiert noch gebaut, und sie hochzuladen würde das Deployment nur
+# unnötig vergrößern.
+petite-pali/

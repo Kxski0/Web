@@ -9,7 +9,7 @@ import typescriptConfig from 'eslint-config-next/typescript';
 const config = [
   ...coreWebVitals,
   ...typescriptConfig,
-  { ignores: ['.next/**', 'node_modules/**', 'scripts/**', 'public/**'] },
+  { ignores: ['.next/**', 'node_modules/**', 'scripts/**', 'public/**', 'petite-pali/**'] },
 ];
 
 export default config;

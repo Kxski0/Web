@@ -1,0 +1,22 @@
+/*
+ * Sichtbar erst bei Tastaturfokus. Nicht display:none — das nähme den Link aus
+ * der Fokusreihenfolge und damit seinen einzigen Zweck.
+ */
+.link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-bark);
+  color: var(--color-cream);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transform: translateY(-150%);
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+
+.link:focus-visible {
+  transform: translateY(0);
+}

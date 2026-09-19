@@ -1,0 +1,72 @@
+.page {
+  padding-block: clamp(7rem, 14vw, 10rem) clamp(3rem, 8vw, 6rem);
+}
+
+.inner {
+  max-width: 44rem;
+}
+
+.title {
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  margin-top: 1.25rem;
+}
+
+.section {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.heading {
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+}
+
+.body {
+  margin-top: 0.875rem;
+  display: grid;
+  gap: 1rem;
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.body a {
+  color: var(--color-caramel);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.address {
+  font-style: normal;
+  line-height: 1.8;
+  color: var(--color-ink);
+}
+
+/*
+ * Der Hinweis auf noch fehlende Pflichtangaben. Er ist absichtlich auffällig:
+ * er steht dort, solange das Impressum unvollständig ist, und verschwindet von
+ * selbst, sobald die Felder in src/content/site.ts gefüllt sind.
+ */
+.notice {
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--radius-soft);
+  border: 1px solid var(--color-caramel);
+  background-color: var(--color-butter);
+}
+
+.noticeTitle {
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-cocoa);
+}
+
+.noticeBody {
+  margin-top: 0.625rem;
+  color: var(--color-ink);
+}
+
+.missing {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}

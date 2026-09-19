@@ -1,0 +1,39 @@
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: var(--color-linen);
+}
+
+.layer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out);
+}
+
+.video[data-ready='true'] {
+  opacity: 1;
+}
+
+/*
+ * Ein warmer Schleier über dem Video. Die Aufnahme ist hell und unruhig; ohne
+ * ihn liefe sie optisch gegen die ruhige Cremefläche der Seite an. Er dunkelt
+ * nicht ab, um Schrift zu tragen — die Schrift steht auf einer eigenen Fläche,
+ * nicht auf dem Bild.
+ */
+.veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(47 40 35 / 0.18), rgb(47 40 35 / 0) 32%),
+    linear-gradient(to top, rgb(250 246 239 / 0.28), rgb(250 246 239 / 0) 45%);
+}

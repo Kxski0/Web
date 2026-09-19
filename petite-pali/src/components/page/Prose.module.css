@@ -1,0 +1,78 @@
+.block {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.blockTinted {
+  background-color: var(--color-linen);
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.title {
+  grid-column: 1 / -1;
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+}
+
+.body {
+  grid-column: 1 / -1;
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 1.125rem;
+  color: var(--color-muted);
+  font-size: var(--text-lede);
+  line-height: var(--text-lede--line-height);
+}
+
+/* Aufzählungen bekommen einen Karamellpunkt statt eines Systemaufzählungs-
+   zeichens — das ist der einzige Ort, an dem die Marke in den Fließtext reicht. */
+.body :global(ul) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.body :global(li) {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.body :global(li)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-caramel);
+}
+
+.body :global(strong) {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+@media (min-width: 62rem) {
+  .alignLeft .title {
+    grid-column: 1 / span 4;
+  }
+
+  .alignLeft .body {
+    grid-column: 6 / span 6;
+    margin-top: 0;
+  }
+
+  .alignRight .title {
+    grid-column: 1 / span 4;
+    grid-row: 1;
+  }
+
+  .alignRight .body {
+    grid-column: 6 / span 6;
+    grid-row: 1;
+    margin-top: 0;
+  }
+}

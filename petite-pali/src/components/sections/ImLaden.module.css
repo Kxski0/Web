@@ -1,0 +1,59 @@
+.section {
+  padding-block: clamp(2rem, 5vw, 4rem) clamp(4rem, 10vw, 8rem);
+}
+
+.head {
+  max-width: 34rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.title {
+  margin-top: 1.5rem;
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+}
+
+.band {
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  grid-template-columns: 1fr;
+}
+
+.figure {
+  margin: 0;
+}
+
+.frame {
+  border-radius: var(--radius-image);
+  aspect-ratio: 3 / 4;
+}
+
+.caption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+@media (min-width: 40rem) {
+  .band {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 62rem) {
+  .band {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Ein bewusster Bruch im sonst gleichmäßigen Band: das erste Bild steht
+     höher und größer als die übrigen drei. */
+  .figure:first-child {
+    grid-row: span 2;
+  }
+
+  .figure:first-child .frame {
+    aspect-ratio: 3 / 4;
+    height: 100%;
+  }
+}

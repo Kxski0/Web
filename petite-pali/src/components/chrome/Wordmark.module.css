@@ -1,0 +1,33 @@
+.compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mark {
+  width: auto;
+  height: 2.25rem;
+  /* Das Hasenmotiv ist freigestellt und bringt keinen eigenen Grund mit —
+     es liegt direkt auf der Seite und braucht keine Platte darunter. */
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.full {
+  width: auto;
+  /*
+   * Der gezeichnete Schriftzug trägt die Zeile „Baby & Kinder Boutique“ mit.
+   * Unter etwa 180px Breite ist die nicht mehr zu lesen — deshalb kommt diese
+   * Fassung nur dort vor, wo wirklich Platz ist, und im Kopfbereich die
+   * gesetzte Variante daneben.
+   */
+  min-width: 180px;
+}
