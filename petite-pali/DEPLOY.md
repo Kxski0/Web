@@ -26,9 +26,15 @@ darf nicht beide Projekte neu bauen — siehe „Einrichtung", Schritt 4.
    Build der anderen aus.
 5. Umgebungsvariablen setzen (siehe unten). `SITE_INDEXABLE` **nicht** setzen.
 
-Die `.vercelignore` im Wurzelverzeichnis schließt `petite-pali/` vom
-SolBauTec-Deployment aus. Sie gilt nur für das Projekt mit Root Directory `.` —
-dieses Projekt ist davon nicht betroffen.
+Im Wurzelverzeichnis liegt bewusst **keine** `.vercelignore`. Vercel wendet
+eine Wurzel-`.vercelignore` auf **jedes** Projekt dieses Repositories an, auch
+auf Projekte mit einem anderen Root Directory — nachgewiesen im Build-Log eines
+Projekts mit Root Directory `dashboard`, das trotzdem meldete: „Found
+.vercelignore (repository root) / Removed 143 ignored files". Ein Eintrag
+`petite-pali/` dort würde also genau diesem Projekt vor dem Build die Quellen
+entfernen. SolBauTec baut `petite-pali/` ohnehin nicht: der Ordner steht im
+`exclude` der Wurzel-`tsconfig.json` und in den `ignores` der ESLint-Config,
+und importiert wird von dort nichts.
 
 ## Umgebungsvariablen
 

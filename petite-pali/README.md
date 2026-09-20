@@ -21,10 +21,10 @@ Wiederverwendbare Bausteine aus dem Schwesterprojekt wurden **kopiert und
 angepasst, nicht importiert**. Das ist Absicht: ein gemeinsames Paket wäre genau
 die Kopplung, die hier ausgeschlossen werden soll.
 
-Am Wurzelverzeichnis wurden nur drei additive Änderungen vorgenommen, damit sich
+Am Wurzelverzeichnis wurden nur zwei additive Änderungen vorgenommen, damit sich
 die Projekte nicht gegenseitig in die Quere kommen: `petite-pali/` steht in den
-`ignores` der Wurzel-ESLint-Config, im `exclude` der Wurzel-`tsconfig.json` und
-in einer `.vercelignore`.
+`ignores` der Wurzel-ESLint-Config und im `exclude` der Wurzel-`tsconfig.json`.
+Eine `.vercelignore` in der Repowurzel wäre schädlich — siehe `DEPLOY.md`.
 
 ## Stack
 
