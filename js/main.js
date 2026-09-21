@@ -251,22 +251,22 @@
      8 · KONFIGURATOR — "Was möchten Sie transportieren?"
      ================================================================== */
   var SOLUTIONS = {
-    'stueckgut': {
+    'stueckguttransport': {
       title: 'Stückgut & Paletten',
       text: 'Ob Einzelpalette oder Teilladung: Wir bündeln Ihre Sendungen, planen die Route und liefern deutschlandweit – ohne Umweg über fremde Umschlagzentren.',
       facts: ['Von der Einzelpalette bis zur Komplettladung', 'Deutschlandweite Zustellung ab dem Ruhrgebiet', 'Feste Ansprechpartner in der Disposition']
     },
-    'neumoebel': {
+    'neumoebel-lieferung': {
       title: 'Neumöbel-Logistik',
       text: 'Neuware verzeiht keine Kratzer. Wir transportieren Möbel vom Lager oder Hersteller bis zur Wunschadresse – sorgfältig gesichert und sauber zugestellt.',
       facts: ['Möbelkoffer mit großem Ladevolumen', 'Sorgfältige Ladungssicherung ab Werk', 'Zustellung nach Terminabsprache']
     },
-    'elektrogeraete': {
+    'elektrogeraete-lieferung': {
       title: 'Elektrogeräte & weiße Ware',
       text: 'Empfindliche Technik braucht ruhige Hände und die richtige Sicherung. Wir übernehmen Einzelgeräte ebenso wie ganze Lieferungen für den Fachhandel.',
       facts: ['Einzelgerät bis Filialbelieferung', 'Transport mit Ladebordwand', 'Feste Touren auf Wunsch']
     },
-    'kurierfahrten': {
+    'kurierdienst': {
       title: 'Kurier- & Direktfahrt',
       text: 'Wenn es schnell gehen muss: ein Fahrzeug, eine Ladung, ein Ziel. Ihre Sendung fährt ohne Zwischenstopp und ohne Umladen direkt ans Ziel.',
       facts: ['Direktfahrt ohne Umladung', 'Kurzfristige Beauftragung möglich', 'Auch für eilige Einzelsendungen']
@@ -283,7 +283,7 @@
     }
   };
 
-  var ORDER = ['stueckgut', 'neumoebel', 'elektrogeraete', 'kurierfahrten', 'umzuege', 'sonstiges'];
+  var ORDER = ['stueckguttransport', 'neumoebel-lieferung', 'elektrogeraete-lieferung', 'kurierdienst', 'umzuege', 'sonstiges'];
   var chipsWrap = $('#cfgChips');
   var panel = $('#cfgPanel');
   var ladungSelect = $('#f-was');
@@ -344,7 +344,7 @@
   }
 
   if (chipsWrap && panel) {
-    selectSolution('stueckgut', false);
+    selectSolution('stueckguttransport', false);
 
     chipsWrap.addEventListener('click', function (ev) {
       var chip = ev.target.closest('.chip');

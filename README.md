@@ -13,22 +13,35 @@ sich ab, damit Fahrzeugbilder maximal wirken.
 
 | # | Aufgabe | Wo |
 |---|---|---|
-| 1 | ~~Echte Fotos einsetzen~~ — erledigt, echtes Bildmaterial ist eingebunden | `assets/img/` |
-| 2 | **Telefonnummer, E-Mail, Adresse** ersetzen | überall mit `TODO:KONTAKT` markiert |
-| 3 | **Impressum** vollständig ausfüllen | `impressum.html` |
-| 4 | **Datenschutzerklärung** juristisch prüfen lassen | `datenschutz.html` |
-| 5 | **Formular-Empfang** einrichten | `js/main.js` → `CONFIG.formEndpoint` |
-| 6 | **Kundenlogos** einsetzen (oder Bereich entfernen) | `index.html` → `<div class="logos">` |
-| 7 | **Domain** in `canonical` und JSON-LD eintragen | `index.html` `<head>` |
-| 8 | Optional: **Jahreszahlen** in der Timeline ergänzen | `index.html` → `.tl__step` |
+| 1 | **Telefonnummer eintragen** — § 5 DDG verlangt sie zwingend | `tools/content.py` → `phone_display`, `phone_href`, dann `phone_is_placeholder` auf `False` |
+| 2 | **Domain prüfen** — steuert Canonicals, Sitemap, robots.txt, Open Graph | `tools/content.py` → `SITE["domain"]` |
+| 3 | **USt-IdNr.** ergänzen, sobald sie vorliegt | `tools/legal.py` |
+| 4 | **Aufsichtsbehörde** für den Güterkraftverkehr ergänzen | `tools/legal.py` |
+| 5 | **Öffnungszeiten** bestätigen | `tools/content.py` → `hours` |
+| 6 | **Datenschutzerklärung** juristisch prüfen lassen | `tools/legal.py` |
+| 7 | **Formular-Empfang** einrichten | `js/main.js` → `CONFIG.formEndpoint` |
+| 8 | **AV-Vertrag** mit dem Hoster abschließen | organisatorisch |
+| 9 | **Kundenlogos** einsetzen oder Bereich entfernen | `tools/build.py` → `build_unternehmen` |
+| 10 | Sitemap in der **Google Search Console** einreichen | `https://…/sitemap.xml` |
+
+Nach jeder Änderung an `tools/` muss `python3 tools/build.py` laufen.
 
 Alle Platzhalter finden:
 
 ```bash
-grep -rn "TODO:KONTAKT\|Musterstraße\|000 00 00\|HRB 00000" *.html
+grep -rn "TODO:" tools/ && grep -rn "000 00 00" *.html
 ```
 
----
+### Firmendaten (Stand: bestätigt)
+
+```
+RuhrCargo GmbH
+Florianstraße 15-21, 44139 Dortmund
+Geschäftsführer: Melih Arik
+Amtsgericht Dortmund, HRB 38662
+info@ruhrcargo.net
+Telefon: fehlt noch
+```
 
 ## Bildmaterial
 
@@ -180,7 +193,7 @@ tools/                  Generator (siehe unten)
 assets/                 Schriften, Logo, Bilder
 ```
 
-13 Seiten insgesamt. Die Startseite nennt nur die wichtigsten Punkte und verlinkt
+14 Seiten insgesamt (13 indexierbare plus die 404-Seite). Die Startseite nennt nur die wichtigsten Punkte und verlinkt
 jeweils in die Tiefe — die Ausführlichkeit steckt in den Unterseiten.
 
 ### Seiten pflegen
@@ -189,7 +202,7 @@ Die HTML-Dateien werden aus `tools/content.py` erzeugt. Alle Texte stehen dort a
 einer Stelle, die Seitenhülle (Kopf, Navigation, Fuß) nur einmal in `tools/build.py`.
 
 ```bash
-python3 tools/build.py      # erzeugt alle 13 Seiten neu
+python3 tools/build.py      # erzeugt alle Seiten, sitemap.xml und robots.txt neu
 ```
 
 **Wichtig:** Änderungen direkt im HTML gehen beim nächsten Lauf verloren. Für
@@ -221,6 +234,29 @@ GPU die Arbeit macht:
 
 `prefers-reduced-motion: reduce` schaltet jede Bewegung ab, ohne dass Inhalte
 verschwinden.
+
+## SEO
+
+Alles, was sich technisch prüfen lässt, ist umgesetzt:
+
+- **Pro Seite** eigener Title (≤ 60 Zeichen), eigene Description (110–165 Zeichen),
+  Canonical, Open Graph inklusive `og:url`, Twitter Card, genau eine `h1`
+- **Strukturierte Daten** als JSON-LD: `LocalBusiness` auf der Startseite,
+  `Service` und `FAQPage` auf den Leistungsseiten, `BreadcrumbList` auf allen
+  Unterseiten. Nur belegte Angaben — Telefon und Öffnungszeiten bleiben draußen,
+  solange sie Platzhalter sind
+- **sitemap.xml** und **robots.txt** werden mitgeneriert, Prioritäten gestaffelt
+- **404-Seite** mit `noindex`, Weg zurück und Leistungsübersicht
+- **URLs** nach Suchintention: `/leistungen/stueckguttransport.html`,
+  `/leistungen/neumoebel-lieferung.html`, `/leistungen/kurierdienst.html`.
+  Alte Adressen werden über `vercel.json` dauerhaft weitergeleitet
+- **Bilder** als WebP mit sprechenden Dateinamen, `width`/`height` werden beim
+  Bauen aus der Datei gelesen — sie können nie vom Bild abweichen
+- **Interne Verlinkung** mit konkreten Ankertexten statt „Mehr erfahren"
+
+Die Sitemap muss nach dem Livegang einmalig in der Google Search Console
+eingereicht werden. Eine Position in den Suchergebnissen lässt sich damit nicht
+zusichern — die technische Grundlage stimmt, den Rest entscheidet Google.
 
 ## Technische Entscheidungen
 

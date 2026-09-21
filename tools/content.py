@@ -3,22 +3,38 @@
 
 SITE = {
     "name": "RuhrCargo GmbH",
+    "legal_name": "RuhrCargo GmbH",
     "claim": "Ihre Ware. Unser Auftrag.",
-    "domain": "https://www.ruhrcargo.de",
-    # TODO:KONTAKT — echte Daten eintragen
-    "phone_display": "+49 (0) 201 000 00 00",
-    "phone_href": "+492010000000",
-    "email": "info@ruhrcargo.de",
-    "street": "Musterstraße 00",
-    "zip_city": "45000 Essen",
+    # EINZIGE Stelle für die Produktionsdomain. Sie steuert Canonicals,
+    # Sitemap, robots.txt und Open Graph. Vor dem Livegang prüfen!
+    "domain": "https://www.ruhrcargo.net",
+    "ceo": "Melih Arik",
+    "email": "info@ruhrcargo.net",
+    "street": "Florianstraße 15-21",
+    "zip": "44139",
+    "city": "Dortmund",
+    "region": "Nordrhein-Westfalen",
+    "court": "Amtsgericht Dortmund",
+    "hrb": "HRB 38662",
+    # TODO:TELEFON — vom Kunden noch nicht geliefert. § 5 DDG verlangt eine
+    # Telefonnummer. Bis dahin Platzhalter; bewusst NICHT in den strukturierten
+    # Daten, damit Google keine falsche Nummer ausliefert.
+    "phone_display": "+49 (0) 231 000 00 00",
+    "phone_href": "+492310000000",
+    "phone_is_placeholder": True,
+    # TODO:ZEITEN — vom Kunden nicht bestätigt, daher nicht in den strukturierten Daten
     "hours": "Mo – Fr, 07:00 – 18:00 Uhr",
+    "hours_is_placeholder": True,
 }
+
 
 # ── Leistungen ────────────────────────────────────────────────────────────
 SERVICES = [
  {
-  "slug": "neumoebel", "short": "Möbel vom Lager bis in die Wohnung", "nav": "Neumöbel", "title": "Neumöbel",
-  "icon": "i-sofa", "num": "01", "img": "leistung-neumoebel",
+  "slug": "neumoebel-lieferung",
+  "seo_title": "Neumöbel-Lieferung & Möbeltransport | RuhrCargo",
+  "seo_desc": "Neumöbel liefern lassen: Wir transportieren Möbel vom Hersteller oder Lager bis zur Wunschadresse – im Möbelkoffer, gesichert und nach fester Terminabsprache.", "short": "Möbel vom Lager bis in die Wohnung", "nav": "Neumöbel", "title": "Neumöbel",
+  "icon": "i-sofa", "num": "01", "img": "ruhrcargo-neumoebel-lieferung",
   "img_alt": "Zwei Mitarbeiter tragen ein verpacktes Sofa in einen Wohnraum",
   "teaser": "Empfindliche Neuware vom Lager bis zur Wunschadresse – sorgfältig verladen, sauber zugestellt.",
   "lead": "Neuware verzeiht keine Kratzer. Wir bringen Möbel vom Hersteller oder Lager bis zur Wunschadresse – gesichert, terminiert und ohne Umweg.",
@@ -45,11 +61,13 @@ SERVICES = [
     ("Können Sie in obere Etagen liefern?",
      "Sprechen Sie uns bei der Anfrage darauf an. Zugang, Etage und Treppenhaus klären wir vorab, damit vor Ort nichts improvisiert werden muss."),
   ],
-  "related": ["umzuege", "elektrogeraete", "stueckgut"],
+  "related": ["umzuege", "elektrogeraete-lieferung", "stueckguttransport"],
  },
  {
-  "slug": "elektrogeraete", "short": "Weiße Ware und Elektronik", "nav": "Elektrogeräte", "title": "Elektrogeräte",
-  "icon": "i-appliance", "num": "02", "img": "leistung-elektrogeraete",
+  "slug": "elektrogeraete-lieferung",
+  "seo_title": "Elektrogeräte liefern lassen | RuhrCargo Spedition",
+  "seo_desc": "Waschmaschine, Kühlschrank, Fernseher: Wir transportieren Elektrogeräte und weiße Ware mit Ladebordwand – für Fachhandel, Küchenstudios und Privatkunden.", "short": "Weiße Ware und Elektronik", "nav": "Elektrogeräte", "title": "Elektrogeräte",
+  "icon": "i-appliance", "num": "02", "img": "ruhrcargo-elektrogeraete-lieferung",
   "img_alt": "Mitarbeiter schiebt eine Waschmaschine über die Rampe in den Transporter",
   "teaser": "Weiße Ware und Elektronik sicher gesichert, sicher verladen und termingerecht zugestellt.",
   "lead": "Waschmaschine, Kühlschrank, Fernseher: Elektrogeräte sind schwer, empfindlich und schlecht zu greifen. Wir transportieren sie so, dass sie funktionsfähig ankommen.",
@@ -76,11 +94,13 @@ SERVICES = [
     ("Was passiert bei einem Transportschaden?",
      "Wir dokumentieren die Übergabe. Melden Sie einen Schaden bitte direkt bei der Anlieferung, dann klären wir das Weitere unmittelbar mit Ihnen."),
   ],
-  "related": ["neumoebel", "stueckgut", "kurierfahrten"],
+  "related": ["neumoebel-lieferung", "stueckguttransport", "kurierdienst"],
  },
  {
-  "slug": "stueckgut", "short": "Paletten, Kisten, Einzelsendungen", "nav": "Stückgut", "title": "Stückgut",
-  "icon": "i-pallet", "num": "03", "img": "leistung-stueckgut",
+  "slug": "stueckguttransport",
+  "seo_title": "Stückguttransport | RuhrCargo Spedition Dortmund",
+  "seo_desc": "Stückgut transportieren ohne Umladung: Von der Einzelpalette bis zur Teilladung fahren wir im Direktverkehr deutschlandweit – ab dem Ruhrgebiet, termingerecht.", "short": "Paletten, Kisten, Einzelsendungen", "nav": "Stückgut", "title": "Stückgut",
+  "icon": "i-pallet", "num": "03", "img": "ruhrcargo-stueckguttransport",
   "img_alt": "Gabelstapler setzt eine folierte Palette im Lager ab",
   "teaser": "Paletten, Kisten und Einzelsendungen – flexibel gebündelt und deutschlandweit unterwegs.",
   "lead": "Von der Einzelpalette bis zur Teilladung: Wir bündeln Ihre Sendungen, planen die Route und liefern deutschlandweit – ohne Umweg über fremde Umschlagzentren.",
@@ -107,11 +127,13 @@ SERVICES = [
     ("Brauchen wir am Ziel einen Stapler?",
      "Nicht zwingend. Sagen Sie uns bei der Anfrage, wie am Empfangsort entladen werden kann – danach wählen wir das Fahrzeug aus."),
   ],
-  "related": ["elektrogeraete", "kurierfahrten", "neumoebel"],
+  "related": ["elektrogeraete-lieferung", "kurierdienst", "neumoebel-lieferung"],
  },
  {
-  "slug": "kurierfahrten", "short": "Direktfahrt ohne Umladung", "nav": "Kurierfahrten", "title": "Kurierfahrten",
-  "icon": "i-bolt", "num": "04", "img": "leistung-kurier",
+  "slug": "kurierdienst",
+  "seo_title": "Kurierdienst & Direktfahrten | RuhrCargo",
+  "seo_desc": "Kurierfahrt mit Direktzustellung: ein Fahrzeug, eine Ladung, ein Ziel. Ohne Zwischenstopp und ohne Umladen – deutschlandweit und kurzfristig beauftragbar.", "short": "Direktfahrt ohne Umladung", "nav": "Kurierfahrten", "title": "Kurierfahrten",
+  "icon": "i-bolt", "num": "04", "img": "ruhrcargo-kurierdienst",
   "img_alt": "Kurierfahrer bringt eine Sendung zu einem Bürogebäude, Transporter am Straßenrand",
   "teaser": "Direktfahrten, wenn es schnell gehen muss: ein Fahrzeug, eine Ladung, ein Ziel.",
   "lead": "Wenn ein Termin steht und die Sendung nicht warten kann: Ein Fahrzeug, eine Ladung, ein Ziel. Ohne Zwischenstopp, ohne Umladen.",
@@ -138,11 +160,13 @@ SERVICES = [
     ("Wie groß darf eine Direktfahrt-Sendung sein?",
      "Von der Dokumentenmappe bis zur vollen Transporterladung ist alles möglich. Bei größeren Mengen setzen wir ein entsprechend größeres Fahrzeug ein."),
   ],
-  "related": ["stueckgut", "elektrogeraete", "umzuege"],
+  "related": ["stueckguttransport", "elektrogeraete-lieferung", "umzuege"],
  },
 {
-  "slug": "umzuege", "short": "Privat und gewerblich", "nav": "Umzüge", "title": "Umzüge",
-  "icon": "i-home", "num": "06", "img": "leistung-umzuege",
+  "slug": "umzuege",
+  "seo_title": "Umzug privat & gewerblich | RuhrCargo Dortmund",
+  "seo_desc": "Umzug mit Spedition: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Hausrat oder Büro ans neue Ziel – privat und gewerblich, deutschlandweit.", "short": "Privat und gewerblich", "nav": "Umzüge", "title": "Umzüge",
+  "icon": "i-home", "num": "06", "img": "ruhrcargo-umzug",
   "img_alt": "Mitarbeiter tragen eine Matratze durch ein Treppenhaus",
   "teaser": "Privat oder gewerblich – geplant, verladen und angekommen, ohne Stress für Sie.",
   "lead": "Vom Apartment bis zum Firmenstandort: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Ihren Hausrat oder Ihr Büro ans neue Ziel.",
@@ -169,7 +193,7 @@ SERVICES = [
     ("Was ist mit besonders schweren Einzelstücken?",
      "Sagen Sie uns vorher Bescheid, etwa bei Klavier, Tresor oder Großgeräten. Dann planen wir Personal und Hilfsmittel entsprechend ein."),
   ],
-  "related": ["neumoebel", "elektrogeraete", "kurierfahrten"],
+  "related": ["neumoebel-lieferung", "elektrogeraete-lieferung", "kurierdienst"],
  },
 ]
 
@@ -177,7 +201,7 @@ SERVICE_BY_SLUG = {s["slug"]: s for s in SERVICES}
 
 # ── Fuhrpark ──────────────────────────────────────────────────────────────
 FLEET = [
-{"slug": "kofferlkw", "img": "fuhrpark-kofferlkw", "wide": False,
+{"slug": "kofferlkw", "img": "ruhrcargo-koffer-lkw", "wide": False,
   "label": "Klasse 02 · Mit Ladebordwand", "name": "Koffer-LKW",
   "alt": "Koffer-LKW von RuhrCargo mit ausgefahrener Ladebordwand beim Verladen eines Elektrogeräts",
   "tags": ["Elektrogeräte", "Neumöbel", "Stückgut"],
@@ -185,7 +209,7 @@ FLEET = [
   "specs": [("Einsatz", "Geräte, Möbel, empfindliche Ware"),
             ("Beladung", "Ladebordwand"),
             ("Besonderheit", "Wettergeschützter Koffer")]},
- {"slug": "moebelkoffer", "img": "fuhrpark-moebelkoffer", "wide": False,
+ {"slug": "moebelkoffer", "img": "ruhrcargo-moebelkoffer", "wide": False,
   "label": "Klasse 03 · Volumen", "name": "Möbelkoffer",
   "alt": "Zwei Mitarbeiter verladen ein verpacktes Möbelstück über die Ladebordwand",
   "tags": ["Neumöbel", "Umzüge", "Empfindliche Ware"],
@@ -193,7 +217,7 @@ FLEET = [
   "specs": [("Einsatz", "Möbel und Umzugsgut"),
             ("Beladung", "Ladebordwand"),
             ("Besonderheit", "Maximales Volumen")]},
- {"slug": "transporter", "img": "fuhrpark-transporter", "wide": True,
+ {"slug": "transporter", "img": "ruhrcargo-kleintransporter", "wide": True,
   "label": "Klasse 04 · Wendig", "name": "Kleintransporter",
   "alt": "Kleintransporter von RuhrCargo mit geöffneten Hecktüren bei einer Zustellung",
   "tags": ["Kurierfahrten", "Direktfahrt", "Stückgut"],

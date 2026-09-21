@@ -315,6 +315,15 @@ h1, h2, h3, h4 {
   opacity: 0;
   transition: opacity 320ms var(--ease);
 }
+/* Seiten, die nicht mit einem dunklen Kopfbereich beginnen, brauchen einen
+   dauerhaft deckenden Header — sonst steht die weiße Navigation auf Weiß. */
+.site-header--solid {
+  background: rgba(14, 14, 15, .94);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+.site-header--solid::after { opacity: 1; }
+
 .site-header.is-stuck {
   background: rgba(14, 14, 15, .86);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
@@ -1917,4 +1926,32 @@ a.contact__row { position: relative; }
   .services > .svc:nth-child(5):last-child .svc__desc { color: rgba(255, 255, 255, .74); }
   .services > .svc:nth-child(5):last-child .svc__go { opacity: 1; transform: none; }
   .services > .svc:nth-child(5):last-child:hover .svc__img { transform: scale(1.04); }
+}
+
+/* --------------------------------------------------------------------------
+   36 · LESBARKEIT KLEINER LABELS AUF MOBIL
+   Technische Mono-Labels liegen im Layout bei 10–11,5 px. Auf dem Telefon
+   ist das für Fließtext zu klein — dort greift eine Untergrenze von 12 px.
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root { --fs-mono: .75rem; }
+  .svc__go,
+  .fleet__label,
+  .veh-card__label,
+  .rel-card__go,
+  .cta-band__note,
+  .form-note,
+  .footer__bar,
+  .logo-slot__note,
+  .crumbs li,
+  .route__meta,
+  .step__meta,
+  .tl__step,
+  .cfg__index,
+  .mobile-nav__label,
+  .field > label,
+  .aside__title,
+  .spec dt,
+  .footer__title { font-size: .75rem; }
+  .fleet__tag, .sector { font-size: .7rem; }
 }

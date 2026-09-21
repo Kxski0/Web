@@ -6,7 +6,7 @@
 Die erzeugten Dateien sind normales, eigenständiges HTML — für den Betrieb
 wird dieses Skript nicht gebraucht.
 """
-import os, sys, html
+import os, sys, html, json, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (SITE, SERVICES, SERVICE_BY_SLUG, FLEET, STEPS,
                      REASONS, TIMELINE, SECTORS)
@@ -27,6 +27,46 @@ def icon(name, size=17, sw="1.9", cls=""):
             f'stroke-linejoin="round" aria-hidden="true"><use href="#{name}"/></svg>')
 
 ARROW = icon("i-arrow")
+
+def img_size(rel):
+    """Liest die Maße direkt aus der Bilddatei — so kann width/height im HTML
+    nie vom tatsächlichen Bild abweichen."""
+    path = os.path.join(ROOT, rel)
+    with open(path, "rb") as f:
+        d = f.read(32)
+    if d[:4] == b"RIFF" and d[8:12] == b"WEBP":
+        fmt = d[12:16]
+        if fmt == b"VP8 ":
+            return (int.from_bytes(d[26:28], "little") & 0x3FFF,
+                    int.from_bytes(d[28:30], "little") & 0x3FFF)
+        if fmt == b"VP8L":
+            n = int.from_bytes(d[21:25], "little")
+            return ((n & 0x3FFF) + 1, ((n >> 14) & 0x3FFF) + 1)
+        if fmt == b"VP8X":
+            return (int.from_bytes(d[24:27], "little") + 1,
+                    int.from_bytes(d[27:30], "little") + 1)
+    if d[:8] == b"\x89PNG\r\n\x1a\n":
+        return (int.from_bytes(d[16:20], "big"), int.from_bytes(d[20:24], "big"))
+    if d[:2] == b"\xff\xd8":                       # JPEG
+        with open(path, "rb") as f:
+            f.seek(2)
+            while True:
+                m = f.read(2)
+                if len(m) < 2 or m[0] != 0xFF: break
+                ln = int.from_bytes(f.read(2), "big")
+                if m[1] in (0xC0, 0xC1, 0xC2, 0xC3):
+                    f.read(1)
+                    h = int.from_bytes(f.read(2), "big")
+                    w = int.from_bytes(f.read(2), "big")
+                    return (w, h)
+                f.seek(ln - 2, 1)
+    raise ValueError("Maße nicht lesbar: " + rel)
+
+def dim(rel):
+    w, h = img_size(rel)
+    return f'width="{w}" height="{h}"'
+
+
 
 SPRITE = '''<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
@@ -55,7 +95,7 @@ NAV = [("leistungen.html", "Leistungen", "leistungen"),
        ("unternehmen.html","Unternehmen","unternehmen"),
        ("ablauf.html",     "Ablauf",     "ablauf")]
 
-def header(base, active):
+def header(base, active, solid=False):
     subs = "".join(
         f'<li><a class="nav__sub-link" href="{base}leistungen/{s["slug"]}.html">'
         f'{icon(s["icon"], 19, "1.6", "nav__sub-icon")}'
@@ -75,7 +115,8 @@ def header(base, active):
                       f'</div></div></li>')
         else:
             items += f'<li class="nav__item"><a class="nav__link{act}" href="{base}{href}"{cur}>{e(label)}</a></li>'
-    return f'''<header class="site-header" id="siteHeader">
+    cls = "site-header site-header--solid" if solid else "site-header"
+    return f'''<header class="{cls}" id="siteHeader">
   <div class="site-header__inner">
     <a class="logo" href="{base}index.html" aria-label="RuhrCargo GmbH – zur Startseite">
       <img src="{base}assets/logo-wordmark-light.png" alt="RuhrCargo GmbH — Spedition &amp; Logistik" width="520" height="84">
@@ -144,7 +185,7 @@ def footer(base):
         <p class="footer__title">Kontakt</p>
         <!-- TODO:KONTAKT -->
         <address>
-          {SITE["name"]}<br>{SITE["street"]}<br>{SITE["zip_city"]}<br><br>
+          {SITE["name"]}<br>{SITE["street"]}<br>{SITE["zip"]} {SITE["city"]}<br><br>
           <a href="tel:{SITE["phone_href"]}">{SITE["phone_display"]}</a><br>
           <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>
         </address>
@@ -160,10 +201,59 @@ def footer(base):
   </div>
 </footer>'''
 
-def page(path, title, desc, body, active="", jsonld="", og_img="assets/og-image.jpg"):
+PAGES = []   # für sitemap.xml
+
+def ld_organization():
+    """LocalBusiness — nur belegte Angaben. Telefon und Öffnungszeiten sind
+    noch Platzhalter und bleiben deshalb bewusst draußen."""
+    d = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": SITE["domain"] + "/#organisation",
+        "name": SITE["name"],
+        "legalName": SITE["legal_name"],
+        "description": "Spedition und Logistik aus Dortmund: Stückguttransport, "
+                       "Neumöbel-Lieferung, Elektrogeräte, Kurierdienst und Umzüge – deutschlandweit.",
+        "url": SITE["domain"] + "/",
+        "logo": SITE["domain"] + "/assets/logo.png",
+        "image": SITE["domain"] + "/assets/og-image.jpg",
+        "email": SITE["email"],
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": SITE["street"],
+            "postalCode": SITE["zip"],
+            "addressLocality": SITE["city"],
+            "addressRegion": SITE["region"],
+            "addressCountry": "DE",
+        },
+        "areaServed": {"@type": "Country", "name": "Deutschland"},
+    }
+    if not SITE.get("phone_is_placeholder"):
+        d["telephone"] = SITE["phone_display"]
+    return d
+
+def ld_breadcrumbs(crumbs):
+    items = []
+    for i, (label, href) in enumerate(crumbs, start=1):
+        url = SITE["domain"] + "/" + (href.replace("index.html", "") if href else "")
+        items.append({"@type": "ListItem", "position": i, "name": label, "item": url})
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}
+
+def page(path, title, desc, body, active="", jsonld=None, crumbs=None,
+         og_img="assets/og-image.jpg", robots="index, follow", in_sitemap=True,
+         priority="0.7", solid_header=False):
     base = "../" * path.count("/")
-    canon = SITE["domain"] + "/" + (path if path != "index.html" else "")
-    ld = f'\n<script type="application/ld+json">\n{jsonld}\n</script>' if jsonld else ""
+    url = SITE["domain"] + "/" + ("" if path == "index.html" else path)
+    blocks = []
+    if jsonld:
+        blocks += jsonld if isinstance(jsonld, list) else [jsonld]
+    if crumbs and len(crumbs) > 1:
+        blocks.append(ld_breadcrumbs(crumbs))
+    ld = "".join("\n<script type=\"application/ld+json\">\n"
+                 + json.dumps(x, ensure_ascii=False, indent=2) + "\n</script>" for x in blocks)
+    if in_sitemap:
+        PAGES.append((url, priority))
+
     doc = f'''<!DOCTYPE html>
 <html lang="de">
 <head>
@@ -171,18 +261,27 @@ def page(path, title, desc, body, active="", jsonld="", og_img="assets/og-image.
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
+<meta name="robots" content="{robots}">
 <meta name="theme-color" content="#111111">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="{canon}">
-<meta property="og:type" content="website">
+<meta name="author" content="{SITE["name"]}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="{"website" if path == "index.html" else "article"}">
 <meta property="og:locale" content="de_DE">
 <meta property="og:site_name" content="{SITE["name"]}">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
+<meta property="og:url" content="{url}">
 <meta property="og:image" content="{SITE["domain"]}/{og_img}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RuhrCargo GmbH — Spedition und Logistik aus Dortmund">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{e(title)}">
+<meta name="twitter:description" content="{e(desc)}">
+<meta name="twitter:image" content="{SITE["domain"]}/{og_img}">
 <link rel="icon" href="{base}assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="{base}assets/favicon.png">
+<link rel="manifest" href="{base}site.webmanifest">
 <link rel="preload" href="{base}assets/fonts/archivo-500-900-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{base}assets/fonts/inter-400-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{base}css/fonts.css">
@@ -191,7 +290,7 @@ def page(path, title, desc, body, active="", jsonld="", og_img="assets/og-image.
 <body>
 <a class="skip-link" href="#main">Zum Inhalt springen</a>
 {SPRITE}
-{header(base, active)}
+{header(base, active, solid_header)}
 {mobile_nav(base)}
 <main id="main">
 {body}
@@ -202,7 +301,7 @@ def page(path, title, desc, body, active="", jsonld="", og_img="assets/og-image.
 </html>
 '''
     full = os.path.join(ROOT, path)
-    os.makedirs(os.path.dirname(full), exist_ok=True)
+    os.makedirs(os.path.dirname(full) or ".", exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
         f.write(doc)
     return len(doc)
@@ -215,7 +314,7 @@ def page_hero(eyebrow, title, lead, crumbs, base, img=None, alt=""):
     media = ""
     if img:
         media = (f'<div class="page-hero__media" data-parallax="0.12">'
-                 f'<img src="{base}assets/img/{img}.jpg" alt="{e(alt)}" loading="eager" decoding="async">'
+                 f'<img src="{base}assets/img/{img}.webp" alt="{e(alt)}" width="1500" height="643" loading="eager" fetchpriority="high" decoding="async">'
                  f'<span class="page-hero__scrim" aria-hidden="true"></span></div>')
     return f'''<section class="page-hero{" page-hero--media" if img else ""}">
   {media}
@@ -232,7 +331,7 @@ def page_hero(eyebrow, title, lead, crumbs, base, img=None, alt=""):
 def cta_band(base, title="Sie haben einen Transport.<br>Wir haben die Lösung.",
              text="Beschreiben Sie kurz, was wohin soll – wir melden uns mit einem konkreten Vorschlag zurück."):
     return f'''<section class="section on-dark cta-band">
-  <img class="cta-band__mark" src="{base}assets/img/karte-deutschland.jpg" alt="" width="1000" height="625" loading="lazy" aria-hidden="true">
+  <img class="cta-band__mark" src="{base}assets/img/ruhrcargo-streckennetz-deutschland.webp" alt="" {dim('assets/img/ruhrcargo-streckennetz-deutschland.webp')} loading="lazy" aria-hidden="true">
   <div class="container cta-band__inner">
     <div class="cta-band__copy">
       <p class="eyebrow" data-reveal="fade">Kontakt</p>
@@ -253,12 +352,12 @@ def service_grid(base, limit=None, reveal=True):
     for i, s in enumerate(items):
         d = (i % 4) * 60
         out.append(f'''<a class="svc" href="{base}leistungen/{s["slug"]}.html" data-reveal="scale" style="--d:{d}">
-        <img class="svc__img" src="{base}assets/img/{s["img"]}.jpg" alt="{e(s["img_alt"])}" width="720" height="900" loading="lazy" decoding="async">
+        <img class="svc__img" src="{base}assets/img/{s["img"]}.webp" alt="{e(s["img_alt"])}" {dim(f'assets/img/{s["img"]}.webp')} loading="lazy" decoding="async">
         <span class="svc__scrim" aria-hidden="true"></span>
         <span class="svc__top"><span class="svc__num">{s["num"]}</span>{icon(s["icon"], 26, "1.5", "svc__icon")}</span>
         <h3 class="svc__title">{e(s["title"])}</h3>
         <p class="svc__desc">{e(s["teaser"])}</p>
-        <span class="svc__go">Mehr erfahren {icon("i-arrow", 13, "2.2")}</span>
+        <span class="svc__go">Mehr über {e(s["nav"])} {icon("i-arrow", 13, "2.2")}</span>
       </a>''')
     return '<div class="services">\n      ' + "\n      ".join(out) + '\n    </div>'
 
@@ -288,15 +387,19 @@ def build_index():
         f'<p class="reason__text">{e(short)}</p></article>'
         for i, (n, t, short, _) in enumerate(REASONS))
 
-    fleet_teaser = "".join(
-        f'''<a class="fleet__card{" fleet__card--wide" if f["wide"] else ""}" href="fuhrpark.html#{f["slug"]}" data-fleet data-reveal="{"scale" if f["wide"] else ("left" if i%2 else "right")}">
-        <div class="fleet__figure"><img src="assets/img/{f["img"]}.jpg" alt="{e(f["alt"])}" loading="lazy" decoding="async"></div>
+    fleet_teaser = ""
+    for i, f in enumerate(FLEET[:3]):
+        d = dim(f'assets/img/{f["img"]}.webp')
+        rev = "scale" if f["wide"] else ("left" if i % 2 else "right")
+        tags = "".join(f'<span class="fleet__tag">{e(x)}</span>' for x in f["tags"])
+        fleet_teaser += f'''<a class="fleet__card{" fleet__card--wide" if f["wide"] else ""}" href="fuhrpark.html#{f["slug"]}" data-fleet data-reveal="{rev}">
+        <div class="fleet__figure"><img src="assets/img/{f["img"]}.webp" alt="{e(f["alt"])}" {d} loading="lazy" decoding="async"></div>
         <span class="fleet__scrim" aria-hidden="true"></span>
         <div class="fleet__body">
           <span class="fleet__label">{e(f["label"])}</span>
           <h3 class="fleet__name">{e(f["name"])}</h3>
-          <div class="fleet__tags">{"".join(f'<span class="fleet__tag">{e(t)}</span>' for t in f["tags"])}</div>
-        </div></a>''' for i, f in enumerate(FLEET[:3]))
+          <div class="fleet__tags">{tags}</div>
+        </div></a>'''
 
     ticker_items = "".join(f'<span class="ticker__item">{e(s["title"])}</span>' for s in SERVICES)
 
@@ -304,7 +407,7 @@ def build_index():
 
 <section class="hero" id="hero">
   <div class="hero__media" data-parallax="0.16">
-    <img src="assets/img/hero.jpg" alt="Zwei Mitarbeiter von RuhrCargo vor einem beladenen Koffer-LKW" width="1600" height="900" fetchpriority="high" decoding="async">
+    <img src="assets/img/ruhrcargo-koffer-lkw-mitarbeiter.webp" alt="Zwei Mitarbeiter von RuhrCargo vor einem beladenen Koffer-LKW" {dim('assets/img/ruhrcargo-koffer-lkw-mitarbeiter.webp')} fetchpriority="high" decoding="async">
   </div>
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="hero__grid" aria-hidden="true"></div>
@@ -396,7 +499,7 @@ def build_index():
         </p>
       </div>
       <figure class="about__media clip-reveal" data-reveal="fade" style="--d:120">
-        <img src="assets/img/about.jpg" alt="Das Team von RuhrCargo vor dem Betriebsgelände" width="1100" height="879" loading="lazy" decoding="async">
+        <img src="assets/img/ruhrcargo-team-dortmund.webp" alt="Das Team von RuhrCargo vor dem Betriebsgelände" {dim('assets/img/ruhrcargo-team-dortmund.webp')} loading="lazy" decoding="async">
         <figcaption class="about__badge"><b>20+</b><span>Fahrzeuge im Einsatz</span></figcaption>
       </figure>
     </div>
@@ -405,7 +508,7 @@ def build_index():
 </section>
 
 <section class="band" id="unterwegs" data-band data-reveal="fade" aria-labelledby="band-title">
-  <img class="band__img" src="assets/img/band-unterwegs.jpg" alt="Kleintransporter von RuhrCargo unterwegs in der Stadt" width="1700" height="729" loading="lazy" decoding="async">
+  <img class="band__img" src="assets/img/ruhrcargo-kleintransporter-unterwegs.webp" alt="Kleintransporter von RuhrCargo unterwegs in der Stadt" {dim('assets/img/ruhrcargo-kleintransporter-unterwegs.webp')} loading="lazy" decoding="async">
   <span class="band__scrim" aria-hidden="true"></span>
   <div class="container">
     <div class="band__inner">
@@ -466,33 +569,23 @@ def build_index():
 
 {cta_band("")}'''
 
-    jsonld = f'''{{
-  "@context": "https://schema.org",
-  "@type": "MovingCompany",
-  "name": "{SITE["name"]}",
-  "description": "Spedition und Logistik: Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten und Umzüge.",
-  "url": "{SITE["domain"]}/",
-  "logo": "{SITE["domain"]}/assets/logo.png",
-  "telephone": "{SITE["phone_display"]}",
-  "email": "{SITE["email"]}",
-  "address": {{"@type": "PostalAddress", "streetAddress": "{SITE["street"]}", "postalCode": "45000", "addressLocality": "Essen", "addressRegion": "NRW", "addressCountry": "DE"}},
-  "areaServed": {{"@type": "Country", "name": "Deutschland"}},
-  "openingHours": "Mo-Fr 07:00-18:00"
-}}'''
     return page("index.html",
-                "RuhrCargo GmbH — Spedition & Logistik | Ihre Ware. Unser Auftrag.",
-                "RuhrCargo GmbH: Spedition und Logistik aus dem Ruhrgebiet. Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten und Umzüge – deutschlandweit, zuverlässig und termingerecht.",
-                body, active="", jsonld=jsonld)
+                "Spedition & Logistik Dortmund | RuhrCargo GmbH",
+                "Spedition aus Dortmund: Stückguttransport, Neumöbel-Lieferung, Elektrogeräte, "
+                "Kurierdienst und Umzüge. Über 20 eigene Fahrzeuge, deutschlandweit im Einsatz.",
+                body, active="", jsonld=ld_organization(), priority="1.0",
+                crumbs=[("Startseite", "index.html")])
 
 # ── Leistungsübersicht ────────────────────────────────────────────────────
 def build_leistungen():
     rows = ""
     for i, s in enumerate(SERVICES):
         flip = " svc-row--flip" if i % 2 else ""
+        load = 'loading="eager" fetchpriority="high"' if i == 0 else 'loading="lazy"' 
         bullets = "".join(f'<li>{icon("i-check", 15, "2.4")}<span>{e(b)}</span></li>' for b in s["does"][:4])
         rows += f'''<article class="svc-row{flip}" id="{s["slug"]}">
       <div class="svc-row__media clip-reveal" data-reveal="fade">
-        <img src="assets/img/{s["img"]}.jpg" alt="{e(s["img_alt"])}" width="720" height="900" loading="lazy" decoding="async">
+        <img src="assets/img/{s["img"]}.webp" alt="{e(s["img_alt"])}" {dim(f'assets/img/{s["img"]}.webp')} {load} decoding="async">
         <span class="svc-row__num">{s["num"]}</span>
       </div>
       <div class="svc-row__body">
@@ -517,9 +610,12 @@ def build_leistungen():
 
 {cta_band("", "Nicht dabei, was Sie brauchen?<br>Fragen Sie trotzdem.",
   "Ungewöhnliche Maße, besondere Anforderungen oder eine wiederkehrende Tour – wir sagen Ihnen ehrlich, ob und wie wir das fahren.")}'''
-    return page("leistungen.html", "Leistungen — RuhrCargo GmbH | Spedition & Logistik",
-        "Alle Leistungen der RuhrCargo GmbH im Überblick: Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten und Umzüge.",
-        body, active="leistungen")
+    return page("leistungen.html",
+        "Transportleistungen im Überblick | RuhrCargo",
+        "Die fünf Leistungsbereiche von RuhrCargo: Stückguttransport, Neumöbel-Lieferung, "
+        "Elektrogeräte, Kurierdienst und Umzüge – mit Fahrzeug und Handling je Ladung.",
+        body, active="leistungen", priority="0.9",
+        crumbs=[("Startseite", "index.html"), ("Leistungen", "leistungen.html")])
 
 # ── Leistungs-Detailseiten ────────────────────────────────────────────────
 def build_service(s):
@@ -531,7 +627,7 @@ def build_service(s):
         f = next((x for x in FLEET if x["name"] == v), None)
         if not f: continue
         vehicles += f'''<a class="veh-card" href="{base}fuhrpark.html#{f["slug"]}" data-reveal="scale">
-        <img src="{base}assets/img/{f["img"]}.jpg" alt="{e(f["alt"])}" loading="lazy" decoding="async">
+        <img src="{base}assets/img/{f["img"]}.webp" alt="{e(f["alt"])}" {dim(f'assets/img/{f["img"]}.webp')} loading="lazy" decoding="async">
         <span class="veh-card__scrim" aria-hidden="true"></span>
         <span class="veh-card__body"><span class="veh-card__label">{e(f["label"])}</span>
         <span class="veh-card__name">{e(f["name"])}</span></span></a>'''
@@ -544,13 +640,13 @@ def build_service(s):
         {icon(r["icon"], 24, "1.5", "rel-card__icon")}
         <span class="rel-card__title">{e(r["title"])}</span>
         <span class="rel-card__text">{e(r["teaser"])}</span>
-        <span class="rel-card__go">Ansehen {icon("i-arrow", 13, "2.2")}</span></a>'''
+        <span class="rel-card__go">Zu {e(r["nav"])} {icon("i-arrow", 13, "2.2")}</span></a>'''
         for i, r in enumerate(SERVICE_BY_SLUG[x] for x in s["related"]))
     paras = "".join(f'<p data-reveal style="--d:{60+i*40}">{e(p)}</p>' for i, p in enumerate(s["body"]))
 
     body = f'''{page_hero(f'Leistung {s["num"]}', e(s["title"]), s["lead"],
         [("Startseite", "index.html"), ("Leistungen", "leistungen.html"), (s["title"], None)],
-        base, img="kopf-" + s["slug"], alt=s["img_alt"])}
+        base, img="ruhrcargo-" + s["slug"].replace("umzuege","umzug") + "-header", alt=s["img_alt"])}
 
 <section class="section on-white">
   <div class="container">
@@ -605,28 +701,39 @@ def build_service(s):
 </section>
 
 {cta_band(base, f'{e(s["title"])} zu transportieren?<br>Sprechen wir darüber.')}'''
-    ld = f'''{{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "{e(s["title"])}",
-  "provider": {{"@type": "MovingCompany", "name": "{SITE["name"]}"}},
-  "areaServed": {{"@type": "Country", "name": "Deutschland"}},
-  "description": "{e(s["lead"])}"
-}}'''
-    return page(f'leistungen/{s["slug"]}.html',
-                f'{s["title"]} — RuhrCargo GmbH | Spedition & Logistik',
-                s["lead"][:158], body, active="leistungen", jsonld=ld)
+    ld = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": s["title"],
+      "serviceType": s["title"],
+      "provider": {"@id": SITE["domain"] + "/#organisation"},
+      "areaServed": {"@type": "Country", "name": "Deutschland"},
+      "description": s["lead"],
+      "url": f'{SITE["domain"]}/leistungen/{s["slug"]}.html',
+    }
+    faq_ld = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{"@type": "Question", "name": q,
+                      "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in s["faq"]],
+    }
+    return page(f'leistungen/{s["slug"]}.html', s["seo_title"], s["seo_desc"], body,
+                active="leistungen", jsonld=[ld, faq_ld], priority="0.8",
+                og_img="assets/og-image.jpg",
+                crumbs=[("Startseite", "index.html"), ("Leistungen", "leistungen.html"),
+                        (s["title"], f'leistungen/{s["slug"]}.html')])
 
 # ── Fuhrpark ──────────────────────────────────────────────────────────────
 def build_fuhrpark():
     blocks = ""
     for i, f in enumerate(FLEET):
         flip = " veh-row--flip" if i % 2 else ""
+        load = 'loading="eager" fetchpriority="high"' if i == 0 else 'loading="lazy"' 
         specs = "".join(f'<div class="spec"><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in f["specs"])
         tags = "".join(f'<span class="fleet__tag fleet__tag--ink">{e(t)}</span>' for t in f["tags"])
         blocks += f'''<article class="veh-row{flip}" id="{f["slug"]}">
       <div class="veh-row__media clip-reveal" data-reveal="fade">
-        <img src="assets/img/{f["img"]}.jpg" alt="{e(f["alt"])}" loading="lazy" decoding="async">
+        <img src="assets/img/{f["img"]}.webp" alt="{e(f["alt"])}" {dim(f'assets/img/{f["img"]}.webp')} {load} decoding="async">
       </div>
       <div class="veh-row__body">
         <p class="eyebrow" data-reveal="fade">{e(f["label"])}</p>
@@ -638,7 +745,7 @@ def build_fuhrpark():
     </article>'''
     body = f'''{page_hero("Fuhrpark", "Über 20 Fahrzeuge.<br>Für jede Ladung das richtige.",
         "Wir wählen das Fahrzeug nach der Ware aus, nicht umgekehrt. Drei Klassen decken alles ab, was bei uns auf die Straße geht.",
-        [("Startseite", "index.html"), ("Fuhrpark", None)], "", img="kopf-fuhrpark",
+        [("Startseite", "index.html"), ("Fuhrpark", None)], "", img="ruhrcargo-fuhrpark-header",
         alt="Koffer-LKW von RuhrCargo mit ausgefahrener Ladebordwand")}
 
 <section class="section on-white">
@@ -662,9 +769,12 @@ def build_fuhrpark():
 </section>
 
 {cta_band("")}'''
-    return page("fuhrpark.html", "Fuhrpark — RuhrCargo GmbH | Spedition & Logistik",
-        "Der Fuhrpark der RuhrCargo GmbH: Koffer-LKW mit Ladebordwand, Möbelkoffer und Kleintransporter – über 20 Fahrzeuge für jede Ladung.",
-        body, active="fuhrpark")
+    return page("fuhrpark.html",
+        "Fuhrpark: Koffer-LKW und Transporter | RuhrCargo",
+        "Der Fuhrpark von RuhrCargo: Koffer-LKW mit Ladebordwand, Möbelkoffer und "
+        "Kleintransporter. Über 20 Fahrzeuge – wir wählen das passende zur Ladung aus.",
+        body, active="fuhrpark", priority="0.7", og_img="assets/og-image.jpg",
+        crumbs=[("Startseite", "index.html"), ("Fuhrpark", "fuhrpark.html")])
 
 # ── Unternehmen ───────────────────────────────────────────────────────────
 def build_unternehmen():
@@ -693,7 +803,7 @@ def build_unternehmen():
                     f'<span class="logo-slot__note">Slot {i:02d}</span></div>' for i in range(1, 7))
     body = f'''{page_hero("Über RuhrCargo", "Seit über 20&nbsp;Jahren<br>auf der Straße.",
         "Was mit einem Fahrzeug begann, ist heute ein Fuhrpark mit über 20 Fahrzeugen und einem Team, das seit Jahren zusammenarbeitet.",
-        [("Startseite", "index.html"), ("Unternehmen", None)], "", img="about",
+        [("Startseite", "index.html"), ("Unternehmen", None)], "", img="ruhrcargo-team-dortmund",
         alt="Das Team von RuhrCargo vor dem Betriebsgelände")}
 
 <section class="section on-white">
@@ -772,9 +882,12 @@ def build_unternehmen():
 </section>
 
 {cta_band("")}'''
-    return page("unternehmen.html", "Über RuhrCargo — Spedition & Logistik aus dem Ruhrgebiet",
-        "Über 20 Jahre Erfahrung, über 20 eigene Fahrzeuge, deutschlandweit im Einsatz: Das Unternehmen RuhrCargo GmbH, seine Entwicklung und seine Arbeitsweise.",
-        body, active="unternehmen")
+    return page("unternehmen.html",
+        "Über RuhrCargo | Spedition aus Dortmund",
+        "Über 20 Jahre Erfahrung, über 20 eigene Fahrzeuge, Sitz in Dortmund: Wie RuhrCargo "
+        "arbeitet, welche Ladungen wir fahren und worauf sich Auftraggeber verlassen.",
+        body, active="unternehmen", priority="0.7", og_img="assets/img/ruhrcargo-team-dortmund.webp",
+        crumbs=[("Startseite", "index.html"), ("Unternehmen", "unternehmen.html")])
 
 # ── Ablauf ────────────────────────────────────────────────────────────────
 def build_ablauf():
@@ -822,9 +935,12 @@ def build_ablauf():
 </section>
 
 {cta_band("")}'''
-    return page("ablauf.html", "Ablauf — So arbeitet RuhrCargo | Spedition & Logistik",
-        "Anfrage, Planung, Umsetzung, Lieferung: Wie ein Transportauftrag bei der RuhrCargo GmbH abläuft – Schritt für Schritt erklärt.",
-        body, active="ablauf")
+    return page("ablauf.html",
+        "Ablauf einer Transportanfrage | RuhrCargo",
+        "Von der Anfrage bis zur Zustellung: Wie ein Transportauftrag bei RuhrCargo abläuft – "
+        "Anfrage, Planung, Umsetzung, Lieferung. Jeder Schritt einzeln erklärt.",
+        body, active="ablauf", priority="0.6",
+        crumbs=[("Startseite", "index.html"), ("Ablauf", "ablauf.html")])
 
 # ── Kontakt ───────────────────────────────────────────────────────────────
 def build_kontakt():
@@ -834,7 +950,7 @@ def build_kontakt():
         [("Startseite", "index.html"), ("Kontakt", None)], "")}
 
 <section class="section on-dark contact" id="anfrage">
-  <img class="contact__mark" src="assets/img/karte-deutschland.jpg" alt="" width="1000" height="625" loading="lazy" aria-hidden="true">
+  <img class="contact__mark" src="assets/img/ruhrcargo-streckennetz-deutschland.webp" alt="" {dim('assets/img/ruhrcargo-streckennetz-deutschland.webp')} loading="lazy" aria-hidden="true">
   <div class="container contact__grid">
     <div class="contact__copy">
       <p class="eyebrow" data-reveal="fade">Direkt erreichen</p>
@@ -850,7 +966,7 @@ def build_kontakt():
         <div class="contact__row">{icon("i-clock", 19, "1.7")}
           <span><span class="contact__row-label">Erreichbarkeit</span><span class="contact__row-value">{SITE["hours"]}</span></span></div>
         <div class="contact__row">{icon("i-truck", 19, "1.7")}
-          <span><span class="contact__row-label">Anschrift</span><span class="contact__row-value">{SITE["street"]}<br>{SITE["zip_city"]}</span></span></div>
+          <span><span class="contact__row-label">Anschrift</span><span class="contact__row-value">{SITE["street"]}<br>{SITE["zip"]} {SITE["city"]}</span></span></div>
       </div>
     </div>
 
@@ -910,30 +1026,110 @@ def build_kontakt():
     </div>
   </div>
 </section>'''
-    return page("kontakt.html", "Kontakt — RuhrCargo GmbH | Transport anfragen",
-        "Transport anfragen bei der RuhrCargo GmbH: Anfrageformular, Telefonnummer und Erreichbarkeit. Wir melden uns mit einem konkreten Vorschlag zurück.",
-        body, active="kontakt")
+    return page("kontakt.html",
+        "Transport anfragen | RuhrCargo Dortmund",
+        "Transport anfragen bei RuhrCargo in Dortmund: Formular für Stückgut, Möbel, "
+        "Elektrogeräte, Kurierfahrten und Umzüge. Wir melden uns mit einem Vorschlag zurück.",
+        body, active="kontakt", priority="0.9",
+        crumbs=[("Startseite", "index.html"), ("Kontakt", "kontakt.html")])
 
 # ── Rechtsseiten ──────────────────────────────────────────────────────────
 def build_legal():
     from legal import IMPRESSUM, DATENSCHUTZ
+    meta = {
+        "impressum.html": ("Impressum",
+            "Impressum | RuhrCargo GmbH Dortmund",
+            f'Impressum der RuhrCargo GmbH, {SITE["street"]}, {SITE["zip"]} {SITE["city"]}. '
+            "Angaben gemäß § 5 DDG: Vertretung, Handelsregister und Kontaktdaten.", IMPRESSUM),
+        "datenschutz.html": ("Datenschutzerklärung",
+            "Datenschutzerklärung | RuhrCargo GmbH",
+            "Datenschutzerklärung der RuhrCargo GmbH: Welche Daten beim Besuch der Website und "
+            "bei einer Transportanfrage verarbeitet werden – und welche Rechte Sie haben.", DATENSCHUTZ),
+    }
     n = 0
-    for path, title, txt in [("impressum.html", "Impressum", IMPRESSUM),
-                             ("datenschutz.html", "Datenschutzerklärung", DATENSCHUTZ)]:
+    for path, (label, title, desc, txt) in meta.items():
         body = f'''<section class="legal section">
   <div class="container">
     <nav class="crumbs" aria-label="Brotkrumen"><ol>
-      <li><a href="index.html">Startseite</a></li><li aria-current="page">{e(title)}</li>
+      <li><a href="index.html">Startseite</a></li><li aria-current="page">{e(label)}</li>
     </ol></nav>
     <p class="eyebrow" data-reveal="fade">Rechtliches</p>
-    <h1 class="h2" data-reveal style="--d:60;margin:1rem 0 2.5rem">{e(title)}</h1>
+    <h1 class="h2" data-reveal style="--d:60;margin:1rem 0 2.5rem">{e(label)}</h1>
     <div class="legal__body" data-reveal style="--d:100">
 {txt}
     </div>
   </div>
 </section>'''
-        n += page(path, f"{title} — {SITE['name']}", f"{title} der {SITE['name']}.", body)
+        n += page(path, title, desc, body, priority="0.3", solid_header=True,
+                  crumbs=[("Startseite", "index.html"), (label, path)])
     return n
+
+# ── 404 ───────────────────────────────────────────────────────────────────
+def build_404():
+    links = "".join(
+        f'''<a class="rel-card" href="leistungen/{s["slug"]}.html">
+        {icon(s["icon"], 24, "1.5", "rel-card__icon")}
+        <span class="rel-card__title">{e(s["title"])}</span>
+        <span class="rel-card__text">{e(s["teaser"])}</span>
+        <span class="rel-card__go">Zu {e(s["nav"])} {icon("i-arrow", 13, "2.2")}</span></a>''' for s in SERVICES)
+    body = f'''<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Fehler 404</p>
+      <h1 class="page-hero__title">Diese Seite gibt es nicht.</h1>
+      <p class="page-hero__lead">Der Link ist veraltet oder die Adresse enthält einen Tippfehler.
+        Unten finden Sie unsere Leistungen – oder Sie gehen zurück zur Startseite.</p>
+      <p style="margin-top:1rem;display:flex;gap:.8rem;flex-wrap:wrap">
+        <a class="btn btn--primary" href="index.html">Zur Startseite {ARROW}</a>
+        <a class="btn btn--ghost" href="kontakt.html">Transport anfragen</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section on-white">
+  <div class="container">
+    <p class="eyebrow">Unsere Leistungen</p>
+    <h2 class="h2" style="margin:1rem 0 0">Vielleicht suchen Sie das hier</h2>
+    <div class="rel-grid">{links}</div>
+  </div>
+</section>'''
+    return page("404.html", "Seite nicht gefunden | RuhrCargo GmbH",
+                "Die aufgerufene Seite existiert nicht. Hier finden Sie die Leistungen der "
+                "RuhrCargo GmbH und den Weg zurück zur Startseite.",
+                body, robots="noindex, follow", in_sitemap=False)
+
+# ── Sitemap, robots.txt, Manifest ────────────────────────────────────────
+def build_sitemap_and_robots():
+    today = datetime.date.today().isoformat()
+    urls = "\n".join(
+        f"  <url>\n    <loc>{u}</loc>\n    <lastmod>{today}</lastmod>\n"
+        f"    <priority>{p}</priority>\n  </url>" for u, p in PAGES)
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           + urls + "\n</urlset>\n")
+    open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(xml)
+
+    robots = f"""User-agent: *
+Allow: /
+
+# Vorschau-Deployments und Fehlerseite gehoeren nicht in den Index
+Disallow: /404.html
+
+Sitemap: {SITE["domain"]}/sitemap.xml
+"""
+    open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8").write(robots)
+
+    manifest = {
+        "name": SITE["name"], "short_name": "RuhrCargo",
+        "description": "Spedition und Logistik aus Dortmund.",
+        "start_url": "/", "display": "browser",
+        "background_color": "#111111", "theme_color": "#111111",
+        "icons": [{"src": "/assets/favicon.png", "sizes": "64x64", "type": "image/png"}],
+    }
+    open(os.path.join(ROOT, "site.webmanifest"), "w", encoding="utf-8").write(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    return len(PAGES)
 
 # ── Lauf ──────────────────────────────────────────────────────────────────
 def main():
@@ -948,6 +1144,9 @@ def main():
         print(f"  ↳ {s['slug']:12} {n/1024:6.1f} KB")
     n = build_legal(); total += n; pages += 2
     print(f"  Rechtstexte    {n/1024:6.1f} KB")
+    n = build_404(); total += n; pages += 1
+    print(f"  404            {n/1024:6.1f} KB")
+    print(f"  sitemap.xml    {build_sitemap_and_robots()} URLs · robots.txt · site.webmanifest")
     print(f"\n{pages} Seiten, {total/1024:.0f} KB HTML")
 
 if __name__ == "__main__":

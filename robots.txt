@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Vorschau-Deployments und Fehlerseite gehoeren nicht in den Index
+Disallow: /404.html
+
+Sitemap: https://www.ruhrcargo.net/sitemap.xml
