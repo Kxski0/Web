@@ -271,25 +271,10 @@
       text: 'Wenn es schnell gehen muss: ein Fahrzeug, eine Ladung, ein Ziel. Ihre Sendung fährt ohne Zwischenstopp und ohne Umladen direkt ans Ziel.',
       facts: ['Direktfahrt ohne Umladung', 'Kurzfristige Beauftragung möglich', 'Auch für eilige Einzelsendungen']
     },
-    'reifenlogistik': {
-      title: 'Reifenlogistik',
-      text: 'Saisongeschäft heißt: alles gleichzeitig. Wir bewegen Reifen und Räder in Menge – vom Großhandel zum Point of Sale, planbar durch die Hochsaison.',
-      facts: ['Große Stückzahlen je Tour', 'Belieferung von Handel und Werkstatt', 'Planbare Kapazitäten in der Saison']
-    },
     'umzuege': {
       title: 'Umzug – privat & gewerblich',
       text: 'Vom Apartment bis zum Firmenstandort: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Ihren Hausrat oder Ihr Büro ans neue Ziel.',
       facts: ['Private und gewerbliche Umzüge', 'Fahrzeug passend zum Volumen', 'Termin nach Ihrem Zeitplan']
-    },
-    'messe-ladenbau': {
-      title: 'Messe- & Ladenbau',
-      text: 'Auf dem Messegelände und auf der Baustelle zählt das Zeitfenster. Wir liefern termingenau an – und holen nach dem Abbau wieder ab.',
-      facts: ['Termingenaue Anlieferung im Zeitfenster', 'An- und Abtransport aus einer Hand', 'Erfahrung mit Messe- und Baustellenlogistik']
-    },
-    'reha-hilfsmittel': {
-      title: 'Reha-Hilfsmittel',
-      text: 'Zustellungen für Sanitätshäuser und Patienten verlangen Fingerspitzengefühl. Wir liefern terminiert, diskret und mit der nötigen Sorgfalt.',
-      facts: ['Zustellung an Sanitätshaus oder Patient', 'Feste Terminabsprache', 'Sorgfältiger Umgang mit sensibler Ware']
     },
     'sonstiges': {
       title: 'Ihre individuelle Lösung',
@@ -298,8 +283,7 @@
     }
   };
 
-  var ORDER = ['stueckgut', 'neumoebel', 'elektrogeraete', 'kurierfahrten', 'reifenlogistik',
-               'umzuege', 'messe-ladenbau', 'reha-hilfsmittel', 'sonstiges'];
+  var ORDER = ['stueckgut', 'neumoebel', 'elektrogeraete', 'kurierfahrten', 'umzuege', 'sonstiges'];
   var chipsWrap = $('#cfgChips');
   var panel = $('#cfgPanel');
   var ladungSelect = $('#f-was');

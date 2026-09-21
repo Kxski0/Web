@@ -11,6 +11,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (SITE, SERVICES, SERVICE_BY_SLUG, FLEET, STEPS,
                      REASONS, TIMELINE, SECTORS)
 
+# Laufende Nummer aus der Position ableiten — bleibt korrekt, wenn Bereiche
+# hinzukommen oder wegfallen
+for _i, _s in enumerate(SERVICES, start=1):
+    _s["num"] = f"{_i:02d}"
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 e = html.escape
 
@@ -262,7 +267,7 @@ def build_index():
     stats = [("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
              ("20", "+", "Jahre Erfahrung", "Gewachsene Routine in Transport und Disposition."),
              (None, None, "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
-             ("8", "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]
+             ("5", "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]
     stat_html = ""
     for i, (num, suf, label, note) in enumerate(stats):
         val = (f'<span class="stat__num" data-count="{num}" data-suffix="{suf}">0</span>'
@@ -299,7 +304,7 @@ def build_index():
 
 <section class="hero" id="hero">
   <div class="hero__media" data-parallax="0.16">
-    <img src="assets/img/hero.jpg" alt="Sattelzug von RuhrCargo auf der Autobahn im Abendlicht" width="1600" height="900" fetchpriority="high" decoding="async">
+    <img src="assets/img/hero.jpg" alt="Zwei Mitarbeiter von RuhrCargo vor einem beladenen Koffer-LKW" width="1600" height="900" fetchpriority="high" decoding="async">
   </div>
   <div class="hero__scrim" aria-hidden="true"></div>
   <div class="hero__grid" aria-hidden="true"></div>
@@ -348,7 +353,7 @@ def build_index():
         <h2 class="h2" data-reveal style="--d:60">Alles, was<br>transportiert werden muss.</h2>
       </div>
       <div data-reveal style="--d:120">
-        <p class="lead">Acht Leistungsbereiche, ein Anspruch: Ihre Ware kommt vollständig,
+        <p class="lead">Fünf Leistungsbereiche, ein Anspruch: Ihre Ware kommt vollständig,
           unbeschädigt und zum vereinbarten Termin an.</p>
         <p style="margin-top:1.1rem"><a class="link-arrow" href="leistungen.html">Alle Leistungen im Detail {icon("i-arrow", 16)}</a></p>
       </div>
@@ -400,7 +405,7 @@ def build_index():
 </section>
 
 <section class="band" id="unterwegs" data-band data-reveal="fade" aria-labelledby="band-title">
-  <img class="band__img" src="assets/img/band-unterwegs.jpg" alt="LKW von RuhrCargo auf einer Brücke im Abendlicht" width="1700" height="729" loading="lazy" decoding="async">
+  <img class="band__img" src="assets/img/band-unterwegs.jpg" alt="Kleintransporter von RuhrCargo unterwegs in der Stadt" width="1700" height="729" loading="lazy" decoding="async">
   <span class="band__scrim" aria-hidden="true"></span>
   <div class="container">
     <div class="band__inner">
@@ -465,7 +470,7 @@ def build_index():
   "@context": "https://schema.org",
   "@type": "MovingCompany",
   "name": "{SITE["name"]}",
-  "description": "Spedition und Logistik: Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten, Reifenlogistik, Umzüge, Messe- & Ladenbau und Reha-Hilfsmittel.",
+  "description": "Spedition und Logistik: Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten und Umzüge.",
   "url": "{SITE["domain"]}/",
   "logo": "{SITE["domain"]}/assets/logo.png",
   "telephone": "{SITE["phone_display"]}",
@@ -476,7 +481,7 @@ def build_index():
 }}'''
     return page("index.html",
                 "RuhrCargo GmbH — Spedition & Logistik | Ihre Ware. Unser Auftrag.",
-                "RuhrCargo GmbH: Spedition und Logistik aus dem Ruhrgebiet. Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten, Reifenlogistik, Umzüge, Messe- & Ladenbau und Reha-Hilfsmittel – deutschlandweit und termingerecht.",
+                "RuhrCargo GmbH: Spedition und Logistik aus dem Ruhrgebiet. Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten und Umzüge – deutschlandweit, zuverlässig und termingerecht.",
                 body, active="", jsonld=jsonld)
 
 # ── Leistungsübersicht ────────────────────────────────────────────────────
@@ -500,7 +505,7 @@ def build_leistungen():
         </p>
       </div>
     </article>'''
-    body = f'''{page_hero("Leistungen", "Acht Bereiche.<br>Ein Anspruch.",
+    body = f'''{page_hero("Leistungen", "Fünf Bereiche.<br>Ein Anspruch.",
         "Von der Einzelzustellung bis zur wiederkehrenden Tour: Was wir transportieren, transportieren wir mit der Sorgfalt, die die Ware verlangt.",
         [("Startseite", "index.html"), ("Leistungen", None)], "")}
 
@@ -513,7 +518,7 @@ def build_leistungen():
 {cta_band("", "Nicht dabei, was Sie brauchen?<br>Fragen Sie trotzdem.",
   "Ungewöhnliche Maße, besondere Anforderungen oder eine wiederkehrende Tour – wir sagen Ihnen ehrlich, ob und wie wir das fahren.")}'''
     return page("leistungen.html", "Leistungen — RuhrCargo GmbH | Spedition & Logistik",
-        "Alle Leistungen der RuhrCargo GmbH im Überblick: Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten, Reifenlogistik, Umzüge, Messe- & Ladenbau und Reha-Hilfsmittel.",
+        "Alle Leistungen der RuhrCargo GmbH im Überblick: Neumöbel, Elektrogeräte, Stückgut, Kurierfahrten und Umzüge.",
         body, active="leistungen")
 
 # ── Leistungs-Detailseiten ────────────────────────────────────────────────
@@ -632,9 +637,9 @@ def build_fuhrpark():
       </div>
     </article>'''
     body = f'''{page_hero("Fuhrpark", "Über 20 Fahrzeuge.<br>Für jede Ladung das richtige.",
-        "Wir wählen das Fahrzeug nach der Ware aus, nicht umgekehrt. Vier Klassen decken alles ab, was bei uns auf die Straße geht.",
-        [("Startseite", "index.html"), ("Fuhrpark", None)], "", img="fuhrpark-lkw",
-        alt="LKW von RuhrCargo wird in der Halle mit dem Gabelstapler beladen")}
+        "Wir wählen das Fahrzeug nach der Ware aus, nicht umgekehrt. Drei Klassen decken alles ab, was bei uns auf die Straße geht.",
+        [("Startseite", "index.html"), ("Fuhrpark", None)], "", img="kopf-fuhrpark",
+        alt="Koffer-LKW von RuhrCargo mit ausgefahrener Ladebordwand")}
 
 <section class="section on-white">
   <div class="container"><div class="veh-rows">{blocks}</div></div>
@@ -658,7 +663,7 @@ def build_fuhrpark():
 
 {cta_band("")}'''
     return page("fuhrpark.html", "Fuhrpark — RuhrCargo GmbH | Spedition & Logistik",
-        "Der Fuhrpark der RuhrCargo GmbH: LKW für Komplettladungen, Koffer-LKW mit Ladebordwand, Möbelkoffer und Kleintransporter – über 20 Fahrzeuge.",
+        "Der Fuhrpark der RuhrCargo GmbH: Koffer-LKW mit Ladebordwand, Möbelkoffer und Kleintransporter – über 20 Fahrzeuge für jede Ladung.",
         body, active="fuhrpark")
 
 # ── Unternehmen ───────────────────────────────────────────────────────────
@@ -682,7 +687,7 @@ def build_unternehmen():
             ("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
             ("20", "+", "Jahre Erfahrung", "Gewachsene Routine in Transport und Disposition."),
             (None, None, "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
-            ("8", "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]))
+            ("5", "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]))
     sectors = "".join(f'<span class="sector">{e(s)}</span>' for s in SECTORS)
     slots = "".join(f'<div class="logo-slot"><span class="logo-slot__mark">Kundenlogo</span>'
                     f'<span class="logo-slot__note">Slot {i:02d}</span></div>' for i in range(1, 7))
@@ -714,7 +719,7 @@ def build_unternehmen():
           <li>Über 20 eigene Fahrzeuge</li>
           <li>Über 20 Jahre Erfahrung</li>
           <li>Deutschlandweit im Einsatz</li>
-          <li>Acht Leistungsbereiche</li>
+          <li>Fünf Leistungsbereiche</li>
           <li>Feste Ansprechpartner</li>
         </ul>
         <a class="btn btn--dark btn--block" href="kontakt.html">Sprechen Sie mit uns {ARROW}</a>

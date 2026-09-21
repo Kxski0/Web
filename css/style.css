@@ -365,6 +365,10 @@ h1, h2, h3, h4 {
 .nav__list { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); }
 .nav__link {
   position: relative;
+  /* inline-flex, sonst bricht das global auf display:block gesetzte
+     Chevron-SVG in eine eigene Zeile unter den Text */
+  display: inline-flex;
+  align-items: center;
   font-size: .93rem;
   font-weight: 500;
   padding: .4rem 0;
@@ -1887,4 +1891,30 @@ a.contact__row { position: relative; }
   .veh-card img { transform: none !important; }
   [data-parallax] { transform: none !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   35 · LEISTUNGSRASTER MIT UNGERADER KARTENZAHL
+   Bei genau fünf Bereichen bliebe sonst eine Lücke in der zweiten Reihe.
+   Die letzte Karte füllt sie und zeigt ihr Bild dauerhaft — wie im Fuhrpark.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1000px) {
+  .services > .svc:nth-child(5):last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 5;
+    min-height: 280px;
+  }
+  .services > .svc:nth-child(5):last-child .svc__desc { max-width: 46ch; }
+  /* Hochformat in einem sehr breiten Rahmen — höher ansetzen, damit
+     Personen und Handlung im Bild bleiben */
+  .services > .svc:nth-child(5):last-child .svc__img { object-position: 50% 24%; }
+}
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
+  .services > .svc:nth-child(5):last-child { color: var(--white); border-color: transparent; }
+  .services > .svc:nth-child(5):last-child .svc__img { opacity: 1; transform: scale(1); }
+  .services > .svc:nth-child(5):last-child .svc__scrim { opacity: 1; }
+  .services > .svc:nth-child(5):last-child .svc__desc { color: rgba(255, 255, 255, .74); }
+  .services > .svc:nth-child(5):last-child .svc__go { opacity: 1; transform: none; }
+  .services > .svc:nth-child(5):last-child:hover .svc__img { transform: scale(1.04); }
 }

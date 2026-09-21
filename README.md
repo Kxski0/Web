@@ -55,28 +55,25 @@ blieb unverändert. Bei einem Logo-Update alle Varianten neu erzeugen.
 
 | Datei | Format | Motiv |
 |---|---|---|
-| `hero.jpg` | 1600 × 900 | Sattelzug auf der Autobahn im Abendlicht |
-| `band-unterwegs.jpg` | 1700 × 729 | LKW auf einer Brücke — Band „Deutschlandweit unterwegs" |
+| `hero.jpg` | 1600 × 899 | Zwei Mitarbeiter vor dem Koffer-LKW |
+| `band-unterwegs.jpg` | 1700 × 728 | Kleintransporter in der Stadt — Band „Deutschlandweit unterwegs" |
 | `about.jpg` | 1100 × 879 | Das Team vor dem Betriebsgelände |
 | `karte-deutschland.jpg` | 1000 × 625 | Streckennetz — Hintergrund im Kontaktbereich |
 | `leistung-neumoebel.jpg` | 720 × 900 | Verpacktes Sofa wird in einen Wohnraum getragen |
 | `leistung-elektrogeraete.jpg` | 720 × 899 | Waschmaschine über die Rampe in den Transporter |
 | `leistung-stueckgut.jpg` | 720 × 899 | Gabelstapler mit folierter Palette |
 | `leistung-kurier.jpg` | 720 × 901 | Zustellung an einem Bürogebäude |
-| `leistung-reifen.jpg` | 720 × 901 | Reifenerfassung vor dem beladenen LKW |
 | `leistung-umzuege.jpg` | 720 × 901 | Matratze im Treppenhaus |
-| `leistung-messebau.jpg` | 720 × 900 | Messestandaufbau mit Logowand |
-| `leistung-reha.jpg` | 720 × 900 | Rollstuhlfahrerin über die Rampe |
-| `fuhrpark-lkw.jpg` | 1500 × 642 | LKW wird per Gabelstapler beladen |
 | `fuhrpark-kofferlkw.jpg` | 1100 × 757 | Koffer-LKW mit Ladebordwand |
 | `fuhrpark-moebelkoffer.jpg` | 1100 × 757 | Möbelkoffer beim Verladen |
 | `fuhrpark-transporter.jpg` | 1500 × 642 | Kleintransporter bei der Zustellung |
-| `kopf-*.jpg` (8 Stück) | 1500 × 643 | Breite Kopfbilder der Leistungs-Detailseiten |
+| `kopf-*.jpg` (5 Stück) | 1500 × 643 | Breite Kopfbilder der Leistungs-Detailseiten |
+| `kopf-fuhrpark.jpg` | 1500 × 643 | Kopfbild der Fuhrparkseite |
 
-In `assets/img/reserve/` liegen zehn weitere Motive, die nicht auf der Seite
-verwendet werden — unter anderem die Logowand, die Verladehalle bei Nacht, die
-Haustürübergabe und ein zweites Reha-Motiv. Zum Tauschen einfach über die
-gleichnamige Datei in `assets/img/` kopieren.
+In `assets/img/reserve/` liegen die nicht verwendeten Motive — darunter alle
+Bilder der entfernten Bereiche (Reifenlogistik, Messe- & Ladenbau,
+Reha-Hilfsmittel, LKW) sowie das frühere Hero- und Bandmotiv mit dem Sattelzug.
+Zum Zurückholen einfach über die gleichnamige Datei in `assets/img/` kopieren.
 
 ### Zur Auflösung
 
@@ -168,7 +165,7 @@ Funktioniert ebenso auf Netlify, Vercel, GitHub Pages oder klassischem FTP-Websp
 ```
 index.html              Startseite — verdichtet, verweist auf die Unterseiten
 leistungen.html         Alle acht Leistungen im Überblick
-leistungen/*.html       Acht Detailseiten, eine je Leistung
+leistungen/*.html       Fünf Detailseiten, eine je Leistung
 fuhrpark.html           Fuhrpark ausführlich
 unternehmen.html        Über RuhrCargo, Entwicklung, Gründe, Referenzen
 ablauf.html             Prozess ausführlich + Konfigurator
@@ -183,7 +180,7 @@ tools/                  Generator (siehe unten)
 assets/                 Schriften, Logo, Bilder
 ```
 
-16 Seiten insgesamt. Die Startseite nennt nur die wichtigsten Punkte und verlinkt
+13 Seiten insgesamt. Die Startseite nennt nur die wichtigsten Punkte und verlinkt
 jeweils in die Tiefe — die Ausführlichkeit steckt in den Unterseiten.
 
 ### Seiten pflegen
@@ -192,7 +189,7 @@ Die HTML-Dateien werden aus `tools/content.py` erzeugt. Alle Texte stehen dort a
 einer Stelle, die Seitenhülle (Kopf, Navigation, Fuß) nur einmal in `tools/build.py`.
 
 ```bash
-python3 tools/build.py      # erzeugt alle 16 Seiten neu
+python3 tools/build.py      # erzeugt alle 13 Seiten neu
 ```
 
 **Wichtig:** Änderungen direkt im HTML gehen beim nächsten Lauf verloren. Für
