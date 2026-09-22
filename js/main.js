@@ -15,7 +15,7 @@
   ------------------------------------------------------------------ */
   var CONFIG = {
     formEndpoint: '',
-    contactEmail: 'info@ruhrcargo.de'
+    contactEmail: 'info@ruhrcargo.net'
   };
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
