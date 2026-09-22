@@ -22,7 +22,7 @@ IMPRESSUM = f"""\
       </p>
 
       <h2>Vertreten durch</h2>
-      <p>Geschäftsführer: {SITE["ceo"]}</p>
+      <p>Geschäftsführer: {SITE["ceo_legal"]}</p>
 
       <h2>Kontakt</h2>
       <p>
@@ -43,7 +43,7 @@ IMPRESSUM = f"""\
         Veröffentlichung noch nicht vor und wird ergänzt, sobald sie vorliegt.</p>
 
       <h2>Verantwortlich für den Inhalt</h2>
-      <p>{SITE["ceo"]}, Anschrift wie oben</p>
+      <p>{SITE["ceo_legal"]}, Anschrift wie oben</p>
 
       <h2>EU-Streitschlichtung</h2>
       <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:

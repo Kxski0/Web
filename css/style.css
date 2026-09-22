@@ -892,7 +892,10 @@ h1, h2, h3, h4 {
 .stat__label { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--grey); }
 .stat__note { font-size: .9rem; color: var(--grey); line-height: 1.45; }
 
-/* Timeline */
+/* Timeline — derzeit nicht im Einsatz. Der Abschnitt "Vom ersten Fahrzeug
+   bis heute" ist raus, solange es keine echte Firmenhistorie zu erzaehlen
+   gibt. Die Regeln bleiben stehen, damit er sich mit Gruendungsjahr und
+   echten Etappen ohne Neuaufbau wieder einsetzen laesst. */
 .timeline { position: relative; display: grid; gap: 0; }
 @media (min-width: 900px) { .timeline { grid-template-columns: repeat(4, 1fr); } }
 .timeline::before {

@@ -10,7 +10,7 @@ import os, sys, html, json, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from urllib.parse import quote
 from content import (SITE, SERVICES, SERVICE_BY_SLUG, FLEET, STEPS,
-                     REASONS, TIMELINE, SECTORS)
+                     REASONS, SECTORS)
 
 # Laufende Nummer aus der Position ableiten — bleibt korrekt, wenn Bereiche
 # hinzukommen oder wegfallen
@@ -376,14 +376,16 @@ def service_grid(base, limit=None, reveal=True):
 
 # ── Startseite ────────────────────────────────────────────────────────────
 def build_index():
+    # num=None heißt: suf wird als feststehender Text ausgegeben statt
+    # hochgezählt. So lassen sich Kacheln ohne Zahl mischen.
     stats = [("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
-             ("20", "+", "Jahre Erfahrung", "Gewachsene Routine in Transport und Disposition."),
-             (None, None, "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
+             (None, "1:1", "Ansprechpartner", "Sie sprechen mit der Person, die Ihren Auftrag disponiert."),
+             (None, "DE", "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
              (str(len(SERVICES)), "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]
     stat_html = ""
     for i, (num, suf, label, note) in enumerate(stats):
         val = (f'<span class="stat__num" data-count="{num}" data-suffix="{suf}">0</span>'
-               if num else '<span class="stat__num">DE</span>')
+               if num else f'<span class="stat__num">{e(suf)}</span>')
         stat_html += (f'<div class="stat" data-reveal style="--d:{i*70}">{val}'
                       f'<span class="stat__label">{e(label)}</span>'
                       f'<span class="stat__note">{e(note)}</span></div>')
@@ -503,10 +505,10 @@ def build_index():
     <div class="about__top">
       <div class="about__copy">
         <p class="eyebrow" data-reveal="fade">Über RuhrCargo</p>
-        <h2 class="h2" data-reveal style="--d:60">Seit über 20&nbsp;Jahren<br>auf der Straße.</h2>
-        <p class="lead" data-reveal style="--d:110">Was mit einem Fahrzeug begann, ist heute ein Fuhrpark
-          mit über 20&nbsp;Fahrzeugen und einem Team, das seit Jahren zusammenarbeitet. Groß genug für
-          deutschlandweite Touren – klein genug, dass Sie beim Anruf denselben Ansprechpartner erreichen.</p>
+        <h2 class="h2" data-reveal style="--d:60">Eigene Fahrzeuge.<br>Eigene Disposition.</h2>
+        <p class="lead" data-reveal style="--d:110">Über 20&nbsp;Fahrzeuge im eigenen Fuhrpark, geplant im
+          eigenen Haus. Groß genug für deutschlandweite Touren, klein genug, dass Sie beim Anruf
+          denselben Ansprechpartner erreichen.</p>
         <p data-reveal style="--d:160;margin-top:.5rem">
           <a class="link-arrow" href="unternehmen.html">Mehr über das Unternehmen {icon("i-arrow", 16)}</a>
         </p>
@@ -791,10 +793,6 @@ def build_fuhrpark():
 
 # ── Unternehmen ───────────────────────────────────────────────────────────
 def build_unternehmen():
-    tl = "".join(
-        f'<article class="tl" data-reveal style="--d:{i*80}"><span class="tl__step">{e(st)}</span>'
-        f'<h3 class="tl__title">{e(t)}</h3><p class="tl__text">{e(x)}</p></article>'
-        for i, (st, t, x) in enumerate(TIMELINE))
     reasons = "".join(
         f'''<article class="reason-long" data-reveal style="--d:{i*90}">
         <span class="reason__idx">{n}</span>
@@ -804,18 +802,18 @@ def build_unternehmen():
       </article>''' for i, (n, t, short, long) in enumerate(REASONS))
     stats = "".join(
         f'<div class="stat" data-reveal style="--d:{i*70}">'
-        + (f'<span class="stat__num" data-count="{n}" data-suffix="{s}">0</span>' if n else '<span class="stat__num">DE</span>')
+        + (f'<span class="stat__num" data-count="{n}" data-suffix="{s}">0</span>' if n else f'<span class="stat__num">{e(s)}</span>')
         + f'<span class="stat__label">{e(l)}</span><span class="stat__note">{e(x)}</span></div>'
         for i, (n, s, l, x) in enumerate([
             ("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
-            ("20", "+", "Jahre Erfahrung", "Gewachsene Routine in Transport und Disposition."),
-            (None, None, "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
+            (None, "1:1", "Ansprechpartner", "Sie sprechen mit der Person, die Ihren Auftrag disponiert."),
+            (None, "DE", "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
             (str(len(SERVICES)), "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]))
     sectors = "".join(f'<span class="sector">{e(s)}</span>' for s in SECTORS)
     slots = "".join(f'<div class="logo-slot"><span class="logo-slot__mark">Kundenlogo</span>'
                     f'<span class="logo-slot__note">Slot {i:02d}</span></div>' for i in range(1, 7))
-    body = f'''{page_hero("Über RuhrCargo", "Seit über 20&nbsp;Jahren<br>auf der Straße.",
-        "Was mit einem Fahrzeug begann, ist heute ein Fuhrpark mit über 20 Fahrzeugen und einem Team, das seit Jahren zusammenarbeitet.",
+    body = f'''{page_hero("Über RuhrCargo", "Kurze Wege.<br>Vom Anruf bis zur Tour.",
+        "Wer bei RuhrCargo die Anfrage annimmt, plant auch das Fahrzeug ein. Das spart Erklärungsschleifen und macht kurzfristige Änderungen möglich.",
         [("Startseite", "index.html"), ("Unternehmen", None)], "", img="ruhrcargo-team-dortmund",
         alt="Das Team von RuhrCargo vor dem Betriebsgelände")}
 
@@ -830,17 +828,17 @@ def build_unternehmen():
         <p data-reveal style="--d:50">Vom einzelnen Möbelstück bis zur wiederkehrenden Tour für Industrie
           und Handel planen wir jeden Auftrag so, wie er transportiert werden muss – nicht so, wie es in
           ein Standardraster passt. Was das konkret heißt, sieht man am ehesten daran, worauf wir
-          spezialisiert sind: Ladungsarten, die Erfahrung verlangen.</p>
-        <p data-reveal style="--d:100">Möbel, Elektrogeräte, Reifen in Saisonmengen, Messebau und
-          Hilfsmittel für Sanitätshäuser haben eines gemeinsam: Sie sind entweder empfindlich, sperrig,
-          terminkritisch oder alles zusammen. Genau dafür ist unser Fuhrpark zusammengestellt und genau
-          dafür ist unser Personal ausgebildet.</p>
+          spezialisiert sind: Ladungsarten, die Umsicht verlangen.</p>
+        <p data-reveal style="--d:100">Möbel, Elektrogeräte, Stückgut, Umzugsgut und alles, was bei einer
+          Entrümpelung anfällt, haben eines gemeinsam: Es ist empfindlich, sperrig, terminkritisch oder
+          alles zusammen. Danach ist unser Fuhrpark zusammengestellt und darauf ist unser Personal
+          eingestellt.</p>
       </div>
       <aside class="prose-split__aside" data-reveal="right" style="--d:120">
         <p class="aside__title">Auf einen Blick</p>
         <ul class="aside__list">
           <li>Über 20 eigene Fahrzeuge</li>
-          <li>Über 20 Jahre Erfahrung</li>
+          <li>Eigene Disposition im Haus</li>
           <li>Deutschlandweit im Einsatz</li>
           <li>Sechs Leistungsbereiche</li>
           <li>Feste Ansprechpartner</li>
@@ -849,14 +847,6 @@ def build_unternehmen():
       </aside>
     </div>
     <div class="stats" style="margin-top:clamp(3rem,6vw,5rem)">{stats}</div>
-  </div>
-</section>
-
-<section class="section on-paper">
-  <div class="container">
-    <p class="eyebrow" data-reveal="fade">Entwicklung</p>
-    <h2 class="h2" data-reveal style="--d:60;margin:1rem 0 clamp(2rem,4vw,3rem)">Vom ersten Fahrzeug bis heute</h2>
-    <div class="timeline">{tl}</div>
   </div>
 </section>
 
@@ -878,13 +868,13 @@ def build_unternehmen():
       <div class="section-head__title">
         <p class="eyebrow" data-reveal="fade">Referenzen</p>
         <h2 class="h2" data-reveal style="--d:60">Logistik, auf die<br>Unternehmen vertrauen.</h2>
-        <p class="lead" data-reveal style="--d:110">Handel, Industrie, Messebau und Gesundheitswesen:
-          Unsere Auftraggeber verbindet, dass ihre Ware verlässlich ankommen muss.</p>
+        <p class="lead" data-reveal style="--d:110">Möbel- und Elektrofachhandel, Industrie, Handwerk,
+          Büros und Privathaushalte: Auf diese Auftraggeber sind Fuhrpark und Handling ausgelegt.</p>
       </div>
       <div class="kpis" data-reveal="right" style="--d:120">
-        <div class="kpi"><span class="kpi__num" data-count="20" data-suffix="+">0</span><span class="kpi__label">Jahre<br>am Markt</span></div>
         <div class="kpi"><span class="kpi__num" data-count="20" data-suffix="+">0</span><span class="kpi__label">Fahrzeuge<br>im Einsatz</span></div>
-        <div class="kpi"><span class="kpi__num" data-count="16">0</span><span class="kpi__label">Bundesländer<br>beliefert</span></div>
+        <div class="kpi"><span class="kpi__num" data-count="16">0</span><span class="kpi__label">Bundesländer<br>erreichbar</span></div>
+        <div class="kpi"><span class="kpi__num" data-count="{len(SERVICES)}">0</span><span class="kpi__label">Leistungs-<br>bereiche</span></div>
       </div>
     </header>
     <!-- KUNDENLOGOS: Text in .logo-slot__mark durch <img src="assets/img/kunde-01.svg" alt="Firmenname"> ersetzen -->
@@ -897,8 +887,8 @@ def build_unternehmen():
 {cta_band("")}'''
     return page("unternehmen.html",
         "Über RuhrCargo | Spedition aus Dortmund",
-        "Über 20 Jahre Erfahrung, über 20 eigene Fahrzeuge, Sitz in Dortmund: wie die "
-        "Spedition RuhrCargo arbeitet und was wir deutschlandweit fahren.",
+        "Über 20 eigene Fahrzeuge, eigene Disposition, Sitz in Dortmund: wie die Spedition "
+        "RuhrCargo arbeitet und was wir deutschlandweit fahren.",
         body, active="unternehmen", priority="0.7", og_img="assets/img/ruhrcargo-team-dortmund.webp",
         crumbs=[("Startseite", "index.html"), ("Unternehmen", "unternehmen.html")])
 

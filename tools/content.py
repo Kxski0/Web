@@ -18,7 +18,14 @@ SITE = {
     #     "domain": "https://www.ruhrcargo.net",
     # ersetzen, `python3 tools/build.py` laufen lassen und deployen.
     "domain": "https://ruhrcargo10.vercel.app",
-    "ceo": "Melih Arik",
+    # Kurzform für die allgemeine Nennung auf der Seite.
+    "ceo": "M. Arik",
+    # ACHTUNG: § 5 DDG verlangt den Vertretungsberechtigten im Impressum so,
+    # dass er eindeutig identifizierbar ist. Abgekürzte Vornamen werden von
+    # Gerichten regelmäßig beanstandet. Impressum und § 18 MStV nutzen deshalb
+    # weiter den vollen Namen. Soll auch dort abgekürzt werden, hier ändern —
+    # dann aber im Wissen um das Abmahnrisiko.
+    "ceo_legal": "Melih Arik",
     "email": "info@ruhrcargo.net",
     "street": "Florianstraße 15-21",
     "zip": "44139",
@@ -308,17 +315,10 @@ REASONS = [
   "Ein Transport ist erst dann gut gelaufen, wenn niemand darüber sprechen musste. Wir planen so, dass Zusagen halten, und melden uns von selbst, wenn sich etwas ändert."),
  ("02", "Flexibel", "Kurzfristige Anfrage, ungewöhnliche Ladung, enges Zeitfenster: Wir finden den Weg.",
   "Weil wir unsere Fahrzeuge selbst disponieren, können wir umplanen, ohne durch drei Instanzen zu gehen. Was möglich ist, sagen wir Ihnen sofort – und was nicht, ebenso."),
- ("03", "Erfahren", "Über 20 Jahre Praxis und ein Fachpersonal, das empfindliche Ware im Griff hat.",
-  "Möbel, Elektrogeräte, Stückgut, Umzugsgut: Jede Ladungsart hat ihre Eigenheiten. Die lernt man nicht aus einem Handbuch, sondern über Jahre."),
+ ("03", "Spezialisiert", "Wir fahren die Ladungsarten, bei denen es auf Umsicht ankommt.",
+  "Ein Sofa durch ein enges Treppenhaus zu bekommen und eine Waschmaschine so zu sichern, dass sie nicht verrutscht, sind zwei verschiedene Handgriffe. Darauf ist unser Personal eingestellt und danach ist der Fuhrpark zusammengestellt."),
  ("04", "Persönlich", "Kein Callcenter, keine Warteschleife. Sie erreichen die Menschen, die planen und fahren.",
   "Bei uns spricht man mit der Person, die den Auftrag auch disponiert. Das spart Erklärungsschleifen und sorgt dafür, dass Details nicht auf dem Weg verloren gehen."),
-]
-
-TIMELINE = [
- ("Etappe 01", "Der Anfang", "Ein Fahrzeug, ein Anspruch: Aufträge so ausführen, dass der Kunde wieder anruft."),
- ("Etappe 02", "Erste Festkunden", "Aus einzelnen Fahrten werden feste Touren für Handel und Industrie."),
- ("Etappe 03", "Spezialisierung", "Möbel, Elektrogeräte, Stückgut: Ladungsarten, die Erfahrung verlangen."),
- ("Etappe 04", "Heute", "Über 20 Fahrzeuge, erfahrenes Fachpersonal, deutschlandweit im Einsatz."),
 ]
 
 SECTORS = ["Möbelhandel", "Elektrofachhandel", "Industrie & Produktion",
