@@ -8,6 +8,7 @@ wird dieses Skript nicht gebraucht.
 """
 import os, sys, html, json, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from urllib.parse import quote
 from content import (SITE, SERVICES, SERVICE_BY_SLUG, FLEET, STEPS,
                      REASONS, TIMELINE, SECTORS)
 
@@ -157,6 +158,13 @@ def mobile_nav(base):
   </div>
 </div>'''
 
+def maps_url():
+    """Kartenlink auf die echte Betriebsadresse — wird aus SITE gebaut, damit
+    er bei einer Adressänderung nicht auseinanderläuft."""
+    q = f'{SITE["name"]} {SITE["street"]} {SITE["zip"]} {SITE["city"]}'
+    return "https://www.google.com/maps/search/?api=1&amp;query=" + quote(q)
+
+
 def footer(base):
     svc = "".join(f'<li><a href="{base}leistungen/{s["slug"]}.html">{e(s["title"])}</a></li>' for s in SERVICES[:5])
     return f'''<footer class="site-footer">
@@ -185,7 +193,8 @@ def footer(base):
         <p class="footer__title">Kontakt</p>
         <!-- TODO:KONTAKT -->
         <address>
-          {SITE["name"]}<br>{SITE["street"]}<br>{SITE["zip"]} {SITE["city"]}<br><br>
+          {SITE["name"]}<br>{SITE["street"]}<br>{SITE["zip"]} {SITE["city"]}<br>
+          <a class="footer__map" href="{maps_url()}" rel="noopener noreferrer" target="_blank">Route zum Betriebsgelände</a><br><br>
           <a href="tel:{SITE["phone_href"]}">{SITE["phone_display"]}</a><br>
           <a href="mailto:{SITE["email"]}">{SITE["email"]}</a>
         </address>
@@ -331,7 +340,7 @@ def page_hero(eyebrow, title, lead, crumbs, base, img=None, alt=""):
 def cta_band(base, title="Sie haben einen Transport.<br>Wir haben die Lösung.",
              text="Beschreiben Sie kurz, was wohin soll – wir melden uns mit einem konkreten Vorschlag zurück."):
     return f'''<section class="section on-dark cta-band">
-  <img class="cta-band__mark" src="{base}assets/img/ruhrcargo-streckennetz-deutschland.webp" alt="" {dim('assets/img/ruhrcargo-streckennetz-deutschland.webp')} loading="lazy" aria-hidden="true">
+  <img class="cta-band__mark" src="{base}assets/img/ruhrcargo-streckennetz-deutschland.webp" alt="Stilisierte Deutschlandkarte als Hinweis auf das deutschlandweite Einsatzgebiet" {dim('assets/img/ruhrcargo-streckennetz-deutschland.webp')} loading="lazy">
   <div class="container cta-band__inner">
     <div class="cta-band__copy">
       <p class="eyebrow" data-reveal="fade">Kontakt</p>
@@ -339,7 +348,7 @@ def cta_band(base, title="Sie haben einen Transport.<br>Wir haben die Lösung.",
       <p class="lead" data-reveal style="--d:110">{e(text)}</p>
     </div>
     <div class="cta-band__actions" data-reveal="right" style="--d:140">
-      <a class="btn btn--primary btn--lg" href="{base}kontakt.html">Transport anfragen {ARROW}</a>
+      <a class="btn btn--primary btn--lg" href="{base}kontakt.html">Anfrage senden {ARROW}</a>
       <a class="btn btn--ghost btn--lg" href="tel:{SITE["phone_href"]}">{icon("i-phone", 16, "1.7")} {SITE["phone_display"]}</a>
       <p class="cta-band__note">{SITE["hours"]} · Unverbindlich und kostenlos</p>
     </div>
@@ -351,14 +360,17 @@ def service_grid(base, limit=None, reveal=True):
     out = []
     for i, s in enumerate(items):
         d = (i % 4) * 60
-        out.append(f'''<a class="svc" href="{base}leistungen/{s["slug"]}.html" data-reveal="scale" style="--d:{d}">
+        # Der Link sitzt bewusst nur auf der Überschrift und deckt die Karte
+        # über ein Pseudoelement ab. Umschlösse er die ganze Karte, wäre der
+        # Linktext über 120 Zeichen lang — schlecht für Screenreader und SEO.
+        out.append(f'''<article class="svc" data-reveal="scale" style="--d:{d}">
         <img class="svc__img" src="{base}assets/img/{s["img"]}.webp" alt="{e(s["img_alt"])}" {dim(f'assets/img/{s["img"]}.webp')} loading="lazy" decoding="async">
         <span class="svc__scrim" aria-hidden="true"></span>
         <span class="svc__top"><span class="svc__num">{s["num"]}</span>{icon(s["icon"], 26, "1.5", "svc__icon")}</span>
-        <h3 class="svc__title">{e(s["title"])}</h3>
+        <h3 class="svc__title"><a class="svc__link" href="{base}leistungen/{s["slug"]}.html">{e(s["title"])}</a></h3>
         <p class="svc__desc">{e(s["teaser"])}</p>
-        <span class="svc__go">Mehr über {e(s["nav"])} {icon("i-arrow", 13, "2.2")}</span>
-      </a>''')
+        <span class="svc__go" aria-hidden="true">Mehr erfahren {icon("i-arrow", 13, "2.2")}</span>
+      </article>''')
     return '<div class="services">\n      ' + "\n      ".join(out) + '\n    </div>'
 
 # ── Startseite ────────────────────────────────────────────────────────────
@@ -392,14 +404,14 @@ def build_index():
         d = dim(f'assets/img/{f["img"]}.webp')
         rev = "scale" if f["wide"] else ("left" if i % 2 else "right")
         tags = "".join(f'<span class="fleet__tag">{e(x)}</span>' for x in f["tags"])
-        fleet_teaser += f'''<a class="fleet__card{" fleet__card--wide" if f["wide"] else ""}" href="fuhrpark.html#{f["slug"]}" data-fleet data-reveal="{rev}">
+        fleet_teaser += f'''<article class="fleet__card{" fleet__card--wide" if f["wide"] else ""}" data-fleet data-reveal="{rev}">
         <div class="fleet__figure"><img src="assets/img/{f["img"]}.webp" alt="{e(f["alt"])}" {d} loading="lazy" decoding="async"></div>
         <span class="fleet__scrim" aria-hidden="true"></span>
         <div class="fleet__body">
           <span class="fleet__label">{e(f["label"])}</span>
-          <h3 class="fleet__name">{e(f["name"])}</h3>
+          <h3 class="fleet__name"><a class="fleet__link" href="fuhrpark.html#{f["slug"]}">{e(f["name"])}</a></h3>
           <div class="fleet__tags">{tags}</div>
-        </div></a>'''
+        </div></article>'''
 
     ticker_items = "".join(f'<span class="ticker__item">{e(s["title"])}</span>' for s in SERVICES)
 
@@ -571,8 +583,8 @@ def build_index():
 
     return page("index.html",
                 "Spedition & Logistik Dortmund | RuhrCargo GmbH",
-                "Spedition aus Dortmund: Stückguttransport, Neumöbel-Lieferung, Elektrogeräte, "
-                "Kurierdienst und Umzüge. Über 20 eigene Fahrzeuge, deutschlandweit im Einsatz.",
+                "Spedition aus Dortmund: Stückgut, Neumöbel, Elektrogeräte, Kurierfahrten "
+                "und Umzüge. Über 20 eigene Fahrzeuge, deutschlandweit im Einsatz.",
                 body, active="", jsonld=ld_organization(), priority="1.0",
                 crumbs=[("Startseite", "index.html")])
 
@@ -612,8 +624,8 @@ def build_leistungen():
   "Ungewöhnliche Maße, besondere Anforderungen oder eine wiederkehrende Tour – wir sagen Ihnen ehrlich, ob und wie wir das fahren.")}'''
     return page("leistungen.html",
         "Transportleistungen im Überblick | RuhrCargo",
-        "Die fünf Leistungsbereiche von RuhrCargo: Stückguttransport, Neumöbel-Lieferung, "
-        "Elektrogeräte, Kurierdienst und Umzüge – mit Fahrzeug und Handling je Ladung.",
+        "Die fünf Leistungsbereiche von RuhrCargo: Stückgut, Neumöbel, Elektrogeräte, "
+        "Kurierfahrten und Umzüge – mit Fahrzeug und Handling je Ladung.",
         body, active="leistungen", priority="0.9",
         crumbs=[("Startseite", "index.html"), ("Leistungen", "leistungen.html")])
 
@@ -636,11 +648,11 @@ def build_service(s):
         <div class="faq__a"><p>{e(a)}</p></div>
       </details>''' for i, (q, a) in enumerate(s["faq"]))
     rel = "".join(
-        f'''<a class="rel-card" href="{base}leistungen/{r["slug"]}.html" data-reveal="scale" style="--d:{i*70}">
+        f'''<article class="rel-card" data-reveal="scale" style="--d:{i*70}">
         {icon(r["icon"], 24, "1.5", "rel-card__icon")}
-        <span class="rel-card__title">{e(r["title"])}</span>
+        <span class="rel-card__title"><a class="rel-card__link" href="{base}leistungen/{r["slug"]}.html">{e(r["title"])}</a></span>
         <span class="rel-card__text">{e(r["teaser"])}</span>
-        <span class="rel-card__go">Zu {e(r["nav"])} {icon("i-arrow", 13, "2.2")}</span></a>'''
+        <span class="rel-card__go" aria-hidden="true">Mehr erfahren {icon("i-arrow", 13, "2.2")}</span></article>'''
         for i, r in enumerate(SERVICE_BY_SLUG[x] for x in s["related"]))
     paras = "".join(f'<p data-reveal style="--d:{60+i*40}">{e(p)}</p>' for i, p in enumerate(s["body"]))
 
@@ -772,7 +784,7 @@ def build_fuhrpark():
     return page("fuhrpark.html",
         "Fuhrpark: Koffer-LKW und Transporter | RuhrCargo",
         "Der Fuhrpark von RuhrCargo: Koffer-LKW mit Ladebordwand, Möbelkoffer und "
-        "Kleintransporter. Über 20 Fahrzeuge – wir wählen das passende zur Ladung aus.",
+        "Kleintransporter. Über 20 Fahrzeuge – passend zur Ladung ausgewählt.",
         body, active="fuhrpark", priority="0.7", og_img="assets/og-image.jpg",
         crumbs=[("Startseite", "index.html"), ("Fuhrpark", "fuhrpark.html")])
 
@@ -885,7 +897,7 @@ def build_unternehmen():
     return page("unternehmen.html",
         "Über RuhrCargo | Spedition aus Dortmund",
         "Über 20 Jahre Erfahrung, über 20 eigene Fahrzeuge, Sitz in Dortmund: Wie RuhrCargo "
-        "arbeitet, welche Ladungen wir fahren und worauf sich Auftraggeber verlassen.",
+        "arbeitet und welche Ladungen wir deutschlandweit fahren.",
         body, active="unternehmen", priority="0.7", og_img="assets/img/ruhrcargo-team-dortmund.webp",
         crumbs=[("Startseite", "index.html"), ("Unternehmen", "unternehmen.html")])
 
@@ -938,7 +950,7 @@ def build_ablauf():
     return page("ablauf.html",
         "Ablauf einer Transportanfrage | RuhrCargo",
         "Von der Anfrage bis zur Zustellung: Wie ein Transportauftrag bei RuhrCargo abläuft – "
-        "Anfrage, Planung, Umsetzung, Lieferung. Jeder Schritt einzeln erklärt.",
+        "Anfrage, Planung, Umsetzung, Lieferung Schritt für Schritt.",
         body, active="ablauf", priority="0.6",
         crumbs=[("Startseite", "index.html"), ("Ablauf", "ablauf.html")])
 
@@ -950,7 +962,7 @@ def build_kontakt():
         [("Startseite", "index.html"), ("Kontakt", None)], "")}
 
 <section class="section on-dark contact" id="anfrage">
-  <img class="contact__mark" src="assets/img/ruhrcargo-streckennetz-deutschland.webp" alt="" {dim('assets/img/ruhrcargo-streckennetz-deutschland.webp')} loading="lazy" aria-hidden="true">
+  <img class="contact__mark" src="assets/img/ruhrcargo-streckennetz-deutschland.webp" alt="Stilisierte Deutschlandkarte als Hinweis auf das deutschlandweite Einsatzgebiet" {dim('assets/img/ruhrcargo-streckennetz-deutschland.webp')} loading="lazy">
   <div class="container contact__grid">
     <div class="contact__copy">
       <p class="eyebrow" data-reveal="fade">Direkt erreichen</p>
@@ -1029,7 +1041,7 @@ def build_kontakt():
     return page("kontakt.html",
         "Transport anfragen | RuhrCargo Dortmund",
         "Transport anfragen bei RuhrCargo in Dortmund: Formular für Stückgut, Möbel, "
-        "Elektrogeräte, Kurierfahrten und Umzüge. Wir melden uns mit einem Vorschlag zurück.",
+        "Elektrogeräte, Kurierfahrten und Umzüge. Wir melden uns zurück.",
         body, active="kontakt", priority="0.9",
         crumbs=[("Startseite", "index.html"), ("Kontakt", "kontakt.html")])
 
@@ -1044,7 +1056,7 @@ def build_legal():
         "datenschutz.html": ("Datenschutzerklärung",
             "Datenschutzerklärung | RuhrCargo GmbH",
             "Datenschutzerklärung der RuhrCargo GmbH: Welche Daten beim Besuch der Website und "
-            "bei einer Transportanfrage verarbeitet werden – und welche Rechte Sie haben.", DATENSCHUTZ),
+            "bei einer Anfrage verarbeitet werden – und Ihre Rechte daran.", DATENSCHUTZ),
     }
     n = 0
     for path, (label, title, desc, txt) in meta.items():
@@ -1067,11 +1079,11 @@ def build_legal():
 # ── 404 ───────────────────────────────────────────────────────────────────
 def build_404():
     links = "".join(
-        f'''<a class="rel-card" href="leistungen/{s["slug"]}.html">
+        f'''<article class="rel-card">
         {icon(s["icon"], 24, "1.5", "rel-card__icon")}
-        <span class="rel-card__title">{e(s["title"])}</span>
+        <span class="rel-card__title"><a class="rel-card__link" href="leistungen/{s["slug"]}.html">{e(s["title"])}</a></span>
         <span class="rel-card__text">{e(s["teaser"])}</span>
-        <span class="rel-card__go">Zu {e(s["nav"])} {icon("i-arrow", 13, "2.2")}</span></a>''' for s in SERVICES)
+        <span class="rel-card__go" aria-hidden="true">Mehr erfahren {icon("i-arrow", 13, "2.2")}</span></article>''' for s in SERVICES)
     body = f'''<section class="page-hero">
   <div class="container">
     <div class="page-hero__inner">

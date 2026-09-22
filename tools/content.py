@@ -5,9 +5,19 @@ SITE = {
     "name": "RuhrCargo GmbH",
     "legal_name": "RuhrCargo GmbH",
     "claim": "Ihre Ware. Unser Auftrag.",
-    # EINZIGE Stelle für die Produktionsdomain. Sie steuert Canonicals,
-    # Sitemap, robots.txt und Open Graph. Vor dem Livegang prüfen!
-    "domain": "https://www.ruhrcargo.net",
+    # EINZIGE Stelle für die ausgelieferte Domain. Sie steuert Canonicals,
+    # Sitemap, robots.txt und Open Graph.
+    #
+    # WICHTIG: Hier muss immer die Adresse stehen, unter der die Seite
+    # tatsächlich erreichbar ist. Ein Canonical auf eine noch nicht
+    # verbundene Domain sagt Google, es solle die ausgelieferten Seiten
+    # ignorieren — genau das hatte der SEO-Check als Fehler gemeldet.
+    #
+    # UMSTELLUNG AUF DIE EIGENE DOMAIN: sobald www.ruhrcargo.net auf das
+    # Vercel-Projekt zeigt, die nächste Zeile durch
+    #     "domain": "https://www.ruhrcargo.net",
+    # ersetzen, `python3 tools/build.py` laufen lassen und deployen.
+    "domain": "https://ruhrcargo10.vercel.app",
     "ceo": "Melih Arik",
     "email": "info@ruhrcargo.net",
     "street": "Florianstraße 15-21",
@@ -33,7 +43,7 @@ SERVICES = [
  {
   "slug": "neumoebel-lieferung",
   "seo_title": "Neumöbel-Lieferung & Möbeltransport | RuhrCargo",
-  "seo_desc": "Neumöbel liefern lassen: Wir transportieren Möbel vom Hersteller oder Lager bis zur Wunschadresse – im Möbelkoffer, gesichert und nach fester Terminabsprache.", "short": "Möbel vom Lager bis in die Wohnung", "nav": "Neumöbel", "title": "Neumöbel",
+  "seo_desc": "Neumöbel liefern lassen: Wir transportieren Möbel vom Lager bis zur Wunschadresse – im Möbelkoffer, gesichert und nach fester Terminabsprache.", "short": "Möbel vom Lager bis in die Wohnung", "nav": "Neumöbel", "title": "Neumöbel",
   "icon": "i-sofa", "num": "01", "img": "ruhrcargo-neumoebel-lieferung",
   "img_alt": "Zwei Mitarbeiter tragen ein verpacktes Sofa in einen Wohnraum",
   "teaser": "Empfindliche Neuware vom Lager bis zur Wunschadresse – sorgfältig verladen, sauber zugestellt.",
@@ -66,7 +76,7 @@ SERVICES = [
  {
   "slug": "elektrogeraete-lieferung",
   "seo_title": "Elektrogeräte liefern lassen | RuhrCargo Spedition",
-  "seo_desc": "Waschmaschine, Kühlschrank, Fernseher: Wir transportieren Elektrogeräte und weiße Ware mit Ladebordwand – für Fachhandel, Küchenstudios und Privatkunden.", "short": "Weiße Ware und Elektronik", "nav": "Elektrogeräte", "title": "Elektrogeräte",
+  "seo_desc": "Waschmaschine, Kühlschrank, Fernseher: Wir transportieren Elektrogeräte und weiße Ware mit Ladebordwand – für Fachhandel und Privatkunden.", "short": "Weiße Ware und Elektronik", "nav": "Elektrogeräte", "title": "Elektrogeräte",
   "icon": "i-appliance", "num": "02", "img": "ruhrcargo-elektrogeraete-lieferung",
   "img_alt": "Mitarbeiter schiebt eine Waschmaschine über die Rampe in den Transporter",
   "teaser": "Weiße Ware und Elektronik sicher gesichert, sicher verladen und termingerecht zugestellt.",
@@ -99,7 +109,7 @@ SERVICES = [
  {
   "slug": "stueckguttransport",
   "seo_title": "Stückguttransport | RuhrCargo Spedition Dortmund",
-  "seo_desc": "Stückgut transportieren ohne Umladung: Von der Einzelpalette bis zur Teilladung fahren wir im Direktverkehr deutschlandweit – ab dem Ruhrgebiet, termingerecht.", "short": "Paletten, Kisten, Einzelsendungen", "nav": "Stückgut", "title": "Stückgut",
+  "seo_desc": "Stückgut ohne Umladung transportieren: von der Einzelpalette bis zur Teilladung, im Direktverkehr deutschlandweit ab dem Ruhrgebiet.", "short": "Paletten, Kisten, Einzelsendungen", "nav": "Stückgut", "title": "Stückgut",
   "icon": "i-pallet", "num": "03", "img": "ruhrcargo-stueckguttransport",
   "img_alt": "Gabelstapler setzt eine folierte Palette im Lager ab",
   "teaser": "Paletten, Kisten und Einzelsendungen – flexibel gebündelt und deutschlandweit unterwegs.",
@@ -132,7 +142,7 @@ SERVICES = [
  {
   "slug": "kurierdienst",
   "seo_title": "Kurierdienst & Direktfahrten | RuhrCargo",
-  "seo_desc": "Kurierfahrt mit Direktzustellung: ein Fahrzeug, eine Ladung, ein Ziel. Ohne Zwischenstopp und ohne Umladen – deutschlandweit und kurzfristig beauftragbar.", "short": "Direktfahrt ohne Umladung", "nav": "Kurierfahrten", "title": "Kurierfahrten",
+  "seo_desc": "Kurierfahrt mit Direktzustellung: ein Fahrzeug, eine Ladung, ein Ziel. Ohne Zwischenstopp und ohne Umladen – deutschlandweit und kurzfristig.", "short": "Direktfahrt ohne Umladung", "nav": "Kurierfahrten", "title": "Kurierfahrten",
   "icon": "i-bolt", "num": "04", "img": "ruhrcargo-kurierdienst",
   "img_alt": "Kurierfahrer bringt eine Sendung zu einem Bürogebäude, Transporter am Straßenrand",
   "teaser": "Direktfahrten, wenn es schnell gehen muss: ein Fahrzeug, eine Ladung, ein Ziel.",
@@ -165,7 +175,7 @@ SERVICES = [
 {
   "slug": "umzuege",
   "seo_title": "Umzug privat & gewerblich | RuhrCargo Dortmund",
-  "seo_desc": "Umzug mit Spedition: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Hausrat oder Büro ans neue Ziel – privat und gewerblich, deutschlandweit.", "short": "Privat und gewerblich", "nav": "Umzüge", "title": "Umzüge",
+  "seo_desc": "Umzug mit Spedition: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Hausrat oder Büro ans neue Ziel – privat und gewerblich.", "short": "Privat und gewerblich", "nav": "Umzüge", "title": "Umzüge",
   "icon": "i-home", "num": "06", "img": "ruhrcargo-umzug",
   "img_alt": "Mitarbeiter tragen eine Matratze durch ein Treppenhaus",
   "teaser": "Privat oder gewerblich – geplant, verladen und angekommen, ohne Stress für Sie.",
