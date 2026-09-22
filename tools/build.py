@@ -624,8 +624,8 @@ def build_leistungen():
   "Ungewöhnliche Maße, besondere Anforderungen oder eine wiederkehrende Tour – wir sagen Ihnen ehrlich, ob und wie wir das fahren.")}'''
     return page("leistungen.html",
         "Transportleistungen im Überblick | RuhrCargo",
-        "Die fünf Leistungsbereiche von RuhrCargo: Stückgut, Neumöbel, Elektrogeräte, "
-        "Kurierfahrten und Umzüge – mit Fahrzeug und Handling je Ladung.",
+        "Stückgut, Neumöbel, Elektrogeräte, Kurierfahrten und Umzüge: die fünf "
+        "Leistungen der Spedition RuhrCargo aus Dortmund. Jetzt unverbindlich anfragen.",
         body, active="leistungen", priority="0.9",
         crumbs=[("Startseite", "index.html"), ("Leistungen", "leistungen.html")])
 
@@ -783,8 +783,8 @@ def build_fuhrpark():
 {cta_band("")}'''
     return page("fuhrpark.html",
         "Fuhrpark: Koffer-LKW und Transporter | RuhrCargo",
-        "Der Fuhrpark von RuhrCargo: Koffer-LKW mit Ladebordwand, Möbelkoffer und "
-        "Kleintransporter. Über 20 Fahrzeuge – passend zur Ladung ausgewählt.",
+        "Koffer-LKW mit Ladebordwand, Möbelkoffer und Kleintransporter: über 20 eigene "
+        "Fahrzeuge. Wir wählen das Fahrzeug passend zu Ihrer Ladung aus.",
         body, active="fuhrpark", priority="0.7", og_img="assets/og-image.jpg",
         crumbs=[("Startseite", "index.html"), ("Fuhrpark", "fuhrpark.html")])
 
@@ -896,8 +896,8 @@ def build_unternehmen():
 {cta_band("")}'''
     return page("unternehmen.html",
         "Über RuhrCargo | Spedition aus Dortmund",
-        "Über 20 Jahre Erfahrung, über 20 eigene Fahrzeuge, Sitz in Dortmund: Wie RuhrCargo "
-        "arbeitet und welche Ladungen wir deutschlandweit fahren.",
+        "Über 20 Jahre Erfahrung, über 20 eigene Fahrzeuge, Sitz in Dortmund: wie die "
+        "Spedition RuhrCargo arbeitet und was wir deutschlandweit fahren.",
         body, active="unternehmen", priority="0.7", og_img="assets/img/ruhrcargo-team-dortmund.webp",
         crumbs=[("Startseite", "index.html"), ("Unternehmen", "unternehmen.html")])
 
@@ -949,8 +949,8 @@ def build_ablauf():
 {cta_band("")}'''
     return page("ablauf.html",
         "Ablauf einer Transportanfrage | RuhrCargo",
-        "Von der Anfrage bis zur Zustellung: Wie ein Transportauftrag bei RuhrCargo abläuft – "
-        "Anfrage, Planung, Umsetzung, Lieferung Schritt für Schritt.",
+        "Anfrage, Planung, Transport, Lieferung: So läuft ein Transportauftrag bei "
+        "RuhrCargo ab – mit festem Ansprechpartner von der Zusage bis zur Zustellung.",
         body, active="ablauf", priority="0.6",
         crumbs=[("Startseite", "index.html"), ("Ablauf", "ablauf.html")])
 
@@ -1041,7 +1041,7 @@ def build_kontakt():
     return page("kontakt.html",
         "Transport anfragen | RuhrCargo Dortmund",
         "Transport anfragen bei RuhrCargo in Dortmund: Formular für Stückgut, Möbel, "
-        "Elektrogeräte, Kurierfahrten und Umzüge. Wir melden uns zurück.",
+        "Elektrogeräte, Kurierfahrten und Umzüge. Unverbindlich und kostenlos.",
         body, active="kontakt", priority="0.9",
         crumbs=[("Startseite", "index.html"), ("Kontakt", "kontakt.html")])
 
