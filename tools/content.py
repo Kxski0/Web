@@ -47,9 +47,9 @@ SERVICES = [
   "icon": "i-sofa", "num": "01", "img": "ruhrcargo-neumoebel-lieferung",
   "img_alt": "Zwei Mitarbeiter tragen ein verpacktes Sofa in einen Wohnraum",
   "teaser": "Empfindliche Neuware vom Lager bis zur Wunschadresse – sorgfältig verladen, sauber zugestellt.",
-  "lead": "Neuware verzeiht keine Kratzer. Wir bringen Möbel vom Hersteller oder Lager bis zur Wunschadresse – gesichert, terminiert und ohne Umweg.",
+  "lead": "Neuware verzeiht keine Kratzer. Wir bringen Möbel vom Hersteller oder Lager bis zur Wunschadresse, zum vereinbarten Termin und ohne Umweg über ein fremdes Lager.",
   "body": [
-    "Möbel sind sperrig, empfindlich und oft teuer. Ein Transportschaden kostet nicht nur Geld, sondern vor allem Zeit: für die Reklamation, für den Ersatz und für einen zweiten Anlauf. Deshalb behandeln wir Neumöbel wie das, was sie sind – Ware, die beim ersten Mal ankommen muss.",
+    "Möbel sind sperrig und empfindlich, und ein Kratzer sieht man sofort. Teuer wird ein Transportschaden trotzdem weniger durch den Schaden selbst als durch alles, was danach kommt: Reklamation, Ersatzteil, zweiter Anlauf. Deshalb fahren wir Neuware so, dass sie beim ersten Mal ankommt.",
     "Wir fahren für Möbelhäuser, Hersteller und Innenausstatter genauso wie für Privatkunden, die ihre Neuanschaffung nicht selbst transportieren wollen. Vom einzelnen Sessel bis zur kompletten Einrichtung.",
   ],
   "does": [
@@ -178,7 +178,7 @@ SERVICES = [
   "seo_desc": "Umzug mit Spedition: Wir planen den Ablauf, stellen das Fahrzeug und bringen Hausrat oder Büro ans neue Ziel – privat und gewerblich. Jetzt anfragen.", "short": "Privat und gewerblich", "nav": "Umzüge", "title": "Umzüge",
   "icon": "i-home", "num": "06", "img": "ruhrcargo-umzug",
   "img_alt": "Mitarbeiter tragen eine Matratze durch ein Treppenhaus",
-  "teaser": "Privat oder gewerblich – geplant, verladen und angekommen, ohne Stress für Sie.",
+  "teaser": "Privat oder gewerblich: geplant, verladen, angekommen. Ohne dass Sie sich kümmern müssen.",
   "lead": "Vom Apartment bis zum Firmenstandort: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Ihren Hausrat oder Ihr Büro ans neue Ziel.",
   "body": [
     "Ein Umzug scheitert selten am Fahren. Er scheitert an der Planung: am zu kleinen Fahrzeug, am fehlenden Halteverbot, am Treppenhaus, das niemand vorher angesehen hat.",
@@ -197,13 +197,51 @@ SERVICES = [
   "vehicles": ["Möbelkoffer", "Koffer-LKW", "Kleintransporter"],
   "faq": [
     ("Wie finde ich heraus, welches Fahrzeug ich brauche?",
-     "Das übernehmen wir. Beschreiben Sie uns grob, was mitkommt – Zimmerzahl, große Möbelstücke, Besonderheiten – und wir schlagen die passende Größe vor."),
+     "Das übernehmen wir. Sagen Sie uns grob, was mitkommt: Zimmerzahl, große Möbelstücke, Besonderheiten. Dann schlagen wir die passende Größe vor."),
     ("Übernehmen Sie auch Firmenumzüge?",
      "Ja. Büros, Praxen und Filialen ziehen meist außerhalb der Geschäftszeiten um. Den Termin richten wir danach aus."),
     ("Was ist mit besonders schweren Einzelstücken?",
      "Sagen Sie uns vorher Bescheid, etwa bei Klavier, Tresor oder Großgeräten. Dann planen wir Personal und Hilfsmittel entsprechend ein."),
   ],
-  "related": ["neumoebel-lieferung", "elektrogeraete-lieferung", "kurierdienst"],
+  "related": ["entruempelung", "neumoebel-lieferung", "elektrogeraete-lieferung"],
+ },
+{
+  "slug": "entruempelung",
+  "seo_title": "Entrümpelung Dortmund & Ruhrgebiet | RuhrCargo",
+  # TODO:ENTSORGUNG — Ob RuhrCargo als Beförderer von Abfällen nach § 53 KrWG
+  # angezeigt ist, wurde nicht bestätigt. Deshalb steht hier bewusst nichts
+  # über Entsorgungsnachweise, Zertifikate oder eine eigene Deponie.
+  "seo_desc": "Entrümpelung in Dortmund und im Ruhrgebiet: Wohnung, Keller, Garage oder Büro leerräumen. Wir tragen raus und fahren weg. Jetzt anfragen.", "short": "Wohnung, Keller und Büro leerräumen", "nav": "Entrümpelung", "title": "Entrümpelung",
+  "icon": "i-clear", "num": "06", "img": "ruhrcargo-entruempelung",
+  "img_alt": "Zwei Mitarbeiter von RuhrCargo tragen ein Sofa aus einer Haustür",
+  "teaser": "Wohnung, Keller, Garage oder Büro: Wir räumen leer, tragen heraus und fahren ab.",
+  "lead": "Wohnung, Keller, Dachboden oder Büro leerräumen – wir tragen heraus und nehmen mit, was weg soll. Sie müssen dabei nichts anfassen.",
+  "body": [
+    "Entrümpelt wird selten aus freien Stücken. Meistens drückt ein Termin: die Wohnungsübergabe, der Verkauf, das Ende des Mietvertrags, ein Nachlass, den jemand regeln muss. Dann zählt, dass genug Leute kommen und das Fahrzeug groß genug ist. Beides planen wir vorher, nicht vor Ort.",
+    "Was weg soll, sehen wir uns vorher an. Bei einem Keller reicht meistens ein Telefonat, bei einer ganzen Wohnung kommen wir vorbei. Danach wissen Sie, wie viele Leute anrücken, wie lange es dauert und was es kostet. Und was stehen bleiben soll, bleibt stehen – sagen Sie uns einfach, was.",
+  ],
+  "does": [
+    "Wohnungen, Keller, Dachböden und Garagen leerräumen",
+    "Büros, Praxen und Lagerflächen räumen",
+    "Heraustragen auch aus oberen Etagen ohne Aufzug",
+    "Abtransport mit eigenen Fahrzeugen",
+    "Besichtigung vorab, damit der Preis vorher feststeht",
+    "Aussortieren, was Sie behalten möchten",
+  ],
+  "who": ["Privathaushalte vor Übergabe oder Umzug", "Angehörige bei einer Haushaltsauflösung",
+          "Vermieter und Hausverwaltungen", "Büros und Praxen bei Umbau oder Schließung"],
+  "vehicles": ["Möbelkoffer", "Koffer-LKW", "Kleintransporter"],
+  "faq": [
+    ("Was kostet eine Entrümpelung?",
+     "Das hängt an der Menge, am Zugang und an der Etage. Eine Zahl ins Blaue hinein hilft Ihnen nicht weiter. Wir sehen uns vorher an, was weg soll, und nennen Ihnen dann einen Preis, der auch hält."),
+    ("Muss ich vorher selbst aussortieren?",
+     "Nein. Sagen Sie uns, was bleiben soll – das stellen wir beiseite. Den Rest räumen wir."),
+    ("Räumen Sie auch einzelne Räume?",
+     "Ja. Ein Keller, eine Garage oder ein einzelnes Zimmer ist für uns genauso ein Auftrag wie eine komplette Wohnung."),
+    ("Wie kurzfristig geht das?",
+     "Das hängt davon ab, wie die Woche aussieht. Wenn es eilt, sagen Sie das gleich bei der Anfrage – dann schauen wir zuerst, was sich einschieben lässt."),
+  ],
+  "related": ["umzuege", "neumoebel-lieferung", "stueckguttransport"],
  },
 ]
 
@@ -222,9 +260,9 @@ FLEET = [
  {"slug": "moebelkoffer", "img": "ruhrcargo-moebelkoffer", "wide": False,
   "label": "Klasse 03 · Volumen", "name": "Möbelkoffer",
   "alt": "Zwei Mitarbeiter verladen ein verpacktes Möbelstück über die Ladebordwand",
-  "tags": ["Neumöbel", "Umzüge", "Empfindliche Ware"],
-  "text": "Großes Ladevolumen bei geringem Gewicht der Ladung. Das Fahrzeug für Möbel und Umzüge, wo es weniger auf Tonnen als auf Kubikmeter ankommt.",
-  "specs": [("Einsatz", "Möbel und Umzugsgut"),
+  "tags": ["Neumöbel", "Umzüge", "Entrümpelung"],
+  "text": "Großes Ladevolumen bei geringem Gewicht der Ladung. Das Fahrzeug für Möbel, Umzüge und Entrümpelungen, wo es weniger auf Tonnen als auf Kubikmeter ankommt.",
+  "specs": [("Einsatz", "Möbel, Umzugsgut, Räumgut"),
             ("Beladung", "Ladebordwand"),
             ("Besonderheit", "Maximales Volumen")]},
  {"slug": "transporter", "img": "ruhrcargo-kleintransporter", "wide": True,

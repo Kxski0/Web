@@ -79,6 +79,7 @@ SPRITE = '''<svg width="0" height="0" style="position:absolute" aria-hidden="tru
     <g id="i-home"><path d="M3 11 12 3l9 8"/><path d="M5.5 9.8V20h13V9.8"/><path d="M10 20v-5.5h4V20"/></g>
     <g id="i-booth"><path d="M3 8h18l-2-4H5z"/><path d="M4.5 8v12h15V8"/><path d="M9.5 20v-6.5h5V20"/></g>
     <g id="i-reha"><circle cx="13.2" cy="3.6" r="1.9"/><path d="M11.6 7.5v5.6h5l2.6 5.4"/><path d="M16.4 16.2A5.6 5.6 0 1 1 10 9.6"/></g>
+    <g id="i-clear"><path d="M2.6 8.6h18.8l-2.2 10.6H4.8z"/><path d="M6.7 8.6 7.9 4.6h8.2l1.2 4"/><path d="M8.6 12.4h6.8"/></g>
     <g id="i-plus"><path d="M12 5v14M5 12h14"/></g>
     <g id="i-arrow"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></g>
     <g id="i-chev"><path d="M5 8.5 12 15.5 19 8.5"/></g>
@@ -166,7 +167,7 @@ def maps_url():
 
 
 def footer(base):
-    svc = "".join(f'<li><a href="{base}leistungen/{s["slug"]}.html">{e(s["title"])}</a></li>' for s in SERVICES[:5])
+    svc = "".join(f'<li><a href="{base}leistungen/{s["slug"]}.html">{e(s["title"])}</a></li>' for s in SERVICES)
     return f'''<footer class="site-footer">
   <div class="container">
     <div class="footer__grid">
@@ -222,7 +223,7 @@ def ld_organization():
         "name": SITE["name"],
         "legalName": SITE["legal_name"],
         "description": "Spedition und Logistik aus Dortmund: Stückguttransport, "
-                       "Neumöbel-Lieferung, Elektrogeräte, Kurierdienst und Umzüge – deutschlandweit.",
+                       "Neumöbel-Lieferung, Elektrogeräte, Kurierdienst, Umzüge und Entrümpelung – deutschlandweit.",
         "url": SITE["domain"] + "/",
         "logo": SITE["domain"] + "/assets/logo.png",
         "image": SITE["domain"] + "/assets/og-image.jpg",
@@ -378,7 +379,7 @@ def build_index():
     stats = [("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
              ("20", "+", "Jahre Erfahrung", "Gewachsene Routine in Transport und Disposition."),
              (None, None, "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
-             ("5", "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]
+             (str(len(SERVICES)), "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]
     stat_html = ""
     for i, (num, suf, label, note) in enumerate(stats):
         val = (f'<span class="stat__num" data-count="{num}" data-suffix="{suf}">0</span>'
@@ -468,7 +469,7 @@ def build_index():
         <h2 class="h2" data-reveal style="--d:60">Alles, was<br>transportiert werden muss.</h2>
       </div>
       <div data-reveal style="--d:120">
-        <p class="lead">Fünf Leistungsbereiche, ein Anspruch: Ihre Ware kommt vollständig,
+        <p class="lead">Sechs Leistungsbereiche, ein Anspruch: Ihre Ware kommt vollständig,
           unbeschädigt und zum vereinbarten Termin an.</p>
         <p style="margin-top:1.1rem"><a class="link-arrow" href="leistungen.html">Alle Leistungen im Detail {icon("i-arrow", 16)}</a></p>
       </div>
@@ -583,8 +584,8 @@ def build_index():
 
     return page("index.html",
                 "Spedition & Logistik Dortmund | RuhrCargo GmbH",
-                "Spedition aus Dortmund: Stückgut, Neumöbel, Elektrogeräte, Kurierfahrten "
-                "und Umzüge. Über 20 eigene Fahrzeuge, deutschlandweit im Einsatz.",
+                "Spedition aus Dortmund: Stückgut, Neumöbel, Elektrogeräte, Kurierfahrten, "
+                "Umzüge und Entrümpelung. Über 20 eigene Fahrzeuge, deutschlandweit.",
                 body, active="", jsonld=ld_organization(), priority="1.0",
                 crumbs=[("Startseite", "index.html")])
 
@@ -610,7 +611,7 @@ def build_leistungen():
         </p>
       </div>
     </article>'''
-    body = f'''{page_hero("Leistungen", "Fünf Bereiche.<br>Ein Anspruch.",
+    body = f'''{page_hero("Leistungen", "Sechs Bereiche.<br>Ein Anspruch.",
         "Von der Einzelzustellung bis zur wiederkehrenden Tour: Was wir transportieren, transportieren wir mit der Sorgfalt, die die Ware verlangt.",
         [("Startseite", "index.html"), ("Leistungen", None)], "")}
 
@@ -621,11 +622,11 @@ def build_leistungen():
 </section>
 
 {cta_band("", "Nicht dabei, was Sie brauchen?<br>Fragen Sie trotzdem.",
-  "Ungewöhnliche Maße, besondere Anforderungen oder eine wiederkehrende Tour – wir sagen Ihnen ehrlich, ob und wie wir das fahren.")}'''
+  "Sperrige Maße, ein enges Zeitfenster oder eine Tour, die sich jede Woche wiederholt: Sagen Sie uns, worum es geht. Wir antworten ehrlich.")}'''
     return page("leistungen.html",
         "Transportleistungen im Überblick | RuhrCargo",
-        "Stückgut, Neumöbel, Elektrogeräte, Kurierfahrten und Umzüge: die fünf "
-        "Leistungen der Spedition RuhrCargo aus Dortmund. Jetzt unverbindlich anfragen.",
+        "Stückgut, Neumöbel, Elektrogeräte, Kurierfahrten, Umzüge, Entrümpelung: die "
+        "sechs Leistungen der Spedition RuhrCargo aus Dortmund. Jetzt anfragen.",
         body, active="leistungen", priority="0.9",
         crumbs=[("Startseite", "index.html"), ("Leistungen", "leistungen.html")])
 
@@ -809,7 +810,7 @@ def build_unternehmen():
             ("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
             ("20", "+", "Jahre Erfahrung", "Gewachsene Routine in Transport und Disposition."),
             (None, None, "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
-            ("5", "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]))
+            (str(len(SERVICES)), "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]))
     sectors = "".join(f'<span class="sector">{e(s)}</span>' for s in SECTORS)
     slots = "".join(f'<div class="logo-slot"><span class="logo-slot__mark">Kundenlogo</span>'
                     f'<span class="logo-slot__note">Slot {i:02d}</span></div>' for i in range(1, 7))
@@ -841,7 +842,7 @@ def build_unternehmen():
           <li>Über 20 eigene Fahrzeuge</li>
           <li>Über 20 Jahre Erfahrung</li>
           <li>Deutschlandweit im Einsatz</li>
-          <li>Fünf Leistungsbereiche</li>
+          <li>Sechs Leistungsbereiche</li>
           <li>Feste Ansprechpartner</li>
         </ul>
         <a class="btn btn--dark btn--block" href="kontakt.html">Sprechen Sie mit uns {ARROW}</a>
@@ -1041,7 +1042,7 @@ def build_kontakt():
     return page("kontakt.html",
         "Transport anfragen | RuhrCargo Dortmund",
         "Transport anfragen bei RuhrCargo in Dortmund: Formular für Stückgut, Möbel, "
-        "Elektrogeräte, Kurierfahrten und Umzüge. Unverbindlich und kostenlos.",
+        "Elektrogeräte, Kurierfahrten, Umzüge und Entrümpelung. Unverbindlich.",
         body, active="kontakt", priority="0.9",
         crumbs=[("Startseite", "index.html"), ("Kontakt", "kontakt.html")])
 

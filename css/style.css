@@ -1945,9 +1945,43 @@ a.contact__row { position: relative; }
 
 /* --------------------------------------------------------------------------
    35 · LEISTUNGSRASTER MIT UNGERADER KARTENZAHL
-   Bei genau fünf Bereichen bliebe sonst eine Lücke in der zweiten Reihe.
-   Die letzte Karte füllt sie und zeigt ihr Bild dauerhaft — wie im Fuhrpark.
+   Das Raster stellt auf breiten Schirmen vier Spalten. Fünf oder sechs
+   Karten lassen die zweite Reihe sonst halb leer. Die Regeln unten füllen
+   sie auf und zeigen die Bilder dort dauerhaft — wie im Fuhrpark.
+
+   Fünf Karten: die letzte läuft über die ganze Reihe.
+   Sechs Karten: die letzten beiden teilen sich die Reihe.
+   Beides greift über :nth-child von selbst, je nachdem wie viele
+   Leistungen in content.py stehen.
+
+   Die Sechser-Regel braucht genau vier Spalten. Die stellt das Raster ab
+   1160 px (gemessen, nicht geschätzt). Darunter gehen sechs Karten als
+   3+3, 2+2+2 oder untereinander auf und brauchen keine Sonderbehandlung.
    -------------------------------------------------------------------------- */
+@media (min-width: 1160px) {
+  .services > .svc:nth-child(5):nth-last-child(2),
+  .services > .svc:nth-child(6):last-child {
+    grid-column: span 2;
+    aspect-ratio: 16 / 7.2;
+    min-height: 300px;
+  }
+  .services > .svc:nth-child(5):nth-last-child(2) .svc__img,
+  .services > .svc:nth-child(6):last-child .svc__img { object-position: 50% 30%; }
+}
+@media (min-width: 1160px) and (hover: hover) and (pointer: fine) {
+  .services > .svc:nth-child(5):nth-last-child(2),
+  .services > .svc:nth-child(6):last-child { color: var(--white); border-color: transparent; }
+  .services > .svc:nth-child(5):nth-last-child(2) .svc__img,
+  .services > .svc:nth-child(6):last-child .svc__img { opacity: 1; transform: scale(1); }
+  .services > .svc:nth-child(5):nth-last-child(2) .svc__scrim,
+  .services > .svc:nth-child(6):last-child .svc__scrim { opacity: 1; }
+  .services > .svc:nth-child(5):nth-last-child(2) .svc__desc,
+  .services > .svc:nth-child(6):last-child .svc__desc { color: rgba(255, 255, 255, .74); }
+  .services > .svc:nth-child(5):nth-last-child(2) .svc__go,
+  .services > .svc:nth-child(6):last-child .svc__go { opacity: 1; transform: none; }
+  .services > .svc:nth-child(5):nth-last-child(2):hover .svc__img,
+  .services > .svc:nth-child(6):last-child:hover .svc__img { transform: scale(1.04); }
+}
 @media (min-width: 1000px) {
   .services > .svc:nth-child(5):last-child {
     grid-column: 1 / -1;

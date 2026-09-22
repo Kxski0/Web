@@ -276,14 +276,19 @@
       text: 'Vom Apartment bis zum Firmenstandort: Wir planen den Ablauf, stellen das passende Fahrzeug und bringen Ihren Hausrat oder Ihr Büro ans neue Ziel.',
       facts: ['Private und gewerbliche Umzüge', 'Fahrzeug passend zum Volumen', 'Termin nach Ihrem Zeitplan']
     },
+    'entruempelung': {
+      title: 'Entrümpelung',
+      text: 'Wohnung, Keller, Garage oder Büro leerräumen: Wir tragen heraus und fahren ab. Was stehen bleiben soll, bleibt stehen – sagen Sie uns einfach, was.',
+      facts: ['Vom einzelnen Keller bis zur ganzen Wohnung', 'Auch aus oberen Etagen ohne Aufzug', 'Besichtigung vorab, Preis steht vorher fest']
+    },
     'sonstiges': {
-      title: 'Ihre individuelle Lösung',
-      text: 'Ungewöhnliche Maße, besondere Anforderungen oder eine wiederkehrende Tour? Beschreiben Sie uns Ihren Fall – wir sagen Ihnen ehrlich, ob und wie wir ihn fahren.',
-      facts: ['Individuelle Transportlösungen', 'Auch für wiederkehrende Touren', 'Ehrliche Einschätzung statt Standardangebot']
+      title: 'Etwas anderes',
+      text: 'Sperrige Maße, ein enges Zeitfenster oder eine Tour, die sich jede Woche wiederholt: Beschreiben Sie uns den Fall. Wir sagen Ihnen, ob wir ihn fahren können. Und wenn nicht, sagen wir auch das.',
+      facts: ['Auch sperrige und ungewöhnliche Ladung', 'Feste Touren, die sich wiederholen', 'Ehrliche Einschätzung statt Standardangebot']
     }
   };
 
-  var ORDER = ['stueckguttransport', 'neumoebel-lieferung', 'elektrogeraete-lieferung', 'kurierdienst', 'umzuege', 'sonstiges'];
+  var ORDER = ['stueckguttransport', 'neumoebel-lieferung', 'elektrogeraete-lieferung', 'kurierdienst', 'umzuege', 'entruempelung', 'sonstiges'];
   var chipsWrap = $('#cfgChips');
   var panel = $('#cfgPanel');
   var ladungSelect = $('#f-was');
