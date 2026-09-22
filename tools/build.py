@@ -713,7 +713,7 @@ def build_service(s):
   </div>
 </section>
 
-{cta_band(base, f'{e(s["title"])} zu transportieren?<br>Sprechen wir darüber.')}'''
+{cta_band(base, f'{e(s["cta"])}<br>Sprechen wir darüber.')}'''
     ld = {
       "@context": "https://schema.org",
       "@type": "Service",

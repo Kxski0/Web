@@ -41,7 +41,7 @@ SITE = {
 # ── Leistungen ────────────────────────────────────────────────────────────
 SERVICES = [
  {
-  "slug": "neumoebel-lieferung",
+  "slug": "neumoebel-lieferung", "cta": "Möbel zu liefern?",
   "seo_title": "Neumöbel-Lieferung & Möbeltransport | RuhrCargo",
   "seo_desc": "Neumöbel liefern lassen: Wir transportieren Möbel vom Lager bis zur Wunschadresse – im Möbelkoffer, gesichert, nach Terminabsprache. Jetzt anfragen.", "short": "Möbel vom Lager bis in die Wohnung", "nav": "Neumöbel", "title": "Neumöbel",
   "icon": "i-sofa", "num": "01", "img": "ruhrcargo-neumoebel-lieferung",
@@ -74,7 +74,7 @@ SERVICES = [
   "related": ["umzuege", "elektrogeraete-lieferung", "stueckguttransport"],
  },
  {
-  "slug": "elektrogeraete-lieferung",
+  "slug": "elektrogeraete-lieferung", "cta": "Geräte zu liefern?",
   "seo_title": "Elektrogeräte liefern lassen | RuhrCargo Spedition",
   "seo_desc": "Waschmaschine, Kühlschrank, Fernseher: Wir liefern Elektrogeräte und weiße Ware mit Ladebordwand – für Fachhandel und Privatkunden. Jetzt anfragen.", "short": "Weiße Ware und Elektronik", "nav": "Elektrogeräte", "title": "Elektrogeräte",
   "icon": "i-appliance", "num": "02", "img": "ruhrcargo-elektrogeraete-lieferung",
@@ -107,7 +107,7 @@ SERVICES = [
   "related": ["neumoebel-lieferung", "stueckguttransport", "kurierdienst"],
  },
  {
-  "slug": "stueckguttransport",
+  "slug": "stueckguttransport", "cta": "Stückgut zu transportieren?",
   "seo_title": "Stückguttransport | RuhrCargo Spedition Dortmund",
   "seo_desc": "Stückguttransport ohne Umladung: von der Einzelpalette bis zur Teilladung, im Direktverkehr ab Dortmund deutschlandweit. Jetzt unverbindlich anfragen.", "short": "Paletten, Kisten, Einzelsendungen", "nav": "Stückgut", "title": "Stückgut",
   "icon": "i-pallet", "num": "03", "img": "ruhrcargo-stueckguttransport",
@@ -140,7 +140,7 @@ SERVICES = [
   "related": ["elektrogeraete-lieferung", "kurierdienst", "neumoebel-lieferung"],
  },
  {
-  "slug": "kurierdienst",
+  "slug": "kurierdienst", "cta": "Muss es heute noch ankommen?",
   "seo_title": "Kurierdienst & Direktfahrten | RuhrCargo",
   "seo_desc": "Kurierfahrt mit Direktzustellung: ein Fahrzeug, eine Ladung, ein Ziel – ohne Umladen, deutschlandweit und kurzfristig. Jetzt unverbindlich anfragen.", "short": "Direktfahrt ohne Umladung", "nav": "Kurierfahrten", "title": "Kurierfahrten",
   "icon": "i-bolt", "num": "04", "img": "ruhrcargo-kurierdienst",
@@ -173,7 +173,7 @@ SERVICES = [
   "related": ["stueckguttransport", "elektrogeraete-lieferung", "umzuege"],
  },
 {
-  "slug": "umzuege",
+  "slug": "umzuege", "cta": "Umzug steht an?",
   "seo_title": "Umzug privat & gewerblich | RuhrCargo Dortmund",
   "seo_desc": "Umzug mit Spedition: Wir planen den Ablauf, stellen das Fahrzeug und bringen Hausrat oder Büro ans neue Ziel – privat und gewerblich. Jetzt anfragen.", "short": "Privat und gewerblich", "nav": "Umzüge", "title": "Umzüge",
   "icon": "i-home", "num": "06", "img": "ruhrcargo-umzug",
@@ -206,7 +206,7 @@ SERVICES = [
   "related": ["entruempelung", "neumoebel-lieferung", "elektrogeraete-lieferung"],
  },
 {
-  "slug": "entruempelung",
+  "slug": "entruempelung", "cta": "Etwas zu räumen?",
   "seo_title": "Entrümpelung Dortmund & Ruhrgebiet | RuhrCargo",
   # TODO:ENTSORGUNG — Ob RuhrCargo als Beförderer von Abfällen nach § 53 KrWG
   # angezeigt ist, wurde nicht bestätigt. Deshalb steht hier bewusst nichts
