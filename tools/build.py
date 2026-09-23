@@ -324,7 +324,9 @@ def page_hero(eyebrow, title, lead, crumbs, base, img=None, alt=""):
     media = ""
     if img:
         media = (f'<div class="page-hero__media" data-parallax="0.12">'
-                 f'<img src="{base}assets/img/{img}.webp" alt="{e(alt)}" width="1500" height="643" loading="eager" fetchpriority="high" decoding="async">'
+                 # Nicht fest verdrahten: die Kopfbilder sind je nach Beschnitt
+                 # 642 bis 644 Pixel hoch. dim() liest die Maße aus der Datei.
+                 f'<img src="{base}assets/img/{img}.webp" alt="{e(alt)}" {dim(f"assets/img/{img}.webp")} loading="eager" fetchpriority="high" decoding="async">'
                  f'<span class="page-hero__scrim" aria-hidden="true"></span></div>')
     return f'''<section class="page-hero{" page-hero--media" if img else ""}">
   {media}
