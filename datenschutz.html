@@ -178,7 +178,18 @@
       <p>Wir löschen die Daten, sobald sie für die Zweckerreichung nicht mehr erforderlich sind und
         keine handels- oder steuerrechtlichen Aufbewahrungsfristen entgegenstehen.</p>
       <p>Das Formular enthält ein für Menschen unsichtbares Feld, das ausschließlich der Abwehr
-        automatisierter Einträge dient. Es werden dabei keine personenbezogenen Daten erhoben.</p>
+        automatisierter Einträge dient. Es werden dabei keine personenbezogenen Daten erhoben.
+        Um wiederholtes automatisiertes Absenden zu unterbinden, wird Ihre IP-Adresse für zehn
+        Minuten im Arbeitsspeicher des Servers vorgehalten und danach verworfen. Rechtsgrundlage
+        ist Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO; unser berechtigtes Interesse liegt in der
+        Abwehr missbräuchlicher Nutzung.</p>
+      <p class="legal__todo"><strong>Offen: Versanddienst des Formulars.</strong> Sobald in Vercel
+        ein Maildienst hinterlegt ist, muss er hier als Auftragsverarbeiter benannt werden — mit
+        Firma, Sitz, Rechtsgrundlage der Übermittlung und Link auf dessen Datenschutzerklärung.
+        Dafür in <code>tools/content.py</code> <code>SITE["mail_provider"]</code> auf
+        <code>"brevo"</code> oder <code>"resend"</code> setzen und neu bauen. Solange nichts
+        hinterlegt ist, öffnet das Formular das E-Mail-Programm des Besuchers; dabei wird kein
+        Dienstleister eingeschaltet.</p>
 
       <h2>6. Schriftarten</h2>
       <p>Diese Website bindet keine externen Schriftarten ein. Alle verwendeten Schriften werden

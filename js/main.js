@@ -11,10 +11,13 @@
      ------------------------------------------------------------------
      formEndpoint : URL, die das Anfrageformular per POST (JSON) empfängt.
                     Leer lassen = Fallback über das E-Mail-Programm (mailto).
+                    /api/anfrage ist die Serverless Function im Ordner api/.
+                    Solange dort kein Maildienst hinterlegt ist, antwortet sie
+                    mit 503 und das Formular weicht selbst auf mailto aus.
      contactEmail : Empfängeradresse für den mailto-Fallback.
   ------------------------------------------------------------------ */
   var CONFIG = {
-    formEndpoint: '',
+    formEndpoint: '/api/anfrage',
     contactEmail: 'info@ruhrcargo.net'
   };
 
@@ -404,7 +407,10 @@
   var form = $('#anfrageForm');
   var okBox = $('#formOk');
   var errBox = $('#formErr');
+  var errText = $('#formErrText');
   var submitBtn = $('#formSubmit');
+  // Ausgangstext merken, damit eine spezielle Meldung ihn nicht dauerhaft ersetzt
+  var standardFehler = errText ? errText.textContent : '';
 
   function fieldOf(input) { return input.closest('.field'); }
 
@@ -439,6 +445,7 @@
       ev.preventDefault();
       okBox.classList.remove('is-visible');
       errBox.classList.remove('is-visible');
+      if (errText) errText.textContent = standardFehler;
 
       if (form.website && form.website.value) return;   // Honeypot: nur Bots
 
@@ -456,6 +463,13 @@
       new FormData(form).forEach(function (v, k) { data[k] = v; });
       delete data.website;
 
+      // Beschriftung der gewaehlten Ladung mitschicken. Sonst stuende im
+      // Betreff der Mail der Slug statt "Neumoebel".
+      var wahl = $('#f-was');
+      if (wahl && wahl.selectedIndex > -1) {
+        data.ladungLabel = wahl.options[wahl.selectedIndex].textContent.trim();
+      }
+
       function succeed() {
         okBox.classList.add('is-visible');
         form.reset();
@@ -463,8 +477,8 @@
         okBox.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
       }
 
-      // Ohne Backend: vorbefüllte E-Mail im Mailprogramm öffnen
-      if (!CONFIG.formEndpoint) {
+      // Ohne Versandweg: vorbefüllte E-Mail im Mailprogramm öffnen
+      function perMailprogramm() {
         var lines = [
           'Ladung: ' + (data.ladung || ''),
           'Abholung: ' + (data.von || ''),
@@ -483,11 +497,23 @@
           '?subject=' + encodeURIComponent('Transportanfrage über die Website') +
           '&body=' + encodeURIComponent(lines);
         succeed();
-        return;
       }
+
+      if (!CONFIG.formEndpoint) { perMailprogramm(); return; }
 
       submitBtn.setAttribute('data-busy', 'true');
       submitBtn.querySelector('span').textContent = 'Wird gesendet …';
+
+      function entsperren() {
+        submitBtn.removeAttribute('data-busy');
+        submitBtn.querySelector('span').textContent = 'Transport anfragen';
+      }
+
+      function scheitern(text) {
+        if (text) errText.textContent = text;
+        errBox.classList.add('is-visible');
+        errBox.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+      }
 
       fetch(CONFIG.formEndpoint, {
         method: 'POST',
@@ -495,14 +521,26 @@
         body: JSON.stringify(data)
       })
         .then(function (res) {
-          if (!res.ok) throw new Error('Status ' + res.status);
-          succeed();
+          return res.json().catch(function () { return {}; }).then(function (body) {
+            return { status: res.status, ok: res.ok, body: body };
+          });
         })
-        .catch(function () { errBox.classList.add('is-visible'); })
-        .finally(function () {
-          submitBtn.removeAttribute('data-busy');
-          submitBtn.querySelector('span').textContent = 'Transport anfragen';
-        });
+        .then(function (r) {
+          if (r.ok) { entsperren(); succeed(); return; }
+
+          // Noch kein Maildienst hinterlegt: statt einer Fehlermeldung das
+          // Mailprogramm oeffnen, damit die Anfrage trotzdem ankommt.
+          if (r.status === 503) { entsperren(); perMailprogramm(); return; }
+
+          entsperren();
+          if (r.status === 429) {
+            scheitern('Es sind gerade sehr viele Anfragen eingegangen. '
+              + 'Bitte versuchen Sie es in ein paar Minuten noch einmal oder rufen Sie uns an.');
+          } else {
+            scheitern(standardFehler);
+          }
+        })
+        .catch(function () { entsperren(); scheitern(standardFehler); });
     });
   }
 

@@ -19,12 +19,51 @@ sich ab, damit Fahrzeugbilder maximal wirken.
 | 4 | **Aufsichtsbehörde** für den Güterkraftverkehr ergänzen | `tools/legal.py` |
 | 5 | **Öffnungszeiten** bestätigen | `tools/content.py` → `hours` |
 | 6 | **Datenschutzerklärung** juristisch prüfen lassen | `tools/legal.py` |
-| 7 | **Formular-Empfang** einrichten | `js/main.js` → `CONFIG.formEndpoint` |
+| 7 | **Maildienst für das Formular** hinterlegen — siehe unten | Vercel → Environment Variables |
 | 8 | **AV-Vertrag** mit dem Hoster abschließen | organisatorisch |
 | 9 | **Kundenlogos** einsetzen oder Bereich entfernen | `tools/build.py` → `build_unternehmen` |
 | 10 | Sitemap in der **Google Search Console** einreichen | `https://…/sitemap.xml` |
 
 Nach jeder Änderung an `tools/` muss `python3 tools/build.py` laufen.
+
+---
+
+## Anfrageformular
+
+Das Formular auf `kontakt.html` postet JSON an `/api/anfrage` — eine Serverless
+Function im Ordner `api/`, ohne Abhängigkeiten. Sie prüft die Eingaben, drosselt
+Wiederholungen und schickt die Anfrage als E-Mail an `MAIL_TO`. Geantwortet wird
+direkt an die Adresse des Absenders (`Reply-To`).
+
+**Solange kein Schlüssel hinterlegt ist**, antwortet die Funktion mit `503` und
+das Formular öffnet stattdessen das E-Mail-Programm des Besuchers. Es läuft also
+nie ins Leere — aber richtig ist es erst mit einem der beiden Dienste.
+
+### Einrichten (Vercel → Projekt → Settings → Environment Variables)
+
+| Variable | Wert |
+|---|---|
+| `MAIL_TO` | `info@ruhrcargo.net` |
+| `MAIL_FROM` | Absenderadresse, beim Dienst freigeschaltet |
+| `MAIL_FROM_NAME` | z. B. `RuhrCargo Website` |
+| `BREVO_API_KEY` **oder** `RESEND_API_KEY` | Schlüssel des gewählten Dienstes |
+
+**Brevo** sitzt in der EU (deutsche Niederlassung, EU-Server) und ist damit
+datenschutzrechtlich der unkompliziertere Weg. **Resend** ist schneller
+eingerichtet, verarbeitet aber in den USA.
+
+Danach zwingend:
+
+1. In `tools/content.py` `SITE["mail_provider"]` auf `"brevo"` bzw. `"resend"`
+   setzen und neu bauen. Der Dienst ist Auftragsverarbeiter und muss in
+   Abschnitt 5a der Datenschutzerklärung stehen — ohne die Einstellung weist
+   die Seite sichtbar darauf hin, dass die Angabe fehlt.
+2. **AV-Vertrag** nach Art. 28 DSGVO mit dem Dienst abschließen.
+3. Eine Testanfrage senden und prüfen, ob sie ankommt.
+
+Die Drosselung liegt im Arbeitsspeicher der jeweiligen Instanz. Gegen ein
+stumpfes Skript hilft das, gegen einen verteilten Angriff nicht — dafür wäre
+Vercel Firewall oder ein externer Speicher nötig.
 
 Alle Platzhalter finden:
 
@@ -37,7 +76,7 @@ grep -rn "TODO:" tools/ && grep -rn "000 00 00" *.html
 ```
 RuhrCargo GmbH
 Florianstraße 15-21, 44139 Dortmund
-Geschäftsführer: Melih Arik
+Geschäftsführer: Melih Arik (im Impressum voll, sonst „M. Arik“)
 Amtsgericht Dortmund, HRB 38662
 info@ruhrcargo.net
 Telefon: fehlt noch

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Rechtstexte. Platzhalter sind mit TODO markiert."""
-from content import SITE
+from content import SITE, MAIL_PROVIDER
 
 _S, _Z, _C = SITE["street"], SITE["zip"], SITE["city"]
 _MAIL, _TEL = SITE["email"], SITE["phone_display"]
@@ -74,6 +74,26 @@ IMPRESSUM = f"""\
         bedürfen der schriftlichen Zustimmung.</p>
 """
 
+_P = MAIL_PROVIDER.get(SITE.get("mail_provider") or "")
+if _P:
+    _VERSAND = f"""\
+      <h2>5a. Versand der Formularnachricht</h2>
+      <p>Für die Zustellung der Formularnachricht an unser Postfach setzen wir
+        {_P["name"]} ein ({_P["firma"]}). Der Anbieter verarbeitet die von Ihnen im Formular
+        angegebenen Daten ausschließlich weisungsgebunden für uns; es besteht ein Vertrag zur
+        Auftragsverarbeitung nach Art.&nbsp;28 DSGVO. {_P["sitz"]}
+        Weitere Angaben finden Sie in der Datenschutzerklärung des Anbieters:
+        <a href="{_P["datenschutz"]}" rel="noopener noreferrer" target="_blank">{_P["datenschutz"]}</a>.</p>"""
+else:
+    _VERSAND = """\
+      <p class="legal__todo"><strong>Offen: Versanddienst des Formulars.</strong> Sobald in Vercel
+        ein Maildienst hinterlegt ist, muss er hier als Auftragsverarbeiter benannt werden — mit
+        Firma, Sitz, Rechtsgrundlage der Übermittlung und Link auf dessen Datenschutzerklärung.
+        Dafür in <code>tools/content.py</code> <code>SITE["mail_provider"]</code> auf
+        <code>"brevo"</code> oder <code>"resend"</code> setzen und neu bauen. Solange nichts
+        hinterlegt ist, öffnet das Formular das E-Mail-Programm des Besuchers; dabei wird kein
+        Dienstleister eingeschaltet.</p>"""
+
 DATENSCHUTZ = f"""\
       <p class="legal__todo"><strong>Vor dem Livegang prüfen lassen.</strong> Dieser Text beschreibt
         den aktuellen technischen Stand der Website. Er ersetzt keine Rechtsberatung. Offen sind:
@@ -135,7 +155,12 @@ DATENSCHUTZ = f"""\
       <p>Wir löschen die Daten, sobald sie für die Zweckerreichung nicht mehr erforderlich sind und
         keine handels- oder steuerrechtlichen Aufbewahrungsfristen entgegenstehen.</p>
       <p>Das Formular enthält ein für Menschen unsichtbares Feld, das ausschließlich der Abwehr
-        automatisierter Einträge dient. Es werden dabei keine personenbezogenen Daten erhoben.</p>
+        automatisierter Einträge dient. Es werden dabei keine personenbezogenen Daten erhoben.
+        Um wiederholtes automatisiertes Absenden zu unterbinden, wird Ihre IP-Adresse für zehn
+        Minuten im Arbeitsspeicher des Servers vorgehalten und danach verworfen. Rechtsgrundlage
+        ist Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO; unser berechtigtes Interesse liegt in der
+        Abwehr missbräuchlicher Nutzung.</p>
+{_VERSAND}
 
       <h2>6. Schriftarten</h2>
       <p>Diese Website bindet keine externen Schriftarten ein. Alle verwendeten Schriften werden

@@ -42,6 +42,31 @@ SITE = {
     # TODO:ZEITEN — vom Kunden nicht bestätigt, daher nicht in den strukturierten Daten
     "hours": "Mo – Fr, 07:00 – 18:00 Uhr",
     "hours_is_placeholder": True,
+
+    # Versanddienst des Anfrageformulars. Steuert Abschnitt 5 der
+    # Datenschutzerklärung — ein solcher Dienst ist Auftragsverarbeiter und
+    # muss dort benannt sein. Erlaubt: "brevo", "resend" oder None.
+    # Muss zu dem Schlüssel passen, der in Vercel hinterlegt ist
+    # (BREVO_API_KEY bzw. RESEND_API_KEY). Solange None gesetzt ist, weist
+    # die Datenschutzerklärung sichtbar darauf hin, dass die Angabe fehlt.
+    "mail_provider": None,
+}
+
+# Angaben zu den unterstützten Versanddiensten für die Datenschutzerklärung
+MAIL_PROVIDER = {
+    "brevo": {
+        "name": "Brevo",
+        "firma": "Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin",
+        "sitz": "Die Verarbeitung findet auf Servern innerhalb der Europäischen Union statt.",
+        "datenschutz": "https://www.brevo.com/de/legal/privacypolicy/",
+    },
+    "resend": {
+        "name": "Resend",
+        "firma": "Resend, Inc., 2261 Market Street #5039, San Francisco, CA 94114, USA",
+        "sitz": ("Die Übermittlung in die USA erfolgt auf Grundlage der Standardvertragsklauseln "
+                 "nach Art. 46 Abs. 2 lit. c DSGVO."),
+        "datenschutz": "https://resend.com/legal/privacy-policy",
+    },
 }
 
 
