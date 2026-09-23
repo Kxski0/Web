@@ -70,6 +70,10 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Waagerecht darf nie gescrollt werden. clip statt hidden, weil hidden
+     einen Scroll-Container erzeugt und damit den festen Kopfbereich und das
+     weiche Scrollen stört. */
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
 }
@@ -82,7 +86,6 @@ body {
   background: var(--white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
   font-variant-ligatures: none;
 }
 
@@ -678,7 +681,10 @@ h1, h2, h3, h4 {
   flex-direction: column;
   justify-content: flex-end;
   gap: .75rem;
-  min-height: 330px;
+  /* Kein min-height neben aspect-ratio: die Mindesthöhe würde sonst in eine
+     Mindestbreite umgerechnet und die Karte auf sehr schmalen Schirmen
+     breiter machen als ihre Rasterspalte. Ab 360 px liefert das
+     Seitenverhältnis ohnehin mehr Höhe, als die 330 px je erzwungen haben. */
   aspect-ratio: 4 / 4.15;
   padding: clamp(1.1rem, 1.7vw, 1.5rem);
   background: var(--white);
@@ -1418,6 +1424,13 @@ a.contact__row { position: relative; }
 }
 [data-reveal="left"]  { transform: translateX(-38px); }
 [data-reveal="right"] { transform: translateX(38px); }
+/* Der seitliche Versatz muss in den Seitenrand passen. Auf dem Telefon sind
+   das 20 px — bei 38 px ragte jedes noch nicht eingeblendete Element aus dem
+   Bild und machte die Seite verschiebbar. */
+@media (max-width: 720px) {
+  [data-reveal="left"]  { transform: translateX(-14px); }
+  [data-reveal="right"] { transform: translateX(14px); }
+}
 [data-reveal="fade"]  { transform: none; }
 [data-reveal="scale"] { transform: translateY(22px) scale(.985); }
 [data-reveal].is-in { opacity: 1; transform: none; }
@@ -1965,7 +1978,11 @@ a.contact__row { position: relative; }
   .services > .svc:nth-child(5):nth-last-child(2),
   .services > .svc:nth-child(6):last-child {
     grid-column: span 2;
-    aspect-ratio: 16 / 7.2;
+    /* Kein aspect-ratio zusammen mit min-height: die Mindesthöhe würde über
+       das Seitenverhältnis in eine Mindestbreite umgerechnet (300 × 2,22 =
+       666 px). Zwei solcher Karten passen in keine Rasterzeile und schieben
+       die Seite nach rechts. Die Höhe kommt deshalb aus dem Inhalt. */
+    aspect-ratio: auto;
     min-height: 300px;
   }
   .services > .svc:nth-child(5):nth-last-child(2) .svc__img,
@@ -1988,7 +2005,8 @@ a.contact__row { position: relative; }
 @media (min-width: 1000px) {
   .services > .svc:nth-child(5):last-child {
     grid-column: 1 / -1;
-    aspect-ratio: 16 / 5;
+    /* siehe oben: aspect-ratio und min-height vertragen sich hier nicht */
+    aspect-ratio: auto;
     min-height: 280px;
   }
   .services > .svc:nth-child(5):last-child .svc__desc { max-width: 46ch; }

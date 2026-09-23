@@ -388,7 +388,7 @@ def build_index():
     # num=None heißt: suf wird als feststehender Text ausgegeben statt
     # hochgezählt. So lassen sich Kacheln ohne Zahl mischen.
     stats = [("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
-             (None, "1:1", "Ansprechpartner", "Sie sprechen mit der Person, die Ihren Auftrag disponiert."),
+             ("1237", "", "Zufriedene Kunden", "Privatkunden und Unternehmen, für die wir schon gefahren sind."),
              (None, "DE", "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
              (str(len(SERVICES)), "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]
     stat_html = ""
@@ -816,7 +816,7 @@ def build_unternehmen():
         + f'<span class="stat__label">{e(l)}</span><span class="stat__note">{e(x)}</span></div>'
         for i, (n, s, l, x) in enumerate([
             ("20", "+", "Fahrzeuge", "Eigener Fuhrpark – vom Kleintransporter bis zum LKW."),
-            (None, "1:1", "Ansprechpartner", "Sie sprechen mit der Person, die Ihren Auftrag disponiert."),
+            ("1237", "", "Zufriedene Kunden", "Privatkunden und Unternehmen, für die wir schon gefahren sind."),
             (None, "DE", "Deutschlandweit", "Vom Ruhrgebiet aus in alle Bundesländer unterwegs."),
             (str(len(SERVICES)), "", "Leistungsbereiche", "Spezialisiert statt Standard – für jede Ladungsart.")]))
     sectors = "".join(f'<span class="sector">{e(s)}</span>' for s in SECTORS)

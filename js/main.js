@@ -180,7 +180,10 @@
     var suffix = el.getAttribute('data-suffix') || '';
     if (isNaN(target)) return;
 
-    function paint(v) { el.innerHTML = v + (suffix ? '<sup>' + suffix + '</sup>' : ''); }
+    // Vierstellige Werte brauchen den Tausenderpunkt: 1.237 statt 1237
+    function paint(v) {
+      return el.innerHTML = v.toLocaleString('de-DE') + (suffix ? '<sup>' + suffix + '</sup>' : '');
+    }
     if (reduced) { paint(target); return; }
 
     var start = 0;
