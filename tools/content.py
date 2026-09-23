@@ -220,7 +220,11 @@ SERVICES = [
   # über Entsorgungsnachweise, Zertifikate oder eine eigene Deponie.
   "seo_desc": "Entrümpelung in Dortmund und im Ruhrgebiet: Wohnung, Keller, Garage oder Büro leerräumen. Wir tragen raus und fahren weg. Jetzt anfragen.", "short": "Wohnung, Keller und Büro leerräumen", "nav": "Entrümpelung", "title": "Entrümpelung",
   "icon": "i-clear", "num": "06", "img": "ruhrcargo-entruempelung",
-  "img_alt": "Zwei Mitarbeiter von RuhrCargo tragen ein Sofa aus einer Haustür",
+  # Auf der breiten Karte der Startseite sonst nur der Ruecken des
+  # Traegers im Bild; tiefer angesetzt sind Schrank und Zimmer zu sehen.
+  "focus": "52%",
+  "img_alt": "Zwei Mitarbeiter von RuhrCargo räumen einen Schrank aus einem vollgestellten Zimmer",
+  "header_alt": "Mitarbeiter von RuhrCargo trägt eine Platte zum Räumgut vor dem Koffer-LKW",
   "teaser": "Wohnung, Keller, Garage oder Büro: Wir räumen leer, tragen heraus und fahren ab.",
   "lead": "Wohnung, Keller, Dachboden oder Büro leerräumen – wir tragen heraus und nehmen mit, was weg soll. Sie müssen dabei nichts anfassen.",
   "body": [

@@ -356,6 +356,13 @@ def cta_band(base, title="Sie haben einen Transport.<br>Wir haben die Lösung.",
   </div>
 </section>'''
 
+def focus(s):
+    """Bildausschnitt einzelner Karten verschieben. Die breiten Karten der
+    letzten Reihe zeigen von einem Hochformat nur ein schmales Band; steht
+    das Motiv nicht in der Mitte, laesst es sich hierueber nachfuehren."""
+    return f' style="object-position:50% {s["focus"]}"' if s.get("focus") else ""
+
+
 def service_grid(base, limit=None, reveal=True):
     items = SERVICES[:limit] if limit else SERVICES
     out = []
@@ -365,7 +372,7 @@ def service_grid(base, limit=None, reveal=True):
         # über ein Pseudoelement ab. Umschlösse er die ganze Karte, wäre der
         # Linktext über 120 Zeichen lang — schlecht für Screenreader und SEO.
         out.append(f'''<article class="svc" data-reveal="scale" style="--d:{d}">
-        <img class="svc__img" src="{base}assets/img/{s["img"]}.webp" alt="{e(s["img_alt"])}" {dim(f'assets/img/{s["img"]}.webp')} loading="lazy" decoding="async">
+        <img class="svc__img" src="{base}assets/img/{s["img"]}.webp" alt="{e(s["img_alt"])}" {dim(f'assets/img/{s["img"]}.webp')}{focus(s)} loading="lazy" decoding="async">
         <span class="svc__scrim" aria-hidden="true"></span>
         <span class="svc__top"><span class="svc__num">{s["num"]}</span>{icon(s["icon"], 26, "1.5", "svc__icon")}</span>
         <h3 class="svc__title"><a class="svc__link" href="{base}leistungen/{s["slug"]}.html">{e(s["title"])}</a></h3>
@@ -661,7 +668,8 @@ def build_service(s):
 
     body = f'''{page_hero(f'Leistung {s["num"]}', e(s["title"]), s["lead"],
         [("Startseite", "index.html"), ("Leistungen", "leistungen.html"), (s["title"], None)],
-        base, img="ruhrcargo-" + s["slug"].replace("umzuege","umzug") + "-header", alt=s["img_alt"])}
+        base, img="ruhrcargo-" + s["slug"].replace("umzuege","umzug") + "-header",
+        alt=s.get("header_alt", s["img_alt"]))}
 
 <section class="section on-white">
   <div class="container">
